@@ -1,0 +1,60 @@
+https://docs.docker.com/reference/commandline/cli
+-------------------
+docker run -it image-spec /bin/bash
+	run and log into container
+	can do e.g.
+		adduser username sudo
+		exit
+	Change is not persistent
+
+to exit without quitting container: ctrl-p ctrl-q
+
+containers have names, long/sort IDs
+
+docker ps
+	get list of containers
+	ps -a: show stopped ones too
+
+docker run -d ...
+	run container in detached mode
+
+docker logs shortid
+	show output from detached container
+	-f: stream the output
+
+docker run -d -P image-spec
+	map ports
+	(runs default command in image)
+--------------
+fundamentals
+
+docker commit container-id  username/app:version
+	make container into an image
+
+dockerfiles
+FROM base-img
+RUN cmd e.g. apt-get
+	each builds a new layer, so efficient to combine with &&
+
+docker build -t imagename context
+	(context is where to look for Dockerfile and other files)
+
+CMD default command
+ENTRYPOINT like CMD but can't override, and can pass args in docker run cmd
+VOLUME /myvol
+EXPOSE 80 443
+	ports container will listen on
+
+docker exec -it container-id bash
+	run command in running container
+
+docker stop/start container
+
+docker rm container
+	delete stopped container
+
+docker rmi image-id
+	remove local image copy
+
+docker push repo/name:tag
+	push image to docker hub

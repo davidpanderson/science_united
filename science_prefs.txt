@@ -1,0 +1,62 @@
+- How do volunteers express
+	- area prefs:
+		want to compute for
+		willing to compute for
+		don't want to compute for
+- How do projects express the properties of
+	themselves
+	their apps
+	their jobs
+- what is the granularity?
+	project (but it could have mix of jobs)
+	app (but it could have a mix of jobs)
+	job?
+
+	in the latter two cases, how does the top-level allocater
+	(the account manager) know how much computing was done
+	for each attribute?
+------------
+Assumption:
+
+Selection/allocation policy is only within the acct mgr, not projects.
+I.e. the scheduler on a project doesn't see user science prefs.
+This means that we're not going to tag individual jobs or batches with properties
+and have the scheduler match-make.
+------------
+
+Science areas and subareas
+	biology
+		medicine
+			cancer
+			ebola
+		phylogeny
+	astronomy
+	physics
+	earth science
+	math
+
+hierarchy versus keywords
+	some keywords are relevant only in certain contexts
+
+Continents
+	Asia, Europe
+
+Countries
+
+Institutions
+	universities
+	research labs
+		CERN
+
+Projects
+-----------
+Science prefs
+default: no restrictions
+
+Science area
+top level: green checkbox or red X next to each area
+if more than one checked, slider for each area
+Can have "more detail..." or "you have specified more detail..."
+
+Location
+

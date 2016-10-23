@@ -1,0 +1,68 @@
+Science United
+
+Front page
+	info
+	log in with Facebook | Google
+	use twitter bootstrap?
+Account page
+	interest checkboxes
+		Environmental research
+		Biomedicine
+		Basic science (physics, chem)
+		Math and computer science
+		default: all checked
+		possible (but too fancy?)
+			slider bar for each checked one
+			if you move one slider, others change
+	If we have a cookie
+		if never got an RPC
+			show "you need to download and install BOINC"
+			Download link
+		else if last RPC is old
+			advise to reinstall boinc
+		else if client version is old
+			advise to reinstall boinc
+	else
+		Download link
+		send cookie
+
+--------------
+McLennan idea:
+projects are rewarded for
+	- creating interesting news stories
+and maybe also for
+	- contributing power themselves
+
+Use HUBzero to create the site?
+--------------
+How to allocate hosts to projects/apps
+	each project has a share S(P) (assigned by S@h)
+	each user assigns a share S(A) to area
+	
+--------------
+
+database
+	use a standard BOINC DB
+		user
+		host
+	additional tables:
+		area
+		project
+		app
+		attachment
+			userid
+			area
+			fraction
+
+acct mgr RPC handler
+	attach host to all projects w/ an app in selected area
+	set project preferences to allow only apps in selected area
+	RS(P) = 0
+	for each area A
+		for each P associated with A
+			RS(P) += S(A)*S(P)
+
+Need a way to gracefully detach projects
+	(finish existing work, then detach)
+
+---------
