@@ -1,27 +1,27 @@
 Purdue
     Zentner, Michael G <mzentner@purdue.edu>
-        (765) 494 7705
+        (76) 494 770
         mzentner@purdue.edu
     Steve Clark
         clarks@purdue.edu
-        765-494-3132
+        76-494-
     Ben Haley
         bhaley@purdue.edu
-        (765) 494-0276
+        (76) 494-076
 
 TACC
 	Luke Wilson
-		512 232 7351
+		  7
 
-19 Aug
+9 Aug
 	call w/ Ben, Steve
 
-11 Oct
+ Oct
 Steve: has a computer now
 	hasn't written any code yet
 	using python
 
-13 Oct
+ Oct
 Luke: didn't answer
 
 24 Oct

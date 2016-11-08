@@ -1,0 +1,44 @@
+Science United web site
+
+functions
+    new user experience
+    returning user experience
+    catalog of supported research projects (not BOINC projects)
+    news items
+        from research projects
+
+tools
+	bootstrap?
+	angular.js?
+	hubzero?
+
+Front page
+	a call to action
+	describe science; pictures
+	address safety
+	if not logged in:
+		Big green Join button
+		smaller "login" button
+	else:
+		if never got RPC:
+			need to download; link
+		if last RPC is old
+			advise to download; link
+		if client version is old
+			advise to re-install
+		some progress/status stuff
+		link to science prefs
+		list of devices
+
+Join page
+	1) log in with Facebook | Google
+	2) science prefs (see below)
+	3) Download button
+
+Science prefs
+	interest checkboxes
+		Environmental research
+		Biomedicine
+		Basic science (physics, chem)
+		Math and computer science
+		default: all checked

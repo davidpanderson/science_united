@@ -42,7 +42,7 @@ docker build -t imagename context
 CMD default command
 ENTRYPOINT like CMD but can't override, and can pass args in docker run cmd
 VOLUME /myvol
-EXPOSE 80 443
+EXPOSE 80 44
 	ports container will listen on
 
 docker exec -it container-id bash

@@ -20,8 +20,8 @@ Assumption:
 
 Selection/allocation policy is only within the acct mgr, not projects.
 I.e. the scheduler on a project doesn't see user science prefs.
-This means that we're not going to tag individual jobs or batches with properties
-and have the scheduler match-make.
+This means that we're not going to tag individual jobs or batches
+with properties and have the scheduler match-make.
 ------------
 
 Science areas and subareas
@@ -55,7 +55,6 @@ default: no restrictions
 
 Science area
 top level: green checkbox or red X next to each area
-if more than one checked, slider for each area
 Can have "more detail..." or "you have specified more detail..."
 
 Location
