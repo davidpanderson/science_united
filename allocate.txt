@@ -1,0 +1,51 @@
+Allocation
+Would like to come as close to guaranteed allocation as possible.
+
+We can estimate the total throughput of the system,
+   and we can break it down by resource type,
+   and for a given set of keywords we can see how much is not vetoed.
+
+Goal: someone comes to use the an allocation request, which includes
+- the available app version types
+    (CPU, NVIDIA, AMD, platform, VM)
+- the set of keywords
+- # FLOPs
+
+Parameters:
+- what % of resources to use for allocations (50?)
+- max % for a single allocation (10?)
+
+Projects also get an unallocated share,
+with a fraction determined by the popularity of their keywords
+(and keywords of their apps)
+
+to process an allocation request:
+select hosts that aren't ruled out by keywords
+total their flops for eligible resources
+------------
+
+A project is either single-allocation or multi-allocation.
+In the latter case the allocations are to apps within the project.
+
+An "allocation target" (AT) is either a project or an app.
+
+An "allocation" consists of
+- an initial balance
+- the rate of balance accrual
+- the interval of balance accrual
+where "balance" is in terms of FLOPs
+
+SU serves as a meta-scheduler.
+
+It keeps track of targets, allocations, balances, host assignments.
+
+?? should allocation usage be measured by host/time,
+or by work actually done (credit)?
+Note: should work in a reasonable way even if jobs are very long
+
+?? what if SU assigns a host to a project, and the project doesn't have work?
+	SU should work in a reasonable way for sporadic workloads
+
+-----------
+client changes:
+	report CPU/GPU time per app and project

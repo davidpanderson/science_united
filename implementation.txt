@@ -1,0 +1,46 @@
+Need a way to find out how much work has been done by a host for an app
+approaches:
+    1) track it in the client, report in AM RPC
+    2) get it from the project
+
+1) seems preferable; will need a new client
+--------------
+database
+
+use a standard BOINC DB
+    user
+    host
+    message boards
+
+additional tables:
+project
+    keywords
+app
+    link to project
+    keywords
+    description of science, scientists
+app version
+    link to app
+    platform
+    GPU; needed software
+    need Vbox? need VM accel?
+allocation
+    app
+    flops
+news/discussion
+    message board for each project, each app
+
+The set of keywords can be represented by a JSON file
+
+--------------
+acct mgr RPC handler
+	attach host to all projects w/ an app in selected area
+	set project preferences to allow only apps in selected area
+	RS(P) = 0
+	for each area A
+		for each P associated with A
+			RS(P) += S(A)*S(P)
+
+Need a way to gracefully detach projects
+	(finish existing work, then detach)
+
