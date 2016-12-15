@@ -1,5 +1,8 @@
 Allocation
-Would like to come as close to guaranteed allocation as possible.
+Goals:
+    come as close to guaranteed allocation as possible.
+    respect user prefs
+    maximize througput
 
 We can estimate the total throughput of the system,
    and we can break it down by resource type,

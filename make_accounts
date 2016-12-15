@@ -1,0 +1,21 @@
+#! /usr/bin/env php
+<?php
+
+function main() {
+    $accounts = SUAccount::enum("status=".INIT." or status=".TRANSIENT);
+    foreach ($accounts as $account) {
+        $ret = create_account($account);
+        switch ($ret) {
+        case 0:
+            $account->update("status=".SUCCESS");
+            break;
+        case DIFFERENT_PASSWD:
+            $account->update("status=".DIFFERENT_PASSWD");
+            break;
+        }
+    }
+}
+
+main();
+
+?>

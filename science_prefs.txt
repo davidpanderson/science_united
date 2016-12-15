@@ -49,13 +49,27 @@ Institutions
 		CERN
 
 Projects
------------
+----------
+Keywords
+    area:astronomy area:physics
+    country:us continent:north_america
+    institution:university_of_illinois
+    open_results:yes
+    for_profit:no
+    etc.
+--------------
+each project and application can have associated keywords
+
+Each user has 2 lists of keywords: wanted and vetoed.
+Vetoed: if matches any of project/app, don't run it.
+Wanted: prioritize based on number of matches.
+
+If a new keyword is added, it's automatically allowed
+(neither wanted nor vetoed) for all users.
+--------------
 Science prefs
 default: no restrictions
 
 Science area
 top level: green checkbox or red X next to each area
 Can have "more detail..." or "you have specified more detail..."
-
-Location
-
