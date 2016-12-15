@@ -68,6 +68,10 @@ class SUProjectKeyword {
         $db = BoincDb::get();
         return $db->enum('project_keyword', 'SUProjectKeyword');
     }
+    static function delete($clause) {
+        $db = BoincDb::get();
+        return $db->delete_aux('project_keyword', $clause);
+    }
 }
 
 class SUUserKeyword {

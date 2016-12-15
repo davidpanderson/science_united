@@ -78,18 +78,41 @@ function su_show_project() {
     row2("Science keywords", array_to_string($sci));
     row2("Location keywords", array_to_string($loc));
     end_table();
-    echo '<a class="btn btn-success" href="manage.php?action=project_edit_form&id='.$project->id.'">Edit</a>
+    echo '<a class="btn btn-success" href="manage.php?action=edit_project_form&id='.$project->id.'">Edit</a>
     ';
     page_tail();
 }
 
+// return list of all keywords of given category
+// List items are array (id, word)
+//
 function keyword_subset($keywords, $category) {
     $x = array();
     foreach ($keywords as $k) {
         if ($k->category != $category) continue;
-        $x[] = array($k->id, $k->name);
+        $x[] = array($k->id, $k->word);
     }
     return $x;
+}
+
+// given keyword list (of the form above),
+// return boolean array of ones a project has
+//
+function keyword_flags($keywords, $category, $project_id) {
+    $pks = SUProjectKeyword::enum();
+    $pwords = array();
+    foreach ($pks as $pk) {
+        // could do this more efficiently with a join
+        //
+        $kw = SUKeyword::lookup_id($pk->keyword_id);
+        $pwords[] = $kw->id;
+    }
+
+    $flags = array();
+    foreach ($keywords as $k) {
+        $flags[] = in_array($k[0], $pwords);
+    }
+    return $flags;
 }
 
 function add_project_form() {
@@ -98,18 +121,74 @@ function add_project_form() {
     form_input_hidden('action', 'add_project_action');
     form_input_text('URL', 'url');
     form_input_text('Name', 'name');
-    form_input_text('Allocation', 'alloc', 'number');
+    form_input_text('Allocation', 'alloc', '', 'number');
     $keywds = SUKeyword::enum();
     $sci_keywds = keyword_subset($keywds, SCIENCE);
     $loc_keywds = keyword_subset($keywds, LOCATION);
     if (count($sci_keywds)>0) {
-        form_select('Science keywords<br><small>use ctrl to select multiple</small>', 'sci_keywds', $sci_keywds, true);
+        form_select_multiple(
+            'Science keywords<br><small>use ctrl to select multiple</small>',
+            'sci_keywds',
+            $sci_keywds,
+            null
+        );
     }
     if (count($loc_keywds)>0) {
-        form_select('Location keywords<br><small>use ctrl to select multiple</small>', 'loc_keywds', $loc_keywds, true);
+        form_select_multiple(
+            'Location keywords<br><small>use ctrl to select multiple</small>',
+            'loc_keywds',
+            $loc_keywds,
+            null
+        );
     }
-    form_input_text('New science keywords<br><small>comma-separated</small>', 'new_sci_keywds');
-    form_input_text('New location keywords<br><small>comma-separated</small>', 'new_loc_keywds');
+    form_input_text(
+        'New science keywords<br><small>comma-separated</small>',
+        'new_sci_keywds'
+    );
+    form_input_text(
+        'New location keywords<br><small>comma-separated</small>',
+        'new_loc_keywds'
+    );
+    form_submit('OK');
+    form_end();
+    page_tail();
+}
+
+function edit_project_form() {
+    $id = get_int('id');
+    $p = SUProject::lookup_id($id);
+    page_head("Edit project");
+    form_start('manage.php');
+    form_input_hidden('action', 'edit_project_action');
+    form_input_hidden('id', $id);
+    form_input_text('URL', 'url', $p->url, 'text', 'disabled');
+    form_input_text('Name', 'name', $p->name);
+    form_input_text('Allocation', 'alloc', $p->allocation, 'number');
+    $keywds = SUKeyword::enum();
+    $sci_keywds = keyword_subset($keywds, SCIENCE);
+    $sci_flags = keyword_flags($sci_keywds, SCIENCE, $p->id);
+    $loc_keywds = keyword_subset($keywds, LOCATION);
+    $loc_flags = keyword_flags($loc_keywds, LOCATION, $p->id);
+    form_select_multiple(
+        'Science keywords<br><small>use ctrl to select multiple</small>',
+        'sci_keywds',
+        $sci_keywds,
+        $sci_flags
+    );
+    form_select_multiple(
+        'Location keywords<br><small>use ctrl to select multiple</small>',
+        'loc_keywds',
+        $loc_keywds,
+        $loc_flags
+    );
+    form_input_text(
+        'New science keywords<br><small>comma-separated</small>',
+        'new_sci_keywds'
+    );
+    form_input_text(
+        'New location keywords<br><small>comma-separated</small>',
+        'new_loc_keywds'
+    );
     form_submit('OK');
     form_end();
     page_tail();
@@ -159,14 +238,79 @@ function add_project_action() {
 
 }
 
-function edit_project_form() {
-    $id = get_int('id');
-    $project = SUProject::lookup_id($id);
-    page_head('Edit '.$project->name);
-    page_tail();
+// given a list of keyword IDs,
+// add or remove project/keyword associations
+//
+function update_keywords($p, $new_kw_ids, $category) {
+    // get list of associations
+    //
+    $old_kw_assocs = SUProjectKeyword::enum("project_id=$p->id");
+
+    // get corresponding list of keyword objects
+    //
+    $old_kws = array_map(
+        function($x){return SUKeyword::lookup_id($x->keyword_id);},
+        $old_kw_assocs
+    );
+
+    // filter by category
+    //
+    $old_kws = array_filter($old_kws,
+        function($x) use ($category) {return $x->category == $category;}
+    );
+
+    // convert to list of IDs
+    //
+    $old_kw_ids = array_map(
+        function($x) {return $x->id;},
+        $old_kws
+    );
+
+    // remove old ones not in new list
+    //
+    foreach ($old_kw_ids as $id) {
+        if (!in_array($id, $new_kw_ids)) {
+            SUProjectKeyword::delete("project_id=$p->id and keyword_id=$id");
+        }
+    }
+
+    // add new ones
+    //
+    foreach ($new_kw_ids as $id) {
+        if (!in_array($id, $old_kw_ids)) {
+            SUProjectKeyword::insert(
+                "(project_id, keyword_id) values ($p->id, $id)"
+            );
+        }
+    }
 }
 
 function edit_project_action() {
+    $id = get_int('id');
+    $name = get_str('name');
+    $alloc = get_str('alloc');
+    $p = SUProject::lookup_id($id);
+    if (!$p) {
+        error_page("no such project");
+    }
+    $p->update("name='$name', allocation=$alloc");
+
+    // add or remove existing keywords
+    //
+    update_keywords($p, get_array('sci_keywds'), SCIENCE);
+    update_keywords($p, get_array('loc_keywds'), LOCATION);
+
+    // add new keywords
+    //
+    $nsci = add_keywords(get_str('new_sci_keywds'), $p->id, SCIENCE);
+    $nloc = add_keywords(get_str('new_loc_keywds'), $p->id, LOCATION);
+
+    page_head("Project updated");
+    echo '
+        <p>
+        <a href="manage.php">Return to management page</a>
+    ';
+    page_tail();
 }
 
 $action = get_str('action', true);
@@ -186,11 +330,13 @@ case 'add_project_action':
     add_project_action();
     break;
 case 'edit_project_form':
-    add_project_action();
+    edit_project_form();
     break;
 case 'edit_project_action':
     edit_project_action();
     break;
+default:
+    error_page("no such action $action");
 }
 
 ?>
