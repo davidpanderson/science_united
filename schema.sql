@@ -23,6 +23,7 @@ create table project_keyword (
 create table user_keyword (
     user_id                 integer         not null,
     keyword_id              integer         not null,
+    type                    smallint        not null,
     unique(user_id, keyword_id)
 ) engine=InnoDB;
 

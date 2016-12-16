@@ -238,33 +238,21 @@ function add_project_action() {
 
 }
 
-// given a list of keyword IDs,
+// given a new list of keyword IDs for a given project
 // add or remove project/keyword associations
 //
-function update_keywords($p, $new_kw_ids, $category) {
-    // get list of associations
-    //
+function update_keywords($p, $new_kw_ids) {
     $old_kw_assocs = SUProjectKeyword::enum("project_id=$p->id");
+        // list of associations
 
-    // get corresponding list of keyword objects
-    //
     $old_kws = array_map(
         function($x){return SUKeyword::lookup_id($x->keyword_id);},
         $old_kw_assocs
     );
+        // corresponding list of keyword objects
 
-    // filter by category
-    //
-    $old_kws = array_filter($old_kws,
-        function($x) use ($category) {return $x->category == $category;}
-    );
-
-    // convert to list of IDs
-    //
-    $old_kw_ids = array_map(
-        function($x) {return $x->id;},
-        $old_kws
-    );
+    $old_kw_ids = array_map(function($x) {return $x->id;}, $old_kws);
+        // list of IDs
 
     // remove old ones not in new list
     //
@@ -297,8 +285,8 @@ function edit_project_action() {
 
     // add or remove existing keywords
     //
-    update_keywords($p, get_array('sci_keywds'), SCIENCE);
-    update_keywords($p, get_array('loc_keywds'), LOCATION);
+    $kwids = array_merge(get_array('sci_keywds'), get_array('loc_keywds'));
+    update_keywords($p, $kwids);
 
     // add new keywords
     //

@@ -10,6 +10,12 @@ chdir($dir);
 define('SCIENCE', 0);
 define('LOCATION', 1);
 
+// user keyword type
+//
+define('KW_YES', 1);
+define('KW_MAYBE', 0);
+define('KW_NO', -1);
+
 // values for account state
 //
 define('INIT', 0);
@@ -82,6 +88,14 @@ class SUUserKeyword {
     static function enum() {
         $db = BoincDb::get();
         return $db->enum('user_keyword', 'SUUserKeyword');
+    }
+    static function delete($clause) {
+        $db = BoincDb::get();
+        return $db->delete_aux('user_keyword', $clause);
+    }
+    static function update($clause) {
+        $db = BoincDb::get();
+        return $db->update_aux('user_keyword', $clause);
     }
 }
 
