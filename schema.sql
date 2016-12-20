@@ -10,6 +10,7 @@ create table project (
     create_time             integer         not null,
     name                    varchar(254)    not null,
     url                     varchar(254)    not null,
+    url_signature           varchar(1024)   not null,
     allocation              double          not null,
     primary key (id)
 ) engine=InnoDB;

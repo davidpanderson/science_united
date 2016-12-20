@@ -119,8 +119,9 @@ function add_project_form() {
     page_head("Add project");
     form_start('manage.php');
     form_input_hidden('action', 'add_project_action');
-    form_input_text('URL', 'url');
     form_input_text('Name', 'name');
+    form_input_text('URL', 'url');
+    form_input_textarea('URL signature', 'url_signature');
     form_input_text('Allocation', 'alloc', '', 'number');
     $keywds = SUKeyword::enum();
     $sci_keywds = keyword_subset($keywds, SCIENCE);

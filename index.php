@@ -75,19 +75,16 @@ function left(){
             } else {
                 echo "
                     <p>
-                    XXX is a research project, based at <a href=#>YYY</a>,
-                    that uses Internet-connected
-                    computers to do research in XXX.
-                    You can contribute to our research
+                    Science United.
+                    You can contribute to scientific research
                     by running a free program on your computer.
                     </p>
                 ";
             }
             echo "
                 <ul>
-                <li> <a href=#>Our research</a>
-                <li> <a href=#>Our team</a>
-                <li> <a href=manage.php>Manage</a>
+                <li> <a href=manage.php>Administrator</a>
+                <li> <a href=prefs.php>Volunteer</a>
                 </ul>
             ";
             echo "</ul>";

@@ -108,4 +108,8 @@ class SUAccount {
         $db = BoincDb::get();
         return $db->enum('account', 'SUAccount', $where_clause);
     }
+    static function lookup($where_clause) {
+        $db = BoincDb::get();
+        return $db->lookup('account', 'SUAccount', $where_clause);
+    }
 }
