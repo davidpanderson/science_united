@@ -210,11 +210,12 @@ function add_keywords($str, $project_id, $category) {
 
 function add_project_action() {
     $url = get_str('url');
+    $url_signature = get_str('url_signature');
     $name = get_str('name');
     $alloc = get_str('alloc');
     $now = time();
     $project_id = SUProject::insert(
-        "(url, name, create_time, allocation) values ('$url', '$name', $now, $alloc)"
+        "(url, url_signature, name, create_time, allocation) values ('$url', '$url_signature', '$name', $now, $alloc)"
     );
     if (!$project_id) {
         error_page("insert failed");

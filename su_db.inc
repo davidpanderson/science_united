@@ -85,9 +85,9 @@ class SUUserKeyword {
         $db = BoincDb::get();
         return $db->insert('user_keyword', $clause);
     }
-    static function enum() {
+    static function enum($where_clause='') {
         $db = BoincDb::get();
-        return $db->enum('user_keyword', 'SUUserKeyword');
+        return $db->enum('user_keyword', 'SUUserKeyword', $where_clause);
     }
     static function delete($clause) {
         $db = BoincDb::get();
@@ -111,5 +111,9 @@ class SUAccount {
     static function lookup($where_clause) {
         $db = BoincDb::get();
         return $db->lookup('account', 'SUAccount', $where_clause);
+    }
+    static function update($clause) {
+        $db = BoincDb::get();
+        return $db->update_aux('account', $clause);
     }
 }

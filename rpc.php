@@ -72,7 +72,7 @@ function send_reply($accounts) {
         ."<name>Science United</name>\n"
         ."<signing_key>\n"
     ;
-    readfile('signing_key_public');
+    readfile('code_sign_public');
     echo "</signing_key>\n"
         ."<repeat_sec>86400</repeat_sec>\n"
     ;
@@ -82,6 +82,7 @@ function send_reply($accounts) {
         echo "<account>\n"
             ."<url>$proj->url</url>\n"
             ."<url_signature>\n$proj->url_signature\n</url_signature>\n"
+            ."<authenticator>$acct->authenticator</authenticator>\n"
         ;
     }
     echo "</acct_mgr_reply>\n";
@@ -106,10 +107,10 @@ function main() {
         xml_error(-1, 'bad password');
     }
 
-    $host_cpid = (int)$req->host_cpid;
+    $host_cpid = (string)$req->host_cpid;
     $host = BoincHost::lookup_cpid($host_cpid);
     if (!$host) {
-        $host_cpid = (int)$req->previous_host_cpid;
+        $host_cpid = (string)$req->previous_host_cpid;
         $host =  BoincHost::lookup_cpid($host_cpid);
     }
     if ($host) {
@@ -118,7 +119,7 @@ function main() {
     } else {
         $now = time();
         $host_id = BoincHost::insert(
-            "(create_time, user_id, host_cpid) values ($now, $user->id, $host_cpid)"
+            "(create_time, userid, host_cpid) values ($now, $user->id, '$host_cpid')"
         );
         // TODO: fill in host info
     }
@@ -130,7 +131,7 @@ function main() {
         $account = SUAccount::lookup(
             "project_id = $p->id and user_id = $user->id"
         );
-        if ($account) {
+        if ($account && ($account->state == SUCCESS)) {
             $accounts_to_send[] = array($p, $account);
         } else {
             SUAccount::insert(
@@ -142,7 +143,7 @@ function main() {
         $n++;
         if ($n == 3) break;
     }
-    send_reply($accounts_to_send());
+    send_reply($accounts_to_send);
 }
 
 main();
