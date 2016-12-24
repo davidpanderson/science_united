@@ -10,13 +10,10 @@
 //   create an account record; a periodic task will create the account later
 // - return a list of projects for which the user has a working account
 
-$dir = getcwd();
-chdir("/mydisks/a/users/boincadm/projects/test2/html/user");
 require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
-chdir($dir);
 
-require_once("su_db.inc");
+require_once("../inc/su_db.inc");
 
 // if user has a pref for this keyword, return -1/1, else 0
 //
@@ -67,7 +64,6 @@ function rank_projects($user, $host) {
 // $accounts is an array of array(project, account)
 //
 function send_reply($accounts) {
-    xml_header();
     echo "<acct_mgr_reply>\n"
         ."<name>Science United</name>\n"
         ."<signing_key>\n"
@@ -83,17 +79,20 @@ function send_reply($accounts) {
             ."<url>$proj->url</url>\n"
             ."<url_signature>\n$proj->url_signature\n</url_signature>\n"
             ."<authenticator>$acct->authenticator</authenticator>\n"
+            ."</account>\n"
         ;
     }
     echo "</acct_mgr_reply>\n";
 }
 
 function main() {
-    //$req = simplexml_load_string($_POST['request']);
+    //$req = simplexml_load_file('php://input');
     $req = simplexml_load_file('req.xml');
     if (!$req) {
         xml_error(-1, "can't parse request");
     }
+
+    xml_header();   // do this before DB access
 
     $email_addr = (string)$req->name;
     $user = BoincUser::lookup_email_addr($email_addr);
@@ -102,7 +101,6 @@ function main() {
     }
 
     $passwd_hash = (string)$req->password_hash;
-    echo "$passwd_hash";
     if ($passwd_hash != $user->passwd_hash) {
         xml_error(-1, 'bad password');
     }
@@ -131,17 +129,24 @@ function main() {
         $account = SUAccount::lookup(
             "project_id = $p->id and user_id = $user->id"
         );
-        if ($account && ($account->state == SUCCESS)) {
-            $accounts_to_send[] = array($p, $account);
+        if ($account) {
+            if ($account->state == SUCCESS) {
+                $accounts_to_send[] = array($p, $account);
+                $n++;
+                if ($n == 3) break;
+            } else {
+                continue;
+            }
         } else {
-            SUAccount::insert(
+            $ret = SUAccount::insert(
                 sprintf("(project_id, user_id, state) values (%d, %d, %d)",
                     $p->id, $user->id, INIT
                 )
             );
+            if (!$ret) {
+                xml_error(-1, "account insert failed");
+            }
         }
-        $n++;
-        if ($n == 3) break;
     }
     send_reply($accounts_to_send);
 }

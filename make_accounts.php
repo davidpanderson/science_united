@@ -1,13 +1,10 @@
 <?php
 
-$dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
 require_once("../inc/db_conn.inc");
 require_once("../inc/web_rpc_api.inc");
 require_once("../inc/common_defs.inc");
-chdir($dir);
 
-require_once("su_db.inc");
+require_once("../inc/su_db.inc");
 
 // create project accounts
 

@@ -1,61 +1,10 @@
 <?php
 
-$dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
 require_once("../inc/util.inc");
-chdir($dir);
 
 require_once("su_db.inc");
 
 // show/enter/edit prefs
-
-function ukw_lookup($ukws, $id) {
-    foreach ($ukws as $uwk) {
-        if ($uwk->keyword_id == $id) {
-            return $uwk;
-        }
-    }
-    return null;
-}
-
-function show_keywords($ukws, $kws, $category, $type) {
-    $first = true;
-    $x = '';
-    foreach ($kws as $kw) {
-        if ($kw->category != $category) continue;
-        $ukw = ukw_lookup($ukws, $kw->id);
-        if (($ukw && ($ukw->type == $type)) || (!$ukw && $type==KW_MAYBE)) {
-            if (!$first) $x .= ", ";
-            $first = false;
-            $x .= $kw->word;
-        }
-    }
-    if ($first) {
-        $x .= "---";
-    }
-    return $x;
-}
-
-function prefs_show($user) {
-    page_head("Preferences");
-    $ukws = SUUserKeyword::enum("user_id=$user->id");
-    $kws = SUKeyword::enum();
-    start_table();
-    row_heading('Types of science');
-    row2('Yes', show_keywords($ukws, $kws, SCIENCE, KW_YES));
-    row2('No', show_keywords($ukws, $kws, SCIENCE, KW_NO));
-    row2('Maybe', show_keywords($ukws, $kws, SCIENCE, KW_MAYBE));
-
-    row_heading('Locations');
-    row2('Yes', show_keywords($ukws, $kws, LOCATION, KW_YES));
-    row2('No', show_keywords($ukws, $kws, LOCATION, KW_NO));
-    row2('Maybe', show_keywords($ukws, $kws, LOCATION, KW_MAYBE));
-    end_table();
-
-    echo '<p><a class="btn btn-success" href="prefs.php?action=prefs_edit_form">Edit</a>
-    ';
-    page_tail();
-}
 
 // show keywords w/ radio buttons
 //
@@ -98,7 +47,7 @@ function show_keywords_checkbox($kws, $ukws, $category) {
 
 function prefs_edit_form($user) {
     page_head("Edit preferences");
-    form_start('prefs.php');
+    form_start('su_prefs.php');
     form_input_hidden('action', 'prefs_edit_action');
     $kws = SUKeyword::enum();
     $ukws = SUUserKeyword::enum("user_id = $user->id");
@@ -140,11 +89,11 @@ function prefs_edit_action($user) {
             }
             break;
         case KW_MAYBE:
-            SUUserKeyword::delete("keyword_id=$kw-id and user_id=$user->id");
+            SUUserKeyword::delete("keyword_id=$kw->id and user_id=$user->id");
             break;
         }
     }
-    Header("Location: prefs.php");
+    Header("Location: su_prefs.php");
 }
 
 $user = get_logged_in_user();
@@ -158,7 +107,9 @@ case 'prefs_edit_action':
     prefs_edit_action($user);
     break;
 default:
+    page_head("Preferences");
     prefs_show($user);
+    page_tail();
 }
 
 ?>

@@ -1,0 +1,3 @@
+#! /bin/sh
+
+~/boinc/lib/crypt_prog -sign_string $1 code_sign_private
