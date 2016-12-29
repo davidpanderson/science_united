@@ -16,17 +16,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-$dir = getcwd();
-chdir("/mydisks/a/users/boincadm/projects/test2/html/user");
 require_once("../inc/xml.inc");
-chdir($dir);
 
 xml_header();
 
 echo "<project_config>
     <name>Science United</name>
     <account_creation_disabled/>
-    <min_client_version>7.6.33</min_client_version>
+    <min_client_version>7.7.1</min_client_version>
+    <send_accounting_info>1</send_accounting_info>
     </project_config>
 ";
 

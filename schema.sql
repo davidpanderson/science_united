@@ -46,30 +46,67 @@ create table su_account (
  * - per user
  *
  * We could also have per-host, per-user-project, per-host-project etc.
- * but let's defer those
+ * but probably not worth it
  */
 
 create table su_accounting (
+    id                      integer         not null auto_increment,
     create_time             double          not null,
-    rec                     double          not null,
+    cpu_ec_delta            double          not null,
+    cpu_ec_total            double          not null,
+    gpu_ec_delta            double          not null,
+    gpu_ec_total            double          not null,
+    cpu_time_delta          double          not null,
+    cpu_time_total          double          not null,
+    gpu_time_delta          double          not null,
+    gpu_time_total          double          not null,
     nactive_hosts           integer         not null,
+    nactive_hosts_gpu       integer         not null,
     nactive_users           integer         not null,
-    index (create_time)
+    njobs_success_delta     integer         not null,
+    njobs_success_total     integer         not null,
+    njobs_fail_delta        integer         not null,
+    njobs_fail_total        integer         not null,
+    primary key (id)
 ) engine=InnoDB;
 
 
 create table su_accounting_project (
+    id                      integer         not null auto_increment,
     create_time             double          not null,
     project_id              integer         not null,
-    rec                     double          not null,
-    rec_time                double          not null,
-    index (create_time)
+    cpu_ec_delta            double          not null,
+    cpu_ec_total            double          not null,
+    gpu_ec_delta            double          not null,
+    gpu_ec_total            double          not null,
+    cpu_time_delta          double          not null,
+    cpu_time_total          double          not null,
+    gpu_time_delta          double          not null,
+    gpu_time_total          double          not null,
+    njobs_success_delta     integer         not null,
+    njobs_success_total     integer         not null,
+    njobs_fail_delta        integer         not null,
+    njobs_fail_total        integer         not null,
+    index (project_id),
+    primary key (id)
 ) engine=InnoDB;
 
 create table su_accounting_user (
+    id                      integer         not null auto_increment,
     create_time             double          not null,
     user_id                 integer         not null,
-    rec                     double          not null,
-    rec_time                double          not null,
-    index (create_time)
+    cpu_ec_delta            double          not null,
+    cpu_ec_total            double          not null,
+    gpu_ec_delta            double          not null,
+    gpu_ec_total            double          not null,
+    cpu_time_delta          double          not null,
+    cpu_time_total          double          not null,
+    gpu_time_delta          double          not null,
+    gpu_time_total          double          not null,
+    njobs_success_delta     integer         not null,
+    njobs_success_total     integer         not null,
+    njobs_fail_delta        integer         not null,
+    njobs_fail_total        integer         not null,
+    index (user_id),
+    primary key (id)
 ) engine=InnoDB;

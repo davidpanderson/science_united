@@ -130,9 +130,18 @@ class SUAccounting {
         $db = BoincDb::get();
         return $db->insert('su_accounting', $clause);
     }
-    static function enum($where_clause) {
+    static function enum($where_clause, $order_clause) {
         $db = BoincDb::get();
-        return $db->enum('su_accounting', 'SUAccounting', $where_clause);
+        return $db->enum('su_accounting', 'SUAccounting', $where_clause, $order_clause);
+    }
+    static function last() {
+        $db = BoincDb::get();
+        $x = SUAccounting::enum("", "order by id desc");
+        if ($x) {
+            return $x[0];
+        } else {
+            return null;
+        }
     }
 }
 
@@ -145,6 +154,15 @@ class SUAccountingProject {
         $db = BoincDb::get();
         return $db->enum('su_accounting_project', 'SUAccountingProject', $where_clause);
     }
+    static function last($proj_id) {
+        $db = BoincDb::get();
+        $x = SUAccountingProject::enum("project_id=$proj_id", "order by id desc");
+        if ($x) {
+            return $x[0];
+        } else {
+            return null;
+        }
+    }
 }
 
 class SUAccountingUser {
@@ -155,5 +173,14 @@ class SUAccountingUser {
     static function enum($where_clause) {
         $db = BoincDb::get();
         return $db->enum('su_accounting_user', 'SUAccountingUser', $where_clause);
+    }
+    static function last($user_id) {
+        $db = BoincDb::get();
+        $x = SUAccountingUser::enum("user_id=$user_id", "order by id desc");
+        if ($x) {
+            return $x[0];
+        } else {
+            return null;
+        }
     }
 }
