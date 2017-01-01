@@ -3,6 +3,8 @@
 require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
 
+////////////// UI FOR KEYWORDS ////////////////
+
 // show select for keywords
 
 function keyword_select ($keywords, $category) {
@@ -59,7 +61,9 @@ function prefs_show($user) {
     ';
 }
 
-function show_computers($user) {
+///////////// UI FOR VOLUNTEERS /////////////
+
+function show_user_computers($user) {
     $hosts = BoincHost::enum("userid=$user->id");
     start_table('table-striped');
     row_heading_array(array('Name', 'average throughput'));
@@ -69,8 +73,80 @@ function show_computers($user) {
     end_table();
 }
 
-function show_projects($user) {
+function show_user_projects($user) {
     $accounts = SUAccount::enum("user_id=$user->id");
     start_table('table-striped');
+    end_table();
+}
+
+// show accounting totals
+//
+function show_user_acct_totals($user) {
+    $au = SUAccountingUser::last($user->id);
+    if (!$au) {
+        echo "No accounting records yet";
+        return;
+    }
+    start_table();
+    row2("CPU time", $au->cpu_time_total);
+    row2("CPU FLOPS", $au->cpu_ec_total);
+    row2("GPU time", $au->gpu_time_total);
+    row2("GPU FLOPS", $au->gpu_ec_total);
+    row2("Jobs: successful", $au->njobs_success_total);
+    row2("Jobs: failed", $au->njobs_fail_total);
+    end_table();
+}
+
+function show_user_acct_history($user) {
+    $saus = SUAccountingUser::enum(
+        "user_id=$user->id", "order by id desc limit 20"
+    );
+    if (count($saus) == 0) {
+        echo "No history yet";
+        return;
+    }
+    start_table();
+    row_heading_array(array(
+        "When",
+        "CPU time",
+        "CPU FLOPS",
+        "GPU time",
+        "GPU FLOPS",
+        "Jobs succeeded",
+        "Jobs failed",
+    ));
+    foreach ($saus as $sau) {
+        row_array(array(
+            $sau->create_time,
+            $sau->cpu_time_delta,
+            $sau->cpu_ec_delta,
+            $sau->gpu_time_delta,
+            $sau->gpu_ec_delta,
+            $sau->njobs_success_delta,
+            $sau->njobs_fail_delta,
+        ));
+    }
+    end_table();
+}
+
+function show_user_acct_history_ec($user) {
+    $saus = SUAccountingUser::enum(
+        "user_id=$user->id", "order by id desc limit 20"
+    );
+    if (count($saus) == 0) {
+        echo "No history yet";
+        return;
+    }
+    start_table();
+    row_heading_array(array(
+        "When",
+        "FLOPS",
+    ));
+    foreach ($saus as $sau) {
+        row_array(array(
+            date_str($sau->create_time),
+            $sau->cpu_ec_delta + $sau->gpu_ec_delta
+        ));
+    }
     end_table();
 }

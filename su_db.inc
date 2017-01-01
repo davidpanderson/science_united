@@ -70,6 +70,10 @@ class SUProject {
         $db = BoincDb::get();
         return $db->enum('su_project', 'SUProject');
     }
+    static function lookup($clause) {
+        $db = BoincDb::get();
+        return $db->lookup('su_project', 'SUProject', $clause);
+    }
 }
 
 class SUProjectKeyword {
@@ -81,7 +85,7 @@ class SUProjectKeyword {
         $db = BoincDb::get();
         return $db->enum('su_project_keyword', 'SUProjectKeyword');
     }
-    static function delete($clause) {
+    function delete($clause) {
         $db = BoincDb::get();
         return $db->delete_aux('su_project_keyword', $clause);
     }
@@ -125,6 +129,21 @@ class SUAccount {
     }
 }
 
+class SUHostProject {
+    static function insert($clause) {
+        $db = BoincDb::get();
+        return $db->insert('su_host_project', $clause);
+    }
+    static function lookup($where_clause) {
+        $db = BoincDb::get();
+        return $db->lookup('su_host_project', 'SUHostProject', $where_clause);
+    }
+    static function update($clause) {
+        $db = BoincDb::get();
+        return $db->update_aux('su_host_project', $clause);
+    }
+}
+
 class SUAccounting {
     static function insert($clause) {
         $db = BoincDb::get();
@@ -136,12 +155,16 @@ class SUAccounting {
     }
     static function last() {
         $db = BoincDb::get();
-        $x = SUAccounting::enum("", "order by id desc");
+        $x = SUAccounting::enum("", "order by id desc limit 1");
         if ($x) {
             return $x[0];
         } else {
             return null;
         }
+    }
+    function update($clause) {
+        $db = BoincDb::get();
+        return $db->update($this, 'su_accounting', $clause);
     }
 }
 
@@ -156,12 +179,16 @@ class SUAccountingProject {
     }
     static function last($proj_id) {
         $db = BoincDb::get();
-        $x = SUAccountingProject::enum("project_id=$proj_id", "order by id desc");
+        $x = SUAccountingProject::enum("project_id=$proj_id", "order by id desc limit 1");
         if ($x) {
             return $x[0];
         } else {
             return null;
         }
+    }
+    function update($clause) {
+        $db = BoincDb::get();
+        return $db->update($this, 'su_accounting_project', $clause);
     }
 }
 
@@ -176,11 +203,15 @@ class SUAccountingUser {
     }
     static function last($user_id) {
         $db = BoincDb::get();
-        $x = SUAccountingUser::enum("user_id=$user_id", "order by id desc");
+        $x = SUAccountingUser::enum("user_id=$user_id", "order by id desc limit 1");
         if ($x) {
             return $x[0];
         } else {
             return null;
         }
+    }
+    function update($clause) {
+        $db = BoincDb::get();
+        return $db->update($this, 'su_accounting_user', $clause);
     }
 }

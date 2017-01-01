@@ -15,6 +15,8 @@ require_once("../inc/boinc_db.inc");
 
 require_once("../inc/su_db.inc");
 
+define('COBBLESTONE_SCALE', 200./86400e9);
+
 $now = 0;
 
 // if user has a pref for this keyword, return -1/1, else 0
@@ -86,13 +88,18 @@ function send_reply($host, $accounts) {
             ."</account>\n"
         ;
     }
-    echo "</acct_mgr_reply>\n";
+    echo "   <opaque><host_id>$host->id</host_id></opaque>\n"
+        ."</acct_mgr_reply>
+    ";
 }
 
 function make_serialnum($hi) {
+    return "";
 }
 
 function update_host($req, $host) {
+    $_SERVER = array();
+    $_SERVER['REMOTE_ADDR'] = "12.4.2.11";
     global $now;
     $hi = $req->host_info;
     $ts = $req->time_stats;
@@ -100,7 +107,7 @@ function update_host($req, $host) {
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$req->host_cpid);
     $serialnum = make_serialnum($hi);
-    $last_ip_addr = BoincDb::escape_string($_REQUEST['ip_addr']);
+    $last_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
     $on_frac = (double)$ts->on_frac;
     $connected_frac = (double)$ts->connected_frac;
     $active_frac = (double)$ts->active_frac;
@@ -118,7 +125,7 @@ function update_host($req, $host) {
     $d_free = (double)$hi->d_free;
     $os_name = BoincDb::escape_string((string)$hi->os_name);
     $os_version = BoincDb::escape_string((string)$hi->os_version);
-    $host->update("
+    $query = "
         rpc_time = $now,
         timezone = $timezone,
         domain_name = '$domain_name',
@@ -141,16 +148,17 @@ function update_host($req, $host) {
         d_free = $d_free,
         os_name = '$os_name',
         os_version = '$os_version'
-    ");
+    ";
+    $host->update($query);
 }
 
-function create_host($req) {
+function create_host($req, $user) {
     $now = time();
     $id = BoincHost::insert(
-        "(create_time, userid, host_cpid) values ($now, $user->id, '$host_cpid')"
+        "(create_time, userid) values ($now, $user->id)"
     );
     $host = BoincHost::lookup_id($id);
-    $host->update($req);
+    update_host($req, $host);
     return $host;
 }
 
@@ -168,29 +176,42 @@ function lookup_records($req) {
         xml_error(-1, 'bad password');
     }
 
-    $host_id = (string)$req->opaque->host_id;
-    $host = BoincHost::lookup_id($host_id);
+    if (array_key_exists('opaque', $req)) {
+        $host_id = (string)$req->opaque->host_id;
+        $host = BoincHost::lookup_id($host_id);
+    } else {
+        $host = null;
+    }
     if ($host) {
         update_host($req, $host);
     } else {
-        $host = create_host($req);
+        $host = create_host($req, $user);
     }
+    return array($user, $host);
 }
 
 //
 function check_time_delta($dt, $delta, $is_gpu) {
     if ($delta < 0) return 0;
     $max_inst = $is_gpu?8:256;
-    $max_delta = $max_inst*dt;
+    $max_delta = $max_inst*$dt;
     return min($delta, $max_delta);
 }
 
 function check_ec_delta($dt, $delta, $is_gpu) {
     if ($delta < 0) return 0;
     $max_inst = $is_gpu?8:256;
-    $max_rate = $is_gpu?100e12/COBBLESTONE_FACTOR:100e9/COBBLESTONE_FACTOR;
-    $max_delta = $max_inst*$max_rate*dt;
+    $max_rate = $is_gpu?100e12/COBBLESTONE_SCALE:100e9/COBBLESTONE_SCALE;
+    $max_delta = $max_inst*$max_rate*$dt;
     return min($delta, $max_delta);
+}
+
+// limit on the # of jobs a host could process in one day.
+// Let's say 10000
+//
+function check_njobs($dt, $njobs) {
+    if ($njobs < 0) return 0;
+    return min($njobs, 10000.*$dt/86400.);
 }
 
 // compute deltas for CPU/GPU time and flops.
@@ -200,10 +221,13 @@ function check_ec_delta($dt, $delta, $is_gpu) {
 //
 function do_accounting($req, $user, $host) {
     global $now;
-    $dt = $now = $host->last_rpc_time;
+    $dt = $now = $host->rpc_time;
     if ($dt < 0) {
         return;
     }
+
+    // totals across all projects
+    //
     $cpu_time = 0;
     $cpu_ec = 0;
     $gpu_time = 0;
@@ -212,39 +236,114 @@ function do_accounting($req, $user, $host) {
     $delta_cpu_ec = 0;
     $delta_gpu_time = 0;
     $delta_gpu_ec = 0;
-    foreach($req->project as $rp) {
+    $njobs_success = 0;
+    $njobs_fail = 0;
+
+    foreach ($req->project as $rp) {
         $url = (string)$rp->url;
-        $project = SUProject::lookup("url=$url");
+        $project = SUProject::lookup("url='$url'");
         if (!$project) {
+            //echo "can't find project $url\n";
             continue;
         }
-        $d_cpu_time = (double)$rp->cpu_time - $host->cpu_time;
-        $d_cpu_time = check_time_delta($dt, $d_cpu_time, false);
-        $d_cpu_ec = (double)$rp->cpu_ec - $host->cpu_ec;
-        $d_cpu_ec = check_ec_delta($dt, $d_cpu_ec, false);
-        $d_gpu_time = (double)$rp->gpu_time - $host->gpu_time;
-        $d_gpu_time = check_time_delta($dt, $d_gpu_time, true);
-        $d_gpu_ec = (double)$rp->gpu_ec - $host->gpu_ec;
-        $d_gpu_ec = check_ec_delta($dt, $d_gpu_ec, true);
 
-        $d_cpu_time += $d_cpu_time;
-        $d_cpu_ec += $d_cpu_ec;
-        $d_gpu_time += $d_gpu_time;
-        $d_gpu_ec += $d_gpu_ec;
+        // got host/project record
+        //
+        $hp = SUHostProject::lookup(
+            "host_id=$host->id and project_id=$project->id"
+        );
+        if (!$hp) {
+            SUHostProject::insert(
+                "(host_id, project_id) values ($host->id, $project->id)"
+            );
+            $hp = SUHostProject::lookup(
+                "host_id=$host->id and project_id=$project->id"
+            );
+        }
 
+        $cpu_time = (double)$rp->cpu_time;
+        $cpu_ec = (double)$rp->cpu_ec;
+        $gpu_time = (double)$rp->gpu_time;
+        $gpu_ec = (double)$rp->gpu_ec;
+        $njobs_success = (int)$rp->njobs_success;
+        $njobs_fail = (int)$rp->njobs_fail;
+
+        // compute deltas for this project
+        //
+        $d = $cpu_time - $hp->cpu_time;
+        $d_cpu_time = check_time_delta($dt, $d, false);
+        $d = $cpu_ec - $hp->cpu_ec;
+        $d_cpu_ec = check_ec_delta($dt, $d, false);
+        $d = $gpu_time - $hp->gpu_time;
+        $d_gpu_time = check_time_delta($dt, $d, true);
+        $d = $gpu_ec - $hp->gpu_ec;
+        $d_gpu_ec = check_ec_delta($dt, $d, true);
+        $d = $njobs_success - $hp->njobs_success;
+        $d_njobs_success = check_njobs($dt, $d);
+        $d = $njobs_fail - $hp->njobs_fail;
+        $d_njobs_fail = check_njobs($dt, $d);
+
+        // update host/project record
+        //
+        $hp->update("
+            cpu_time=$cpu_time,
+            cpu_ec=$cpu_ec,
+            gpu_time=$gpu_time,
+            gpu_ec=$gpu_ec,
+            njobs_success=$njobs_success,
+            njobs_fail=$njobs_fail
+            where host_id=$host->id and project_id=$project->id
+        ");
+
+        // add deltas to project's accounting record
+        //
+        $ap = SUAccountingProject::last($project->id);
+        $ap->update("
+            cpu_ec_delta=cpu_ec_delta+$d_cpu_ec,
+            gpu_ec_delta=gpu_ec_delta+$d_gpu_ec,
+            cpu_time_delta=cpu_time_delta+$d_cpu_time,
+            gpu_time_delta=gpu_time_delta+$d_gpu_time,
+            njobs_success=njobs_success+$d_njobs_success,
+            njobs_fail=njobs_fail+$d_njobs_fail
+        ");
+
+        // add to all-project totals
+        //
+        $delta_cpu_time += $d_cpu_time;
+        $delta_cpu_ec += $d_cpu_ec;
+        $delta_gpu_time += $d_gpu_time;
+        $delta_gpu_ec += $d_gpu_ec;
         $cpu_time += (double)$rp->cpu_time;
         $cpu_ec += (double)$rp->cpu_ec;
         $gpu_time += (double)$rp->gpu_time;
         $gpu_ec += (double)$rp->gpu_ec;
     }
-    $host->update(
-        "cpu_time=$cpu_time, cpu_ec=$cpu_ec, gpu_time=$gpu_time, gpu_ec=$gpu_ec, last_rpc_time=$now"
-    );
 
-    SUAccounting::update(
-        "cpu_time=cpu_time+$delta_cpu_time, cpu_ec=cpu_ec+$delta_cpu_ec, gpu_time=gpu_time+$delta_gpu_time, gpu_ec=gpu_ec+$delta_gpu_ec",
-        "create_time=(max(create_time) from su_accounting"
-    );
+    // update user accounting record
+    //
+    $au = SUAccountingUser::last($user->id);
+    if (!$au) {
+        SUAccountingUser::insert(
+            "(user_id, create_time) values($user->id, $now)"
+        );
+        $au = SUAccountingUser::last($user->id);
+    }
+    $au->update("
+        cpu_time=cpu_time+$delta_cpu_time,
+        cpu_ec=cpu_ec+$delta_cpu_ec,
+        gpu_time=gpu_time+$delta_gpu_time,
+        gpu_ec=gpu_ec+$delta_gpu_ec
+    ");
+
+    // update global accounting record
+    //
+    $acc = SUAccounting::last();
+    $acc->update("
+        cpu_time=cpu_time+$delta_cpu_time,
+        cpu_ec=cpu_ec+$delta_cpu_ec,
+        gpu_time=gpu_time+$delta_gpu_time,
+        gpu_ec=gpu_ec+$delta_gpu_ec
+    ");
 }
 
 // decide what projects to have this host run.
