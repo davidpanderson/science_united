@@ -101,16 +101,21 @@ function update_host($req, $host) {
     $_SERVER = array();
     $_SERVER['REMOTE_ADDR'] = "12.4.2.11";
     global $now;
+
     $hi = $req->host_info;
     $ts = $req->time_stats;
+    $ns = $req->net_stats;
+
+    $client_version = (string)$req->client_version;
+
+    // request message is from client, so don't trust it
+    //
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$req->host_cpid);
     $serialnum = make_serialnum($hi);
-    $last_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
-    $on_frac = (double)$ts->on_frac;
-    $connected_frac = (double)$ts->connected_frac;
-    $active_frac = (double)$ts->active_frac;
+    $ip_addr = BoincDb::escape_string((string)$hi->ip_addr);
+    $external_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
     $p_ncpus = (int)$hi->p_ncpus;
     $p_vendor = BoincDb::escape_string((string)$hi->p_vendor);
     $p_model = BoincDb::escape_string((string)$hi->p_model);
@@ -125,15 +130,24 @@ function update_host($req, $host) {
     $d_free = (double)$hi->d_free;
     $os_name = BoincDb::escape_string((string)$hi->os_name);
     $os_version = BoincDb::escape_string((string)$hi->os_version);
+    $virtualbox_version = BoincDb::escape_string((string)$hi->virtualbox_version);
+
+    $on_frac = (double)$ts->on_frac;
+    $connected_frac = (double)$ts->connected_frac;
+    $active_frac = (double)$ts->active_frac;
+
+    $n_bwup = $ns->bwup;
+    $n_bwdown = $ns->bwdown;
+
     $query = "
+        client_version = '$client_version',
+        virtualbox_version = '$virtualbox_version',
         rpc_time = $now,
         timezone = $timezone,
         domain_name = '$domain_name',
         serialnum = '$serialnum',
-        last_ip_addr = '$last_ip_addr',
-        on_frac = $on_frac,
-        connected_frac = $connected_frac,
-        active_frac = $active_frac,
+        last_ip_addr = '$ip_addr',
+        external_ip_addr = '$external_ip_addr',
         p_ncpus = $p_ncpus,
         p_vendor = '$p_vendor',
         p_model = '$p_model',
@@ -147,7 +161,12 @@ function update_host($req, $host) {
         d_total = $d_total,
         d_free = $d_free,
         os_name = '$os_name',
-        os_version = '$os_version'
+        os_version = '$os_version',
+        on_frac = $on_frac,
+        connected_frac = $connected_frac,
+        active_frac = $active_frac,
+        n_bwup = $n_bwup,
+        n_bwdown = $n_bwdown
     ";
     $host->update($query);
 }
@@ -180,6 +199,8 @@ function lookup_records($req) {
         $host_id = (string)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
     } else {
+        // TODO: this host might be re-attaching to the AM.
+        // See if there's an existing host record that matches this host
         $host = null;
     }
     if ($host) {
@@ -226,18 +247,21 @@ function do_accounting($req, $user, $host) {
         return;
     }
 
-    // totals across all projects
+    // the client reports totals per project.
+    // the following vars are sums across all projects
     //
-    $cpu_time = 0;
-    $cpu_ec = 0;
-    $gpu_time = 0;
-    $gpu_ec = 0;
-    $delta_cpu_time = 0;
-    $delta_cpu_ec = 0;
-    $delta_gpu_time = 0;
-    $delta_gpu_ec = 0;
-    $njobs_success = 0;
-    $njobs_fail = 0;
+    $sum_cpu_time = 0;
+    $sum_cpu_ec = 0;
+    $sum_gpu_time = 0;
+    $sum_gpu_ec = 0;
+    $sum_delta_cpu_time = 0;
+    $sum_delta_cpu_ec = 0;
+    $sum_delta_gpu_time = 0;
+    $sum_delta_gpu_ec = 0;
+    $sum_njobs_success = 0;
+    $sum_njobs_fail = 0;
+    $sum_delta_njobs_success = 0;
+    $sum_delta_njobs_fail = 0;
 
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
@@ -261,65 +285,71 @@ function do_accounting($req, $user, $host) {
             );
         }
 
-        $cpu_time = (double)$rp->cpu_time;
-        $cpu_ec = (double)$rp->cpu_ec;
-        $gpu_time = (double)$rp->gpu_time;
-        $gpu_ec = (double)$rp->gpu_ec;
-        $njobs_success = (int)$rp->njobs_success;
-        $njobs_fail = (int)$rp->njobs_fail;
+        $rp_cpu_time = (double)$rp->cpu_time;
+        $rp_cpu_ec = (double)$rp->cpu_ec;
+        $rp_gpu_time = (double)$rp->gpu_time;
+        $rp_gpu_ec = (double)$rp->gpu_ec;
+        $rp_njobs_success = (int)$rp->njobs_success;
+        $rp_njobs_fail = (int)$rp->njobs_fail;
 
         // compute deltas for this project
         //
-        $d = $cpu_time - $hp->cpu_time;
+        $d = $rp_cpu_time - $hp->cpu_time;
         $d_cpu_time = check_time_delta($dt, $d, false);
-        $d = $cpu_ec - $hp->cpu_ec;
+        $d = $rp_cpu_ec - $hp->cpu_ec;
         $d_cpu_ec = check_ec_delta($dt, $d, false);
-        $d = $gpu_time - $hp->gpu_time;
+        $d = $rp_gpu_time - $hp->gpu_time;
         $d_gpu_time = check_time_delta($dt, $d, true);
-        $d = $gpu_ec - $hp->gpu_ec;
+        $d = $rp_gpu_ec - $hp->gpu_ec;
         $d_gpu_ec = check_ec_delta($dt, $d, true);
-        $d = $njobs_success - $hp->njobs_success;
+        $d = $rp_njobs_success - $hp->njobs_success;
         $d_njobs_success = check_njobs($dt, $d);
-        $d = $njobs_fail - $hp->njobs_fail;
+        $d = $rp_njobs_fail - $hp->njobs_fail;
         $d_njobs_fail = check_njobs($dt, $d);
 
         // update host/project record
         //
-        $hp->update("
-            cpu_time=$cpu_time,
-            cpu_ec=$cpu_ec,
-            gpu_time=$gpu_time,
-            gpu_ec=$gpu_ec,
-            njobs_success=$njobs_success,
-            njobs_fail=$njobs_fail
-            where host_id=$host->id and project_id=$project->id
+        $ret = $hp->update("
+            cpu_time = $rp_cpu_time,
+            cpu_ec = $rp_cpu_ec,
+            gpu_time = $rp_gpu_time,
+            gpu_ec = $rp_gpu_ec,
+            njobs_success = $rp_njobs_success,
+            njobs_fail = $rp_njobs_fail
+            where host_id = $host->id and project_id = $project->id
         ");
+        if (!$ret) xml_error(-1, "hp->update failed");
 
         // add deltas to project's accounting record
         //
         $ap = SUAccountingProject::last($project->id);
-        $ap->update("
-            cpu_ec_delta=cpu_ec_delta+$d_cpu_ec,
-            gpu_ec_delta=gpu_ec_delta+$d_gpu_ec,
-            cpu_time_delta=cpu_time_delta+$d_cpu_time,
-            gpu_time_delta=gpu_time_delta+$d_gpu_time,
-            njobs_success=njobs_success+$d_njobs_success,
-            njobs_fail=njobs_fail+$d_njobs_fail
+        $ret = $ap->update("
+            cpu_ec_delta = cpu_ec_delta + $d_cpu_ec,
+            gpu_ec_delta = gpu_ec_delta + $d_gpu_ec,
+            cpu_time_delta = cpu_time_delta + $d_cpu_time,
+            gpu_time_delta = gpu_time_delta + $d_gpu_time,
+            njobs_success_delta = njobs_success_delta + $d_njobs_success,
+            njobs_fail_delta = njobs_fail_delta + $d_njobs_fail
         ");
+        if (!$ret) xml_error(-1, "ap->update failed");
 
         // add to all-project totals
         //
-        $delta_cpu_time += $d_cpu_time;
-        $delta_cpu_ec += $d_cpu_ec;
-        $delta_gpu_time += $d_gpu_time;
-        $delta_gpu_ec += $d_gpu_ec;
-        $cpu_time += (double)$rp->cpu_time;
-        $cpu_ec += (double)$rp->cpu_ec;
-        $gpu_time += (double)$rp->gpu_time;
-        $gpu_ec += (double)$rp->gpu_ec;
+        $sum_delta_cpu_time += $d_cpu_time;
+        $sum_delta_cpu_ec += $d_cpu_ec;
+        $sum_delta_gpu_time += $d_gpu_time;
+        $sum_delta_gpu_ec += $d_gpu_ec;
+        $sum_cpu_time += $rp_cpu_time;
+        $sum_cpu_ec += $rp_cpu_ec;
+        $sum_gpu_time += $rp_gpu_time;
+        $sum_gpu_ec += $rp_gpu_ec;
+        $sum_njobs_success += $rp_njobs_success;
+        $sum_njobs_fail += $rp_njobs_fail;
+        $sum_delta_njobs_success += $d_njobs_success;
+        $sum_delta_njobs_fail += $d_njobs_fail;
     }
 
-    // update user accounting record
+    // update user accounting record with deltas summed over projects
     //
     $au = SUAccountingUser::last($user->id);
     if (!$au) {
@@ -328,22 +358,28 @@ function do_accounting($req, $user, $host) {
         );
         $au = SUAccountingUser::last($user->id);
     }
-    $au->update("
-        cpu_time=cpu_time+$delta_cpu_time,
-        cpu_ec=cpu_ec+$delta_cpu_ec,
-        gpu_time=gpu_time+$delta_gpu_time,
-        gpu_ec=gpu_ec+$delta_gpu_ec
+    $ret = $au->update("
+        cpu_time_delta = cpu_time_delta + $sum_delta_cpu_time,
+        cpu_ec_delta = cpu_ec_delta + $sum_delta_cpu_ec,
+        gpu_time_delta = gpu_time_delta + $sum_delta_gpu_time,
+        gpu_ec_delta = gpu_ec_delta + $sum_delta_gpu_ec,
+        njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
+        njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
+    if (!$ret) xml_error(-1, "au->update failed");
 
     // update global accounting record
     //
     $acc = SUAccounting::last();
-    $acc->update("
-        cpu_time=cpu_time+$delta_cpu_time,
-        cpu_ec=cpu_ec+$delta_cpu_ec,
-        gpu_time=gpu_time+$delta_gpu_time,
-        gpu_ec=gpu_ec+$delta_gpu_ec
+    $ret = $acc->update("
+        cpu_time_delta = cpu_time_delta + $sum_delta_cpu_time,
+        cpu_ec_delta = cpu_ec_delta + $sum_delta_cpu_ec,
+        gpu_time_delta = gpu_time_delta + $sum_delta_gpu_time,
+        gpu_ec_delta = gpu_ec_delta + $sum_delta_gpu_ec,
+        njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
+        njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
+    if (!$ret) xml_error(-1, "acc->update failed");
 }
 
 // decide what projects to have this host run.
@@ -381,8 +417,8 @@ function choose_projects($user, $host) {
 function main() {
     global $now;
 
-    //$req = simplexml_load_file('php://input');
-    $req = simplexml_load_file('req.xml');
+    $req = simplexml_load_file('php://input');
+    //$req = simplexml_load_file('req.xml');
     if (!$req) {
         xml_error(-1, "can't parse request");
     }

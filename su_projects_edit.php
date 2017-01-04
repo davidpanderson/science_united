@@ -60,7 +60,7 @@ function show_projects() {
         ));
         foreach ($projects as $p) {
             table_row(
-                '<a href="su_manage.php?action=show_project&id='.$p->id.'">'.$p->name.'</a>',
+                '<a href="su_projects_edit.php?action=show_project&id='.$p->id.'">'.$p->name.'</a>',
                 $p->url,
                 date_str($p->create_time),
                 $p->allocation
@@ -70,7 +70,7 @@ function show_projects() {
     } else {
         echo 'No projects yet';
     }
-    echo '<p><a class="btn btn-default" href="su_manage.php?action=add_project_form">Add project</a>
+    echo '<p><a class="btn btn-default" href="su_projects_edit.php?action=add_project_form">Add project</a>
     ';
     echo "<p></p>";
 }
@@ -215,7 +215,7 @@ function add_project_action() {
     $nsci = add_keywords(get_str('new_sci_keywds'), $project_id, SCIENCE);
     $nloc = add_keywords(get_str('new_loc_keywds'), $project_id, LOCATION);
 
-    Header("Location: su_projects_edit.php?action=show_project&id=$id");
+    Header("Location: su_projects_edit.php?action=show_project&id=$project_id");
 }
 
 // given a new list of keyword IDs for a given project

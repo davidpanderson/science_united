@@ -2,7 +2,8 @@ create table su_keyword (
     id                      integer         not null auto_increment,
     word                    varchar(254)    not null,
     category                tinyint         not null,
-    primary key (id)
+    primary key (id),
+    unique(word)
 ) engine=InnoDB;
 
 create table su_project (

@@ -9,6 +9,7 @@ function main() {
     echo '
         <a href="su_projects_edit.php">Projects (info/edit)</a>
         <p> <a href="su_projects_acct.php">Projects (accounting)</a>
+        <p> <a href="su_acct.php">Accounting totals</a>
     ';
     page_tail();
 }

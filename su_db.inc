@@ -142,6 +142,10 @@ class SUHostProject {
         $db = BoincDb::get();
         return $db->update_aux('su_host_project', $clause);
     }
+    static function enum($where_clause, $order_clause=null) {
+        $db = BoincDb::get();
+        return $db->enum('su_host_project', 'SUHostProject', $where_clause, $order_clause);
+    }
 }
 
 class SUAccounting {
