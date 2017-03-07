@@ -24,24 +24,29 @@ Note: should work in a reasonable way even if jobs are very long
 Accounting
 goals:
 maintain daily history for
-	total:
+	total (su_accounting):
 		CPU flops delta and total
 		GPU flops delta and total
 		CPU time delta and total
 		GPU time delta and total
+		# jobs success
+		# jobs fail
+			This above are updated by AM RPC.
+			They can be reconstructed from either of the following tables
 		# active hosts
 		# active hosts w/ usable GPU
 		# active users
-		# jobs success
-		# jobs fail
-	project:
+			The above are computed based on last RPC time within a week
+			user.expavg_time is used to store the last RPC time
+
+	project (su_accounting_project):
 		CPU flops delta and total
 		GPU flops delta and total
 		CPU time delta and total
 		GPU time delta and total
 		# jobs success
 		# jobs fail
-	user:
+	user (su_accounting_user):
 		CPU flops delta and total
 		GPU flops delta and total
 		CPU time delta and total
@@ -49,16 +54,24 @@ maintain daily history for
 		# jobs success
 		# jobs fail
 
+		Records are created by the AM RPC
+		(avoid creating records for users who never do work)
+		and are copied only for periods when work has been done
+
 maintain per host (no history)
+	boinc_client_version
+	has usable GPU
+	p_vm_extensions_disabled
+	vbox_version
+		(should add the above to standard code)
+
 	CPU flops total
 	CPU time total
 	GPU flops total
 	GPU time total
-	has usable GPU
 	# jobs success
 	# jobs fail
-	p_vm_extensions_disabled
-		(should add this to standard code)
+		(the above are used to compute deltas, and also to show totals)
 
 client changes:
 	maintain
@@ -89,3 +102,40 @@ daily accounting program
 		compute # active hosts based on last RPC time
 		group by userid to get # active users
 		update # hosts w/ usable GPU
+
+-------------
+
+web interfaces
+
+user
+	home page
+		totals
+		recent history of ec
+		link to more histories
+		link to host list
+		link to project list
+		prefs; link to edit
+
+	host list
+		name, info, cpu_ec, cpu_time, njobs etc
+		linked to detail
+	host detail
+		the above plus
+		project list
+			project name
+			last RPC
+			cpu time, njobs etc.
+	project list
+		table: name, CPU ec etc.
+	histories
+		table cols for (CPU time, ec, etc.)
+			first row: total
+			rows: delta per day
+
+manager
+	project list
+		totals cpu_ec, njobs etc.
+	project detail
+		totals
+		per day
+			deltas
