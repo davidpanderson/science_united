@@ -1,42 +1,7 @@
 <?php
 
-// management interface for SU
-
-$dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
 require_once("../inc/util.inc");
-chdir($dir);
-
-require_once("su_db.inc");
-
-function show_projects() {
-    page_head('Projects');
-    $projects = SUproject::enum();
-    if ($projects) {
-        start_table('table-striped');
-        row_heading_array(array(
-            'Name<br><small>click for details</small>',
-            'URL',
-            'created',
-            'allocation'
-        ));
-        foreach ($projects as $p) {
-            table_row(
-                '<a href="manage.php?action=show_project&id='.$p->id.'">'.$p->name.'</a>',
-                $p->url,
-                date_str($p->create_time),
-                $p->allocation
-            );
-        }
-        end_table();
-    } else {
-        echo 'No projects yet';
-    }
-    echo '<p><a class="btn btn-default" href="manage.php?action=add_project_form">Add project</a>
-    ';
-    echo "<p></p>";
-    page_tail();
-}
+require_once("../inc/su_db.inc");
 
 function array_to_string($arr) {
     $x = false;
@@ -78,9 +43,36 @@ function su_show_project() {
     row2("Science keywords", array_to_string($sci));
     row2("Location keywords", array_to_string($loc));
     end_table();
-    echo '<a class="btn btn-success" href="manage.php?action=edit_project_form&id='.$project->id.'">Edit</a>
+    echo '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit project</a>
     ';
     page_tail();
+}
+
+function show_projects() {
+    $projects = SUproject::enum();
+    if ($projects) {
+        start_table('table-striped');
+        row_heading_array(array(
+            'Name<br><small>click for details</small>',
+            'URL',
+            'created',
+            'allocation'
+        ));
+        foreach ($projects as $p) {
+            table_row(
+                '<a href="su_manage.php?action=show_project&id='.$p->id.'">'.$p->name.'</a>',
+                $p->url,
+                date_str($p->create_time),
+                $p->allocation
+            );
+        }
+        end_table();
+    } else {
+        echo 'No projects yet';
+    }
+    echo '<p><a class="btn btn-default" href="su_manage.php?action=add_project_form">Add project</a>
+    ';
+    echo "<p></p>";
 }
 
 // return list of all keywords of given category
@@ -117,7 +109,7 @@ function keyword_flags($keywords, $category, $project_id) {
 
 function add_project_form() {
     page_head("Add project");
-    form_start('manage.php');
+    form_start('su_projects_edit.php');
     form_input_hidden('action', 'add_project_action');
     form_input_text('Name', 'name');
     form_input_text('URL', 'url');
@@ -159,7 +151,7 @@ function edit_project_form() {
     $id = get_int('id');
     $p = SUProject::lookup_id($id);
     page_head("Edit project");
-    form_start('manage.php');
+    form_start('su_projects_edit.php');
     form_input_hidden('action', 'edit_project_action');
     form_input_hidden('id', $id);
     form_input_text('URL', 'url', $p->url, 'text', 'disabled');
@@ -210,50 +202,40 @@ function add_keywords($str, $project_id, $category) {
 
 function add_project_action() {
     $url = get_str('url');
+    $url_signature = get_str('url_signature');
     $name = get_str('name');
     $alloc = get_str('alloc');
     $now = time();
     $project_id = SUProject::insert(
-        "(url, name, create_time, allocation) values ('$url', '$name', $now, $alloc)"
+        "(url, url_signature, name, create_time, allocation) values ('$url', '$url_signature', '$name', $now, $alloc)"
     );
     if (!$project_id) {
         error_page("insert failed");
     }
     $nsci = add_keywords(get_str('new_sci_keywds'), $project_id, SCIENCE);
     $nloc = add_keywords(get_str('new_loc_keywds'), $project_id, LOCATION);
-    page_head("Project added");
-    echo '
-        Added project.
-    ';
-    if ($nsci) {
-        echo "<p>Added $nsci science keywords.\n";
-    }
-    if ($nloc) {
-        echo "<p>Added $nloc location keywords.\n";
-    }
-    echo '
-        <p>
-        <a href="manage.php">Return to management page</a>
-    ';
-    page_tail();
 
+    Header("Location: su_projects_edit.php?action=show_project&id=$id");
 }
 
 // given a new list of keyword IDs for a given project
 // add or remove project/keyword associations
 //
 function update_keywords($p, $new_kw_ids) {
+    // get current list of keywords associations
+    //
     $old_kw_assocs = SUProjectKeyword::enum("project_id=$p->id");
-        // list of associations
 
+    // get corresponding list of keyword objects
+    //
     $old_kws = array_map(
         function($x){return SUKeyword::lookup_id($x->keyword_id);},
         $old_kw_assocs
     );
-        // corresponding list of keyword objects
 
+    // and list of IDs
+    //
     $old_kw_ids = array_map(function($x) {return $x->id;}, $old_kws);
-        // list of IDs
 
     // remove old ones not in new list
     //
@@ -294,20 +276,17 @@ function edit_project_action() {
     $nsci = add_keywords(get_str('new_sci_keywds'), $p->id, SCIENCE);
     $nloc = add_keywords(get_str('new_loc_keywds'), $p->id, LOCATION);
 
-    page_head("Project updated");
-    echo '
-        <p>
-        <a href="manage.php">Return to management page</a>
-    ';
-    page_tail();
+    Header("Location: su_projects_edit.php?action=show_project&id=$id");
 }
 
 $action = get_str('action', true);
 
 switch($action) {
-case 'show_projects':
 case null:
+case 'show_projects':
+    page_head('Projects');
     show_projects();
+    page_tail();
     break;
 case 'show_project':
     su_show_project();
