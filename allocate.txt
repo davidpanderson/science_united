@@ -1,18 +1,13 @@
-Allocation
-Goals:
-    come as close to guaranteed allocation as possible.
-    respect user prefs
-    maximize througput
-
 We can estimate the total throughput of the system,
    and we can break it down by resource type,
    and for a given set of keywords we can see how much is not vetoed.
 
-Goal: someone comes to use the an allocation request, which includes
+Goal: someone comes to SU with an allocation request, which includes
 - the available app version types
     (CPU, NVIDIA, AMD, platform, VM)
 - the set of keywords
 - # FLOPs
+We can tell them whether this can be granted, and if so starting when
 
 Parameters:
 - what % of resources to use for allocations (50?)
@@ -20,16 +15,17 @@ Parameters:
 
 Projects also get an unallocated share,
 with a fraction determined by the popularity of their keywords
-(and keywords of their apps)
 
 to process an allocation request:
 select hosts that aren't ruled out by keywords
 total their flops for eligible resources
 ------------
-Allocation is at the granularity of project.
-If you have apps that need separate prioritization,
-make them separate projects.
-Projects are cheap.
+SU serves as a meta-scheduler.
+It keeps track of targets, allocations, balances, host assignments.
+SU allocation is at the granularity of project.
+If a project needs app- or user-level granularity it can either
+    - run multiple BOINC projects, 1 per user/app
+    - use BOINC's built-in allocation system
 
 An "allocation" consists of
 - an initial balance
@@ -37,15 +33,11 @@ An "allocation" consists of
 - the interval of balance accrual
 where "balance" is in terms of FLOPs
 
-SU serves as a meta-scheduler.
-
-It keeps track of targets, allocations, balances, host assignments.
-
 There are two measures of work done:
 1) REC, as reported directly by clients
 2) credit, as reported by projects
 
-2) is cheap-resistant, 1) is not
+2) is cheat-resistant, 1) is not
 1) is up-to-date, 2) is not (long jobs, validation delay)
 
 Approach:
@@ -57,7 +49,3 @@ show 2) to volunteers.
 ?? what if SU assigns a host to a project, and the project doesn't have work?
 	SU should work in a reasonable way for sporadic workloads
 Need way for SU to check if project has work?
-
------------
-client changes:
-	report CPU/GPU time per app and project

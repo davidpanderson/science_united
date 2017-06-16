@@ -4,9 +4,17 @@ require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
 
-////////////// UI FOR KEYWORDS ////////////////
+function admin_only() {
+    $user = get_logged_in_user();
+    BoincForumPrefs::lookup($user);
+    if (!is_admin($user)) {
+            error_page("Not admin");
+    }
+}
 
-// show select for keywords
+////////////// UI INVOLVING KEYWORDS ////////////////
+
+// show select for keywords (don't use)
 
 function keyword_select ($keywords, $category) {
     foreach ($keywords as $k) {
@@ -16,6 +24,8 @@ function keyword_select ($keywords, $category) {
     }
 }
 
+// lookup the given keyword ID in the user KW list
+//
 function ukw_lookup($ukws, $id) {
     foreach ($ukws as $uwk) {
         if ($uwk->keyword_id == $id) {
@@ -25,7 +35,9 @@ function ukw_lookup($ukws, $id) {
     return null;
 }
 
-function show_keywords($ukws, $kws, $category, $type) {
+// return comma-separated list of KWs
+//
+function user_keyword_string($ukws, $kws, $category, $type) {
     $first = true;
     $x = '';
     foreach ($kws as $kw) {
@@ -48,31 +60,21 @@ function prefs_show($user) {
     $kws = SUKeyword::enum();
     start_table();
     row_heading('Types of science');
-    row2('Yes', show_keywords($ukws, $kws, SCIENCE, KW_YES));
-    row2('No', show_keywords($ukws, $kws, SCIENCE, KW_NO));
-    row2('Maybe', show_keywords($ukws, $kws, SCIENCE, KW_MAYBE));
+    row2('Yes', user_keyword_string($ukws, $kws, SCIENCE, KW_YES));
+    row2('No', user_keyword_string($ukws, $kws, SCIENCE, KW_NO));
+    row2('Maybe', user_keyword_string($ukws, $kws, SCIENCE, KW_MAYBE));
 
     row_heading('Locations');
-    row2('Yes', show_keywords($ukws, $kws, LOCATION, KW_YES));
-    row2('No', show_keywords($ukws, $kws, LOCATION, KW_NO));
-    row2('Maybe', show_keywords($ukws, $kws, LOCATION, KW_MAYBE));
+    row2('Yes', user_keyword_string($ukws, $kws, LOCATION, KW_YES));
+    row2('No', user_keyword_string($ukws, $kws, LOCATION, KW_NO));
+    row2('Maybe', user_keyword_string($ukws, $kws, LOCATION, KW_MAYBE));
     end_table();
 
     echo '<p><a class="btn btn-success" href="su_prefs.php?action=prefs_edit_form">Edit preferences</a>
     ';
 }
 
-///////////// UI FOR VOLUNTEERS /////////////
-
-function show_user_computers($user) {
-    $hosts = BoincHost::enum("userid=$user->id");
-    start_table('table-striped');
-    row_heading_array(array('Name', 'average throughput'));
-    foreach($hosts as $host) {
-        row_array(array($host->domain_name, $host->expavg_credit));
-    }
-    end_table();
-}
+///////////// UI INVOLVING PROJECTS /////////////
 
 function account_status_string($i) {
     switch ($i) {
@@ -121,119 +123,33 @@ function show_user_projects($user) {
     end_table();
 }
 
-// show accounting totals
-//
-function show_user_acct_totals($user) {
-    $au = SUAccountingUser::last($user->id);
-    if (!$au) {
-        echo "No accounting records yet";
-        return;
+function show_problem_projects($user) {
+    $accounts = SUAccount::enum(
+        sprintf("user_id=%d and state=%d", $user->id, ACCT_DIFFERENT_PASSWD)
+    );
+    if (!count($accounts)) return;
+    echo "
+        <h3>Password mismatch</h3>
+        Your accounts on the following projects
+        have a password that's different from your Science United password.
+        We can't use these projects unless the passwords match.
+        Please go to the project web site and change your password
+        to your Science United password.
+    ";
+    foreach($accounts as $a) {
+        $p = SUProject::lookup_id($a->project_id);
+        echo sprintf('<p><a href="%s">%s</a>', $p->url, $p->name);
     }
-    start_table();
-    row2("CPU time", $au->cpu_time_total);
-    row2("CPU FLOPS", $au->cpu_ec_total);
-    row2("GPU time", $au->gpu_time_total);
-    row2("GPU FLOPS", $au->gpu_ec_total);
-    row2("Jobs: successful", $au->njobs_success_total);
-    row2("Jobs: failed", $au->njobs_fail_total);
-    end_table();
 }
 
-function show_user_acct_history($user) {
-    $saus = SUAccountingUser::enum(
-        "user_id=$user->id", "order by id desc limit 20"
-    );
-    if (count($saus) == 0) {
-        echo "No history yet";
-        return;
-    }
-    start_table();
-    row_heading_array(array(
-        "When",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
-        "Jobs succeeded",
-        "Jobs failed",
-    ));
-    foreach ($saus as $sau) {
-        row_array(array(
-            date_str($sau->create_time),
-            $sau->cpu_time_delta,
-            $sau->cpu_ec_delta,
-            $sau->gpu_time_delta,
-            $sau->gpu_ec_delta,
-            $sau->njobs_success_delta,
-            $sau->njobs_fail_delta,
-        ));
-    }
-    end_table();
-}
+///////////// UI INVOLVING HOSTS /////////////
 
-function show_user_acct_history_ec($user) {
-    $saus = SUAccountingUser::enum(
-        "user_id=$user->id", "order by id desc limit 20"
-    );
-    if (count($saus) == 0) {
-        echo "No history yet";
-        return;
-    }
-    start_table();
-    row_heading_array(array(
-        "When",
-        "FLOPS",
-    ));
-    foreach ($saus as $sau) {
-        row_array(array(
-            date_str($sau->create_time),
-            $sau->cpu_ec_delta + $sau->gpu_ec_delta
-        ));
-    }
-    end_table();
-}
-
-function show_acct_history() {
-    $as = SUAccounting::enum(
-        "", "order by id desc limit 20"
-    );
-    if (count($as) == 0) {
-        echo "No history yet";
-        return;
-    }
-    start_table();
-    $first = true;
-    row_heading_array(array(
-        "When",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
-        "Jobs success",
-        "Jobs fail",
-    ));
-    foreach ($as as $a) {
-        if ($first) {
-            $first = false;
-            row_array(array(
-                "Totals",
-                $a->cpu_time_total + $a->cpu_time_delta,
-                $a->cpu_ec_total + $a->cpu_ec_delta,
-                $a->gpu_time_total + $a->gpu_time_delta,
-                $a->gpu_ec_total + $a->gpu_ec_delta,
-                $a->njobs_success_total + $a->njobs_success_delta,
-                $a->njobs_fail_total + $a->njobs_fail_delta,
-            ));
-        }
-        row_array(array(
-            date_str($a->create_time),
-            $a->cpu_time_delta,
-            $a->cpu_ec_delta,
-            $a->gpu_time_delta,
-            $a->gpu_ec_delta,
-            $a->njobs_success_delta,
-            $a->njobs_fail_delta,
-        ));
+function show_user_computers($user) {
+    $hosts = BoincHost::enum("userid=$user->id");
+    start_table('table-striped');
+    row_heading_array(array('Name', 'average throughput'));
+    foreach($hosts as $host) {
+        row_array(array($host->domain_name, $host->expavg_credit));
     }
     end_table();
 }
@@ -387,3 +303,121 @@ function show_host_projects($host) {
     }
     end_table();
 }
+
+///////////// UI INVOLVING ACCOUNTING ////////////////
+//
+function show_user_acct_totals($user) {
+    $au = SUAccountingUser::last($user->id);
+    if (!$au) {
+        echo "No accounting records yet";
+        return;
+    }
+    start_table();
+    row2("CPU time", $au->cpu_time_total);
+    row2("CPU FLOPS", $au->cpu_ec_total);
+    row2("GPU time", $au->gpu_time_total);
+    row2("GPU FLOPS", $au->gpu_ec_total);
+    row2("Jobs: successful", $au->njobs_success_total);
+    row2("Jobs: failed", $au->njobs_fail_total);
+    end_table();
+}
+
+function show_user_acct_history($user) {
+    $saus = SUAccountingUser::enum(
+        "user_id=$user->id", "order by id desc limit 20"
+    );
+    if (count($saus) == 0) {
+        echo "No history yet";
+        return;
+    }
+    start_table();
+    row_heading_array(array(
+        "When",
+        "CPU time",
+        "CPU FLOPS",
+        "GPU time",
+        "GPU FLOPS",
+        "Jobs succeeded",
+        "Jobs failed",
+    ));
+    foreach ($saus as $sau) {
+        row_array(array(
+            date_str($sau->create_time),
+            $sau->cpu_time_delta,
+            $sau->cpu_ec_delta,
+            $sau->gpu_time_delta,
+            $sau->gpu_ec_delta,
+            $sau->njobs_success_delta,
+            $sau->njobs_fail_delta,
+        ));
+    }
+    end_table();
+}
+
+function show_user_acct_history_ec($user) {
+    $saus = SUAccountingUser::enum(
+        "user_id=$user->id", "order by id desc limit 20"
+    );
+    if (count($saus) == 0) {
+        echo "No history yet";
+        return;
+    }
+    start_table();
+    row_heading_array(array(
+        "When",
+        "FLOPS",
+    ));
+    foreach ($saus as $sau) {
+        row_array(array(
+            date_str($sau->create_time),
+            $sau->cpu_ec_delta + $sau->gpu_ec_delta
+        ));
+    }
+    end_table();
+}
+
+function show_acct_history() {
+    $as = SUAccounting::enum(
+        "", "order by id desc limit 20"
+    );
+    if (count($as) == 0) {
+        echo "No history yet";
+        return;
+    }
+    start_table();
+    $first = true;
+    row_heading_array(array(
+        "When",
+        "CPU time",
+        "CPU FLOPS",
+        "GPU time",
+        "GPU FLOPS",
+        "Jobs success",
+        "Jobs fail",
+    ));
+    foreach ($as as $a) {
+        if ($first) {
+            $first = false;
+            row_array(array(
+                "Totals",
+                $a->cpu_time_total + $a->cpu_time_delta,
+                $a->cpu_ec_total + $a->cpu_ec_delta,
+                $a->gpu_time_total + $a->gpu_time_delta,
+                $a->gpu_ec_total + $a->gpu_ec_delta,
+                $a->njobs_success_total + $a->njobs_success_delta,
+                $a->njobs_fail_total + $a->njobs_fail_delta,
+            ));
+        }
+        row_array(array(
+            date_str($a->create_time),
+            $a->cpu_time_delta,
+            $a->cpu_ec_delta,
+            $a->gpu_time_delta,
+            $a->gpu_ec_delta,
+            $a->njobs_success_delta,
+            $a->njobs_fail_delta,
+        ));
+    }
+    end_table();
+}
+

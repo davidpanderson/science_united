@@ -1,7 +1,308 @@
-McLennan idea:
-projects are rewarded for
-	- creating interesting news stories
-and maybe also for
-	- contributing computing power themselves
+====================
+Keyword preferences
 
-Use HUBzero to create the site?
+- How do volunteers express
+	- area prefs:
+		want to compute for
+		willing to compute for
+		don't want to compute for
+- How do projects express the properties of themselves, their jobs
+
+------------
+Science keywords: hierarchy
+	biology
+		medicine
+			cancer
+			ebola
+		phylogeny
+	astronomy
+	physics
+	earth science
+	math
+
+Location of scientist
+	Asia
+    Europe
+        CERN
+    Americas
+        United States
+            U. Texas
+            UCB
+open results?
+    ONLY open results
+    prefer open results
+    don't care
+
+for profit?
+    not clear because of deals like Monsanto/UCB
+--------------
+each project and job can have associated keywords
+
+Each user has 2 lists of keywords: wanted and vetoed.
+Vetoed: if matches any of project/app, don't run it.
+Wanted: prioritize based on number of matches.
+
+If a new keyword is added, it's automatically allowed
+(neither wanted nor vetoed) for all users.
+--------------
+Science prefs
+default: no restrictions
+
+top level: yes/no/maybe for each keyword
+    link: "more detail..." or "you have specified more detail..."
+====================
+Allocation
+--------------
+The way in which computing power is divided among projects and users.
+"Hard allocation": one that guaranteed, based on assumptions
+about volunteer pool.
+--------------
+goals: multi-objective
+    honor hard allocations
+    respect soft allocations
+    respect user prefs
+    maximize throughput
+--------------    
+We can estimate the total throughput of the system,
+   and we can break it down by resource type,
+   and for a given set of keywords we can see how much is not vetoed.
+
+Goal: someone comes to SU with an allocation request, which includes
+- the available app version types
+    (CPU, NVIDIA, AMD, platform, VM)
+- the set of keywords
+- # FLOPs
+We can tell them whether this can be granted, and if so starting when
+
+Parameters:
+- what % of resources to use for allocations (50?)
+- max % for a single allocation (10?)
+
+Projects also get an unallocated share,
+with a fraction determined by the popularity of their keywords
+
+to process an allocation request:
+select hosts that aren't ruled out by keywords
+total their flops for eligible resources
+------------
+SU serves as a scheduler at the level of project.
+It keeps track of targets, allocations, balances, host assignments.
+SU allocation is at the granularity of project.
+If a project needs app- or user-level granularity it can either
+    - run multiple BOINC projects, 1 per user/app
+    - use BOINC's built-in allocation system
+
+An "allocation" consists of
+- an initial balance
+- the rate of balance accrual
+- the interval of balance accrual
+where "balance" is in terms of FLOPs
+
+There are two measures of work done:
+1) REC, as reported directly by clients
+2) credit, as reported by projects
+
+2) is cheat-resistant, 1) is not
+1) is up-to-date, 2) is not (long jobs, validation delay)
+
+Approach:
+use 1) from SU scheduling, but don't show it to volunteers
+(eliminate incentive for cheating)
+
+show 2) to volunteers.
+
+?? what if SU assigns a host to a project, and the project doesn't have work?
+	SU should work in a reasonable way for sporadic workloads
+    BOINC client:
+    if devices are idle, and scheduler RPC returns nothing
+    do an AM RPC, but only every so often
+    (min AM RPC interval?)
+Need way for SU to check if project has work?
+--------------
+gives projects more allocation if they supply computing?
+    No.  nanoHub users are going to attach to nanoHub, not SU
+--------------
+========================================
+Accounting
+goals:
+maintain daily history for
+	total:
+		CPU flops delta and total
+		GPU flops delta and total
+		CPU time delta and total
+		GPU time delta and total
+		# active hosts
+		# active hosts w/ usable GPU
+		# active users
+		# jobs success
+		# jobs fail
+	project:
+		CPU flops delta and total
+		GPU flops delta and total
+		CPU time delta and total
+		GPU time delta and total
+		# jobs success
+		# jobs fail
+	user:
+		CPU flops delta and total
+		GPU flops delta and total
+		CPU time delta and total
+		GPU time delta and total
+		# jobs success
+		# jobs fail
+
+maintain per host (no history)
+	CPU flops total
+	CPU time total
+	GPU flops total
+	GPU time total
+	has usable GPU
+	# jobs success
+	# jobs fail
+	p_vm_extensions_disabled
+		(should add this to standard code)
+
+client changes:
+	maintain
+		per project
+			total CPU and GPU time
+			total CPU and GPU flops
+				(take CPU throttling into account)
+			# jobs success, fail
+	report these in AM RPC
+	report has usable GPU
+
+Note: for convenience, flops is always measured in EC units
+
+AM RPC handler
+	compute deltas (relative to host record)
+	sanity-check deltas
+		time: #instances x dt
+		flops: same, times fastest possible device (100 GFLOPS *256 CPU, 100 TFLOPS*8 GPU)
+	update host record
+	create accounting_user record if none
+	atomically update delta, total fields of most recent account records for total, project, host
+
+daily accounting program
+	create new records for total, project, user
+		new.delta = 0
+		new.total = old.total + old.delta
+	for total:
+		compute # active hosts based on last RPC time
+		group by userid to get # active users
+		update # hosts w/ usable GPU
+--------------
+How to avoid accounting pre-SU EC?
+invariant: when a host attaches to a project, totals start at zero
+
+host_project has 2 sets of accounting:
+    client_last_*   last value reported by client
+        this may reset to zero if we detach/reattach the project
+    total_*
+        sum of deltas so far
+
+First RPC:
+    create host_project for all reported projects.
+    set client_last_*; no deltas
+
+All RPCs:
+    if we send a project not currently reported
+        if it has a host_project
+            set client_last_* to zero
+        else
+            create a host_project, all zeros
+    set "requested" for projects we're sending
+    set "active" for these plus projects reported by client
+
+============================
+projects
+tacc
+    http://129.114.6.131/tacctest/
+    Biology
+    United States
+nanohub:
+    https://devboinc.nanohub.org/boincserver/
+    Nanotechnology
+    United States
+SETI@home
+    Astronomy, SETI
+    United States, University of California
+BOINC Test Project
+    http://boinc.berkeley.edu/test/
+Einstein@home
+    Astronomy, Physics
+    Germany, United States
+Rosetta
+    Biology, Medicine
+    United States, University of Washington
+
+-----------------
+categorize keywords as major or minor
+    major: astro, bio, env, physics, math
+        US, Europe, Asia
+categorize projects as auto or on-demand
+    auto: accounts creation initiated on SU account creation
+
+====================
+SU Web site
+---------------------
+new items
+    would be good to show news items from project
+    easiest way: each project exports RSS feed
+    news items are tagged with keywords
+    SU aggregates these
+    if logged in, filter/order by keyword
+    show combined stream to others
+
+    Give projects more allocation if they supply news?
+forums
+    for discussion of projects, keywords?
+--------------
+how to have fast startup?
+SU home page
+    explain volunteer computing, SU
+    if logged in
+        show graph of recent EC
+        "In the last 24 hours your computers have contributed
+        CPU time/EC, GPU time/EC, #jobs success
+        to science projects doing x, x, x
+        located in y, y, y"
+
+        To run SU on this computer, click here (goes to install page)
+    big Join button, small login link
+    Join page:
+        create account info
+        basic prefs
+        OK triggers account creation on auto projects
+            execute an async command?
+        go to Install page
+    Install page:
+        SU requires installing latest version of BOINC on this device
+        if already installed, choose account mgr
+        else Download (big green button)
+            this does 1-click install
+--------------------
+keyword edit:
+    show list of all keywords; checkbox for major; button for edit/delete
+    form for adding
+project keyword edit:
+    list all keywords; checkboxes
+--------------------
+problem accounts:
+    explain the problem
+    show list of problem accounts; click for details
+    details page:
+        let the user enter password of existing account.
+        OK: contacts project, tell user if fail
+==================
+RPC handler
+We need "detach when no more work and AM RPC done" flag on client
+==================
+Project plan
+- web site for register and prefs
+
+- admin web interface for editing projects, apps, keywords, quotas
+
+- RPC stubs for account creation, setting prefs
+
+- integrated client download

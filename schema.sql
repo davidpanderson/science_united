@@ -2,6 +2,9 @@ create table su_keyword (
     id                      integer         not null auto_increment,
     word                    varchar(254)    not null,
     category                tinyint         not null,
+        /* science or location */
+    level                   tinyint         not null,
+        /* 0 is highest level; 1 is next highest etc. */
     primary key (id),
     unique(word)
 ) engine=InnoDB;
@@ -13,13 +16,28 @@ create table su_project (
     url                     varchar(254)    not null,
     url_signature           varchar(1024)   not null,
     allocation              double          not null,
+    status                  tinyint         not null,
     credit                  double          not null,
+        /* allocation credit - not BOINC credit */
     primary key (id)
+) engine=InnoDB;
+
+create table su_allocation (
+    id                      integer         not null auto_increment,
+    project_id              integer         not null,
+    init_alloc              double          not null,
+    alloc_rate              double          not null,
+    start_time              double          not null,
+    duration                double          not null,
+    status                  tinyint         not null,
+        /* 0 init, 1 in progress, 2 over */
 ) engine=InnoDB;
 
 create table su_project_keyword (
     project_id              integer         not null,
     keyword_id              integer         not null,
+    work_fraction           double          not null,
+        /* fraction of project's work with this keyword */
     unique(project_id, keyword_id)
 ) engine=InnoDB;
 
@@ -27,6 +45,7 @@ create table su_user_keyword (
     user_id                 integer         not null,
     keyword_id              integer         not null,
     type                    smallint        not null,
+        /* -1=no, 0=maybe, 1=yes */
     unique(user_id, keyword_id)
 ) engine=InnoDB;
 
@@ -51,13 +70,17 @@ create table su_account (
 
 /*
  * Per (host, project) record. No history.
- * Stores totals at last AM RPC;
- * used to compute deltas.
+ * Stores totals at last AM RPC; used to compute deltas.
  */
 create table su_host_project (
     host_id                 integer         not null,
     project_id              integer         not null,
     last_rpc                double          not null,
+        /* when host last made RPC to project */
+    active                  tinyint         not null,
+        /* whether host is currently attached to project */
+    requested               tinyint         not null,
+        /* what is this? */
     cpu_ec                  double          not null,
     cpu_time                double          not null,
     gpu_ec                  double          not null,
@@ -103,6 +126,8 @@ create table su_accounting_project (
     id                      integer         not null auto_increment,
     create_time             double          not null,
     project_id              integer         not null,
+    allocation              double          not null,
+    credit                  double          not null,
     cpu_ec_delta            double          not null,
     cpu_ec_total            double          not null,
     gpu_ec_delta            double          not null,

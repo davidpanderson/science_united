@@ -1,4 +1,20 @@
 <?php
+// This file is part of BOINC.
+// http://boinc.berkeley.edu
+// Copyright (C) 2017 University of California
+//
+// BOINC is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation,
+// either version 3 of the License, or (at your option) any later version.
+//
+// BOINC is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // AM RPC handler
 //
@@ -18,6 +34,17 @@ require_once("../inc/su_db.inc");
 define('COBBLESTONE_SCALE', 200./86400e9);
 
 $now = 0;
+
+// return error
+//
+function su_error($num, $msg) {
+    echo "<acct_mgr_reply>
+    <error_num>$num</error_num>
+    <error_msg>$msg</error_msg>
+</acct_mgr_reply>
+";
+    exit;
+}
 
 // if user has a pref for this keyword, return -1/1, else 0
 //
@@ -106,10 +133,10 @@ function update_host($req, $host) {
     $ts = $req->time_stats;
     $ns = $req->net_stats;
 
-    $client_version = (string)$req->client_version;
-
     // request message is from client, so don't trust it
     //
+    $boinc_client_version = (string)$req->client_version;
+    $n_usable_coprocs = (int)$hi->n_usable_coprocs;
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$req->host_cpid);
@@ -139,8 +166,15 @@ function update_host($req, $host) {
     $n_bwup = $ns->bwup;
     $n_bwdown = $ns->bwdown;
 
+    $p_ngpus = 0;
+    $p_gpu_fpops = 0;
+    foreach ($hi->coprocs->coproc as $c) {
+        $p_ngpus += (int)$c->count;
+        $p_gpu_fpops += (double)$c->peak_flops;
+    }
+
     $query = "
-        client_version = '$client_version',
+        boinc_client_version = '$boinc_client_version',
         virtualbox_version = '$virtualbox_version',
         rpc_time = $now,
         timezone = $timezone,
@@ -166,9 +200,14 @@ function update_host($req, $host) {
         connected_frac = $connected_frac,
         active_frac = $active_frac,
         n_bwup = $n_bwup,
-        n_bwdown = $n_bwdown
+        n_bwdown = $n_bwdown,
+        p_ngpus = $p_ngpus,
+        p_gpu_fpops = $p_gpu_fpops
     ";
-    $host->update($query);
+    $ret = $host->update($query);
+    if (!$ret) {
+        su_error(-1, "host update failed: $host->id $query");
+    }
 }
 
 function create_host($req, $user) {
@@ -187,16 +226,16 @@ function lookup_records($req) {
     $email_addr = (string)$req->name;
     $user = BoincUser::lookup_email_addr($email_addr);
     if (!$user) {
-        xml_error(-1, 'no account found');
+        su_error(-1, 'no account found');
     }
 
     $passwd_hash = (string)$req->password_hash;
     if ($passwd_hash != $user->passwd_hash) {
-        xml_error(-1, 'bad password');
+        su_error(-1, 'bad password');
     }
 
     if (array_key_exists('opaque', $req)) {
-        $host_id = (string)$req->opaque->host_id;
+        $host_id = (int)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
     } else {
         // TODO: this host might be re-attaching to the AM.
@@ -290,7 +329,7 @@ function do_accounting($req, $user, $host) {
         $rp_gpu_time = (double)$rp->gpu_time;
         $rp_gpu_ec = (double)$rp->gpu_ec;
         $rp_njobs_success = (int)$rp->njobs_success;
-        $rp_njobs_fail = (int)$rp->njobs_fail;
+        $rp_njobs_fail = (int)$rp->njobs_error;
 
         // compute deltas for this project
         //
@@ -318,7 +357,7 @@ function do_accounting($req, $user, $host) {
             njobs_fail = $rp_njobs_fail
             where host_id = $host->id and project_id = $project->id
         ");
-        if (!$ret) xml_error(-1, "hp->update failed");
+        if (!$ret) su_error(-1, "hp->update failed");
 
         // add deltas to project's accounting record
         //
@@ -331,7 +370,7 @@ function do_accounting($req, $user, $host) {
             njobs_success_delta = njobs_success_delta + $d_njobs_success,
             njobs_fail_delta = njobs_fail_delta + $d_njobs_fail
         ");
-        if (!$ret) xml_error(-1, "ap->update failed");
+        if (!$ret) su_error(-1, "ap->update failed");
 
         // add to all-project totals
         //
@@ -366,7 +405,7 @@ function do_accounting($req, $user, $host) {
         njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
-    if (!$ret) xml_error(-1, "au->update failed");
+    if (!$ret) su_error(-1, "au->update failed");
 
     // update global accounting record
     //
@@ -379,7 +418,7 @@ function do_accounting($req, $user, $host) {
         njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
-    if (!$ret) xml_error(-1, "acc->update failed");
+    if (!$ret) su_error(-1, "acc->update failed");
 }
 
 // decide what projects to have this host run.
@@ -393,7 +432,7 @@ function choose_projects($user, $host) {
             "project_id = $p->id and user_id = $user->id"
         );
         if ($account) {
-            if ($account->state == SUCCESS) {
+            if ($account->state == ACCT_SUCCESS) {
                 $accounts_to_send[] = array($p, $account);
                 $n++;
                 if ($n == 3) break;
@@ -407,7 +446,7 @@ function choose_projects($user, $host) {
                 )
             );
             if (!$ret) {
-                xml_error(-1, "account insert failed");
+                su_error(-1, "account insert failed");
             }
         }
     }
@@ -420,7 +459,7 @@ function main() {
     $req = simplexml_load_file('php://input');
     //$req = simplexml_load_file('req.xml');
     if (!$req) {
-        xml_error(-1, "can't parse request");
+        su_error(-1, "can't parse request");
     }
 
     $now = time();

@@ -38,17 +38,12 @@ require_once("../inc/bootstrap.inc");
 chdir($dir);
 
 $config = get_config();
-$no_computing = parse_config($config, "<no_computing>");
-$no_web_account_creation = parse_bool($config, "no_web_account_creation");
-    
+ 
 $stopped = web_stopped();
 $user = get_logged_in_user(false);
 
-// The panel at the top of the page
+// top - shown only when site is down
 //
-function panel_contents() {
-}
-
 function top() {
     global $stopped, $master_url, $user;
     if ($stopped) {
@@ -58,46 +53,49 @@ function top() {
             .'</p>
         ';
     }
-    //panel(null, 'panel_contents');
 }
 
 function left(){
-    global $user, $no_computing, $no_web_account_creation, $master_url;
+    global $user, $master_url;
     panel(
         tra("What is %1?", PROJECT),
         function() use($user) {
-            global $no_computing, $no_web_account_creation, $master_url;
-            if ($no_computing) {
-                echo "
-                    XXX is a research project that uses volunteers
-                    to do research in XXX.
-                ";
-            } else {
-                echo "
+            if ($user) {
+                echo sprintf('
+                    Welcome back, %s.
+                    Recently, your computer has been
+                    doing work for projects doing
+                    (list of science keywords)
+                    located in (list of locations).
                     <p>
-                    Science United.
-                    You can contribute to scientific research
-                    by running a free program on your computer.
-                    </p>
-                ";
-            }
+                    graph of computing over last month or so
+                    (FLOPS, CPU time, GPU time).
+                    <p>
+                    amount of CPU time, # jobs etc.
+                    contributed in last 24 hours
+                    <p>
+                    other stuff in su_user.php
+                ', $user->name
+                );
+            } else {
             echo "
-                <ul>
-                <li> <a href=manage.php>Administrator</a>
-                <li> <a href=prefs.php>Volunteer</a>
-                </ul>
-            ";
-            echo "</ul>";
-            if (!$user) {
-                if ($no_computing) {
-                    echo "
-                        <a href=\"create_account_form.php\">Create an account</a>
-                    ";
-                } else {
-                    echo '<center><a href="join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
-                    ';
+                <p>
+                Science United lets you help scientific research projects
+                by giving them computing power.
+                These projects do astronomy, physics, biomedicine,
+                and environmental research;
+                you can pick which of these you want to support.
+                <p>
+                You help by running a free program on your computer,
+                which runs scientific jobs in the background
+                and when you're not at the computer.
+                This program is secure and will not
+                affect your normal use of the computer.
 
-                }
+                </p>
+            ";
+                echo '<center><a href="join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
+                ';
             }
         }
     );

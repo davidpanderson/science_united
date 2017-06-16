@@ -13,12 +13,13 @@ tools
 	hubzero?
 
 Front page
-	a call to action
-	describe science; pictures
-	address safety
+	call to action
+        describe science; pictures
+        address safety
+
 	if not logged in:
 		Big green Join button
-		smaller "login" button
+
 	else:
 		if never got RPC:
 			need to download; link
@@ -31,9 +32,14 @@ Front page
 		list of devices
 
 Join page
-	1) log in with Facebook | Google
-	2) science prefs (see below)
-	3) Download button
+	(eventually: log in with Facebook | Google)
+    screen name
+    email 
+    password
+
+	science prefs (see below)
+
+	Download button
 
 Science prefs
 	interest checkboxes

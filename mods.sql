@@ -1,7 +1,7 @@
 alter table host
     add column p_features              varchar(512)    not null,
     add column boinc_client_version    varchar(64)     not null,
-    add column has_usable_gpu          tinyint         not null,
+    add column n_usable_coprocs        tinyint         not null,
     add column p_vm_extensions_disabled       tinyint         not null,
     add column virtualbox_version      varchar(64)    not null,
     add column cpu_ec                  double          not null,

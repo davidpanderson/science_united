@@ -25,10 +25,21 @@ define('KW_NO', -1);
 
 // values for account.state
 //
-define('INIT', 0);
-define('SUCCESS', 1);
-define('DIFFERENT_PASSWD', 2);
-define('TRANSIENT_ERROR', 3);
+define('ACCT_INIT', 0);
+define('ACCT_SUCCESS', 1);
+define('ACCT_DIFFERENT_PASSWD', 2);
+define('ACCT_TRANSIENT_ERROR', 3);
+
+// values of keyword.priority
+//
+define('KW_MINOR', 1);
+define('KW_MAJOR', 2);
+
+// values of project.status
+//
+define('PROJECT_STATUS_HIDE', 0);
+define('PROJECT_STATUS_ON_DEMAND', 1);
+define('PROJECT_STATUS_AUTO', 2);
 
 class SUKeyword {
     static function insert($clause) {
@@ -41,9 +52,17 @@ class SUKeyword {
         $db = BoincDb::get();
         return $db->lookup_id($id, 'su_keyword', 'SUKeyword');
     }
-    static function enum() {
+    static function enum($where_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_keyword', 'SUKeyword');
+        return $db->enum('su_keyword', 'SUKeyword', $where_clause);
+    }
+    function delete() {
+        $db = BoincDb::get();
+        return $db->delete($this, 'su_keyword');
+    }
+    function update($clause) {
+        $db = BoincDb::get();
+        return $db->update($this, 'su_keyword', $clause);
     }
 }
 
@@ -66,9 +85,9 @@ class SUProject {
         $db = BoincDb::get();
         return $db->delete($this, 'su_project');
     }
-    static function enum() {
+    static function enum($where_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_project', 'SUProject');
+        return $db->enum('su_project', 'SUProject', $where_clause);
     }
     static function lookup($clause) {
         $db = BoincDb::get();
@@ -81,9 +100,9 @@ class SUProjectKeyword {
         $db = BoincDb::get();
         return $db->insert('su_project_keyword', $clause);
     }
-    static function enum() {
+    static function enum($where_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_project_keyword', 'SUProjectKeyword');
+        return $db->enum('su_project_keyword', 'SUProjectKeyword', $where_clause);
     }
     function delete($clause) {
         $db = BoincDb::get();
@@ -96,7 +115,7 @@ class SUUserKeyword {
         $db = BoincDb::get();
         return $db->insert('su_user_keyword', $clause);
     }
-    static function enum($where_clause='') {
+    static function enum($where_clause=null) {
         $db = BoincDb::get();
         return $db->enum('su_user_keyword', 'SUUserKeyword', $where_clause);
     }
@@ -115,7 +134,7 @@ class SUAccount {
         $db = BoincDb::get();
         return $db->insert('su_account', $clause);
     }
-    static function enum($where_clause) {
+    static function enum($where_clause=null) {
         $db = BoincDb::get();
         return $db->enum('su_account', 'SUAccount', $where_clause);
     }
@@ -123,8 +142,9 @@ class SUAccount {
         $db = BoincDb::get();
         return $db->lookup('su_account', 'SUAccount', $where_clause);
     }
-    static function update($clause) {
+    function update($clause) {
         $db = BoincDb::get();
+        $clause .= " where user_id=$this->user_id and project_id=$this->project_id";
         return $db->update_aux('su_account', $clause);
     }
 }
