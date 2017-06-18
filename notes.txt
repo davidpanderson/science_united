@@ -1,12 +1,12 @@
 ====================
 Keyword preferences
 
-- How do volunteers express
-	- area prefs:
-		want to compute for
-		willing to compute for
-		don't want to compute for
-- How do projects express the properties of themselves, their jobs
+- volunteers express the science areas and locations they
+    want to compute for (yes)
+    willing to compute for (maybe)
+    don't want to compute for (no)
+    default: all "maybe"
+- projects express the properties of themselves, and their jobs
 
 ------------
 Science keywords: hierarchy
@@ -20,7 +20,7 @@ Science keywords: hierarchy
 	earth science
 	math
 
-Location of scientist
+Location of science project
 	Asia
     Europe
         CERN
@@ -36,20 +36,16 @@ open results?
 for profit?
     not clear because of deals like Monsanto/UCB
 --------------
-each project and job can have associated keywords
+each project can have associated keywords
+    each one has a fraction, indicating what fraction of work
+    has that keyword.
+    
+each job can have associated keywords
 
-Each user has 2 lists of keywords: wanted and vetoed.
-Vetoed: if matches any of project/app, don't run it.
-Wanted: prioritize based on number of matches.
-
+-------------
 If a new keyword is added, it's automatically allowed
 (neither wanted nor vetoed) for all users.
---------------
-Science prefs
-default: no restrictions
-
-top level: yes/no/maybe for each keyword
-    link: "more detail..." or "you have specified more detail..."
+?? should users be defaulted to no or maybe?
 ====================
 Allocation
 --------------
@@ -244,7 +240,79 @@ categorize projects as auto or on-demand
     auto: accounts creation initiated on SU account creation
 
 ====================
-SU Web site
+User Web site
+functions:
+    new user experience
+    return user experience
+    catalog of research projects
+        where does this come from?
+    new from projects
+--------------
+home page (index.php)
+    If not logged in
+        call to action; describe VC, science; pictures; safety
+        big Join button, small login link
+
+    if logged in
+        if never got RPC
+            need to download;link
+        if last RPC is old or client version is old
+            advise to download; link
+        progress/accounting stuff
+            show graph of recent EC
+            "In the last 24 hours your computers have contributed
+            CPU time/EC, GPU time/EC, #jobs success
+            to science projects doing x, x, x
+            located in y, y, y"
+        link to science prefs
+        link to computing prefs
+        problem account info
+        list of devices
+    Need to handle case where user is adding a new device
+
+    menu bar (all pages)
+        Your account (if logged in)
+            projects
+            science prefs
+            computing prefs
+            computing stats
+            certificate?
+        Computing
+            projects
+            leaderboards
+        Community
+            message boards
+            teams
+            profiles
+            community prefs
+            user search
+            user of the day
+        Site
+            search
+            languages
+            about SU
+            help
+--------------------
+Join page
+    create account info
+        email
+        screen name
+        password
+    basic prefs
+    OK starts download (1-click)
+        small print: if BOINC already installed, choose acct mgr
+--------------------
+prefs edit page
+    show list of major keywords, yes/maybe/no radio buttons
+    "more" button shows all keywords
+    if user has prefs for non-major keywords, show all in that category
+--------------------
+problem account page
+    explain the problem
+    show list of problem accounts; click for details
+    details page:
+        let the user enter password of existing account.
+        OK: contacts project, tell user if fail
 ---------------------
 new items
     would be good to show news items from project
@@ -257,46 +325,51 @@ new items
     Give projects more allocation if they supply news?
 forums
     for discussion of projects, keywords?
---------------
-how to have fast startup?
-SU home page
-    explain volunteer computing, SU
-    if logged in
-        show graph of recent EC
-        "In the last 24 hours your computers have contributed
-        CPU time/EC, GPU time/EC, #jobs success
-        to science projects doing x, x, x
-        located in y, y, y"
-
-        To run SU on this computer, click here (goes to install page)
-    big Join button, small login link
-    Join page:
-        create account info
-        basic prefs
-        OK triggers account creation on auto projects
-            execute an async command?
-        go to Install page
-    Install page:
-        SU requires installing latest version of BOINC on this device
-        if already installed, choose account mgr
-        else Download (big green button)
-            this does 1-click install
---------------------
-keyword edit:
-    show list of all keywords; checkbox for major; button for edit/delete
-    form for adding
-project keyword edit:
-    list all keywords; checkboxes
---------------------
-problem accounts:
-    explain the problem
-    show list of problem accounts; click for details
-    details page:
-        let the user enter password of existing account.
-        OK: contacts project, tell user if fail
+==================
+Admin web site
+keyword edit page
+    show list of major keywords; checkbox for major; button for edit/delete
 ==================
 RPC handler
+
+when are accounts created?
+on initial registration:
+    pick N best projects based on prefs
+        (same logic as in RPC handler)
+    start account creation for those projects
+on RPC:
+    pick N best projects
+    if not registered with any of them
+        return highest-score project we are registered with
+
+-------------
 We need "detach when no more work and AM RPC done" flag on client
+==================
+keyword-based scheduling
+
+submission: batch has keywords
+copied to results (new DB field, 256 chars)
+
+each volunteer reports yes/no keywords in sched request
+	(AM can supply "project opaque" text, passed to projects)
+
+score-based scheduling:
+	"no" keyword match returns -1
+	"yes" match adds 1
+
+ensure non-starvation of jobs in cache
+	add job age to score
+
+Project keywords include a fraction flag
+	(estimate fraction of work from that project with that keyword).
+	100 means all work from project will have that keyword
+
+If a user has a "no" keyword matching a project "all" keyword,
+don't attach to that project.
+
+Can compute:
+	- the fraction of work from project that user can do
+	- the fraction of work from project that user wants to do
 ==================
 Project plan
 - web site for register and prefs

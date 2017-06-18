@@ -45,7 +45,7 @@ create table su_user_keyword (
     user_id                 integer         not null,
     keyword_id              integer         not null,
     type                    smallint        not null,
-        /* -1=no, 0=maybe, 1=yes */
+        /* -1=no, 1=yes */
     unique(user_id, keyword_id)
 ) engine=InnoDB;
 

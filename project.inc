@@ -16,8 +16,6 @@ define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
 define("PROFILE_URL", "user_profile/");
 define("LANGUAGE_FILE", "languages.txt");
-//define("STYLESHEET", "aaa.css");
-//define("STYLESHEET2", "bbb.css");
     // add your own stylesheets (included after bootstrap)
 define("FORUM_QA_MERGED_MODE", true);
     // Set to true to merge Message boards and Q&A section

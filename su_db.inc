@@ -104,9 +104,11 @@ class SUProjectKeyword {
         $db = BoincDb::get();
         return $db->enum('su_project_keyword', 'SUProjectKeyword', $where_clause);
     }
-    function delete($clause) {
+    function delete() {
         $db = BoincDb::get();
-        return $db->delete_aux('su_project_keyword', $clause);
+        return $db->delete_aux('su_project_keyword',
+            "project_id=$this->project_id and keyword_id=$this->keyword_id"
+        );
     }
 }
 
@@ -119,9 +121,11 @@ class SUUserKeyword {
         $db = BoincDb::get();
         return $db->enum('su_user_keyword', 'SUUserKeyword', $where_clause);
     }
-    static function delete($clause) {
+    function delete() {
         $db = BoincDb::get();
-        return $db->delete_aux('su_user_keyword', $clause);
+        return $db->delete_aux('su_user_keyword',
+            "user_id=$this->user_id and keyword_id=$this->keyword_id"
+        );
     }
     static function update($clause) {
         $db = BoincDb::get();
@@ -146,6 +150,12 @@ class SUAccount {
         $db = BoincDb::get();
         $clause .= " where user_id=$this->user_id and project_id=$this->project_id";
         return $db->update_aux('su_account', $clause);
+    }
+    function delete() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_account',
+            "user_id=$this->user_id and project_id=$this->project_id"
+        );
     }
 }
 
