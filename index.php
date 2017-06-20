@@ -94,7 +94,7 @@ function left(){
 
                 </p>
             ";
-                echo '<center><a href="join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
+                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
                 ';
             }
         }

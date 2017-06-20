@@ -143,28 +143,29 @@ function make_acct() {
     return $y;
 }
 
-function add_acct($x, &$y) {
-    $y->cpu_ec_delta += $x->cpu_ec_delta;
-    $y->cpu_time_delta += $x->cpu_time_delta;
-    $y->gpu_ec_delta += $x->gpu_ec_delta;
-    $y->gpu_time_delta += $x->gpu_time_delta;
-    $y->cpu_ec_total += $x->cpu_ec_delta;
-    $y->cpu_time_total += $x->cpu_time_delta;
-    $y->gpu_ec_total += $x->gpu_ec_delta;
-    $y->gpu_time_total += $x->gpu_time_delta;
-    $y->njobs_success_delta += $x->njobs_success_delta;
-    $y->njobs_success_total += $x->njobs_success_delta;
-    $y->njobs_fail_delta += $x->njobs_fail_delta;
-    $y->njobs_fail_total += $x->njobs_fail_delta;
+function add_acct($x, $f, &$y) {
+    $y->cpu_ec_delta += $f*$x->cpu_ec_delta;
+    $y->cpu_time_delta += $f*$x->cpu_time_delta;
+    $y->gpu_ec_delta += $f*$x->gpu_ec_delta;
+    $y->gpu_time_delta += $f*$x->gpu_time_delta;
+    $y->cpu_ec_total += $f*$x->cpu_ec_delta;
+    $y->cpu_time_total += $f*$x->cpu_time_delta;
+    $y->gpu_ec_total += $f*$x->gpu_ec_delta;
+    $y->gpu_time_total += $f*$x->gpu_time_delta;
+    $y->njobs_success_delta += (int)($f*$x->njobs_success_delta);
+    $y->njobs_success_total += (int)($f*$x->njobs_success_delta);
+    $y->njobs_fail_delta += (int)($f*$x->njobs_fail_delta);
+    $y->njobs_fail_total += (int)($f*$x->njobs_fail_delta);
 }
 
-function clear_deltas(&$acc) {
+function clear_deltas($acc) {
     $acc->cpu_ec_delta = 0;
     $acc->cpu_time_delta = 0;
     $acc->gpu_ec_delta = 0;
     $acc->gpu_time_delta = 0;
     $acc->njobs_success_delta = 0;
     $acc->njobs_fail_delta = 0;
+    return $acc;
 }
 
 function insert_string($a, $t, $vars="", $vals="") {
@@ -173,7 +174,7 @@ function insert_string($a, $t, $vars="", $vals="") {
 
 function make_accounting() {
     $now = time();
-    $ndays = 10;
+    $ndays = 100;
     $users = BoincUser::enum("");
     $projects = SUProject::enum();
     $user_accounts = array();
@@ -188,33 +189,45 @@ function make_accounting() {
     }
     $acct = make_acct();
 
+    // loop over days
+    //
     for ($i=0; $i<$ndays; $i++) {
         $t = $now + ($i-$ndays)*86400;
 
-        clear_deltas($acct);
-        foreach ($acct_project as $id=>$ap) {
-            clear_deltas($acct_project[$id]);
+        $acct = clear_deltas($acct);
+        foreach ($acct_project as $id=>$a) {
+            $acct_project[$id] = clear_deltas($acct_project[$id]);
+        }
+        foreach ($acct_user as $id=>$a) {
+            $acct_user[$id] = clear_deltas($acct_user[$id]);
         }
 
-        foreach ($user_accounts as $id=>$accts) {
-            clear_deltas($acct_user[$id]);
+        // loop over users
+        //
+        foreach ($user_accounts as $uid=>$accts) {
+            // decide how much user computed today
+            //
+            $x = drand()+1;
+            $d = make_acct();
+            $d->cpu_ec_delta = 1000.*$x;
+            $d->cpu_time_delta = 86400.*$x;
+            $d->njobs_success_delta = (int)($x*10)+1;
+            $d->njobs_fail_delta = drand()>.5?1:0;
+            if ($uid % 2) {
+                $d->gpu_ec_delta = 10000*$x;
+                $d->gpu_time_delta = 86400*$x;
+            } else {
+                $d->gpu_ec_delta = 0;
+                $d->gpu_time_delta = 0;
+            }
+            add_acct($d, 1, $acct);
+            add_acct($d, 1, $acct_user[$uid]);
+
+            // divide evenly among attached projects
+            //
+            $f = 1./count($accts);
             foreach ($accts as $a) {
-                $x = 1. + sin($i/10.);
-                $d = new StdClass;
-                $d->cpu_ec_delta = 1000.*$x;
-                $d->cpu_time_delta = 86400.*$x;
-                $d->njobs_success_delta = (int)($x*10)+1;
-                $d->njobs_fail_delta = drand()>.5?1:0;
-                if ($id % 2) {
-                    $d->gpu_ec_delta = 10000*$x;
-                    $d->gpu_time_delta = 86400*$x;
-                } else {
-                    $d->gpu_ec_delta = 0;
-                    $d->gpu_time_delta = 0;
-                }
-                add_acct($d, $acct);
-                add_acct($d, $acct_user[$u->id]);
-                add_acct($d, $acct_project[$a->project_id]);
+                add_acct($d, $f, $acct_project[$a->project_id]);
             }
         }
         SUAccounting::insert(insert_string($acct, $t));

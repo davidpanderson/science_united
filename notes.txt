@@ -293,6 +293,9 @@ home page (index.php)
             about SU
             help
 --------------------
+User home page (su_user.php)
+    like BOINC home page; computing, prefs, social functions
+--------------------
 Join page
     create account info
         email
@@ -302,7 +305,7 @@ Join page
     OK starts download (1-click)
         small print: if BOINC already installed, choose acct mgr
 --------------------
-prefs edit page
+prefs edit page (su_prefs.php)
     show list of major keywords, yes/maybe/no radio buttons
     "more" button shows all keywords
     if user has prefs for non-major keywords, show all in that category
@@ -313,6 +316,13 @@ problem account page
     details page:
         let the user enter password of existing account.
         OK: contacts project, tell user if fail
+---------------------
+Accounting pages (su_acct.php)
+    Totals: tables and graphs of totals
+    projects: table of projects (su_projects_acct.php; merge)
+    project: graphs for 1 project
+    users: list of top users
+    user: graphs for 1 user
 ---------------------
 new items
     would be good to show news items from project
@@ -327,8 +337,14 @@ forums
     for discussion of projects, keywords?
 ==================
 Admin web site
-keyword edit page
-    show list of major keywords; checkbox for major; button for edit/delete
+main page (su_manage.php)
+    links to
+        edit projects
+        edit keywords
+        accounting pages
+project add/remove/edit (su_projects_edit.php)
+keyword edit page (su_keywords.php)
+    show list of keywords; checkbox for major; button for edit/delete
 ==================
 RPC handler
 

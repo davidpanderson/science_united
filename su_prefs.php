@@ -16,6 +16,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
+// user page for editing keyword prefs
+
 require_once("../inc/util.inc");
 
 require_once("su_db.inc");

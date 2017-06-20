@@ -183,7 +183,7 @@ class SUAccounting {
         $db = BoincDb::get();
         return $db->insert('su_accounting', $clause);
     }
-    static function enum($where_clause, $order_clause) {
+    static function enum($where_clause='', $order_clause='') {
         $db = BoincDb::get();
         return $db->enum('su_accounting', 'SUAccounting', $where_clause, $order_clause);
     }

@@ -376,6 +376,8 @@ function show_user_acct_history_ec($user) {
     end_table();
 }
 
+// show accountings totals
+//
 function show_acct_history() {
     $as = SUAccounting::enum(
         "", "order by id desc limit 20"
