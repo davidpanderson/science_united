@@ -19,7 +19,7 @@
 
 // join page for new users
 
-require_once("../inc/util.inc");
+require_once("../inc/user_util.inc");
 require_once("../inc/account.inc");
 require_once("../inc/recaptchalib.php");
 require_once("../inc/su.inc");
@@ -29,7 +29,7 @@ function keyword_prefs_form() {
 
     $items = array();
     foreach ($kwds as $k) {
-        $items[] = array($k->id, $k->word);
+        $items[] = array("keywd_".$k->id, $k->word);
     }
     form_checkboxes(
         "Check the areas of science you most want to support",
@@ -37,15 +37,16 @@ function keyword_prefs_form() {
     );
 }
 
-function comp_prefs_form() {
+function global_prefs_form() {
     form_radio_buttons(
         "Computer usage",
         "usage",
         array(
-            array(0, "Light - minimize power consumption"),
-            array(1, "Medium"),
-            array(2, "Maximum"),
-        )
+            array('min', "Light - minimize power consumption"),
+            array('med', "Medium"),
+            array('max', "Maximum"),
+        ),
+        'med'
     );
 }
 
@@ -53,10 +54,11 @@ function show_form() {
     global $recaptcha_public_key;
 
     page_head("Join ".PROJECT, null, null, null, boinc_recaptcha_get_head_extra());
-    form_start("su_join.php?action=go");
+    form_start("su_join.php", "post");
+    form_input_hidden("action", "join");
     create_account_form(0, "su_download.php");
     keyword_prefs_form();
-    comp_prefs_form();
+    global_prefs_form();
     if ($recaptcha_public_key) {
         form_general("", boinc_recaptcha_get_html($recaptcha_public_key));
     }
@@ -65,6 +67,32 @@ function show_form() {
     page_tail();
 }
 
-show_form();
+// we need to create:
+// - the user record, with chosen computing prefs
+// - user/keyword records
+//
+function handle_submit() {
+    $user = validate_post_make_user();
+    if (!$user) {
+        error_page("Couldn't create user record");
+    }
+    $usage = post_str("usage");
+    $user->update("global_prefs='$usage'");
+    $kwds = SUKeyword::enum("category=0 and level=0");
+    foreach ($kwds as $k) {
+        $x = "keywd_".$k->id;
+        if (post_str($x, true)) {
+            SUUserKeyword::insert("(user_id, keyword_id, type) values ($user->id, $k->id, KW_YES)");
+        }
+    }
+    Header("Location: su_download.php");
+}
+
+$action = post_str('action', true);
+if ($action == "join") {
+    handle_submit();
+} else {
+    show_form();
+}
 
 ?>

@@ -30,6 +30,7 @@ define ("DISABLE_PROFILES", true);
 define("USE_STOPFORUMSPAM", true);
     // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
+define("INVITE_CODES", '/foobar/');
 
 define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
     // Email addresses separated by pipe ( | ) that will receive user reports
@@ -65,6 +66,96 @@ function make_php_mailer() {
 }
 }
 
+function su_navbar_right($user) {
+    global $is_login_page;
+    echo '
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    ';
+    if (!$is_login_page) {
+        if ($user) {
+            echo sprintf('
+                <li><a href=%shome.php>'.$user->name.'</a></li>
+                ', url_base()
+            );
+            $url_tokens = url_tokens($user->authenticator);
+            echo sprintf('<li><a href="%slogout.php?%s">Log out</a></li>',
+                url_base(), $url_tokens
+            );
+        } else {
+            echo sprintf('
+                <li><a href="%ssu_join.php">Sign Up</a></li>
+                <li><a href="%slogin_form.php">Login</a></li>
+                ', url_base(), url_base()
+            );
+        }
+    }
+}
+function su_navbar(
+    $url_prefix,
+        // prefix for links; needed for pages not in top dir
+    $user,
+        // logged-in user, if any
+    $fixed=false,
+        // if true, navbar is fixed at top of page.
+        // NOTE: if you do this, you must set a global var $fixed_navbar
+        // to true at compile time
+        // (it needs to be set when page_head() is called).
+    $inverse=false
+        // white on black?
+) {
+    global $master_url;
+
+    $brand = "<a class=\"navbar-brand\" href=$master_url>".PROJECT."</a>";
+    navbar_start($brand, $fixed, $inverse);
+
+    $x = array();
+    if ($user) {
+        $x[] = array(tra("Account"), $url_prefix."home.php");
+        $x[] = array(tra("Join"), $url_prefix."join.php");
+        $x[] = array(tra("Preferences"), $url_prefix."prefs.php?subset=project");
+    }
+    $x[] = array(tra("About %1", PROJECT), $url_prefix."about.php");
+    $x[] = array(tra("Help"), $url_prefix."help.php");
+    navbar_menu(tra("Project"), $x);
+
+    $x = array(
+        array(tra("Preferences"), $url_prefix."prefs.php?subset=global"),
+        array(tra("Statistics"), $url_prefix."stats.php"),
+    );
+    $x = array_merge($x,
+        array(
+            'Leader boards:',
+            array(tra("Participants"), $url_prefix."top_users.php"),
+            array(tra("Computers"), $url_prefix."top_hosts.php"),
+            array(tra("Teams"), $url_prefix."top_teams.php"),
+            array(tra("GPU models"), $url_prefix."gpu_list.php"),
+            array(tra("CPU models"), $url_prefix."cpu_list.php"),
+        )
+    );
+    navbar_menu(tra("Computing"), $x);
+
+    navbar_menu(tra("Community"), array(
+        array(tra("Message boards"), $url_prefix."forum_index.php"),
+        //array(tra("Questions and Answers"), $url_prefix."forum_help_desk.php"),
+        array(tra("Teams"), $url_prefix."team.php", tra("create or join a team")),
+        array(tra("Profiles"), $url_prefix."profile_menu.php"),
+        array(tra("Preferences"), $url_prefix."edit_forum_preferences_form.php"),
+        array(tra("User search"), $url_prefix."user_search.php"),
+        array(tra("User of the day"), $url_prefix."uotd.php"),
+        array(tra("Certificate"), $url_prefix."cert1.php", "", "_blank"),
+    ));
+    navbar_menu(tra("Site"), array(
+        array(tra("Site search"), $url_prefix."site_search.php"),
+        array(tra("Languages"), $url_prefix."language_select.php")
+    ));
+
+    // add your own menu here if you want
+
+    su_navbar_right($user);
+    navbar_end();
+}
+
 // Put your project title and logo here
 // If you include any links, prepend URL with $prefix
 // if you need to open divs here close them in project_footer()
@@ -73,7 +164,7 @@ function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
         echo '<center><img class="img-responsive" src="logo.png"></center>';
     }
-    sample_navbar(secure_url_base(), get_logged_in_user(false), false);
+    su_navbar(secure_url_base(), get_logged_in_user(false), false);
     if ($title) {
         echo "<h2>$title</h2>\n";
     }
@@ -174,6 +265,7 @@ function show_app_credit_user($user, $app_name, $appids) {
         " ($n tasks)"
     );
 }
+
 function show_app_credit_team($team, $app_name, $appids) {
     $t = 0;
     $a = 0;

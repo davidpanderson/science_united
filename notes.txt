@@ -248,7 +248,7 @@ functions:
         where does this come from?
     new from projects
 --------------
-home page (index.php)
+main page (index.php)
     If not logged in
         call to action; describe VC, science; pictures; safety
         big Join button, small login link
@@ -293,22 +293,55 @@ home page (index.php)
             about SU
             help
 --------------------
-User home page (su_user.php)
-    like BOINC home page; computing, prefs, social functions
---------------------
-Join page
+Join page (su_join.php)
     create account info
         email
         screen name
         password
     basic prefs
-    OK starts download (1-click)
-        small print: if BOINC already installed, choose acct mgr
+    goes to...
 --------------------
-prefs edit page (su_prefs.php)
+Download page (su_download.php)
+    says you need to install BOINC
+    Download link (direct)
+        goes via concierge; sets cookies
+        When user runs app, welcome screen says
+            You are now running SU as user Fred
+            No further action is needed.
+            SU will run science jobs in the background.
+            OK
+    small print: if BOINC version >= 7.10 and VBox already installed:
+        In BOINC Manager
+            select Tools/user account manager
+            choose SU
+            enter the email address and password of your SU account
+    goes to...
+--------------------
+Getting started (su_intro.php)
+    Explains
+        computing prefs
+        keyword prefs
+    join a team
+--------------------
+User home page (su_home.php)
+    like BOINC home page
+        graphs of recent work
+        link to problem accounts
+        links to prefs
+            keywords
+            computing prefs
+            community prefs
+        social functions
+--------------------
+keyword prefs edit page (su_prefs.php)
     show list of major keywords, yes/maybe/no radio buttons
     "more" button shows all keywords
     if user has prefs for non-major keywords, show all in that category
+--------------------
+global prefs edit page
+    if min/med/max
+        show radio buttons
+        link to all prefs
 --------------------
 problem account page
     explain the problem
