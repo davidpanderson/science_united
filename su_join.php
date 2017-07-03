@@ -81,11 +81,17 @@ function handle_submit() {
     $kwds = SUKeyword::enum("category=0 and level=0");
     foreach ($kwds as $k) {
         $x = "keywd_".$k->id;
+        echo "$x ";
         if (post_str($x, true)) {
-            SUUserKeyword::insert("(user_id, keyword_id, type) values ($user->id, $k->id, KW_YES)");
+            SUUserKeyword::insert(
+                sprintf("(user_id, keyword_id, type) values (%d, %d, %d)",
+                    $user->id, $k->id, KW_YES
+                )
+            );
         }
     }
-    Header("Location: su_download.php");
+    echo "foobar";
+    //Header("Location: su_download.php");
 }
 
 $action = post_str('action', true);

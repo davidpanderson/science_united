@@ -9,12 +9,13 @@
 require_once("../inc/util.inc");
 
 $master_url = parse_config(get_config(), "<master_url>");
-define("PROJECT", "Science United");
+define("PROJECT", "SCI<span class='iec_power' style='color:green;'>&#x23FB;</span>N");
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
 define("PROFILE_URL", "user_profile/");
+define("STYLESHEET", "test2_custom.css");
 define("LANGUAGE_FILE", "languages.txt");
     // add your own stylesheets (included after bootstrap)
 define("FORUM_QA_MERGED_MODE", true);
@@ -162,7 +163,11 @@ function su_navbar(
 //
 function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
-        echo '<center><img class="img-responsive" src="logo.png"></center>';
+        echo '<center><font size=+6>'.PROJECT.'</font>';
+        echo '<br><font size=+1>Science research at home</font></center>
+            <p>
+        ';
+        //echo '<center><img class="img-responsive" src="logo.png"></center>';
     }
     su_navbar(secure_url_base(), get_logged_in_user(false), false);
     if ($title) {

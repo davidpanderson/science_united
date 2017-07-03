@@ -254,21 +254,21 @@ main page (index.php)
         big Join button, small login link
 
     if logged in
-        if never got RPC
+        if never got RPC from this user
             need to download;link
         if last RPC is old or client version is old
             advise to download; link
+        if problem accounts, link to problem account page
         progress/accounting stuff
             show graph of recent EC
             "In the last 24 hours your computers have contributed
             CPU time/EC, GPU time/EC, #jobs success
-            to science projects doing x, x, x
+            You are contributing to science projects doing x, x, x
             located in y, y, y"
-        link to science prefs
-        link to computing prefs
-        problem account info
-        list of devices
-    Need to handle case where user is adding a new device
+        link to Account page
+        Add new device
+            Android:
+            log in from device,
 
     menu bar (all pages)
         Your account (if logged in)
@@ -299,6 +299,7 @@ Join page (su_join.php)
         screen name
         password
     basic prefs
+    send cookie
     goes to...
 --------------------
 Download page (su_download.php)
@@ -318,12 +319,15 @@ Download page (su_download.php)
     goes to...
 --------------------
 Getting started (su_intro.php)
-    Explains
+    Welcome, thanks etc.
+    add to your other devices too
+    tell your family and friends
+    Explain
         computing prefs
         keyword prefs
     join a team
 --------------------
-User home page (su_home.php)
+User account page (su_home.php)
     like BOINC home page
         graphs of recent work
         link to problem accounts
@@ -428,3 +432,7 @@ Project plan
 - RPC stubs for account creation, setting prefs
 
 - integrated client download
+==================
+documents, technical reports
+
+Allocating volunteer computing resources

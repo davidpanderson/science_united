@@ -24,8 +24,6 @@
 //
 // If you add text, put it in tra() to make it translatable.
 
-$dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
 require_once("../inc/news.inc");
@@ -35,7 +33,6 @@ require_once("../inc/sanitize_html.inc");
 require_once("../inc/text_transform.inc");
 require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
-chdir($dir);
 
 $config = get_config();
  
@@ -83,8 +80,8 @@ function left(){
                 Science United lets you help scientific research projects
                 by giving them computing power.
                 These projects do astronomy, physics, biomedicine,
-                and environmental research;
-                you can pick which of these you want to support.
+                mathematical, and environmental research;
+                you can pick the areas you want to support.
                 <p>
                 You help by running a free program on your computer,
                 which runs scientific jobs in the background
@@ -97,7 +94,8 @@ function left(){
                 echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
                 ';
             }
-        }
+        },
+        "panel-info"
     );
     global $stopped;
     if (!$stopped) {
@@ -119,11 +117,12 @@ function right() {
             if (!web_stopped()) {
                 show_news(0, 5);
             }
-        }
+        },
+        "panel-info"
     );
 }
 
-page_head(null, null, true);
+page_head("SCION", null, true);
 
 grid('top', 'left', 'right');
 
