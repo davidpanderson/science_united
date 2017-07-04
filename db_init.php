@@ -26,7 +26,8 @@
 // - random accounts
 // - accounting data
 
-require_once("su_db.inc");
+require_once("../inc/su_db.inc");
+require_once("../inc/user_util.inc");
 
 function make_keyword($word, $category, $level) {
     global $keywords;
@@ -76,19 +77,20 @@ function make_projects() {
     make_project("World Community Grid", $keywords);
 }
 
-function make_user($name) {
-    $email = $name."@gmail.com";
-    $id = BoincUser::insert("(name, email_addr) values ('$name', '$email')");
+function su_make_user($name) {
+    $email = strtolower($name."@gmail.com");
+    $passwd_hash = md5("foobar".$email);
+    make_user($email, $name, $passwd_hash);
 }
 
 function make_users() {
-    make_user("David");
-    make_user("Carol");
-    make_user("Luke");
-    make_user("Bob");
-    make_user("Steve");
-    make_user("Mary");
-    make_user("Cynthia");
+    su_make_user("David");
+    su_make_user("Carol");
+    su_make_user("Luke");
+    su_make_user("Bob");
+    su_make_user("Steve");
+    su_make_user("Mary");
+    su_make_user("Cynthia");
 }
 
 function clean() {
@@ -117,10 +119,6 @@ function make_accounts() {
     $projects = SUProject::enum();
     foreach ($users as $u) {
         foreach ($projects as $p) {
-            echo "user $u->name, proj $p->name\n";
-            if (drand()<.5) {
-                continue;
-            }
             SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
         }
     }
@@ -240,11 +238,11 @@ function make_accounting() {
     }
 }
 
-//clean();
-//make_keywords();
-//make_projects();
-//make_users();
-//make_accounts();
+clean();
+make_keywords();
+make_projects();
+make_users();
+make_accounts();
 make_accounting();
 
 

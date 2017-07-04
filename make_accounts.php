@@ -47,7 +47,7 @@ function main() {
             $user->name
         );
         if ($err == ERR_DB_NOT_UNIQUE) {
-            $ret = $acct->update(sprintf("state=%d", ACCT_DIFFERENT_PASSWD));
+            $ret = $acct->update(sprintf("state=%d", ACCT_DIFFERENT_PASSWORD));
             if (!$ret) {
                 echo "update 1 failed\n";
             }

@@ -27,7 +27,7 @@ define('KW_NO', -1);
 //
 define('ACCT_INIT', 0);
 define('ACCT_SUCCESS', 1);
-define('ACCT_DIFFERENT_PASSWD', 2);
+define('ACCT_DIFFERENT_PASSWORD', 2);
 define('ACCT_TRANSIENT_ERROR', 3);
 
 // values of keyword.priority
@@ -213,7 +213,7 @@ class SUAccountingProject {
     }
     static function last($proj_id) {
         $db = BoincDb::get();
-        $x = SUAccountingProject::enum("project_id=$proj_id", "order by id desc limit 1");
+        $x = SUAccountingProject::enum("project_id=$proj_id order by id desc limit 1");
         if ($x) {
             return $x[0];
         } else {
@@ -237,7 +237,7 @@ class SUAccountingUser {
     }
     static function last($user_id) {
         $db = BoincDb::get();
-        $x = SUAccountingUser::enum("user_id=$user_id", "order by id desc limit 1");
+        $x = SUAccountingUser::enum("user_id=$user_id order by id desc limit 1");
         if ($x) {
             return $x[0];
         } else {

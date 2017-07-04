@@ -170,7 +170,7 @@ function project_banner($title, $prefix, $is_main) {
         //echo '<center><img class="img-responsive" src="logo.png"></center>';
     }
     su_navbar(secure_url_base(), get_logged_in_user(false), false);
-    if ($title) {
+    if ($title && !$is_main) {
         echo "<h2>$title</h2>\n";
     }
 }

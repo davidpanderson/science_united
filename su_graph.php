@@ -67,10 +67,10 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $gn = tempnam("/tmp", "su_gp");
     $g = fopen($gn, 'c');
     fprintf($g,
-        'set terminal png
+        'set terminal png size %s,%s
         plot "%s" using 1:2 with linespoints title "CPU time", "%s" using 1:3 with linespoints title "GPU time"
         ',
-        $fn, $fn
+        $xsize, $ysize, $fn, $fn
     );
 
     fclose($g);
@@ -83,7 +83,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     unlink($fn);
 }
 
-if (0) {
+if (1) {
     $type = get_str('type');
     $id = get_int('id', true);
     $what = get_str('what');
@@ -92,6 +92,7 @@ if (0) {
     $ysize = get_int('ysize');
     graph($type, $id, $what, $ndays, $xsize, $ysize);
 } else {
-    graph('total', 0, 'job', 100, 800, 600);
+    //graph('total', 0, 'job', 100, 800, 600);
+    graph('user', 22040, 'ec', 30, 800, 600);
 }
 ?>

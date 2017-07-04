@@ -33,9 +33,10 @@ require_once("../inc/sanitize_html.inc");
 require_once("../inc/text_transform.inc");
 require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
+require_once("../inc/su_user.inc");
 
-$config = get_config();
- 
+define('CURRENT_CLIENT_VERSION', '7.8.0');
+
 $stopped = web_stopped();
 $user = get_logged_in_user(false);
 
@@ -52,45 +53,41 @@ function top() {
     }
 }
 
+function user_summary($user) {
+    show_download($user);
+    show_problem_accounts($user);
+    //show_supported_keywords($user);
+    echo "<h3>Your contributions</h3>\n";
+    show_last_month($user);
+    show_last_day($user);
+    show_calls_to_action();
+}
+
 function left(){
     global $user, $master_url;
+    $title = $user?"Welcome back, $user->name": tra("What is %1?", PROJECT);
     panel(
-        tra("What is %1?", PROJECT),
+        $title,
         function() use($user) {
             if ($user) {
-                echo sprintf('
-                    Welcome back, %s.
-                    Recently, your computer has been
-                    doing work for projects doing
-                    (list of science keywords)
-                    located in (list of locations).
-                    <p>
-                    graph of computing over last month or so
-                    (FLOPS, CPU time, GPU time).
-                    <p>
-                    amount of CPU time, # jobs etc.
-                    contributed in last 24 hours
-                    <p>
-                    other stuff in su_user.php
-                ', $user->name
-                );
+                user_summary($user);
             } else {
-            echo "
-                <p>
-                Science United lets you help scientific research projects
-                by giving them computing power.
-                These projects do astronomy, physics, biomedicine,
-                mathematical, and environmental research;
-                you can pick the areas you want to support.
-                <p>
-                You help by running a free program on your computer,
-                which runs scientific jobs in the background
-                and when you're not at the computer.
-                This program is secure and will not
-                affect your normal use of the computer.
-
-                </p>
-            ";
+                echo sprintf('
+                    <p>
+                    %s lets you help scientific research projects
+                    by giving them computing power.
+                    These projects do research in astronomy, physics,
+                    biomedicine, mathematics, and environmental science;
+                    you can pick the areas you want to support.
+                    <p>
+                    You help by running a free program on your computer,
+                    which runs scientific jobs in the background
+                    and when you\'re not at the computer.
+                    This program is secure and will not
+                    affect your normal use of the computer.
+                    </p>
+                    ', PROJECT
+                );
                 echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
                 ';
             }
