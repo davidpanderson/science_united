@@ -8,7 +8,7 @@ function admin_only() {
     $user = get_logged_in_user();
     BoincForumPrefs::lookup($user);
     if (!is_admin($user)) {
-            error_page("Not admin");
+        error_page("Not admin");
     }
 }
 

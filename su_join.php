@@ -22,7 +22,9 @@
 require_once("../inc/user_util.inc");
 require_once("../inc/account.inc");
 require_once("../inc/recaptchalib.php");
+
 require_once("../inc/su.inc");
+require_once("../inc/su_schedule.inc");
 
 function keyword_prefs_form() {
     $kwds = SUKeyword::enum("category=0 and level=0");
@@ -81,7 +83,6 @@ function handle_submit() {
     $kwds = SUKeyword::enum("category=0 and level=0");
     foreach ($kwds as $k) {
         $x = "keywd_".$k->id;
-        echo "$x ";
         if (post_str($x, true)) {
             SUUserKeyword::insert(
                 sprintf("(user_id, keyword_id, type) values (%d, %d, %d)",
@@ -90,8 +91,18 @@ function handle_submit() {
             );
         }
     }
-    echo "foobar";
-    //Header("Location: su_download.php");
+
+    // initiate project account creation
+    //
+    $projects = choose_projects_join($user);
+    if (1) {
+        echo "accounts:\n";
+        foreach ($projects as $p) {
+            echo "<p>adding $p->name\n";
+        }
+        exit;
+    }
+    Header("Location: su_download.php");
 }
 
 $action = post_str('action', true);

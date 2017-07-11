@@ -25,6 +25,8 @@
 // - a set of users
 // - random accounts
 // - accounting data
+//
+// run this from test2/html/ops
 
 require_once("../inc/su_db.inc");
 require_once("../inc/user_util.inc");
@@ -56,25 +58,82 @@ function make_keywords() {
     make_keyword("Purdue", LOCATION, 1);
 }
 
-function make_project($name, $keywords) {
+function make_project($name, $url, $keywords) {
     $now = time();
-    $id = SUProject::insert("(create_time, name) values ($now, '$name')");
+    $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
+    $out = array();
+    $retval = 0;
+    exec($cmd, $out, $retval);
+    if ($retval) {
+        die("$cmd failed\n");
+    }
+    $url_signature = implode("\n", $out);
+    $id = SUProject::insert("(create_time, name, url, url_signature, allocation) values ($now, '$name', '$url', '$url_signature', 10)");
 
     foreach ($keywords as $k) {
-        if (drand() < .4) {
-            SUProjectKeyword::insert("(project_id, keyword_id) values ($id, $k->id)");
+        $word = $k[0];
+        $frac = $k[1];
+        $kw = SUKeyword::lookup("word='$word'");
+        if (!$kw) {
+            echo "Can't find keyword $word\n";
+            continue;
         }
+        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw->id, $frac)");
     }
 }
 
 function make_projects() {
-    $keywords = SUKeyword::enum();
-    make_project("Herd", $keywords);
-    make_project("nanoHUB", $keywords);
-    make_project("CERN", $keywords);
-    make_project("SETI@home", $keywords);
-    make_project("Rosetta@home", $keywords);
-    make_project("World Community Grid", $keywords);
+    make_project("CERN",
+        "http://lhcathome.cern.ch/",
+        array(
+            array("Physics", 1),
+            array("Basic Science", 1),
+            array("Europe", 1),
+            array("CERN", 1),
+        )
+    );
+    make_project("SETI@home",
+        "http://setiathome.berkeley.edu/",
+        array(
+            array("Astronomy", 1),
+            array("SETI", 1),
+            array("United States", 1),
+            array("UC Berkeley", 1),
+        )
+    );
+    make_project("Rosetta@home",
+        "http://boinc.bakerlab.org/rosetta/",
+        array(
+            array("Biomedicine", 1),
+            array("United States", 1),
+        )
+    );
+    make_project("World Community Grid",
+        "http://www.worldcommunitygrid.org/",
+        array(
+            array("Biomedicine", .5),
+            array("Earth Science", .7),
+            array("United States", .5),
+        )
+    );
+}
+if (0) {
+    make_project("Herd",
+        array(
+            array("Biomedicine", .5),
+            array("Basic Science", .7),
+            array("United States", 1),
+            array("U. Texas", .1),
+        )
+    );
+    make_project("nanoHUB",
+        array(
+            array("Nanoscience", 1),
+            array("Basic Science", 1),
+            array("United States", 1),
+            array("Purdue", .3),
+        )
+    );
 }
 
 function su_make_user($name) {
@@ -91,6 +150,10 @@ function make_users() {
     su_make_user("Steve");
     su_make_user("Mary");
     su_make_user("Cynthia");
+
+    $email = "davea@ssl.berkeley.edu";
+    $user = make_user($email, "David Anderson", md5("foobar".$email));
+    BoincForumPrefs::insert("(userid, special_user) values ($user->id, '01')");
 }
 
 function clean() {
@@ -101,6 +164,9 @@ function clean() {
         $p->delete();
     }
     foreach (BoincUser::enum("") as $u) {
+        $u->delete();
+    }
+    foreach (BoincForumPrefs::enum("") as $u) {
         $u->delete();
     }
     foreach (SUProjectKeyword::enum() as $x) {

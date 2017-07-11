@@ -64,6 +64,10 @@ class SUKeyword {
         $db = BoincDb::get();
         return $db->update($this, 'su_keyword', $clause);
     }
+    static function lookup($clause) {
+        $db = BoincDb::get();
+        return $db->lookup('su_keyword', 'SUKeyword', $clause);
+    }
 }
 
 class SUProject {

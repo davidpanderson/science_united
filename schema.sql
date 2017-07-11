@@ -31,6 +31,7 @@ create table su_allocation (
     duration                double          not null,
     status                  tinyint         not null,
         /* 0 init, 1 in progress, 2 over */
+    primary key (id)
 ) engine=InnoDB;
 
 create table su_project_keyword (

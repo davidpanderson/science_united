@@ -23,13 +23,17 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
 
 function array_to_string($arr) {
-    $x = false;
-    foreach ($arr as $wd) {
+    $x = "";
+    foreach ($arr as $y) {
+        $pkw = $y[0];
+        $kwd = $y[1];
+        $wd = $kwd->word;
+        $frac = $pkw->work_fraction;
+        $pct = $frac*100;
         if ($x) {
-            $x .= ", $wd";
-        } else {
-            $x = $wd;
+            $x .= "<br>";
         }
+        $x .= "$wd ($pct%)";
     }
     return $x;
 }
@@ -52,11 +56,12 @@ function su_show_project() {
     if ($pks) {
         foreach ($pks as $pk) {
             $kwd = SUKeyword::lookup_id($pk->keyword_id);
+            $x = array($pk, $kwd);
             if ($kwd->category == SCIENCE) {
-                $sci[] = $kwd->word;
+                $sci[] = $x;
             }
             if ($kwd->category == LOCATION) {
-                $loc[] = $kwd->word;
+                $loc[] = $x;
             }
         }
     }
@@ -113,50 +118,51 @@ function show_projects() {
     echo "<p></p>";
 }
 
-// return list of all keywords of given category
-// List items are array (id, word)
+// Return array of keywords of given category
+// Entries are of the form id=>word
 //
 function keyword_subset($keywords, $category) {
     $x = array();
     foreach ($keywords as $k) {
         if ($k->category != $category) continue;
-        $x[] = array($k->id, $k->word);
+        $x[$k->id] = $k->word;
     }
     return $x;
 }
 
-// given keyword list (of the form above),
-// return boolean array of ones a project has
+// given keyword array of the form above,
+// return a corresponding array of ones a project has
+// (fraction, or -1 if not present)
 //
-function keyword_flags($keywords, $category, $project_id) {
-    $pks = SUProjectKeyword::enum("project_id=$project_id");
-    $pwords = array();
-    foreach ($pks as $pk) {
-        // could do this more efficiently with a join
-        //
-        $kw = SUKeyword::lookup_id($pk->keyword_id);
-        $pwords[] = $kw->id;
+function keyword_fracs($keywords, $category, $project_id) {
+    $x = array();
+    foreach ($keywords as $id=>$word) {
+        $x[$id] = -1;
     }
 
-    $flags = array();
-    foreach ($keywords as $k) {
-        $flags[] = in_array($k[0], $pwords);
+    $pks = SUProjectKeyword::enum("project_id=$project_id");
+    foreach ($pks as $pk) {
+        $x[$pk->keyword_id] = $pk->work_fraction;
     }
-    return $flags;
+
+    return $x;
 }
 
 // generate checkboxes for the given keywords.
 // names are of the form kw_ID
 //
-function keyword_checkboxes($kws, $flags) {
+function keyword_checkboxes($kws, $fracs=null) {
     start_table();
     $i = 0;
-    foreach ($kws as $kw) {
-        $checked = $flags?($flags[$i]?"checked":""):"";
-        row2($kw[1],
-            sprintf('<input type="checkbox" name="kw_%s" %s>',
-                $kw[0],
-                $checked
+    foreach ($kws as $id=>$word) {
+        $checked = $fracs?($fracs[$id]>=0?"checked":""):"";
+        $frac = $fracs?($fracs[$id]>=0?$fracs[$id]*100:""):"";
+        row2($word,
+            sprintf('<input type="checkbox" name="kw_%s" %s> %% of work: <input name="kwf_%s" size=6 value="%s">',
+                $id,
+                $checked,
+                $id,
+                $frac
             )
         );
         $i++;
@@ -177,17 +183,11 @@ function add_project_form() {
     $loc_keywds = keyword_subset($keywds, LOCATION);
     if (count($sci_keywds)>0) {
         echo "<h3>Science keywords</h3>\n";
-        keyword_checkboxes(
-            $sci_keywds,
-            null
-        );
+        keyword_checkboxes($sci_keywds);
     }
     if (count($loc_keywds)>0) {
         echo "<h3>Location keywords</h3>\n";
-        keyword_checkboxes(
-            $loc_keywds,
-            null
-        );
+        keyword_checkboxes($loc_keywds);
     }
     form_submit('OK');
     form_end();
@@ -222,23 +222,19 @@ function edit_project_form() {
     form_input_text('Allocation', 'alloc', $p->allocation, 'number');
     $keywds = SUKeyword::enum();
     $sci_keywds = keyword_subset($keywds, SCIENCE);
-    $sci_flags = keyword_flags($sci_keywds, SCIENCE, $p->id);
+    $sci_fracs = keyword_fracs($sci_keywds, SCIENCE, $p->id);
     $loc_keywds = keyword_subset($keywds, LOCATION);
-    $loc_flags = keyword_flags($loc_keywds, LOCATION, $p->id);
-    keyword_checkboxes(
-        $sci_keywds,
-        $sci_flags
-    );
-    keyword_checkboxes(
-        $loc_keywds,
-        $loc_flags
-    );
+    $loc_fracs = keyword_fracs($loc_keywds, LOCATION, $p->id);
+    echo "<h3>Science area keywords</h3>";
+    keyword_checkboxes($sci_keywds, $sci_fracs);
+    echo "<h3>Location keywords</h3>";
+    keyword_checkboxes($loc_keywds, $loc_fracs);
     form_submit('OK');
     form_end();
     page_tail();
 }
 
-// return list of kw IDs from GET args
+// return array of kwID=>frac from GET args
 //
 function get_kw_ids() {
     $kws = SUKeyword::enum();
@@ -246,7 +242,7 @@ function get_kw_ids() {
     foreach ($kws as $kw) {
         $name ="kw_$kw->id";
         if (get_str($name, true)) {
-            $x[] = $kw->id;
+            $x[$kw->id] = get_int("kwf_$kw->id")/100.;
         }
     }
     return $x;
@@ -274,11 +270,12 @@ function update_keywords($p, $new_kw_ids) {
     // remove old ones not in new list
     //
     foreach ($old_kw_ids as $id) {
-        if (!in_array($id, $new_kw_ids)) {
-            echo "$id not in list - deleting\n";
-            $ret = SUProjectKeyword::delete(
-                "project_id=$p->id and keyword_id=$id"
-            );
+        if (!array_key_exists($id, $new_kw_ids)) {
+            //echo "$id not in list - deleting\n";
+            $pkw = new SUProjectKeyword;
+            $pkw->project_id = $p->id;
+            $pkw->keyword_id = $id;
+            $ret = $pkw->delete();
             if (!$ret) {
                 error_page("keyword delete failed");
             }
@@ -287,10 +284,10 @@ function update_keywords($p, $new_kw_ids) {
 
     // add new ones
     //
-    foreach ($new_kw_ids as $id) {
+    foreach ($new_kw_ids as $id=>$frac) {
         if (!in_array($id, $old_kw_ids)) {
             $ret = SUProjectKeyword::insert(
-                "(project_id, keyword_id) values ($p->id, $id)"
+                "(project_id, keyword_id, work_fraction) values ($p->id, $id, $frac)"
             );
             if (!$ret) {
                 error_page("keyword insert failed");

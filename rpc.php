@@ -30,6 +30,7 @@ require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
 
 require_once("../inc/su_db.inc");
+require_once("../inc/su_schedule.inc");
 
 define('COBBLESTONE_SCALE', 200./86400e9);
 
@@ -44,54 +45,6 @@ function su_error($num, $msg) {
 </acct_mgr_reply>
 ";
     exit;
-}
-
-// if user has a pref for this keyword, return -1/1, else 0
-//
-function keyword_score($kw_id, $ukws) {
-    foreach ($ukws as $ukw) {
-        if ($ukw->keyword_id == $kw_id) {
-            return $ukw->type;
-        }
-    }
-    return 0;
-}
-
-// compute a score for this project, given user prefs.
-// higher = more preferable
-// -1 means don't use
-//
-function project_score($project, $ukws) {
-    $pkws = SUProjectKeyword::enum("project_id = $project->id");
-    $score = 0;
-    foreach ($pkws as $pwk) {
-        $s = keyword_score($pwk->keyword_id, $ukws);
-        if ($s == KW_NO) {
-            return -1;
-        }
-        $score += $s;
-    }
-    return $score*$project->allocation;
-
-    // TODO: give an edge to projects the host is already running
-}
-
-// return list of projects ordered by descending score
-//
-function rank_projects($user, $host) {
-    $ukws = SUUserKeyword::enum("user_id=$user->id");
-    $projects = SUProject::enum();
-    foreach ($projects as $p) {
-        $p->score = project_score($p, $ukws);
-    }
-    usort($projects,
-        function($x, $y){
-            if ($x->score < $y->score) return 1;
-            if ($x->score == $y->score) return 0;
-            return -1;
-        }
-    );
-    return $projects;
 }
 
 // $accounts is an array of array(project, account)
@@ -421,38 +374,6 @@ function do_accounting($req, $user, $host) {
     if (!$ret) su_error(-1, "acc->update failed");
 }
 
-// decide what projects to have this host run.
-//
-function choose_projects($user, $host) {
-    $projects = rank_projects($user, $host);
-    $n = 0;
-    $accounts_to_send = array();
-    foreach ($projects as $p) {
-        $account = SUAccount::lookup(
-            "project_id = $p->id and user_id = $user->id"
-        );
-        if ($account) {
-            if ($account->state == ACCT_SUCCESS) {
-                $accounts_to_send[] = array($p, $account);
-                $n++;
-                if ($n == 3) break;
-            } else {
-                continue;
-            }
-        } else {
-            $ret = SUAccount::insert(
-                sprintf("(project_id, user_id, state) values (%d, %d, %d)",
-                    $p->id, $user->id, INIT
-                )
-            );
-            if (!$ret) {
-                su_error(-1, "account insert failed");
-            }
-        }
-    }
-    return $accounts_to_send;
-}
-
 function main() {
     global $now;
 
@@ -468,7 +389,7 @@ function main() {
 
     list($user, $host) = lookup_records($req);
     do_accounting($req, $user, $host);
-    $accounts_to_send = choose_projects($user, $host);
+    $accounts_to_send = choose_projects_rpc($user, $host);
     send_reply($host, $accounts_to_send);
 }
 

@@ -45,6 +45,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     //
     $fn = tempnam("/tmp", "su_data");
     $f = fopen($fn, "w");
+    $have_gpu = false;
     foreach ($accts as $a) {
         if ($what == "job") {
             fprintf($f, "%f %d %d\n",
@@ -54,10 +55,16 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             fprintf($f, "%f %f %f\n",
                 $a->create_time, $a->cpu_time_delta, $a->gpu_time_delta
             );
+            if ($a->gpu_time_delta) {
+                $have_gpu = true;
+            }
         } else if ($what = "ec") {
             fprintf($f, "%f %f %f\n",
                 $a->create_time, $a->cpu_ec_delta, $a->gpu_ec_delta
             );
+            if ($a->gpu_ec_delta) {
+                $have_gpu = true;
+            }
         }
     }
     fclose($f);
@@ -68,6 +75,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $g = fopen($gn, 'c');
     fprintf($g,
         'set terminal png size %s,%s
+        set xdata time
+        set timefmt "%%s"
         plot "%s" using 1:2 with linespoints title "CPU time", "%s" using 1:3 with linespoints title "GPU time"
         ',
         $xsize, $ysize, $fn, $fn
