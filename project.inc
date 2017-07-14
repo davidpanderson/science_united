@@ -76,7 +76,7 @@ function su_navbar_right($user) {
     if (!$is_login_page) {
         if ($user) {
             echo sprintf('
-                <li><a href=%shome.php>'.$user->name.'</a></li>
+                <li><a href=%ssu_home.php>'.$user->name.'</a></li>
                 ', url_base()
             );
             $url_tokens = url_tokens($user->authenticator);
@@ -164,7 +164,7 @@ function su_navbar(
 function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
         echo '<center><font size=+6>'.PROJECT.'</font>';
-        echo '<br><font size=+1>Science research at home</font></center>
+        echo '<br><font size=+1>Science research on your computer, tablet, or phone</font></center>
             <p>
         ';
         //echo '<center><img class="img-responsive" src="logo.png"></center>';

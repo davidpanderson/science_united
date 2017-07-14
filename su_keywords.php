@@ -18,6 +18,8 @@
 
 // admin interface for add/edit/remove keywords
 
+DEPRECATED
+
 require_once("../inc/su.inc");
 require_once("../inc/util.inc");
 

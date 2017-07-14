@@ -20,7 +20,6 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // script to populate the SU database
-// - a set of keywords
 // - a set of projects
 // - a set of users
 // - random accounts
@@ -30,35 +29,10 @@
 
 require_once("../inc/su_db.inc");
 require_once("../inc/user_util.inc");
+require_once("../inc/keywords.inc");
 
-function make_keyword($word, $category, $level) {
-    global $keywords;
-    $id = SUKeyword::insert("(word, category, level) values ('$word', $category, $level)");
-}
-
-function make_keywords() {
-    make_keyword("Biomedicine", SCIENCE, 0);
-    make_keyword("Basic Science", SCIENCE, 0);
-    make_keyword("Earth Science", SCIENCE, 0);
-    make_keyword("Astronomy", SCIENCE, 0);
-    make_keyword("Math and Computer Science", SCIENCE, 0);
-
-    make_keyword("SETI", SCIENCE, 1);
-    make_keyword("Physics", SCIENCE, 1);
-    make_keyword("Chemistry", SCIENCE, 1);
-    make_keyword("Nanoscience", SCIENCE, 1);
-
-    make_keyword("Europe", LOCATION, 0);
-    make_keyword("Asia", LOCATION, 0);
-    make_keyword("United States", LOCATION, 0);
-
-    make_keyword("UC Berkeley", LOCATION, 1);
-    make_keyword("CERN", LOCATION, 1);
-    make_keyword("U. Texas", LOCATION, 1);
-    make_keyword("Purdue", LOCATION, 1);
-}
-
-function make_project($name, $url, $keywords) {
+function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
+    global $job_keywords;
     $now = time();
     $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
     $out = array();
@@ -67,71 +41,84 @@ function make_project($name, $url, $keywords) {
     if ($retval) {
         die("$cmd failed\n");
     }
+    if (!$web_rpc_url_base) {
+        $web_rpc_url_base = $url;
+    }
     $url_signature = implode("\n", $out);
-    $id = SUProject::insert("(create_time, name, url, url_signature, allocation) values ($now, '$name', '$url', '$url_signature', 10)");
+    $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, allocation) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10)");
 
     foreach ($keywords as $k) {
-        $word = $k[0];
+        $kw_id = $k[0];
         $frac = $k[1];
-        $kw = SUKeyword::lookup("word='$word'");
-        if (!$kw) {
-            echo "Can't find keyword $word\n";
-            continue;
+        while (true) {
+            // insert all ancestors too
+            //
+            SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw_id, $frac)");
+            $kw = $job_keywords[$kw_id];
+            if ($kw->level > 0) {
+                $kw_id = $kw->parent;
+            } else {
+                break;
+            }
         }
-        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw->id, $frac)");
     }
 }
 
 function make_projects() {
-    make_project("CERN",
-        "http://lhcathome.cern.ch/",
+    make_project("LHC@home",
+        "https://lhcathome.cern.ch/lhcathome/",
         array(
-            array("Physics", 1),
-            array("Basic Science", 1),
-            array("Europe", 1),
-            array("CERN", 1),
+            array(KW_PARTICLE_PHYSICS, 1),
+            array(KW_CERN, 1),
         )
     );
     make_project("SETI@home",
         "http://setiathome.berkeley.edu/",
         array(
-            array("Astronomy", 1),
-            array("SETI", 1),
-            array("United States", 1),
-            array("UC Berkeley", 1),
-        )
+            array(KW_SETI, 1),
+            array(KW_UCB, 1),
+        ),
+        "https://setiathome.berkeley.edu/"
     );
     make_project("Rosetta@home",
         "http://boinc.bakerlab.org/rosetta/",
         array(
-            array("Biomedicine", 1),
-            array("United States", 1),
+            array(KW_PROTEINS, 1),
+            array(KW_UW, 1),
         )
     );
-    make_project("World Community Grid",
-        "http://www.worldcommunitygrid.org/",
+    make_project("BOINC Test Project",
+        "http://boinc.berkeley.edu/test/",
         array(
-            array("Biomedicine", .5),
-            array("Earth Science", .7),
-            array("United States", .5),
+            array(KW_MATH_CS, 1),
+            array(KW_UCB, 1),
         )
     );
 }
 if (0) {
-    make_project("Herd",
+    // WCG is problematic because it doesn't use email addr for user ID
+    make_project("World Community Grid",
+        "http://www.worldcommunitygrid.org/",
         array(
-            array("Biomedicine", .5),
-            array("Basic Science", .7),
-            array("United States", 1),
-            array("U. Texas", .1),
+            array(KW_BIOMED, .5),
+            array(KW_EARTH_SCI, .7),
+            array(KW_US, .5),
+        ),
+        "https://www.worldcommunitygrid.org/"
+    );
+    make_project("Herd",
+        "",
+        array(
+            array(KW_BIOMED, .5),
+            array(KW_PHYSICS, .7),
+            array(KW_US, 1),
         )
     );
     make_project("nanoHUB",
+        "",
         array(
-            array("Nanoscience", 1),
-            array("Basic Science", 1),
-            array("United States", 1),
-            array("Purdue", .3),
+            array(KW_NANOSCIENCE, 1),
+            array(KW_US, 1),
         )
     );
 }
@@ -143,9 +130,6 @@ function su_make_user($name) {
 }
 
 function make_users() {
-    su_make_user("David");
-    su_make_user("Carol");
-    su_make_user("Luke");
     su_make_user("Bob");
     su_make_user("Steve");
     su_make_user("Mary");
@@ -157,9 +141,6 @@ function make_users() {
 }
 
 function clean() {
-    foreach (SUKeyword::enum() as $k) {
-        $k->delete();
-    }
     foreach (SUProject::enum() as $p) {
         $p->delete();
     }
@@ -305,11 +286,9 @@ function make_accounting() {
 }
 
 clean();
-make_keywords();
 make_projects();
 make_users();
 make_accounts();
 make_accounting();
-
 
 ?>

@@ -26,7 +26,7 @@ require_once("../inc/su_db.inc");
 function keyword_score($kw_id, $ukws) {
     foreach ($ukws as $ukw) {
         if ($ukw->keyword_id == $kw_id) {
-            return $ukw->type;
+            return $ukw->yesno;
         }
     }
     return 0;
@@ -61,7 +61,6 @@ function rank_projects($user, $host=null) {
     $projects = SUProject::enum();
     foreach ($projects as $p) {
         $p->score = project_score($p, $ukws);
-        echo "<p>project $p->name score $p->score\n";
     }
     usort($projects,
         function($x, $y){

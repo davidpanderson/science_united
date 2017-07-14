@@ -1,4 +1,3 @@
-drop table su_keyword;
 drop table su_project;
 drop table su_allocation;
 drop table su_project_keyword;

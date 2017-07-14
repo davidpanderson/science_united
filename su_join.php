@@ -23,15 +23,18 @@ require_once("../inc/user_util.inc");
 require_once("../inc/account.inc");
 require_once("../inc/recaptchalib.php");
 
+require_once("../inc/keywords.inc");
 require_once("../inc/su.inc");
 require_once("../inc/su_schedule.inc");
 
 function keyword_prefs_form() {
-    $kwds = SUKeyword::enum("category=0 and level=0");
+    global $job_keywords;
 
     $items = array();
-    foreach ($kwds as $k) {
-        $items[] = array("keywd_".$k->id, $k->word);
+    foreach ($job_keywords as $id=>$k) {
+        if ($k->category != KW_CATEGORY_SCIENCE) continue;
+        if ($k->level > 0) continue;
+        $items[] = array("keywd_".$id, $k->name);
     }
     form_checkboxes(
         "Check the areas of science you most want to support",
@@ -74,19 +77,21 @@ function show_form() {
 // - user/keyword records
 //
 function handle_submit() {
+    global $job_keywords;
     $user = validate_post_make_user();
     if (!$user) {
         error_page("Couldn't create user record");
     }
     $usage = post_str("usage");
     $user->update("global_prefs='$usage'");
-    $kwds = SUKeyword::enum("category=0 and level=0");
-    foreach ($kwds as $k) {
-        $x = "keywd_".$k->id;
+    foreach ($job_keywords as $id=>$k) {
+        if ($k->category != KW_CATEGORY_SCIENCE) continue;
+        if ($k->level > 0) continue;
+        $x = "keywd_".$id;
         if (post_str($x, true)) {
             SUUserKeyword::insert(
                 sprintf("(user_id, keyword_id, type) values (%d, %d, %d)",
-                    $user->id, $k->id, KW_YES
+                    $user->id, $id, KW_YES
                 )
             );
         }

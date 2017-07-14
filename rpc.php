@@ -47,9 +47,26 @@ function su_error($num, $msg) {
     exit;
 }
 
+function send_user_keywords($user) {
+    echo '<scheduler_info>
+    <keywords>
+';
+    $ukws = SUUserKeyword::enum("user_id=$user->id");
+    foreach ($ukws as $ukw) {
+        if ($ukw->yesno > 0) {
+            echo "      <ykw>$ukw->keyword_id</ykw>\n";
+        } else {
+            echo "      <nkw>$ukw->keyword_id</nkw>\n";
+        }
+    }
+    echo '  </keywords>
+</scheduler_info>
+';
+}
+
 // $accounts is an array of array(project, account)
 //
-function send_reply($host, $accounts) {
+function send_reply($user, $host, $accounts) {
     echo "<acct_mgr_reply>\n"
         ."<name>Science United</name>\n"
         ."<signing_key>\n"
@@ -58,14 +75,17 @@ function send_reply($host, $accounts) {
     echo "</signing_key>\n"
         ."<repeat_sec>86400</repeat_sec>\n"
     ;
+    send_user_keywords($user);
     foreach ($accounts as $a) {
         $proj = $a[0];
         $acct = $a[1];
         echo "<account>\n"
-            ."<url>$proj->url</url>\n"
-            ."<url_signature>\n$proj->url_signature\n</url_signature>\n"
-            ."<authenticator>$acct->authenticator</authenticator>\n"
-            ."</account>\n"
+            ."   <url>$proj->url</url>\n"
+            ."   <url_signature>\n$proj->url_signature\n</url_signature>\n"
+            ."   <authenticator>$acct->authenticator</authenticator>\n"
+        ;
+
+        echo "</account>\n"
         ;
     }
     echo "   <opaque><host_id>$host->id</host_id></opaque>\n"
@@ -377,8 +397,8 @@ function do_accounting($req, $user, $host) {
 function main() {
     global $now;
 
-    $req = simplexml_load_file('php://input');
-    //$req = simplexml_load_file('req.xml');
+    //$req = simplexml_load_file('php://input');
+    $req = simplexml_load_file('req.xml');
     if (!$req) {
         su_error(-1, "can't parse request");
     }
@@ -390,7 +410,7 @@ function main() {
     list($user, $host) = lookup_records($req);
     do_accounting($req, $user, $host);
     $accounts_to_send = choose_projects_rpc($user, $host);
-    send_reply($host, $accounts_to_send);
+    send_reply($user, $host, $accounts_to_send);
 }
 
 main();

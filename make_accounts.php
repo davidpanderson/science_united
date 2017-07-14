@@ -30,7 +30,7 @@ require_once("../inc/su_db.inc");
 function main() {
     $now = time();
     $accts = SUAccount::enum(
-        sprintf("state=%d or (state=%d and retry_time>%d)", INIT, ACCT_TRANSIENT_ERROR, $now)
+        sprintf("state=%d or (state=%d and retry_time>%d)", ACCT_INIT, ACCT_TRANSIENT_ERROR, $now)
     );
     foreach ($accts as $acct) {
         $user = BoincUser::lookup_id($acct->user_id);
@@ -41,7 +41,7 @@ function main() {
         }
         echo "making account for user $user->id on $project->name\n";
         list($auth, $err, $msg) = create_account(
-            $project->url,
+            $project->web_rpc_url_base,
             $user->email_addr,
             $user->passwd_hash,
             $user->name

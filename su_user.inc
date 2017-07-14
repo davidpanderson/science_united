@@ -52,6 +52,7 @@ function show_download($user) {
             Try <a href=su_download.php>re-installing it</a>.
             If you need help,
             <a href=https://boinc.berkeley.edu/help.php>go here</a>.
+            <br>
         ";
         return;
     }
@@ -60,6 +61,7 @@ function show_download($user) {
         echo WARNING."None of your computers has contacted us in the last ".time_diff($dt, 0)." ago.
             Please check that BOINC is running.
             You may need to <a href=su_download.php>re-install BOINC</a>.
+            <br>
         ";
         return;
     }
@@ -70,7 +72,8 @@ function show_download($user) {
         $cv = boinc_version($host->serialnum);
         if (version_compare($cv, CURRENT_CLIENT_VERSION) < 0) {
             echo WARNING."Your computer $host->domain_name is running an old version of BOINC.
-                Please <a href=su_download.php>upgrade to the current version</a>.
+                Please <a href=su_download_info.php>upgrade to the current version</a>.
+                <br>
             ";
         }
     }
@@ -78,17 +81,20 @@ function show_download($user) {
 
 function show_problem_accounts($user) {
     $accts = SUAccount::enum("user_id=$user->id");
+    $x = "";
     foreach ($accts as $a) {
         if ($a->state == ACCT_DIFFERENT_PASSWORD) {
             $p = SUProject::lookup_id($a->project_id);
-            echo WARNING.sprintf("You have an account on <a href=%s>%s</a>,
-                but we can't access it because it has a different password.
-                Please log in to that project and change your password
-                to the one you're using for %s.",
-                $p->url, $p->name, PROJECT
+            if ($x) $x .= "<br>";
+            $x .= WARNING;
+            $x .= sprintf('You already have an account on %s,
+                but we can\'t access it because it has a different password.
+                <a href=su_connect.php?id=%d>Click here to resolve</a>.',
+                $p->name, $a->project_id
             );
         }
     }
+    echo $x;
 }
 
 // show keywords of recent jobs

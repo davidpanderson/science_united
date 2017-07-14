@@ -19,6 +19,7 @@
 // user page for editing keyword prefs
 
 require_once("../inc/util.inc");
+require_once("../inc/keywords.inc");
 
 require_once("su_db.inc");
 require_once("su.inc");
@@ -27,18 +28,19 @@ require_once("su.inc");
 
 // show keywords w/ radio buttons
 //
-function show_keywords_checkbox($kws, $ukws, $category, $level) {
+function show_keywords_checkbox($ukws, $category, $level) {
+    global $job_keywords;
     $uprefs = array();
-    foreach ($ukws as $uwk) {
-        $uprefs[$uwk->keyword_id] = $uwk->type;
+    foreach ($ukws as $ukw) {
+        $uprefs[$ukw->keyword_id] = $ukw->yesno;
     }
     row_heading_array(array('', 'Yes', 'Maybe', 'No'), null, 'bg-default');
-    foreach ($kws as $kw) {
+    foreach ($job_keywords as $kwid=>$kw) {
         $yes = $maybe = $no = '';
         if ($kw->category != $category) continue;
         if ($kw->level != $level) continue;
-        if (array_key_exists($kw->id, $uprefs)) {
-            switch ($uprefs[$kw->id]) {
+        if (array_key_exists($kwid, $uprefs)) {
+            switch ($uprefs[$kwid]) {
             case KW_YES:
                 $yes = 'checked';
                 break;
@@ -49,9 +51,9 @@ function show_keywords_checkbox($kws, $ukws, $category, $level) {
         } else {
             $maybe = 'checked';
         }
-        $name = "kw_$kw->id";
+        $name = "kw_$kwid";
         table_row(
-            $kw->word,
+            $kw->name,
             sprintf('<input type="radio" name="%s" value="%d" %s>',
                 $name, KW_YES, $yes
             ),
@@ -65,23 +67,13 @@ function show_keywords_checkbox($kws, $ukws, $category, $level) {
     }
 }
 
-// lookup keyword by ID in list
-//
-function get_keyword($kws, $id) {
-    foreach ($kws as $kw) {
-        if ($kw->id == $id) {
-            return $kw;
-        }
-    }
-    return null;
-}
-
 // return the max level of any keyword the user has set in the given category
 //
-function max_level($ukws, $kws, $category) {
+function max_level($ukws, $category) {
+    global $job_keywords;
     $max = 0;
     foreach ($ukws as $ukw) {
-        $kw = get_keyword($kws, $ukw->keyword_id);
+        $kw = $job_keywords[$ukw->keyword_id];
         if ($kw->category != $category) {
             continue;
         }
@@ -96,12 +88,11 @@ function prefs_edit_form($user, $area_level, $loc_level) {
     page_head("Edit preferences");
     form_start('su_prefs.php');
     form_input_hidden('action', 'prefs_edit_action');
-    $kws = SUKeyword::enum();
     $ukws = SUUserKeyword::enum("user_id = $user->id");
 
     start_table('table-striped');
 
-    $x = max_level($ukws, $kws, SCIENCE);
+    $x = max_level($ukws, KW_CATEGORY_SCIENCE);
     if ($x > $area_level) {
         $area_level = $x;
     }
@@ -113,15 +104,15 @@ function prefs_edit_form($user, $area_level, $loc_level) {
     }
     row_heading($y, "bg-info");
     if ($area_level == 0) {
-        show_keywords_checkbox($kws, $ukws, SCIENCE, 0);
+        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 0);
     } else {
         row_heading("General", "bg-default");
-        show_keywords_checkbox($kws, $ukws, SCIENCE, 0);
+        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 0);
         row_heading("Specific", "bg-default");
-        show_keywords_checkbox($kws, $ukws, SCIENCE, 1);
+        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 1);
     }
 
-    $x = max_level($ukws, $kws, LOCATION);
+    $x = max_level($ukws, KW_CATEGORY_LOC);
     if ($x > $loc_level) {
         $loc_level = $x;
     }
@@ -133,12 +124,12 @@ function prefs_edit_form($user, $area_level, $loc_level) {
     }
     row_heading($y, "bg-info");
     if ($loc_level == 0) {
-        show_keywords_checkbox($kws, $ukws, LOCATION, 0);
+        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 0);
     } else {
         row_heading("General", "bg-default");
-        show_keywords_checkbox($kws, $ukws, LOCATION, 0);
+        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 0);
         row_heading("Specific", "bg-default");
-        show_keywords_checkbox($kws, $ukws, LOCATION, 1);
+        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 1);
     }
 
     end_table();
@@ -153,31 +144,31 @@ function prefs_edit_form($user, $area_level, $loc_level) {
 function get_cur_val($kw_id, $ukws) {
     foreach ($ukws as $ukw) {
         if ($ukw->keyword_id != $kw_id) continue;
-        return $ukw->type;
+        return $ukw->yesno;
     }
     return KW_MAYBE;
 }
 
 function prefs_edit_action($user) {
-    $kws = SUKeyword::enum();
+    global $job_keywords;
     $ukws = SUUserKeyword::enum("user_id=$user->id");
-    foreach ($kws as $kw) {
-        $name = "kw_$kw->id";
+    foreach ($job_keywords as $kwid=>$kw) {
+        $name = "kw_$kwid";
         $val = get_int($name, true);
-        $cur_val = get_cur_val($kw->id, $ukws);
+        $cur_val = get_cur_val($kwid, $ukws);
         if ($val == $cur_val) continue;
         switch ($val) {
         case KW_NO:
         case KW_YES:
             if ($cur_val == KW_MAYBE) {
-                SUUserKeyword::insert("(user_id, keyword_id, type) values ($user->id, $kw->id, $val)");
+                SUUserKeyword::insert("(user_id, keyword_id, yesno) values ($user->id, $kwid, $val)");
             } else {
-                SUUserKeyword::update("type=$val where user_id=$user->id and keyword_id=$kw->id");
+                SUUserKeyword::update("yesno=$val where user_id=$user->id and keyword_id=$kwid");
             }
             break;
         case KW_MAYBE:
             $ukw = new SUUserKeyword;
-            $ukw->keyword_id = $kw->id;
+            $ukw->keyword_id = $kwid;
             $ukw->user_id = $user->id;
             $ukw->delete();
             break;

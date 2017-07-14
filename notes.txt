@@ -328,14 +328,25 @@ Getting started (su_intro.php)
     join a team
 --------------------
 User account page (su_home.php)
-    like BOINC home page
+    like BOINC home page:
+    left:
+        problem accounts
         graphs of recent work
-        link to problem accounts
+        link to list of hosts
         links to prefs
             keywords
             computing prefs
             community prefs
+    right:
+        account info
         social functions
+--------------------
+host list (su_hosts.php)
+    columns:
+    name
+    boinc version
+    last RPC
+    active projects
 --------------------
 keyword prefs edit page (su_prefs.php)
     show list of major keywords, yes/maybe/no radio buttons
@@ -347,7 +358,7 @@ global prefs edit page
         show radio buttons
         link to all prefs
 --------------------
-problem account page
+connect account page (su_connect.php>
     explain the problem
     show list of problem accounts; click for details
     details page:

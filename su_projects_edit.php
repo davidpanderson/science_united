@@ -21,13 +21,13 @@
 require_once("../inc/util.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
+require_once("../inc/keywords.inc");
 
 function array_to_string($arr) {
     $x = "";
     foreach ($arr as $y) {
         $pkw = $y[0];
-        $kwd = $y[1];
-        $wd = $kwd->word;
+        $wd = $y[1];
         $frac = $pkw->work_fraction;
         $pct = $frac*100;
         if ($x) {
@@ -39,6 +39,8 @@ function array_to_string($arr) {
 }
 
 function su_show_project() {
+    global $job_keywords;
+
     $id = get_int('id');
     $project = SUProject::lookup_id($id);
     if (!$project) {
@@ -55,12 +57,12 @@ function su_show_project() {
     $loc = array();
     if ($pks) {
         foreach ($pks as $pk) {
-            $kwd = SUKeyword::lookup_id($pk->keyword_id);
-            $x = array($pk, $kwd);
-            if ($kwd->category == SCIENCE) {
+            $kwd = $job_keywords[$pk->keyword_id];
+            $x = array($pk, $kwd->name);
+            if ($kwd->category == KW_CATEGORY_SCIENCE) {
                 $sci[] = $x;
             }
-            if ($kwd->category == LOCATION) {
+            if ($kwd->category == KW_CATEGORY_LOC) {
                 $loc[] = $x;
             }
         }
@@ -74,15 +76,17 @@ function su_show_project() {
 }
 
 function project_kw_string($p, $category) {
+    global $job_keywords;
+
     $x = "";
     $pkws = SUProjectKeyword::enum("project_id=$p->id");
     $first = true;
     foreach ($pkws as $pkw) {
-        $kw = SUKeyword::lookup_id($pkw->keyword_id);
+        $kw = $job_keywords[$pkw->keyword_id];
         if ($kw->category != $category) continue;
         if (!$first) $x .= ', ';
         $first = false;
-        $x .= $kw->word;
+        $x .= $kw->name;
     }
     return $x;
 }
@@ -121,11 +125,12 @@ function show_projects() {
 // Return array of keywords of given category
 // Entries are of the form id=>word
 //
-function keyword_subset($keywords, $category) {
+function keyword_subset($category) {
+    global $job_keywords;
     $x = array();
-    foreach ($keywords as $k) {
+    foreach ($job_keywords as $id=>$k) {
         if ($k->category != $category) continue;
-        $x[$k->id] = $k->word;
+        $x[$id] = $k->name;
     }
     return $x;
 }
@@ -178,9 +183,8 @@ function add_project_form() {
     form_input_text('URL', 'url');
     form_input_textarea('URL signature', 'url_signature');
     form_input_text('Allocation', 'alloc', '', 'number');
-    $keywds = SUKeyword::enum("");
-    $sci_keywds = keyword_subset($keywds, SCIENCE);
-    $loc_keywds = keyword_subset($keywds, LOCATION);
+    $sci_keywds = keyword_subset(SCIENCE);
+    $loc_keywds = keyword_subset(LOCATION);
     if (count($sci_keywds)>0) {
         echo "<h3>Science keywords</h3>\n";
         keyword_checkboxes($sci_keywds);
@@ -220,10 +224,9 @@ function edit_project_form() {
     form_input_text('URL', 'url', $p->url, 'text', 'disabled');
     form_input_text('Name', 'name', $p->name);
     form_input_text('Allocation', 'alloc', $p->allocation, 'number');
-    $keywds = SUKeyword::enum();
-    $sci_keywds = keyword_subset($keywds, SCIENCE);
+    $sci_keywds = keyword_subset(SCIENCE);
     $sci_fracs = keyword_fracs($sci_keywds, SCIENCE, $p->id);
-    $loc_keywds = keyword_subset($keywds, LOCATION);
+    $loc_keywds = keyword_subset(LOCATION);
     $loc_fracs = keyword_fracs($loc_keywds, LOCATION, $p->id);
     echo "<h3>Science area keywords</h3>";
     keyword_checkboxes($sci_keywds, $sci_fracs);
@@ -237,12 +240,12 @@ function edit_project_form() {
 // return array of kwID=>frac from GET args
 //
 function get_kw_ids() {
-    $kws = SUKeyword::enum();
+    global $job_keywords;
     $x = array();
-    foreach ($kws as $kw) {
-        $name ="kw_$kw->id";
+    foreach ($job_keywords as $kwid=>$kw) {
+        $name ="kw_$kwid";
         if (get_str($name, true)) {
-            $x[$kw->id] = get_int("kwf_$kw->id")/100.;
+            $x[$kwid] = get_int("kwf_$kwid")/100.;
         }
     }
     return $x;
@@ -256,16 +259,12 @@ function update_keywords($p, $new_kw_ids) {
     //
     $old_kw_assocs = SUProjectKeyword::enum("project_id=$p->id");
 
-    // get corresponding list of keyword objects
+    // get corresponding list of keyword IDs
     //
-    $old_kws = array_map(
-        function($x){return SUKeyword::lookup_id($x->keyword_id);},
+    $old_kw_ids = array_map(
+        function($x){return $x->keyword_id;},
         $old_kw_assocs
     );
-
-    // and list of IDs
-    //
-    $old_kw_ids = array_map(function($x) {return $x->id;}, $old_kws);
 
     // remove old ones not in new list
     //
