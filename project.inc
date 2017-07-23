@@ -9,7 +9,8 @@
 require_once("../inc/util.inc");
 
 $master_url = parse_config(get_config(), "<master_url>");
-define("PROJECT", "SCI<span class='iec_power' style='color:green;'>&#x23FB;</span>N");
+define("PROJECT", '<nobr>SCI<img style="vertical-align: text-top; height:1em;" src=power.png>N</nobr>');
+define("PROJECT_WHITE", '<nobr>SCI<img style="vertical-align: text-top; height:1em;" src=power_white.png>N</nobr>');
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
@@ -22,6 +23,7 @@ define("FORUM_QA_MERGED_MODE", true);
     // Set to true to merge Message boards and Q&A section
 define("COPYRIGHT_HOLDER", "UC Berkeley");
 define("SYS_ADMIN_EMAIL", "admin@$master_url");
+define("SHORTCUT_ICON", "power.png");
 define("UOTD_ADMIN_EMAIL", "admin@$master_url");
     // who gets user of the day pool running low e-mails?
 //define("MEMCACHE_SERVERS", "127.0.0.1:11211");
@@ -31,6 +33,7 @@ define ("DISABLE_PROFILES", true);
 define("USE_STOPFORUMSPAM", true);
     // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
+define("USER_HOME", "su_home.php");
 define("INVITE_CODES", '/foobar/');
 
 define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
@@ -112,7 +115,7 @@ function su_navbar(
 
     $x = array();
     if ($user) {
-        $x[] = array(tra("Account"), $url_prefix."home.php");
+        $x[] = array(tra("Account"), $url_prefix."su_home.php");
         $x[] = array(tra("Join"), $url_prefix."join.php");
         $x[] = array(tra("Preferences"), $url_prefix."prefs.php?subset=project");
     }

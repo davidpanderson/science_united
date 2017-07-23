@@ -48,19 +48,17 @@ function su_error($num, $msg) {
 }
 
 function send_user_keywords($user) {
-    echo '<scheduler_info>
-    <keywords>
+    echo '<user_keywords>
 ';
     $ukws = SUUserKeyword::enum("user_id=$user->id");
     foreach ($ukws as $ukw) {
         if ($ukw->yesno > 0) {
-            echo "      <ykw>$ukw->keyword_id</ykw>\n";
+            echo "   <yes>$ukw->keyword_id</yes>\n";
         } else {
-            echo "      <nkw>$ukw->keyword_id</nkw>\n";
+            echo "   <no>$ukw->keyword_id</no>\n";
         }
     }
-    echo '  </keywords>
-</scheduler_info>
+    echo '</user_keywords>
 ';
 }
 
@@ -93,13 +91,26 @@ function send_reply($user, $host, $accounts) {
     ";
 }
 
-function make_serialnum($hi) {
-    return "";
+function make_serialnum($req) {
+    $x = sprintf("[BOINC|%s]", (string)($req->client_version));
+    $c = $req->host_info->coprocs->coproc_cuda;
+    if ($c) {
+        $x .= sprintf("[CUDA|%s|%d]", $c->name, $c->count);
+    }
+    $c = $req->host_info->coprocs->coproc_ati;
+    if ($c) {
+        $x .= sprintf("[CAL|%s|%d]", $c->name, $c->count);
+    }
+    $c = $req->host_info->coprocs->coproc_intel_gpu;
+    if ($c) {
+        $x .= sprintf("[INTEL|%s|%d]", $c->name, $c->count);
+    }
+    return $x;
 }
 
 function update_host($req, $host) {
-    $_SERVER = array();
-    $_SERVER['REMOTE_ADDR'] = "12.4.2.11";
+    //$_SERVER = array();
+    //$_SERVER['REMOTE_ADDR'] = "12.4.2.11";
     global $now;
 
     $hi = $req->host_info;
@@ -113,7 +124,7 @@ function update_host($req, $host) {
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$req->host_cpid);
-    $serialnum = make_serialnum($hi);
+    $serialnum = make_serialnum($req);
     $ip_addr = BoincDb::escape_string((string)$hi->ip_addr);
     $external_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
     $p_ncpus = (int)$hi->p_ncpus;
@@ -397,8 +408,8 @@ function do_accounting($req, $user, $host) {
 function main() {
     global $now;
 
-    //$req = simplexml_load_file('php://input');
-    $req = simplexml_load_file('req.xml');
+    $req = simplexml_load_file('php://input');
+    //$req = simplexml_load_file('req.xml');
     if (!$req) {
         su_error(-1, "can't parse request");
     }

@@ -29,6 +29,7 @@ function su_preference_links() {
         function() {
             echo "<p><a href=su_prefs.php>Science preferences</a>";
             echo "<p><a href=prefs.php?subset=global>Computing preferences</a>";
+            echo "<p><a href=su_hosts.php>Your computers</a>";
         }
     );
 }

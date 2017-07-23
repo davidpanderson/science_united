@@ -17,6 +17,17 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // user page for editing keyword prefs
+//
+// show tree of keywords
+// a list of kws to expand is passed in URL
+// a keyword is expanded if either
+//  - its ID is in expand list
+//  - one of its ancestors has a pref
+//
+// an expanded keyword has a "contract" button if
+// none of its ancestors has a pref
+//
+// a contracted keyword has an "expand" button if it has children
 
 require_once("../inc/util.inc");
 require_once("../inc/keywords.inc");
@@ -26,111 +37,155 @@ require_once("su.inc");
 
 // show/enter/edit prefs
 
+// mark keywords according to whether descendant has user pref
+//
+function flag_keywords(&$ukws) {
+    global $job_keywords;
+    foreach ($job_keywords as $kw) {
+        $kw->has_user_pref = false;
+    }
+    foreach ($ukws as $ukw) {
+        $kw = $job_keywords[$ukw->keyword_id];
+        while (true) {
+            if ($kw->parent) {
+                $kw = $job_keywords[$kw->parent];
+                $kw->has_user_pref = true;
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+function expand_url($add_id, $remove_id) {
+    global $job_keywords;
+    $x = "";
+    foreach ($job_keywords as $id=>$jk) {
+        if ($jk->expand && $id!=$remove_id) {
+            $x .= "$id ";
+        }
+    }
+    if ($add_id) {
+        $x .= "$add_id ";
+    }
+    return "su_prefs.php?expand=$x";
+}
+
+function show_keyword($kwid, $uprefs) {
+    global $job_keywords;
+    $yes = $maybe = $no = '';
+    $kw = $job_keywords[$kwid];
+    if (array_key_exists($kwid, $uprefs)) {
+        switch ($uprefs[$kwid]) {
+        case KW_YES:
+            $yes = 'checked';
+            break;
+        case KW_NO: 
+            $no = 'checked';
+            break;
+        }
+    } else {
+        $maybe = 'checked';
+    }
+    $name = "kw_$kwid";
+    $expand = false;
+    $indent = "";
+    $size = 1.2;
+    for ($i=0; $i<$kw->level; $i++) {
+        $indent .= '<span style="padding-left:2.6em"/>';
+        $size *= .9;
+    }
+    if ($kw->expand || $kw->has_user_pref) {
+        $expand = true;
+        if ($kw->expand) {
+            $x = sprintf('%s<a href="%s">&boxminus;</a> %s', $indent, expand_url(0, $kwid), $kw->name);
+        } else {
+            $x = $indent.$kw->name;
+        }
+    } else {
+        if ($kw->has_descendant) {
+            $x = sprintf('%s<a href="%s">&boxplus;</a> %s', $indent, expand_url($kwid, 0), $kw->name);
+        } else {
+            $x = $indent.$kw->name;
+        }
+    }
+    table_row(
+        sprintf('<span style="font-size:%d%%">%s</span>', (int)($size*100), $x),
+        sprintf('<input type="radio" name="%s" value="%d" %s>',
+            $name, KW_YES, $yes
+        ),
+        sprintf('<input type="radio" name="%s" value="%d" %s>',
+            $name, KW_MAYBE, $maybe
+        ),
+        sprintf('<input type="radio" name="%s" value="%d" %s>',
+            $name, KW_NO, $no
+        )
+    );
+    if ($expand) {
+        foreach ($job_keywords as $id=>$kw) {
+            if ($kw->parent == $kwid) {
+                show_keyword($id, $uprefs);
+            }
+        }
+    }
+}
+
 // show keywords w/ radio buttons
 //
-function show_keywords_checkbox($ukws, $category, $level) {
+function show_keywords_checkbox($ukws, $category) {
     global $job_keywords;
     $uprefs = array();
     foreach ($ukws as $ukw) {
         $uprefs[$ukw->keyword_id] = $ukw->yesno;
     }
-    row_heading_array(array('', 'Yes', 'Maybe', 'No'), null, 'bg-default');
+    row_heading_array(array('', 'Priority', 'As needed', 'Never'), null, 'bg-default');
+
+    // show top-level keywords; we'll recursively decide which others
+    //
     foreach ($job_keywords as $kwid=>$kw) {
-        $yes = $maybe = $no = '';
         if ($kw->category != $category) continue;
-        if ($kw->level != $level) continue;
-        if (array_key_exists($kwid, $uprefs)) {
-            switch ($uprefs[$kwid]) {
-            case KW_YES:
-                $yes = 'checked';
-                break;
-            case KW_NO: 
-                $no = 'checked';
-                break;
-            }
-        } else {
-            $maybe = 'checked';
-        }
-        $name = "kw_$kwid";
-        table_row(
-            $kw->name,
-            sprintf('<input type="radio" name="%s" value="%d" %s>',
-                $name, KW_YES, $yes
-            ),
-            sprintf('<input type="radio" name="%s" value="%d" %s>',
-                $name, KW_MAYBE, $maybe
-            ),
-            sprintf('<input type="radio" name="%s" value="%d" %s>',
-                $name, KW_NO, $no
-            )
-        );
+        if ($kw->level) continue;
+        show_keyword($kwid, $uprefs);
     }
 }
 
-// return the max level of any keyword the user has set in the given category
-//
-function max_level($ukws, $category) {
+function get_kw_properties() {
     global $job_keywords;
-    $max = 0;
-    foreach ($ukws as $ukw) {
-        $kw = $job_keywords[$ukw->keyword_id];
-        if ($kw->category != $category) {
-            continue;
-        }
-        if ($kw->level > $max) {
-            $max = $kw->level;
+    foreach ($job_keywords as $id=>$kw) {
+        $kw->has_descendant = false;
+        $kw->expand = false;
+    }
+    foreach ($job_keywords as $id=>$kw) {
+        while ($kw->level > 0) {
+            $kw = $job_keywords[$kw->parent];
+            $kw->has_descendant = true;
         }
     }
-    return $max;
+    $expand = get_str("expand", true);
+    if ($expand) {
+        $expand = explode(" ", $expand);
+        foreach ($expand as $x) {
+            $x = (int) $x;
+            $job_keywords[$x]->expand = true;
+        }
+    }
 }
 
-function prefs_edit_form($user, $area_level, $loc_level) {
+function prefs_edit_form($user) {
     page_head("Edit preferences");
     form_start('su_prefs.php');
     form_input_hidden('action', 'prefs_edit_action');
     $ukws = SUUserKeyword::enum("user_id = $user->id");
+    flag_keywords($ukws);
 
+    get_kw_properties();
     start_table('table-striped');
 
-    $x = max_level($ukws, KW_CATEGORY_SCIENCE);
-    if ($x > $area_level) {
-        $area_level = $x;
-    }
+    row_heading("Science area", "bg-info");
+    show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE);
 
-    $y = "Science area";
-    if ($area_level == 0) {
-        $z = $loc_level?"&loc_level=$loc_level":"";
-        $y .= "<br><small><a href=su_prefs.php?area_level=1$z>More detail</a></small>";
-    }
-    row_heading($y, "bg-info");
-    if ($area_level == 0) {
-        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 0);
-    } else {
-        row_heading("General", "bg-default");
-        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 0);
-        row_heading("Specific", "bg-default");
-        show_keywords_checkbox($ukws, KW_CATEGORY_SCIENCE, 1);
-    }
-
-    $x = max_level($ukws, KW_CATEGORY_LOC);
-    if ($x > $loc_level) {
-        $loc_level = $x;
-    }
-
-    $y = "Location";
-    if ($loc_level == 0) {
-        $z = $area_level?"&area_level=$area_level":"";
-        $y .= "<br><small><a href=su_prefs.php?loc_level=1$z>More detail</a></small>";
-    }
-    row_heading($y, "bg-info");
-    if ($loc_level == 0) {
-        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 0);
-    } else {
-        row_heading("General", "bg-default");
-        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 0);
-        row_heading("Specific", "bg-default");
-        show_keywords_checkbox($ukws, KW_CATEGORY_LOC, 1);
-    }
+    row_heading("Location", "bg-info");
+    show_keywords_checkbox($ukws, KW_CATEGORY_LOC);
 
     end_table();
     echo '<button type="submit" class="btn btn-success">OK</button>
@@ -179,13 +234,13 @@ function prefs_edit_action($user) {
 
 $user = get_logged_in_user();
 $action = get_str('action', true);
-$area_level = get_int('area_level', true);
-$loc_level = get_int('loc_level', true);
 
 switch ($action) {
+case 'expand':
+    break;
 case 'prefs_edit_form':
 default:
-    prefs_edit_form($user, $area_level, $loc_level);
+    prefs_edit_form($user);
     break;
 case 'prefs_edit_action':
     prefs_edit_action($user);

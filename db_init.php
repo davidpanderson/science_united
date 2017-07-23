@@ -161,11 +161,34 @@ function clean() {
     }
 }
 
+function random_element($list) {
+    return $list[rand(0, count($list)-1)];
+}
+
+// attach each user to about half the projects.
+// Then make sure each project has a user, and each user has a project
+//
 function make_accounts() {
     $users = BoincUser::enum("");
     $projects = SUProject::enum();
     foreach ($users as $u) {
+        $x = false;
         foreach ($projects as $p) {
+            if (drand() > .5) {
+                $x = true;
+                $p->has_user = true;
+                SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
+            }
+        }
+        if (!$x) {
+            $p = random_element($projects);
+            SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
+            $p->has_user = true;
+        }
+    }
+    foreach ($projects as $p) {
+        if (!isset($p->has_user)) {
+            $u = random_element($users);
             SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
         }
     }

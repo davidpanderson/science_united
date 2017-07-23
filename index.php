@@ -35,7 +35,7 @@ require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
 require_once("../inc/su_user.inc");
 
-define('CURRENT_CLIENT_VERSION', '7.8.0');
+define('CURRENT_CLIENT_VERSION', '7.6.0');
 
 $stopped = web_stopped();
 $user = get_logged_in_user(false);
@@ -65,7 +65,7 @@ function user_summary($user) {
 
 function left(){
     global $user, $master_url;
-    $title = $user?"Welcome back, $user->name": tra("What is %1?", PROJECT);
+    $title = $user?"Welcome back, $user->name": tra("Want to be part of science research?", PROJECT);
     panel(
         $title,
         function() use($user) {
@@ -74,13 +74,13 @@ function left(){
             } else {
                 echo sprintf('
                     <p>
-                    %s lets you help scientific research projects
+                    %s lets you join scientific research projects
                     by giving them computing power.
                     These projects do research in astronomy, physics,
                     biomedicine, mathematics, and environmental science;
                     you can pick the areas you want to support.
                     <p>
-                    You help by running a free program on your computer,
+                    You help by installing a free program on your computer,
                     which runs scientific jobs in the background
                     and when you\'re not at the computer.
                     This program is secure and will not
@@ -88,7 +88,7 @@ function left(){
                     </p>
                     ', PROJECT
                 );
-                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
+                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT_WHITE).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
                 ';
             }
         },

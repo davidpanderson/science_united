@@ -405,9 +405,40 @@ on RPC:
     pick N best projects
     if not registered with any of them
         return highest-score project we are registered with
+==================
+client changes
 
--------------
-We need "detach when no more work and AM RPC done" flag on client
+represent user keyword sets as two vector<int>s
+
+The following have keyword sets:
+AM_ACCOUNT
+
+Scheduler request: include
+
+Eventually (to show keywords in GUI),
+client needs to have master keyword list (keywords.xml)
+    bundle with installer;
+    refresh every 2 weeks;
+    refresh if see unknown keyword ID
+The following have keyword sets:
+PROJECT
+WORKUNIT
+
+==================
+server changes
+workunit table has keywords as varchar 256
+WU_RESULT has keywords as string
+scheduler: maintain array of vector<int> corresponding to cache
+    if look at job, keywords nonempty, vector empty: parse
+    when remove from cache, clear vector
+
+remote job submission:
+batch can have keywords
+each job in batch can have keywords
+
+local job submission:
+create_work takes kw ids
+    (multi-job as well as single)
 ==================
 keyword-based scheduling
 
