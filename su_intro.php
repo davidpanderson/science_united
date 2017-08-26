@@ -28,7 +28,7 @@ function main() {
         <p>
         By now you should have downloaded and run BOINC.
         If so, you\'re done!
-        Your computer will do run science jobs in the background,
+        Your computer will run science jobs in the background,
         supporting research in the areas you selected.
         <p>
         Scientists need all the computing power they can get.
