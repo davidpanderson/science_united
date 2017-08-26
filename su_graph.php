@@ -41,6 +41,11 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
         $accts = SUAccounting::enum("create_time>$min_time");
     }
 
+    if (!$accts) {
+        echo "No data";
+        exit;
+    }
+
     // write data to temp file
     //
     $fn = tempnam("/tmp", "su_data");
@@ -73,13 +78,17 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     //
     $gn = tempnam("/tmp", "su_gp");
     $g = fopen($gn, 'c');
+    $plot = sprintf('plot "%s" using 1:2 with linespoints title "CPU time"', $fn);
+    if ($have_gpu) {
+        $plot .= sprintf(', "%s" using 1:3 with linespoints title "GPU time"', $fn);
+    }
     fprintf($g,
         'set terminal png size %s,%s
         set xdata time
         set timefmt "%%s"
-        plot "%s" using 1:2 with linespoints title "CPU time", "%s" using 1:3 with linespoints title "GPU time"
+        %s
         ',
-        $xsize, $ysize, $fn, $fn
+        $xsize, $ysize, $plot
     );
 
     fclose($g);
@@ -92,7 +101,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     unlink($fn);
 }
 
-if (1) {
+if (0) {
     $type = get_str('type');
     $id = get_int('id', true);
     $what = get_str('what');
@@ -102,6 +111,6 @@ if (1) {
     graph($type, $id, $what, $ndays, $xsize, $ysize);
 } else {
     //graph('total', 0, 'job', 100, 800, 600);
-    graph('user', 22040, 'ec', 30, 800, 600);
+    graph('user', 22192, 'ec', 30, 800, 600);
 }
 ?>

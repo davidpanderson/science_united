@@ -2,7 +2,6 @@
 
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
-require_once("../inc/su.inc");
 
 function admin_only() {
     $user = get_logged_in_user();

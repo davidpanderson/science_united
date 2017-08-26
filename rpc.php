@@ -74,6 +74,7 @@ function send_reply($user, $host, $accounts) {
         ."<repeat_sec>86400</repeat_sec>\n"
     ;
     send_user_keywords($user);
+    echo $user->global_prefs;
     foreach ($accounts as $a) {
         $proj = $a[0];
         $acct = $a[1];

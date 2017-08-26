@@ -252,4 +252,8 @@ class SUAccountingUser {
         $db = BoincDb::get();
         return $db->update($this, 'su_accounting_user', $clause);
     }
+    static function count($clause) {
+        $db = BoincDb::get();
+        return $db->count('su_accounting_user', $clause);
+    }
 }

@@ -100,13 +100,13 @@ function show_keyword($kwid, $uprefs) {
         if ($kw->expand) {
             $x = sprintf('%s<a href="%s">&boxminus;</a> %s', $indent, expand_url(0, $kwid), $kw->name);
         } else {
-            $x = $indent.$kw->name;
+            $x = '<span style="margin-left:1.3em">'.$indent.$kw->name."</span>";
         }
     } else {
         if ($kw->has_descendant) {
             $x = sprintf('%s<a href="%s">&boxplus;</a> %s', $indent, expand_url($kwid, 0), $kw->name);
         } else {
-            $x = $indent.$kw->name;
+            $x = '<span style="margin-left:1.3em">'.$indent.$kw->name."</span>";
         }
     }
     table_row(

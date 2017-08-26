@@ -35,6 +35,7 @@ function show_projects_acct() {
     ));
     foreach ($projects as $p) {
         $ap = SUAccountingProject::last($p->id);
+        if (!$ap) continue;
         row_array(array(
             '<a href="su_projects_acct.php?project_id='.$p->id.'">'.$p->name.'</a>',
             $ap->cpu_time_total,

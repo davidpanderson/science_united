@@ -49,3 +49,43 @@ show 2) to volunteers.
 ?? what if SU assigns a host to a project, and the project doesn't have work?
 	SU should work in a reasonable way for sporadic workloads
 Need way for SU to check if project has work?
+================
+Linear bounded allocation model
+
+Resource: N computers
+	each does X FLOPS
+	each has queueing delay of X seconds
+
+    The above are dynamically estimated.
+    Make the estimate conservative; e.g. 90% of data
+
+    TFLOPS = N*X
+
+There are M "submitters"
+	each has:
+		FLOPS rate
+		max balance
+			(the above can be adjusted, but are otherwise static)
+		balance
+			(dynamic)
+
+		balance:
+			constantly increases at the given rate
+			maxes out at max
+			is decreased by X when a job of X FLOPs is dispatched
+
+    sum of rates is < TFLOPS
+
+The above is for projects.
+What about SU?
+    submitters are projects
+    "dispatch" is attaching a computer to project
+    a project's balance decreases at rate of attached computers
+        divided by # attachments
+    RPC
+        client is attached to a set of projects
+        The right thing may be to detach these and switch to new project
+        possibility:
+            find set of compatible projects based on prefs
+            attach to highest, detach from lowest
+        take into account cached data?

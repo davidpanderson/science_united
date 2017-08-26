@@ -114,12 +114,18 @@ function show_supported_keywords($user) {
 }
 
 function show_last_month($user) {
-    echo "
-        <p>
-        Past month:
-        <p>
-        <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=400&ysize=200>
-    ";
+    $min_time = time() - 30*86400;
+    $n = SUAccountingUser::count("user_id=$user->id and create_time>$min_time");
+    if ($n) {
+        echo "
+            <p>
+            Past month:
+            <p>
+            <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=400&ysize=200>
+        ";
+    } else {
+        echo "No activity in last 30 days";
+    }
 }
 
 function show_stats(
