@@ -25,6 +25,9 @@
 // - accounting data
 //
 // run this from test2/html/ops
+//
+// db_init.php --update
+// add accounting records for period until now
 
 require_once("../inc/su_db.inc");
 require_once("../inc/user_util.inc");
@@ -52,6 +55,9 @@ function clean() {
         $p->delete();
     }
     foreach (BoincUser::enum("") as $u) {
+        if ($u->email_addr == "davea@ssl.berkeley.edu") {
+            continue;
+        }
         $u->delete();
     }
     foreach (BoincForumPrefs::enum("") as $u) {
@@ -101,7 +107,7 @@ function make_accounts() {
     }
 }
 
-function make_acct() {
+function zero_acct() {
     $y = new StdClass;
     $y->cpu_ec_delta = 0;
     $y->cpu_time_delta = 0;
@@ -147,7 +153,59 @@ function insert_string($a, $t, $vars="", $vals="") {
     return "(create_time, cpu_ec_delta, cpu_ec_total, gpu_ec_delta, gpu_ec_total, cpu_time_delta, cpu_time_total, gpu_time_delta, gpu_time_total, njobs_success_delta, njobs_success_total, njobs_fail_delta, njobs_fail_total $vars) values ($t, $a->cpu_ec_delta, $a->cpu_ec_total, $a->gpu_ec_delta, $a->gpu_ec_total, $a->cpu_time_delta, $a->cpu_time_total, $a->gpu_time_delta, $a->gpu_time_total, $a->njobs_success_delta, $a->njobs_success_total, $a->njobs_fail_delta, $a->njobs_fail_total $vals)";
 }
 
-function make_accounting() {
+// make 1 day of accounting records
+//
+function make_accounting($t, $acct, $acct_project, $acct_user, $user_accounts) {
+    $acct = clear_deltas($acct);
+    foreach ($acct_project as $id=>$a) {
+        $acct_project[$id] = clear_deltas($acct_project[$id]);
+    }
+    foreach ($acct_user as $id=>$a) {
+        $acct_user[$id] = clear_deltas($acct_user[$id]);
+    }
+
+    // loop over users
+    //
+    foreach ($user_accounts as $uid=>$accts) {
+        // decide how much user computed today
+        //
+        $x = drand()+1;
+        $d = zero_acct();
+        $d->cpu_ec_delta = 1000.*$x;
+        $d->cpu_time_delta = 86400.*$x;
+        $d->njobs_success_delta = (int)($x*10)+1;
+        $d->njobs_fail_delta = drand()>.5?1:0;
+        if ($uid % 2) {
+            $d->gpu_ec_delta = 10000*$x;
+            $d->gpu_time_delta = 86400*$x;
+        } else {
+            $d->gpu_ec_delta = 0;
+            $d->gpu_time_delta = 0;
+        }
+        add_acct($d, 1, $acct);
+        add_acct($d, 1, $acct_user[$uid]);
+
+        // divide evenly among attached projects
+        // TODO: divide unevenly
+        //
+        $f = 1./count($accts);
+        foreach ($accts as $a) {
+            add_acct($d, $f, $acct_project[$a->project_id]);
+        }
+    }
+    SUAccounting::insert(insert_string($acct, $t));
+    foreach ($acct_user as $id=>$au) {
+        SUAccountingUser::insert(insert_string($au, $t, ",user_id", ",$id"));
+    }
+    foreach ($acct_project as $id=>$ap) {
+        SUAccountingProject::insert(insert_string($ap, $t, ",project_id", ",$id"));
+    }
+    echo "Creating account records for ".date(DATE_RFC2822, $t)."\n";
+}
+
+// create the last 100 days of accounting records
+//
+function init_accounting() {
     $now = time();
     $ndays = 100;
     $users = BoincUser::enum("");
@@ -157,68 +215,56 @@ function make_accounting() {
     $acct_project = array();
     foreach ($users as $u) {
         $user_accounts[$u->id] = SUAccount::enum("user_id=$u->id");
-        $acct_user[$u->id] = make_acct();
+        $acct_user[$u->id] = zero_acct();
     }
     foreach ($projects as $p) {
-        $acct_project[$p->id] = make_acct();
+        $acct_project[$p->id] = zero_acct();
     }
-    $acct = make_acct();
+    $acct = zero_acct();
 
     // loop over days
     //
     for ($i=0; $i<$ndays; $i++) {
         $t = $now + ($i-$ndays)*86400;
-
-        $acct = clear_deltas($acct);
-        foreach ($acct_project as $id=>$a) {
-            $acct_project[$id] = clear_deltas($acct_project[$id]);
-        }
-        foreach ($acct_user as $id=>$a) {
-            $acct_user[$id] = clear_deltas($acct_user[$id]);
-        }
-
-        // loop over users
-        //
-        foreach ($user_accounts as $uid=>$accts) {
-            // decide how much user computed today
-            //
-            $x = drand()+1;
-            $d = make_acct();
-            $d->cpu_ec_delta = 1000.*$x;
-            $d->cpu_time_delta = 86400.*$x;
-            $d->njobs_success_delta = (int)($x*10)+1;
-            $d->njobs_fail_delta = drand()>.5?1:0;
-            if ($uid % 2) {
-                $d->gpu_ec_delta = 10000*$x;
-                $d->gpu_time_delta = 86400*$x;
-            } else {
-                $d->gpu_ec_delta = 0;
-                $d->gpu_time_delta = 0;
-            }
-            add_acct($d, 1, $acct);
-            add_acct($d, 1, $acct_user[$uid]);
-
-            // divide evenly among attached projects
-            //
-            $f = 1./count($accts);
-            foreach ($accts as $a) {
-                add_acct($d, $f, $acct_project[$a->project_id]);
-            }
-        }
-        SUAccounting::insert(insert_string($acct, $t));
-        foreach ($acct_user as $id=>$au) {
-            SUAccountingUser::insert(insert_string($au, $t, ",user_id", ",$id"));
-        }
-        foreach ($acct_project as $id=>$ap) {
-            SUAccountingProject::insert(insert_string($ap, $t, ",project_id", ",$id"));
-        }
+        make_accounting($t, $acct, $acct_project, $acct_user, $user_accounts);
     }
 }
 
-clean();
-make_projects();
-make_users();
-make_accounts();
-make_accounting();
+function update_accounting() {
+    $users = BoincUser::enum("");
+    $projects = SUProject::enum();
+    $user_accounts = array();
+    $acct_user = array();
+    $acct_project = array();
+    foreach ($users as $u) {
+        $user_accounts[$u->id] = SUAccount::enum("user_id=$u->id");
+        $au = SUAccountingUser::last($u->id);
+        if (!$au) $au = zero_acct();
+        $acct_user[$u->id] = $au;
+    }
+    foreach ($projects as $p) {
+        $ap = SUAccountingProject::last($p->id);
+        if (!$ap) $ap = zero_acct();
+        $acct_project[$p->id] = $au;
+    }
+    $acct = SUAccounting::last();
+
+    $t = $acct->create_time;
+    $now = time();
+    while ($t < $now) {
+        make_accounting($t, $acct, $acct_project, $acct_user, $user_accounts);
+        $t += 86400;
+    }
+}
+
+if ($argc > 1 && $argv[1] == "--update") {
+    update_accounting();
+} else {
+    clean();
+    make_projects();
+    make_users();
+    make_accounts();
+    init_accounting();
+}
 
 ?>

@@ -9,7 +9,8 @@
 require_once("../inc/util.inc");
 
 $master_url = parse_config(get_config(), "<master_url>");
-define("PROJECT", '<nobr>SCI<img style="vertical-align: text-top; height:1em;" src=power.png>N</nobr>');
+define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
+// other ideas: SciOn, Onsite, Onward
 define("PROJECT_WHITE", '<nobr>SCI<img style="vertical-align: text-top; height:1em;" src=power_white.png>N</nobr>');
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");

@@ -101,7 +101,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     unlink($fn);
 }
 
-if (0) {
+if (1) {
     $type = get_str('type');
     $id = get_int('id', true);
     $what = get_str('what');
