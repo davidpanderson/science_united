@@ -38,6 +38,15 @@ function array_to_string($arr) {
     return $x;
 }
 
+function project_status_string($status) {
+    switch ($status) {
+    case PROJECT_STATUS_HIDE: return "<font color=red>hidden</font>";
+    case PROJECT_STATUS_ON_DEMAND: return "<font color=brown>on demand</font>";
+    case PROJECT_STATUS_AUTO: return "<font color=green>normal</font>";
+    }
+    return "unknown: $status";
+}
+
 function su_show_project() {
     global $job_keywords;
 
@@ -52,6 +61,7 @@ function su_show_project() {
     row2("URL", $project->url);
     row2("Created", date_str($project->create_time));
     row2("Allocation", $project->allocation);
+    row2("Status", project_status_string($project->status));
     $pks = SUProjectKeyword::enum("project_id=$project->id");
     $sci = array();
     $loc = array();
@@ -101,7 +111,8 @@ function show_projects() {
             'Science keywords',
             'Location keywords',
             'Created',
-            'Allocation'
+            'Allocation',
+            'Status'
         ));
         foreach ($projects as $p) {
             table_row(
@@ -110,7 +121,8 @@ function show_projects() {
                 project_kw_string($p, SCIENCE),
                 project_kw_string($p, LOCATION),
                 date_str($p->create_time),
-                $p->allocation
+                $p->allocation,
+                project_status_string($p->status)
             );
         }
         end_table();
@@ -224,6 +236,14 @@ function edit_project_form() {
     form_input_text('URL', 'url', $p->url, 'text', 'disabled');
     form_input_text('Name', 'name', $p->name);
     form_input_text('Allocation', 'alloc', $p->allocation, 'number');
+    form_radio_buttons('Status', 'status',
+        array(
+            array('0', 'hidden'),
+            array('1', 'on demand'),
+            array('2', 'normal')
+        ),
+        $p->status
+    );
     $sci_keywds = keyword_subset(SCIENCE);
     $sci_fracs = keyword_fracs($sci_keywds, SCIENCE, $p->id);
     $loc_keywds = keyword_subset(LOCATION);
@@ -299,12 +319,13 @@ function edit_project_action() {
     $id = get_int('id');
     $name = get_str('name');
     $alloc = get_str('alloc');
+    $status = get_int('status');
     $p = SUProject::lookup_id($id);
     if (!$p) {
         error_page("no such project");
     }
-    if ($p->name != $name || $p->allocation != $alloc) {
-        $p->update("name='$name', allocation=$alloc");
+    if ($p->name != $name || $p->allocation != $alloc || $p->status != $status) {
+        $p->update("name='$name', allocation=$alloc, status=$status");
     }
 
     // add or remove existing keywords

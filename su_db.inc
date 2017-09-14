@@ -38,8 +38,11 @@ define('KW_MAJOR', 2);
 // values of project.status
 //
 define('PROJECT_STATUS_HIDE', 0);
+    // don't show; deprecated
 define('PROJECT_STATUS_ON_DEMAND', 1);
+    // let volunteers attach, but don't assign
 define('PROJECT_STATUS_AUTO', 2);
+    // assign as needed
 
 class SUKeyword {
     static function insert($clause) {

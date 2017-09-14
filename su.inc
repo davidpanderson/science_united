@@ -77,14 +77,14 @@ function prefs_show($user) {
 
 function account_status_string($i) {
     switch ($i) {
-    case INIT:
+    case ACCT_INIT:
         return "Initial";
-    case SUCCESS:
-        return "Confirmed";
-    case DIFFERENT_PASSWD:
-        return "Existing account, different password";
-    case TRANSIENT_ERROR:
-        return "Transient error, will retry";
+    case ACCT_SUCCESS:
+        return "Attached";
+    case ACCT_DIFFERENT_PASSWORD:
+        return "Password mismatch";
+    case ACCT_TRANSIENT_ERROR:
+        return "Transient error";
     }
     return "Unknown";
 }

@@ -58,7 +58,7 @@ function project_score($project, $ukws) {
 //
 function rank_projects($user, $host=null) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
-    $projects = SUProject::enum();
+    $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
     foreach ($projects as $p) {
         $p->score = project_score($p, $ukws);
     }

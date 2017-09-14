@@ -62,11 +62,23 @@ function send_user_keywords($user) {
 ';
 }
 
+// return true of URL is in list of accounts
+//
+function is_in_accounts($url, $accounts) {
+    foreach ($accounts as $a) {
+        $proj = $a[0];
+        if ($url == $proj->url) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // $accounts is an array of array(project, account)
 //
-function send_reply($user, $host, $accounts) {
+function send_reply($user, $host, $accounts, $req) {
     echo "<acct_mgr_reply>\n"
-        ."<name>Science United</name>\n"
+        ."<name>Onboard</name>\n"
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
@@ -74,7 +86,10 @@ function send_reply($user, $host, $accounts) {
         ."<repeat_sec>86400</repeat_sec>\n"
     ;
     send_user_keywords($user);
-    echo $user->global_prefs;
+    echo "$user->global_prefs\n";
+
+    // tell client which projects to attach to
+    //
     foreach ($accounts as $a) {
         $proj = $a[0];
         $acct = $a[1];
@@ -82,14 +97,28 @@ function send_reply($user, $host, $accounts) {
             ."   <url>$proj->url</url>\n"
             ."   <url_signature>\n$proj->url_signature\n</url_signature>\n"
             ."   <authenticator>$acct->authenticator</authenticator>\n"
-        ;
-
-        echo "</account>\n"
+            ."</account>\n"
         ;
     }
+
+    // tell it to detach from other projects it's currently attached to
+    //
+    foreach ($req->project as $rp) {
+        $url = (string)$rp->url;
+        if (is_in_accounts($url, $accounts)) {
+            continue;
+        }
+        echo "<account>\n"
+            ."   <url>$url</url>\n"
+            ."   <dont_request_more_work/>\n"
+            ."   <detach_when_done/>\n"
+            ."</account>\n"
+        ;
+    }
+
     echo "   <opaque><host_id>$host->id</host_id></opaque>\n"
-        ."</acct_mgr_reply>
-    ";
+        ."</acct_mgr_reply>\n"
+    ;
 }
 
 function make_serialnum($req) {
@@ -390,7 +419,9 @@ function do_accounting($req, $user, $host) {
         njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
-    if (!$ret) su_error(-1, "au->update failed");
+    if (!$ret) {
+        su_error(-1, "au->update failed");
+    }
 
     // update global accounting record
     //
@@ -403,14 +434,16 @@ function do_accounting($req, $user, $host) {
         njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
-    if (!$ret) su_error(-1, "acc->update failed");
+    if (!$ret) {
+        su_error(-1, "acc->update failed");
+    }
 }
 
 function main() {
     global $now;
 
-    $req = simplexml_load_file('php://input');
-    //$req = simplexml_load_file('req.xml');
+    //$req = simplexml_load_file('php://input');
+    $req = simplexml_load_file('req.xml');
     if (!$req) {
         su_error(-1, "can't parse request");
     }
@@ -422,7 +455,7 @@ function main() {
     list($user, $host) = lookup_records($req);
     do_accounting($req, $user, $host);
     $accounts_to_send = choose_projects_rpc($user, $host);
-    send_reply($user, $host, $accounts_to_send);
+    send_reply($user, $host, $accounts_to_send, $req);
 }
 
 main();

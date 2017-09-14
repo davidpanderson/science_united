@@ -30,15 +30,15 @@ require_once("../inc/su_db.inc");
 function main() {
     $now = time();
     $accts = SUAccount::enum(
-        sprintf("state=%d or (state=%d and retry_time>%d)", ACCT_INIT, ACCT_TRANSIENT_ERROR, $now)
+        sprintf("state=%d or (state=%d and retry_time<%d)", ACCT_INIT, ACCT_TRANSIENT_ERROR, $now)
     );
     foreach ($accts as $acct) {
         $user = BoincUser::lookup_id($acct->user_id);
-        $project = SUProject::lookup_id($acct->project_id);
         if (!$user) {
             echo "missing user $acct->user_id\n";
             continue;
         }
+        $project = SUProject::lookup_id($acct->project_id);
         echo "making account for user $user->id on $project->name\n";
         list($auth, $err, $msg) = create_account(
             $project->web_rpc_url_base,
@@ -46,6 +46,7 @@ function main() {
             $user->passwd_hash,
             $user->name
         );
+        echo "err $err msg $msg\n";
         if ($err == ERR_DB_NOT_UNIQUE) {
             $ret = $acct->update(sprintf("state=%d", ACCT_DIFFERENT_PASSWORD));
             if (!$ret) {

@@ -46,6 +46,7 @@ create table su_user_keyword (
 create table su_account (
     user_id                 integer         not null,
     project_id              integer         not null,
+    create_time             double          not null,
     authenticator           varchar(254)    not null,
     state                   smallint        not null,
     retry_time              double          not null,
