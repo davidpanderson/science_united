@@ -28,7 +28,7 @@ function su_preference_links() {
     panel("Computing",
         function() {
             echo "<p><a href=su_prefs.php>Science preferences</a>";
-            echo "<p><a href=prefs.php?subset=global>Computing preferences</a>";
+            echo "<p><a href=su_compute_prefs.php>Computing preferences</a>";
             echo "<p><a href=su_hosts.php>Your computers</a>";
             echo "<p><a href=su_user_projects.php>Projects</a>";
             echo "<p><a href=su_user_accounting.php>Accounting</a>";

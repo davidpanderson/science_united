@@ -45,20 +45,20 @@ function keyword_prefs_form() {
 function global_prefs_form() {
     form_radio_buttons(
         "Computer usage",
-        "usage",
+        "preset",
         array(
-            array('min', "Light - minimize power consumption"),
-            array('med', "Medium"),
-            array('max', "Maximum"),
+            array('green', "Green - limit power consumption"),
+            array('standard', "Standard"),
+            array('max', "Maximum computing"),
         ),
-        'med'
+        'standard'
     );
 }
 
 function show_form() {
     global $recaptcha_public_key;
 
-    page_head("Join ".PROJECT, null, null, null, boinc_recaptcha_get_head_extra());
+    page_head("Get Onboard", null, null, null, boinc_recaptcha_get_head_extra());
     form_start("su_join.php", "post");
     form_input_hidden("action", "join");
     create_account_form(0, "su_download.php");
@@ -82,15 +82,16 @@ function handle_submit() {
     if (!$user) {
         error_page("Couldn't create user record");
     }
-    $usage = post_str("usage");
-    $user->update("global_prefs='$usage'");
+    $preset = post_str("preset");
+    $prefs = compute_prefs_xml($preset);
+    $user->update("global_prefs='$prefs'");
     foreach ($job_keywords as $id=>$k) {
         if ($k->category != KW_CATEGORY_SCIENCE) continue;
         if ($k->level > 0) continue;
         $x = "keywd_".$id;
         if (post_str($x, true)) {
             SUUserKeyword::insert(
-                sprintf("(user_id, keyword_id, type) values (%d, %d, %d)",
+                sprintf("(user_id, keyword_id, yesno) values (%d, %d, %d)",
                     $user->id, $id, KW_YES
                 )
             );
@@ -100,14 +101,15 @@ function handle_submit() {
     // initiate project account creation
     //
     $projects = choose_projects_join($user);
-    if (1) {
-        echo "accounts:\n";
-        foreach ($projects as $p) {
-            echo "<p>adding $p->name\n";
-        }
-        exit;
+    foreach ($projects as $p) {
+        $ret = SUAccount::insert(
+            sprintf("(project_id, user_id, state) values (%d, %d, %d)",
+                $p->id, $user->id, ACCT_INIT
+            )
+        );
     }
     Header("Location: su_download.php");
+    send_cookie('auth', $user->authenticator, false);
 }
 
 $action = post_str('action', true);

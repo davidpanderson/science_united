@@ -65,7 +65,7 @@ function user_summary($user) {
 
 function left(){
     global $user, $master_url;
-    $title = $user?"Welcome back, $user->name": tra("Want to be part of science research?", PROJECT);
+    $title = $user?"Welcome back, $user->name": tra("Join", PROJECT);
     panel(
         $title,
         function() use($user) {
@@ -88,7 +88,7 @@ function left(){
                     </p>
                     ', PROJECT
                 );
-                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT_WHITE).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
+                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Get %1', PROJECT_WHITE).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
                 ';
             }
         },
@@ -119,7 +119,7 @@ function right() {
     );
 }
 
-page_head("SCION", null, true);
+page_head("Onboard", null, true);
 
 grid('top', 'left', 'right');
 

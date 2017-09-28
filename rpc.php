@@ -102,6 +102,8 @@ function send_reply($user, $host, $accounts, $req) {
     }
 
     // tell it to detach from other projects it's currently attached to
+    // TODO: leave attached to those with large disk usage,
+    // but set resource share to zero.
     //
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
@@ -442,8 +444,8 @@ function do_accounting($req, $user, $host) {
 function main() {
     global $now;
 
-    //$req = simplexml_load_file('php://input');
-    $req = simplexml_load_file('req.xml');
+    $req = simplexml_load_file('php://input');
+    //$req = simplexml_load_file('req.xml');
     if (!$req) {
         su_error(-1, "can't parse request");
     }

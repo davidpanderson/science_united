@@ -20,18 +20,18 @@
 
 require_once("../inc/util.inc");
 
-chdir("/mydisks/a/users/boincadm/boinc/doc");
+chdir("/mydisks/a/users/boincadm/boinc-site");
 require_once("versions.inc");
 require_once("download_util.inc");
 
 function main($user) {
-    page_head("Install BOINC");
-    echo sprintf("To contributed computing power to %s you must install a program called BOINC on your computer.<p>", PROJECT);
+    page_head("Install software");
+    echo sprintf("To participate in %s you must install software called BOINC and VirtualBox on your computer.<p>", PROJECT);
     $client_info = $_SERVER['HTTP_USER_AGENT'];
 
     $concierge = new StdClass;
     $concierge->master_url = "https://boinc.berkeley.edu/test2/";
-    $concierge->auth = $user->authenticator;
+    $concierge->token = $user->authenticator;
     $concierge->user_name = $user->name;
     download_link(
         $client_info, client_info_to_platform($client_info),

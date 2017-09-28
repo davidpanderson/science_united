@@ -16,14 +16,13 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// show projects user is attached to
+// show project(s) user is attached to
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
 
-function main() {
+function show_projects($user) {
     page_head("Projects");
-    $user = get_logged_in_user();
     $accounts = SUAccount::enum("user_id = $user->id");
     if (count($accounts) == 0) {
         echo "No accounts yet";
@@ -42,7 +41,7 @@ function main() {
             }
             $project = SUProject::lookup_id($a->project_id);
             row_array(array(
-                $project->name,
+                "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
                 "tbd",
                 $a->cpu_time,
                 $a->gpu_time,
@@ -66,7 +65,7 @@ function main() {
             $project = SUProject::lookup_id($a->project_id);
             $x = $a->state==ACCT_DIFFERENT_PASSWORD?" <a href=su_connect.php?id=$project->id>(resolve)</a>":"";
             row_array(array(
-                $project->name,
+                "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
                 account_status_string($a->state).$x,
                 time_str($a->retry_time)
             ));
@@ -78,6 +77,35 @@ function main() {
     page_tail();
 }
 
-main();
+function su_show_project($user, $project_id) {
+    $project = SUProject::lookup_id($project_id);
+    if (!$project) die("no such project");
+    $acct = SUAccount::lookup("user_id=$user->id and project_id=$project_id");
+    if (!$acct) die("no account");
+    page_head($project->name);
+    start_table();
+    row2("First contribution", date_str($acct->create_time));
+    row2("Account status", "foo");
+    row2("Science keywords", "");
+    row2("Location keywords", "");
+    row2("CPU computing", $acct->cpu_ec);
+    row2("CPU time", $acct->cpu_time);
+    if ($acct->gpu_ec) {
+        row2("GPU computing", $acct->gpu_ec);
+        row2("GPU time", $acct->gpu_time);
+    }
+    row2("# jobs succeeded", $acct->njobs_success);
+    row2("# jobs failed", $acct->njobs_fail);
+    end_table();
+    page_tail();
+}
+
+$user = get_logged_in_user();
+$project_id = get_int("project_id", true);
+if ($project_id) {
+    su_show_project($user, $project_id);
+} else {
+    show_projects($user);
+}
 
 ?>

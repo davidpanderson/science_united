@@ -11,7 +11,7 @@ require_once("../inc/util.inc");
 $master_url = parse_config(get_config(), "<master_url>");
 define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
 // other ideas: SciOn, Onsite, Onward
-define("PROJECT_WHITE", '<nobr>SCI<img style="vertical-align: text-top; height:1em;" src=power_white.png>N</nobr>');
+define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
@@ -118,14 +118,14 @@ function su_navbar(
     if ($user) {
         $x[] = array(tra("Account"), $url_prefix."su_home.php");
         $x[] = array(tra("Join"), $url_prefix."join.php");
-        $x[] = array(tra("Preferences"), $url_prefix."prefs.php?subset=project");
+        $x[] = array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php");
     }
     $x[] = array(tra("About %1", PROJECT), $url_prefix."about.php");
     $x[] = array(tra("Help"), $url_prefix."help.php");
     navbar_menu(tra("Project"), $x);
 
     $x = array(
-        array(tra("Preferences"), $url_prefix."prefs.php?subset=global"),
+        array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php"),
         array(tra("Statistics"), $url_prefix."stats.php"),
     );
     $x = array_merge($x,

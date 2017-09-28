@@ -26,11 +26,14 @@ function show_form($user, $project) {
     page_head("Connect to $project->name");
     echo sprintf('
         You already have an account on %s,
-        and its password is different from your %s password.
+        but its password is different from your %s password
+        so we can\'t connect your computer to it.
+        <p>
         To let us connect to your %s account, you can either:
         <ul>
         <li> <a href="%s">Go to the %s web site</a> and change your
             password to match your %s password.
+
         <li> Enter your %s password below, and click OK.
             We\'ll will retrieve your account key,
             and that will let us connect to the account.
