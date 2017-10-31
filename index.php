@@ -34,6 +34,7 @@ require_once("../inc/text_transform.inc");
 require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
 require_once("../inc/su_user.inc");
+require_once("../inc/su_join.inc");
 
 define('CURRENT_CLIENT_VERSION', '7.6.0');
 
@@ -88,8 +89,12 @@ function left(){
                     </p>
                     ', PROJECT
                 );
-                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Get %1', PROJECT_WHITE).'</font></a><br><br>Already joined? <a href=login_form.php>Log in.</a></center>
+                //show_join_form();
+                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Get %1', PROJECT_WHITE).'</font></a></center>
                 ';
+                echo "
+                <p><p>Already joined? <a href=login_form.php>Log in.</a>
+                ";
             }
         },
         "panel-info"
@@ -119,7 +124,7 @@ function right() {
     );
 }
 
-page_head("Onboard", null, true);
+page_head("Onboard", null, true, null, boinc_recaptcha_get_head_extra());
 
 grid('top', 'left', 'right');
 

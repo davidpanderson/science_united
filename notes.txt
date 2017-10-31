@@ -1,52 +1,4 @@
 ====================
-Keyword preferences
-
-- volunteers express the science areas and locations they
-    want to compute for (yes)
-    willing to compute for (maybe)
-    don't want to compute for (no)
-    default: all "maybe"
-- projects express the properties of themselves, and their jobs
-
-------------
-Science keywords: hierarchy
-	biology
-		medicine
-			cancer
-			ebola
-		phylogeny
-	astronomy
-	physics
-	earth science
-	math
-
-Location of science project
-	Asia
-    Europe
-        CERN
-    Americas
-        United States
-            U. Texas
-            UCB
-open results?
-    ONLY open results
-    prefer open results
-    don't care
-
-for profit?
-    not clear because of deals like Monsanto/UCB
---------------
-each project can have associated keywords
-    each one has a fraction, indicating what fraction of work
-    has that keyword.
-    
-each job can have associated keywords
-
--------------
-If a new keyword is added, it's automatically allowed
-(neither wanted nor vetoed) for all users.
-?? should users be defaulted to no or maybe?
-====================
 Allocation
 --------------
 The way in which computing power is divided among projects and users.
@@ -475,6 +427,17 @@ Project plan
 
 - integrated client download
 ==================
-documents, technical reports
 
-Allocating volunteer computing resources
+boinc commit plan
+
+dpa_autologin
+    login_token table
+    login_token_lookup RPC
+    download page
+
+dpa_autologin2
+    client: look for filename, do lookup RPC
+        (can test by putting file there)
+
+dpa_autologin3
+    win installer: copy filename

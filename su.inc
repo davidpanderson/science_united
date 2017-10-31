@@ -11,16 +11,6 @@ function admin_only() {
     }
 }
 
-// return XML for default prefs w/ given setting
-//
-function compute_prefs_xml($preset) {
-    return "<global_preferences>
-    <preset>$preset</preset>
-</global_preferences>
-";
-}
-
-
 ////////////// UI INVOLVING KEYWORDS ////////////////
 
 // show select for keywords (don't use)
@@ -33,7 +23,7 @@ function keyword_select ($keywords, $category) {
     }
 }
 
-// lookup the given keyword ID in the user KW list
+// look up the given keyword ID in the user KW list
 //
 function ukw_lookup($ukws, $id) {
     foreach ($ukws as $uwk) {

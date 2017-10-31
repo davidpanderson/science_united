@@ -19,6 +19,7 @@
 // this version must run on isaac
 
 require_once("../inc/util.inc");
+require_once("../inc/account.inc");
 
 chdir("/mydisks/a/users/boincadm/boinc-site");
 require_once("versions.inc");
@@ -26,13 +27,14 @@ require_once("download_util.inc");
 
 function main($user) {
     page_head("Install software");
-    echo sprintf("To participate in %s you must install software called BOINC and VirtualBox on your computer.<p>", PROJECT);
+    echo sprintf("To participate in %s you must install BOINC and VirtualBox on your computer.<p>", PROJECT);
     $client_info = $_SERVER['HTTP_USER_AGENT'];
 
+    $token = make_login_token($user);
+
     $concierge = new StdClass;
-    $concierge->master_url = "https://boinc.berkeley.edu/test2/";
-    $concierge->token = $user->authenticator;
-    $concierge->user_name = $user->name;
+    $concierge->project_id = PROJECT_ID;
+    $concierge->token = $token;
     download_link(
         $client_info, client_info_to_platform($client_info),
         true, true, $concierge
@@ -40,7 +42,6 @@ function main($user) {
     page_tail();
 }
 
-$user = get_logged_in_user();
-main($user);
+main(get_logged_in_user());
 
 ?>

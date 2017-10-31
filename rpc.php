@@ -31,6 +31,7 @@ require_once("../inc/boinc_db.inc");
 
 require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
+require_once("../inc/su_compute_prefs.inc");
 
 define('COBBLESTONE_SCALE', 200./86400e9);
 
@@ -86,7 +87,7 @@ function send_reply($user, $host, $accounts, $req) {
         ."<repeat_sec>86400</repeat_sec>\n"
     ;
     send_user_keywords($user);
-    echo "$user->global_prefs\n";
+    echo expand_compute_prefs($user->global_prefs);
 
     // tell client which projects to attach to
     //

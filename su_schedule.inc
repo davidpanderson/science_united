@@ -38,6 +38,7 @@ function keyword_score($kw_id, $ukws) {
 //
 // Currently based just on keywords.
 // TODO: take GPUs into account?
+// TODO: take balance into account
 //
 function project_score($project, $ukws) {
     $pkws = SUProjectKeyword::enum("project_id = $project->id");

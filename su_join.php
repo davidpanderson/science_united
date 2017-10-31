@@ -24,53 +24,9 @@ require_once("../inc/account.inc");
 require_once("../inc/recaptchalib.php");
 
 require_once("../inc/keywords.inc");
-require_once("../inc/su.inc");
+require_once("../inc/su_join.inc");
 require_once("../inc/su_schedule.inc");
-
-function keyword_prefs_form() {
-    global $job_keywords;
-
-    $items = array();
-    foreach ($job_keywords as $id=>$k) {
-        if ($k->category != KW_CATEGORY_SCIENCE) continue;
-        if ($k->level > 0) continue;
-        $items[] = array("keywd_".$id, $k->name);
-    }
-    form_checkboxes(
-        "Check the areas of science you most want to support",
-        $items
-    );
-}
-
-function global_prefs_form() {
-    form_radio_buttons(
-        "Computer usage",
-        "preset",
-        array(
-            array('green', "Green - limit power consumption"),
-            array('standard', "Standard"),
-            array('max', "Maximum computing"),
-        ),
-        'standard'
-    );
-}
-
-function show_form() {
-    global $recaptcha_public_key;
-
-    page_head("Get Onboard", null, null, null, boinc_recaptcha_get_head_extra());
-    form_start("su_join.php", "post");
-    form_input_hidden("action", "join");
-    create_account_form(0, "su_download.php");
-    keyword_prefs_form();
-    global_prefs_form();
-    if ($recaptcha_public_key) {
-        form_general("", boinc_recaptcha_get_html($recaptcha_public_key));
-    }
-    form_submit("Join");
-    form_end();
-    page_tail();
-}
+require_once("../inc/su_compute_prefs.inc");
 
 // we need to create:
 // - the user record, with chosen computing prefs
@@ -108,7 +64,7 @@ function handle_submit() {
             )
         );
     }
-    Header("Location: su_download.php");
+    Header("Location: download.php");
     send_cookie('auth', $user->authenticator, false);
 }
 
@@ -116,7 +72,9 @@ $action = post_str('action', true);
 if ($action == "join") {
     handle_submit();
 } else {
-    show_form();
+    page_head("Get Onboard", null, null, null, boinc_recaptcha_get_head_extra());
+    show_join_form();
+    page_tail();
 }
 
 ?>

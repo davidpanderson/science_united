@@ -21,6 +21,8 @@
 // Use presets only.
 
 require_once("../inc/util.inc");
+require_once("../inc/su.inc");
+require_once("../inc/su_compute_prefs.inc");
 
 function prefs_row($venue, $pref) {
     $green_checked = ($pref=='green')?"checked":"";
@@ -51,8 +53,9 @@ function show_prefs($user) {
     //
     if (!$default) {
         $default = "standard";
-        $prefs = compute_prefs_xml($default);
-        $user->update("global_prefs='$prefs'");
+        $p= compute_prefs_xml($default);
+        $user->update("global_prefs='$p'");
+        $prefs = simplexml_load_string($p);
     }
     prefs_row("default", $default);
     $home = null;
@@ -88,13 +91,13 @@ function update_prefs($user) {
     <preset>$default</preset>
 ";
     if ($home) {
-        $x .= "<venue name=\"home\"><preset>$home</preset></venue>\n";
+        $x .= "<venue name=\"home\">\n<preset>$home</preset>\n</venue>\n";
     }
     if ($work) {
-        $x .= "<venue name=\"work\"><preset>$work</preset></venue>\n";
+        $x .= "<venue name=\"work\">\n<preset>$work</preset>\n</venue>\n";
     }
     if ($school) {
-        $x .= "<venue name=\"school\"><preset>$school</preset></venue>\n";
+        $x .= "<venue name=\"school\">\n<preset>$school</preset>\n</venue>\n";
     }
     $x .= "</global_preferences>\n";
     $user->update("global_prefs='$x'");
