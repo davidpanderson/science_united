@@ -58,7 +58,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             );
         } else if ($what = "time") {
             fprintf($f, "%f %f %f\n",
-                $a->create_time, $a->cpu_time_delta, $a->gpu_time_delta
+                $a->create_time, $a->cpu_time_delta/3600,
+                ($a->cpu_time_delta+$a->gpu_time_delta)/3600
             );
             if ($a->gpu_time_delta) {
                 $have_gpu = true;
@@ -78,9 +79,19 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     //
     $gn = tempnam("/tmp", "su_gp");
     $g = fopen($gn, 'c');
-    $plot = sprintf('plot "%s" using 1:2 with linespoints title "CPU time"', $fn);
     if ($have_gpu) {
-        $plot .= sprintf(', "%s" using 1:3 with linespoints title "GPU time"', $fn);
+        $plot = sprintf('
+set style fill noborder
+plot "%s" using 1:3 with filledcurve x1 title "GPU time" lc rgb "orange", \
+"%s" using 1:2 with filledcurve x1 title "CPU time" lc rgb "khaki"
+',
+            $fn, $fn
+        );
+    } else {
+        $plot = sprintf(
+            'plot "%s" using 1:2 with filledcurve x1 title "CPU time"',
+            $fn
+        );
     }
     fprintf($g,
         'set terminal png size %s,%s

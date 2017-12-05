@@ -1,3 +1,4 @@
+#! /usr/bin/env php
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
@@ -16,21 +17,24 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// Script to asynchronously create accounts
-// Run periodically, say every 5 min
+// Daemon to create project accounts.
+// Does a pass:
+// - every 10 min, to do retries
+// - when trigger file is present
 //
+
 require_once("../inc/db_conn.inc");
 require_once("../inc/web_rpc_api.inc");
 require_once("../inc/common_defs.inc");
 
 require_once("../inc/su_db.inc");
 
-// create project accounts
-
-function main() {
+function do_pass() {
     $now = time();
     $accts = SUAccount::enum(
-        sprintf("state=%d or (state=%d and retry_time<%d)", ACCT_INIT, ACCT_TRANSIENT_ERROR, $now)
+        sprintf("state=%d or (state=%d and retry_time<%d)",
+            ACCT_INIT, ACCT_TRANSIENT_ERROR, $now
+        )
     );
     foreach ($accts as $acct) {
         $user = BoincUser::lookup_id($acct->user_id);
@@ -39,7 +43,10 @@ function main() {
             continue;
         }
         $project = SUProject::lookup_id($acct->project_id);
-        echo "making account for user $user->id on $project->name\n";
+        echo sprintf('%s: making account for user %d on %s\n";
+            $user->id
+            $project->name
+        ');
         list($auth, $err, $msg) = create_account(
             $project->web_rpc_url_base,
             $user->email_addr,
@@ -74,6 +81,19 @@ function main() {
     }
 }
 
+function main() {
+    $t = 0;
+    while (1) {
+        if (file_exists("make_accounts_trigger") || $t>600) {
+            do_pass();
+        } else {
+            sleep(1);
+            $t++;
+        }
+    }
+}
+
+echo date(DATE_RFC822), ": Starting\n";
 main();
 
 ?>

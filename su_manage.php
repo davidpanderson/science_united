@@ -25,7 +25,6 @@ function main() {
     page_head("Science United Administration");
     echo '
         <a class="btn btn-primary" href="su_projects_edit.php">Projects</a>
-        <a class="btn btn-primary" href="https://boinc.berkeley.edu/keywords.php?header=html">Keywords</a>
         <h3>Accounting</h3>
         <p> <a class="btn btn-primary" href="su_projects_acct.php">Projects</a>
         <p> <a class="btn btn-primary" href="su_accounting.php">Totals</a>

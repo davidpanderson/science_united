@@ -42,7 +42,7 @@ function show_projects($user) {
             $project = SUProject::lookup_id($a->project_id);
             row_array(array(
                 "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
-                "tbd",
+                date_str($a->create_time),
                 $a->cpu_time,
                 $a->gpu_time,
                 $a->njobs_success,

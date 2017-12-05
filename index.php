@@ -81,19 +81,23 @@ function left(){
                     biomedicine, mathematics, and environmental science;
                     you can pick the areas you want to support.
                     <p>
-                    You help by installing a free program on your computer,
-                    which runs scientific jobs in the background
+                    You help by installing BOINC, a free program
+                    that runs scientific jobs in the background
                     and when you\'re not at the computer.
-                    This program is secure and will not
+                    BOINC is secure and will not
                     affect your normal use of the computer.
-                    </p>
-                    ', PROJECT
+                    <p>
+                    %s is supported by the <a href=https://nsf.gov>National Science Foundation</a>
+                    and is based at the <a href=https://berkeley.edu>University of California, Berkeley</a>.
+                    %s and the research projects it supports are non-profit.
+                    <br><br>
+                    ', PROJECT, PROJECT, PROJECT
                 );
                 //show_join_form();
-                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Get %1', PROJECT_WHITE).'</font></a></center>
+                echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
                 ';
                 echo "
-                <p><p>Already joined? <a href=login_form.php>Log in.</a>
+                <br><br>Already joined? <a href=login_form.php>Log in.</a>
                 ";
             }
         },
@@ -124,7 +128,8 @@ function right() {
     );
 }
 
-page_head("Onboard", null, true, null, boinc_recaptcha_get_head_extra());
+echo "<p>";
+page_head(PROJECT, null, true, null, boinc_recaptcha_get_head_extra());
 
 grid('top', 'left', 'right');
 

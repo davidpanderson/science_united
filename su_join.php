@@ -59,8 +59,8 @@ function handle_submit() {
     $projects = choose_projects_join($user);
     foreach ($projects as $p) {
         $ret = SUAccount::insert(
-            sprintf("(project_id, user_id, state) values (%d, %d, %d)",
-                $p->id, $user->id, ACCT_INIT
+            sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
+                $p->id, $user->id, time(), ACCT_INIT
             )
         );
     }
@@ -72,7 +72,10 @@ $action = post_str('action', true);
 if ($action == "join") {
     handle_submit();
 } else {
-    page_head("Get Onboard", null, null, null, boinc_recaptcha_get_head_extra());
+    page_head(
+        sprintf("%s %s", tra("Join"), PROJECT),
+        null, null, null, boinc_recaptcha_get_head_extra()
+    );
     show_join_form();
     page_tail();
 }

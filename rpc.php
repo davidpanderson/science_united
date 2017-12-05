@@ -291,12 +291,18 @@ function check_njobs($dt, $njobs) {
     return min($njobs, 10000.*$dt/86400.);
 }
 
-// compute deltas for CPU/GPU time and flops.
-// update host record.
-// create accounting_user record if needed.
-// update total, project, host accounting records
+// - compute accounting deltas based on AM request message
+// (which lists per-project totals)
+// and totals in host/project records.
+// - update host/project records
+// - add deltas to latest project accounting records
+// - add deltas (summed over projects) to latest user accounting record
+// - add deltas (summed over projects) to latest global accounting record
 //
-function do_accounting($req, $user, $host) {
+function do_accounting(
+    $req,           // AM RPC request as simpleXML object
+    $user, $host    // user and host records
+) {
     global $now;
     $dt = $now = $host->rpc_time;
     if ($dt < 0) {
@@ -304,18 +310,12 @@ function do_accounting($req, $user, $host) {
     }
 
     // the client reports totals per project.
-    // the following vars are sums across all projects
+    // the following are sums across all projects
     //
-    $sum_cpu_time = 0;
-    $sum_cpu_ec = 0;
-    $sum_gpu_time = 0;
-    $sum_gpu_ec = 0;
     $sum_delta_cpu_time = 0;
     $sum_delta_cpu_ec = 0;
     $sum_delta_gpu_time = 0;
     $sum_delta_gpu_ec = 0;
-    $sum_njobs_success = 0;
-    $sum_njobs_fail = 0;
     $sum_delta_njobs_success = 0;
     $sum_delta_njobs_fail = 0;
 
@@ -327,7 +327,7 @@ function do_accounting($req, $user, $host) {
             continue;
         }
 
-        // got host/project record
+        // get host/project record; create if needed
         //
         $hp = SUHostProject::lookup(
             "host_id=$host->id and project_id=$project->id"
@@ -363,7 +363,7 @@ function do_accounting($req, $user, $host) {
         $d = $rp_njobs_fail - $hp->njobs_fail;
         $d_njobs_fail = check_njobs($dt, $d);
 
-        // update host/project record
+        // update host/project record (totals)
         //
         $ret = $hp->update("
             cpu_time = $rp_cpu_time,
@@ -376,7 +376,7 @@ function do_accounting($req, $user, $host) {
         ");
         if (!$ret) su_error(-1, "hp->update failed");
 
-        // add deltas to project's accounting record
+        // add deltas to deltas in project's current accounting record
         //
         $ap = SUAccountingProject::last($project->id);
         $ret = $ap->update("
@@ -389,23 +389,18 @@ function do_accounting($req, $user, $host) {
         ");
         if (!$ret) su_error(-1, "ap->update failed");
 
-        // add to all-project totals
+        // add to all-project delta sums
         //
         $sum_delta_cpu_time += $d_cpu_time;
         $sum_delta_cpu_ec += $d_cpu_ec;
         $sum_delta_gpu_time += $d_gpu_time;
         $sum_delta_gpu_ec += $d_gpu_ec;
-        $sum_cpu_time += $rp_cpu_time;
-        $sum_cpu_ec += $rp_cpu_ec;
-        $sum_gpu_time += $rp_gpu_time;
-        $sum_gpu_ec += $rp_gpu_ec;
-        $sum_njobs_success += $rp_njobs_success;
-        $sum_njobs_fail += $rp_njobs_fail;
         $sum_delta_njobs_success += $d_njobs_success;
         $sum_delta_njobs_fail += $d_njobs_fail;
     }
 
-    // update user accounting record with deltas summed over projects
+    // update user accounting record with deltas summed over projects;
+    // create record if needed
     //
     $au = SUAccountingUser::last($user->id);
     if (!$au) {

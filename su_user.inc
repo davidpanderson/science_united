@@ -121,7 +121,7 @@ function show_last_month($user) {
             <p>
             Past month:
             <p>
-            <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=400&ysize=200>
+            <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=500&ysize=250>
         ";
     } else {
         echo "No activity in last 30 days";
@@ -132,15 +132,15 @@ function show_stats(
     $cpu_ec, $cpu_time, $gpu_ec, $gpu_time, $njobs_success, $njobs_fail
 ){
     echo sprintf(
-        "CPU: %.2f hours, %f GFLOPs
+        "CPU: %.2f hours
         ",
-        $cpu_time/3600, $cpu_ec/2000
+        $cpu_time/3600
     );
     if ($gpu_time > 0) {
         echo sprintf(
-            "<br>GPU: %.2f hours, %f GFLOPs
+            "<br>GPU: %.2f hours
             ",
-            $gpu_time/3600, $gpu_ec/2000
+            $gpu_time/3600
         );
     }
     echo sprintf(

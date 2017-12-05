@@ -16,35 +16,35 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// initialize or add to the project DB
-// Use this to add projects.
-// To edit existing projects, use the web interface
+// initialize or update the project DB table
+//
+// run this from test2/html/ops
 
-require_once("../inc/keywords.inc");
+require_once("/mydisks/a/users/boincadm/boinc-site/keywords.inc");
+require_once("/mydisks/a/users/boincadm/boinc-site/project_ids.inc");
 require_once("../inc/su_db.inc");
 
 function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
     global $job_keywords;
 
     $project = SUProject::lookup("url='$url'");
-    if ($project) {
-        echo "project $name already in DB\n";
-        return;
+    if (!$project) {
+        $now = time();
+        $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
+        $out = array();
+        $retval = 0;
+        exec($cmd, $out, $retval);
+        if ($retval) {
+            die("$cmd failed\n");
+        }
+        if (!$web_rpc_url_base) {
+            $web_rpc_url_base = $url;
+        }
+        $url_signature = implode("\n", $out);
+        $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, allocation) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10)");
+    } else {
+        $id = $project->id;
     }
-
-    $now = time();
-    $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
-    $out = array();
-    $retval = 0;
-    exec($cmd, $out, $retval);
-    if ($retval) {
-        die("$cmd failed\n");
-    }
-    if (!$web_rpc_url_base) {
-        $web_rpc_url_base = $url;
-    }
-    $url_signature = implode("\n", $out);
-    $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, allocation) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10)");
 
     foreach ($keywords as $k) {
         $kw_id = $k[0];
@@ -65,7 +65,9 @@ function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
     echo "Added project $name\n";
 }
 
-function make_projects() {
+// create a limited set of projects (for testing)
+//
+function make_projects_limited() {
     make_project("LHC@home",
         "https://lhcathome.cern.ch/lhcathome/",
         array(
@@ -74,7 +76,7 @@ function make_projects() {
         )
     );
     make_project("SETI@home",
-        "http://setiathome.berkeley.edu/",
+        "https://setiathome.berkeley.edu/",
         array(
             array(KW_SETI, 1),
             array(KW_UCB, 1),
@@ -82,14 +84,14 @@ function make_projects() {
         "https://setiathome.berkeley.edu/"
     );
     make_project("Rosetta@home",
-        "http://boinc.bakerlab.org/rosetta/",
+        "https://boinc.bakerlab.org/rosetta/",
         array(
             array(KW_PROTEINS, 1),
             array(KW_UW, 1),
         )
     );
     make_project("BOINC Test Project",
-        "http://boinc.berkeley.edu/test/",
+        "https://boinc.berkeley.edu/test/",
         array(
             array(KW_MATH_CS, 1),
             array(KW_UCB, 1),
@@ -98,7 +100,7 @@ function make_projects() {
 if (0) {
     // WCG is problematic because it doesn't use email addr for user ID
     make_project("World Community Grid",
-        "http://www.worldcommunitygrid.org/",
+        "https://www.worldcommunitygrid.org/",
         array(
             array(KW_BIOMED, .5),
             array(KW_EARTH_SCI, .7),
@@ -108,7 +110,7 @@ if (0) {
     );
 }
     make_project("Herd",
-        "http://herd.tacc.utexas.edu/",
+        "https://herd.tacc.utexas.edu/",
         array(
             array(KW_BIOMED, .5),
             array(KW_PHYSICS, .5),
@@ -123,6 +125,29 @@ if (0) {
         )
     );
 }
+
+// make projects based on master list
+//
+function make_projects() {
+    $x = simplexml_load_file("projects.xml");
+    $projects = $x->project;
+    foreach ($projects as $p) {
+        if ((int)$p->id == PROJ_WCG) continue;
+        $keywords = array();
+        $ks = explode(" ", (string)$p->keywords);
+        foreach ($ks as $k) {
+            $x = explode(":", $k);
+            if (count($x) > 1) {
+                $keywords[] = array((int)$x[0], (double)$x[1]);
+            } else {
+                $keywords[] = array((int)$x[0], 1);
+            }
+        }
+        make_project((string)$p->name, (string)$p->url, $keywords);
+    }
+}
+
+//make_projects_limited();
 
 make_projects();
 

@@ -9,9 +9,10 @@
 require_once("../inc/util.inc");
 
 $master_url = parse_config(get_config(), "<master_url>");
-define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
+//define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
 // other ideas: SciOn, Onsite, Onward
-define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
+//define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
+define("PROJECT", "Science United");
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
@@ -27,7 +28,6 @@ define("SYS_ADMIN_EMAIL", "admin@$master_url");
 define("SHORTCUT_ICON", "power.png");
 define("UOTD_ADMIN_EMAIL", "admin@$master_url");
     // who gets user of the day pool running low e-mails?
-//define("MEMCACHE_SERVERS", "127.0.0.1:11211");
 define ("DISABLE_PROFILES", true);
     // enable profiles only after enabling reCAPTCHA
     // http://boinc.berkeley.edu/trac/wiki/ProtectionFromSpam
@@ -90,7 +90,7 @@ function su_navbar_right($user) {
             );
         } else {
             echo sprintf('
-                <li><a href="%ssu_join.php">Sign Up</a></li>
+                <li><a href="%ssu_join.php">Join</a></li>
                 <li><a href="%slogin_form.php">Login</a></li>
                 ', url_base(), url_base()
             );
@@ -121,8 +121,8 @@ function su_navbar(
         $x[] = array(tra("Join"), $url_prefix."join.php");
         $x[] = array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php");
     }
-    $x[] = array(tra("About %1", PROJECT), $url_prefix."about.php");
-    $x[] = array(tra("Help"), $url_prefix."help.php");
+    $x[] = array(tra("About %1", PROJECT), $url_prefix."su_about.php");
+    $x[] = array(tra("Help"), $url_prefix."su_help.php");
     navbar_menu(tra("Project"), $x);
 
     $x = array(
@@ -168,8 +168,10 @@ function su_navbar(
 //
 function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
-        echo '<center><font size=+6>'.PROJECT.'</font>';
-        echo '<br><font size=+1>Science research on your computer, tablet, or phone</font></center>
+        echo '<center><font size=+6>
+<img style="vertical-align: sub; height:1.2em;" src=power.png>
+            '.PROJECT.'</font>';
+        echo '<br><font size=+1>Do science research on your computer, tablet, or phone</font></center>
             <p>
         ';
         //echo '<center><img class="img-responsive" src="logo.png"></center>';
@@ -184,8 +186,8 @@ function project_banner($title, $prefix, $is_main) {
 function project_footer($show_return, $show_date, $prefix) {
     // If you include any links, prepend URL with $prefix
     //
-    echo '<p></p>
-        <p class="text-center"> &copy;'.gmdate("Y ").COPYRIGHT_HOLDER.'</p>
+    echo '<br><br>
+        <p class="text-center"> &copy; '.gmdate("Y ").COPYRIGHT_HOLDER.'</p>
     ';
     if ($show_date) {
         $t = time_str(time());

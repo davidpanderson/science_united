@@ -427,17 +427,49 @@ Project plan
 
 - integrated client download
 ==================
+docs
+Overview
+    SU targets a different population than the current BOINC user base:
+        largely young (20s, 30s)
+        ~half female
+        primary motivation: science goals
+        non-motivation: competition
+            show user their own participation level over time
+            no comparisons, leader boards
+        science-oriented
+        non-technical
+            don't use words like FLOPS, CPU, or GPU
+            OK: computer, job
+    Simplicity
+        hide information; TMI is a turn-off for target users
+        hide features
+    Graphical rather than textual display
+    Keep the notion of "project" in the background.
+    SU vs BOINC
+        Ideally, we'd like an SU_branded version of BOINC.
+        But until then, we explain that BOINC is software used by SU
 
-boinc commit plan
+instructions for alpha testers
 
-dpa_autologin
-    login_token table
-    login_token_lookup RPC
-    download page
+Design doc
+==================
+testing and roll-out plan
 
-dpa_autologin2
-    client: look for filename, do lookup RPC
-        (can test by putting file there)
+- get scienceunited.berkeley.edu, su.berkeley.edu; get SSL working
 
-dpa_autologin3
-    win installer: copy filename
+- make 7.9 for win/mac;
+    project list includes SU and boinc test
+
+- announce SU to alpha testers; start testing
+
+When SU is stable:
+add SU to project list, non-test
+fork/test/release 7.10
+
+------------
+project stuff
+
+Github
+    learn project interface
+
+communication channels

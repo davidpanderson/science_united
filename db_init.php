@@ -25,11 +25,13 @@
 // - accounting data
 //
 // run this from test2/html/ops
+// RUN project_init.php FIRST
 //
 // db_init.php --update
 // add accounting records for period until now
 
 require_once("../inc/su_db.inc");
+require_once("../ops/project_init.php");
 require_once("../inc/user_util.inc");
 require_once("../inc/keywords.inc");
 
@@ -46,7 +48,8 @@ function make_users() {
     su_make_user("Cynthia");
 
     $email = "davea@ssl.berkeley.edu";
-    $user = make_user($email, "David Anderson", md5("foobar".$email));
+    //$user = make_user($email, "David Anderson", md5("foobar".$email));
+    $user = BoincUser::lookup("email_addr='$email'");
     BoincForumPrefs::insert("(userid, special_user) values ($user->id, '01')");
 }
 
@@ -60,18 +63,16 @@ function clean() {
         }
         $u->delete();
     }
-    foreach (BoincForumPrefs::enum("") as $u) {
-        $u->delete();
+    foreach (BoincForumPrefs::enum("") as $p) {
+        $p->delete();
     }
-    foreach (SUProjectKeyword::enum() as $x) {
-        $x->delete();
-    }
-    foreach (SUUserKeyword::enum() as $x) {
-        $x->delete();
-    }
-    foreach (SUAccount::enum() as $x) {
-        $x->delete();
-    }
+    SUProjectKeyword::delete_all();
+    SUUserKeyword::delete_all();
+    SUAccount::delete_all();
+    SUHostProject::delete_all();
+    SUAccounting::delete_all();
+    SUAccountingProject::delete_all();
+    SUAccountingUser::delete_all();
 }
 
 function random_element($list) {
@@ -90,19 +91,19 @@ function make_accounts() {
             if (drand() > .5) {
                 $x = true;
                 $p->has_user = true;
-                SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
+                SUAccount::insert("(user_id, project_id, create_time) values ($u->id, $p->id, time())");
             }
         }
         if (!$x) {
             $p = random_element($projects);
-            SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
+            SUAccount::insert("(user_id, project_id, create_time) values ($u->id, $p->id, time())");
             $p->has_user = true;
         }
     }
     foreach ($projects as $p) {
         if (!isset($p->has_user)) {
             $u = random_element($users);
-            SUAccount::insert("(user_id, project_id) values ($u->id, $p->id)");
+            SUAccount::insert("(user_id, project_id, create_time) values ($u->id, $p->id, time())");
         }
     }
 }
@@ -155,7 +156,13 @@ function insert_string($a, $t, $vars="", $vals="") {
 
 // make 1 day of accounting records
 //
-function make_accounting($t, $acct, $acct_project, $acct_user, $user_accounts) {
+function make_accounting(
+    $t,
+    $acct,              // total accounting record
+    $acct_project,      // project accounting records
+    $acct_user,         // user accounting records
+    $user_accounts      // map from user ID to list of SUAccount records
+) {
     $acct = clear_deltas($acct);
     foreach ($acct_project as $id=>$a) {
         $acct_project[$id] = clear_deltas($acct_project[$id]);
@@ -257,8 +264,14 @@ function update_accounting() {
     }
 }
 
-if ($argc > 1 && $argv[1] == "--update") {
-    update_accounting();
+if ($argc > 1) {
+    if ($argv[1] == "--update") {
+        update_accounting();
+    } else if ($argv[1] == "--clean") {
+        clean();
+    } else {
+        die("unknown option $argv[1]);
+    }
 } else {
     clean();
     make_projects();

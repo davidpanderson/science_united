@@ -1,3 +1,5 @@
+#! /usr/bin/env php
+
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
@@ -17,15 +19,21 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // Daily accounting program - run this every ~1 day
-// compute total and per-project REC in this accounting period
-// update project credits
+// Make new records based on the previous:
+// - new totals = previous totals + previous deltas
+// - new deltas = 0
+//
+// For each of the following:
+// - user accounting records
+// - project accounting records
+// - total accounting record
 
 require_once("../inc/su_db.inc");
 
 function do_total($now) {
     $x = SUAccounting::last();
     if ($x) {
-        SUAccounting::insert("(create_time, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $x->cpu_ec_total, $x->gpu_ec_total, $x->cpu_time_total, $x->gpu_time_total, $x->njobs_success_total, $x->njobs_fail_total)");
+        SUAccounting::insert("(create_time, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     } else {
         SUAccounting::insert("(create_time) values ($now)");
     }
@@ -34,7 +42,7 @@ function do_total($now) {
 function do_project($p, $now) {
     $x = SUAccountingProject::last($p->id);
     if ($x) {
-        SUAccountingProject::insert("(create_time, project_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $p->id, $x->cpu_ec_total, $x->gpu_ec_total, $x->cpu_time_total, $x->gpu_time_total, $x->njobs_success_total, $x->njobs_fail_total)");
+        SUAccountingProject::insert("(create_time, project_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $p->id, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     } else {
         SUAccountingProject::insert("(create_time, project_id) values ($now, $p->id)");
     }
@@ -50,7 +58,7 @@ function do_projects($now) {
 function do_user($u, $now) {
     $x = SUAccountingUser::last($u->id);
     if ($x) {
-        SUAccountingUser::insert("(create_time, user_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $u->id, $x->cpu_ec_total, $x->gpu_ec_total, $x->cpu_time_total, $x->gpu_time_total, $x->njobs_success_total, $x->njobs_fail_total)");
+        SUAccountingUser::insert("(create_time, user_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $u->id, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     }
 }
 

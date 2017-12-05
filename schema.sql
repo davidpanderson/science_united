@@ -7,8 +7,8 @@ create table su_project (
     url_signature           varchar(1024)   not null,
     allocation              double          not null,
     status                  tinyint         not null,
-    credit                  double          not null,
-        /* allocation credit - not BOINC credit */
+    balance                 double          not null,
+    projected_balance       double          not null,
     primary key (id)
 ) engine=InnoDB;
 

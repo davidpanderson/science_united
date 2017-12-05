@@ -323,7 +323,7 @@ function show_user_acct_totals($user) {
 
 function show_user_acct_history($user) {
     $saus = SUAccountingUser::enum(
-        "user_id=$user->id", "order by id desc limit 20"
+        "user_id=$user->id", "order by id desc limit 200"
     );
     if (count($saus) == 0) {
         echo "No history yet";

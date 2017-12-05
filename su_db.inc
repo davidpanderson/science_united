@@ -44,35 +44,6 @@ define('PROJECT_STATUS_ON_DEMAND', 1);
 define('PROJECT_STATUS_AUTO', 2);
     // assign as needed
 
-class SUKeyword {
-    static function insert($clause) {
-        $db = BoincDb::get();
-        $ret = $db->insert('su_keyword', $clause);
-        if (!$ret) return 0;
-        return $db->insert_id();
-    }
-    static function lookup_id($id) {
-        $db = BoincDb::get();
-        return $db->lookup_id($id, 'su_keyword', 'SUKeyword');
-    }
-    static function enum($where_clause=null) {
-        $db = BoincDb::get();
-        return $db->enum('su_keyword', 'SUKeyword', $where_clause);
-    }
-    function delete() {
-        $db = BoincDb::get();
-        return $db->delete($this, 'su_keyword');
-    }
-    function update($clause) {
-        $db = BoincDb::get();
-        return $db->update($this, 'su_keyword', $clause);
-    }
-    static function lookup($clause) {
-        $db = BoincDb::get();
-        return $db->lookup('su_keyword', 'SUKeyword', $clause);
-    }
-}
-
 class SUProject {
     static function insert($clause) {
         $db = BoincDb::get();
@@ -117,6 +88,10 @@ class SUProjectKeyword {
             "project_id=$this->project_id and keyword_id=$this->keyword_id"
         );
     }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_project_keyword', 1);
+    }
 }
 
 class SUUserKeyword {
@@ -137,6 +112,10 @@ class SUUserKeyword {
     static function update($clause) {
         $db = BoincDb::get();
         return $db->update_aux('su_user_keyword', $clause);
+    }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_user_keyword', 1);
     }
 }
 
@@ -164,6 +143,10 @@ class SUAccount {
             "user_id=$this->user_id and project_id=$this->project_id"
         );
     }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_account', 1);
+    }
 }
 
 class SUHostProject {
@@ -182,6 +165,10 @@ class SUHostProject {
     static function enum($where_clause, $order_clause=null) {
         $db = BoincDb::get();
         return $db->enum('su_host_project', 'SUHostProject', $where_clause, $order_clause);
+    }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_host_project', 1);
     }
 }
 
@@ -207,6 +194,10 @@ class SUAccounting {
         $db = BoincDb::get();
         return $db->update($this, 'su_accounting', $clause);
     }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_accounting', 1);
+    }
 }
 
 class SUAccountingProject {
@@ -230,6 +221,10 @@ class SUAccountingProject {
     function update($clause) {
         $db = BoincDb::get();
         return $db->update($this, 'su_accounting_project', $clause);
+    }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_accounting_project', 1);
     }
 }
 
@@ -258,5 +253,9 @@ class SUAccountingUser {
     static function count($clause) {
         $db = BoincDb::get();
         return $db->count('su_accounting_user', $clause);
+    }
+    static function delete_all() {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_accounting_user', 1);
     }
 }
