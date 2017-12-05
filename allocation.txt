@@ -1,0 +1,80 @@
+allocation in volunteer computing
+
+users = job submitters
+volunteers 
+
+user types
+	continuous
+		always have N jobs pending
+	sporadic
+		submit N jobs, wait for finish, sleep M
+	intermediate: batches are large
+
+goals
+	allocate resources to users in a way that performs well for all users types
+
+client behavior
+	given a set of projects, each with resource use abilities and resource share,
+	allocate resources in a way that
+	- maximizes throughput
+	- given that, minimizes difference to resource shares
+	?? what is the algorithm to do this?
+
+===============
+The proposed scheduling policy
+
+linear model
+	each user has
+		balance (FLOPS)
+		balance increase rate
+		balance limit
+			continuous users: not relevent since balance never gets high
+			sporadic users: balance goes up to limit between batches.
+				determines how long batches get high priority
+
+	allocation
+		indefinite: nonzero rate for indefinite period
+		definite: nonzero rate for a given period
+
+	FLOPs are measured (estimated) by
+		runtime * peak FLOPS * device availability
+
+	The sum of rates over all users should be slightly less than the actual FLOPS
+
+	Adjust balances so lowest is always zero?
+
+	balance constantly increases at given rate, up to limit
+	when a resource becomes available (AM RPC)
+		preferentially assign it to projects with high balance
+		decrement by est. FLOPS over next day
+
+===============
+Other (dumber) policies
+
+round-robin
+round-robin, weighted by rate
+===============
+Analyzing the policy
+
+characterize the computing resource
+	don't want to model queueing in clients
+	for each host
+		for each resource type (CPU, GPU)
+			throughput
+			mean and var of added delay
+		failure rate (lost jobs)?
+
+simulator
+
+figures of merit
+	RMS completion time of sporadic batches
+	continuous users gets "fair share"
+
+questions
+
+graphs
+	balance as a function of time
+		several cont users w/ different rates
+
+	work done per project as a fn of time
+	completion of batches (show retries)
