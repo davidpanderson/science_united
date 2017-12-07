@@ -37,6 +37,19 @@ define('COBBLESTONE_SCALE', 200./86400e9);
 
 $now = 0;
 
+$log_file = null;
+$verbose = true;
+
+function log_write($x) {
+    global $verbose, $log_file;
+
+    if (!$verbose) return;
+    if (!$log_file) {
+        $log_file = fopen("rpc_log.txt", "a");
+    }
+    fwrite($log_file, sprintf("%s: %s\n", date(DATE_RFC822), $x));
+}
+
 // return error
 //
 function su_error($num, $msg) {
@@ -77,14 +90,15 @@ function is_in_accounts($url, $accounts) {
 
 // $accounts is an array of array(project, account)
 //
-function send_reply($user, $host, $accounts, $req) {
+function send_reply($user, $host, $accounts, $new_accounts, $req) {
     echo "<acct_mgr_reply>\n"
-        ."<name>Onboard</name>\n"
+        ."<name>".PROJECT."</name>\n"
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
+    $repeat_sec = $new_accounts?30:86400;
     echo "</signing_key>\n"
-        ."<repeat_sec>86400</repeat_sec>\n"
+        ."<repeat_sec>$repeat_sec</repeat_sec>\n"
     ;
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
@@ -93,6 +107,7 @@ function send_reply($user, $host, $accounts, $req) {
     //
     foreach ($accounts as $a) {
         $proj = $a[0];
+        log_write("sending attach to project $proj->url");
         $acct = $a[1];
         echo "<account>\n"
             ."   <url>$proj->url</url>\n"
@@ -107,6 +122,7 @@ function send_reply($user, $host, $accounts, $req) {
     // but set resource share to zero.
     //
     foreach ($req->project as $rp) {
+        log_write("sending detach from $proj->url");
         $url = (string)$rp->url;
         if (is_in_accounts($url, $accounts)) {
             continue;
@@ -243,6 +259,7 @@ function lookup_records($req) {
     $email_addr = (string)$req->name;
     $user = BoincUser::lookup_email_addr($email_addr);
     if (!$user) {
+        log_write("account $email_addr not found");
         su_error(-1, 'no account found');
     }
 
@@ -323,7 +340,7 @@ function do_accounting(
         $url = (string)$rp->url;
         $project = SUProject::lookup("url='$url'");
         if (!$project) {
-            //echo "can't find project $url\n";
+            log_write("can't find project $url");
             continue;
         }
 
@@ -374,7 +391,10 @@ function do_accounting(
             njobs_fail = $rp_njobs_fail
             where host_id = $host->id and project_id = $project->id
         ");
-        if (!$ret) su_error(-1, "hp->update failed");
+        if (!$ret) {
+            log_write("up->update failed");
+            su_error(-1, "hp->update failed");
+        }
 
         // add deltas to deltas in project's current accounting record
         //
@@ -387,7 +407,10 @@ function do_accounting(
             njobs_success_delta = njobs_success_delta + $d_njobs_success,
             njobs_fail_delta = njobs_fail_delta + $d_njobs_fail
         ");
-        if (!$ret) su_error(-1, "ap->update failed");
+        if (!$ret) {
+            log_write("ap->update failed");
+            su_error(-1, "ap->update failed");
+        }
 
         // add to all-project delta sums
         //
@@ -418,6 +441,7 @@ function do_accounting(
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
     if (!$ret) {
+        log_write("au->update failed");
         su_error(-1, "au->update failed");
     }
 
@@ -433,6 +457,7 @@ function do_accounting(
         njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
     ");
     if (!$ret) {
+        log_write("acc->update failed");
         su_error(-1, "acc->update failed");
     }
 }
@@ -443,6 +468,7 @@ function main() {
     $req = simplexml_load_file('php://input');
     //$req = simplexml_load_file('req.xml');
     if (!$req) {
+        log_write("can't parse request");
         su_error(-1, "can't parse request");
     }
 
@@ -451,9 +477,10 @@ function main() {
     xml_header();   // do this before DB access
 
     list($user, $host) = lookup_records($req);
+    log_write("processing request from user $user->id host $host->id");
     do_accounting($req, $user, $host);
-    $accounts_to_send = choose_projects_rpc($user, $host);
-    send_reply($user, $host, $accounts_to_send, $req);
+    list($accounts_to_send, $new_accounts) = choose_projects_rpc($user, $host);
+    send_reply($user, $host, $accounts_to_send, $new_accounts, $req);
 }
 
 main();

@@ -19,13 +19,13 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/host.inc");
+require_once("../inc/su_schedule.inc");
 
-function su_show_user_hosts() {
-    $user = get_logged_in_user();
+function su_show_user_hosts($user) {
     $hosts = BoincHost::enum("userid=$user->id order by domain_name, rpc_time desc");
     page_head("Your computers");
     start_table();
-    row_heading_array(array("Name", "CPU", "GPU", "Operating system", "last contact", "Remove duplicate"));
+    row_heading_array(array("Name<br><small>Click for details</small>", "CPU", "GPU", "Operating system", "last contact", "Remove duplicate"));
     $now = time();
     $last_name = "";
     foreach($hosts as $h) {
@@ -35,7 +35,9 @@ function su_show_user_hosts() {
         }
         $last_name = $h->domain_name;
         row_array(array(
-            $h->domain_name,
+            sprintf("<a href=%s>%s</a>",
+                "su_hosts.php?action=detail&host_id=$h->id", $h->domain_name
+            ),
             $h->p_vendor,
             gpu_desc($h->serialnum, false),
             $h->os_name,
@@ -56,9 +58,24 @@ function su_delete_host() {
     $h->delete();
 }
 
+function su_host_detail($user, $host) {
+    page_head("Host $host->domain_name");
+    $projects = rank_projects($user, $host);
+    foreach($projects as $p) {
+        echo "$p->url $p->score<br>\n";
+    }
+    page_tail();
+}
+
+$user = get_logged_in_user();
 $action = get_str("action", true);
 if ($action == "del") {
     su_delete_host();
+    su_show_user_hosts($user);
+} else if ($action == "detail") {
+    $id = get_int("host_id");
+    $host = BoincHost::lookup_id($id);
+    su_host_detail($user, $host);
+} else {
+    su_show_user_hosts($user);
 }
-
-su_show_user_hosts();

@@ -29,6 +29,10 @@ require_once("../inc/common_defs.inc");
 
 require_once("../inc/su_db.inc");
 
+function log_write($x) {
+    echo date(DATE_RFC822), ": $x\n";
+}
+
 function do_pass() {
     $now = time();
     $accts = SUAccount::enum(
@@ -39,52 +43,62 @@ function do_pass() {
     foreach ($accts as $acct) {
         $user = BoincUser::lookup_id($acct->user_id);
         if (!$user) {
-            echo "missing user $acct->user_id\n";
+            log_write("missing user $acct->user_id");
             continue;
         }
         $project = SUProject::lookup_id($acct->project_id);
-        echo sprintf('%s: making account for user %d on %s\n";
-            $user->id
+        if (!$project) {
+            log_write("missing project $acct->project_id");
+            $acct->delete();
+        }
+        log_write(sprintf('making account for user %d on %s',
+            $user->id,
             $project->name
-        ');
+        ));
         list($auth, $err, $msg) = create_account(
             $project->web_rpc_url_base,
             $user->email_addr,
             $user->passwd_hash,
             $user->name
         );
-        echo "err $err msg $msg\n";
         if ($err == ERR_DB_NOT_UNIQUE) {
+            log_write("   account exists, but different password");
             $ret = $acct->update(sprintf("state=%d", ACCT_DIFFERENT_PASSWORD));
             if (!$ret) {
-                echo "update 1 failed\n";
+                log_write("acct update 1 failed");
             }
-            echo "   account exists, but different password\n";
         } else if ($err) {
+            log_write("create_account failed: error $err ($msg)");
             $retry_time = time() + 3600;
             $ret = $acct->update(
                 sprintf("state=%d, retry_time=%d", ACCT_TRANSIENT_ERROR, $retry_time)
             );
             if (!$ret) {
-                echo "update 2 failed\n";
+                log_write("acct update 2 failed");
             }
-            echo "   error $err ($msg)\n";
         } else {
             $ret = $acct->update(
                 sprintf("state=%d, authenticator='%s'", ACCT_SUCCESS, $auth)
             );
             if (!$ret) {
+                log_write("acct update 3 failed");
                 echo "update 3 failed\n";
             }
-            echo "   success\n";
+            log_write("create_account success");
         }
     }
 }
 
 function main() {
     $t = 0;
+    log_write("Starting");
     while (1) {
-        if (file_exists("make_accounts_trigger") || $t>600) {
+        if (file_exists("make_accounts_trigger")) {
+            // AM RPC asked us to create accounts
+            //
+            unlink("make_accounts_trigger");
+            do_pass();
+        } else if ($t>600) {
             do_pass();
         } else {
             sleep(1);
@@ -93,7 +107,6 @@ function main() {
     }
 }
 
-echo date(DATE_RFC822), ": Starting\n";
 main();
 
 ?>

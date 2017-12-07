@@ -60,7 +60,7 @@ function su_show_project() {
     row2("name", $project->name);
     row2("URL", $project->url);
     row2("Created", date_str($project->create_time));
-    row2("Allocation", $project->allocation);
+    row2("Share", $project->share);
     row2("Status", project_status_string($project->status));
     $pks = SUProjectKeyword::enum("project_id=$project->id");
     $sci = array();
@@ -111,7 +111,7 @@ function show_projects() {
             'Science keywords',
             'Location keywords',
             'Created',
-            'Allocation',
+            'Share',
             'Status'
         ));
         foreach ($projects as $p) {
@@ -121,7 +121,7 @@ function show_projects() {
                 project_kw_string($p, SCIENCE),
                 project_kw_string($p, LOCATION),
                 date_str($p->create_time),
-                $p->allocation,
+                $p->share,
                 project_status_string($p->status)
             );
         }
@@ -214,10 +214,10 @@ function add_project_action() {
     $url = get_str('url');
     $url_signature = get_str('url_signature');
     $name = get_str('name');
-    $alloc = get_str('alloc');
+    $alloc = get_str('share');
     $now = time();
     $project_id = SUProject::insert(
-        "(url, url_signature, name, create_time, allocation) values ('$url', '$url_signature', '$name', $now, $alloc)"
+        "(url, url_signature, name, create_time, share) values ('$url', '$url_signature', '$name', $now, $share)"
     );
     if (!$project_id) {
         error_page("insert failed");
@@ -235,7 +235,7 @@ function edit_project_form() {
     form_input_hidden('id', $id);
     form_input_text('URL', 'url', $p->url, 'text', 'disabled');
     form_input_text('Name', 'name', $p->name);
-    form_input_text('Allocation', 'alloc', $p->allocation, 'number');
+    form_input_text('Share', 'alloc', $p->share, 'number');
     form_radio_buttons('Status', 'status',
         array(
             array('0', 'hidden'),
@@ -324,8 +324,8 @@ function edit_project_action() {
     if (!$p) {
         error_page("no such project");
     }
-    if ($p->name != $name || $p->allocation != $alloc || $p->status != $status) {
-        $p->update("name='$name', allocation=$alloc, status=$status");
+    if ($p->name != $name || $p->share != $share || $p->status != $status) {
+        $p->update("name='$name', share=$share, status=$status");
     }
 
     // add or remove existing keywords

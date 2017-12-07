@@ -24,6 +24,18 @@ require_once("/mydisks/a/users/boincadm/boinc-site/keywords.inc");
 require_once("/mydisks/a/users/boincadm/boinc-site/project_ids.inc");
 require_once("../inc/su_db.inc");
 
+// remove projects and everything that refers to them
+//
+function clean() {
+    foreach (SUProject::enum() as $p) {
+        $p->delete();
+    }
+    SUProjectKeyword::delete_all();
+    SUAccount::delete_all();
+    SUHostProject::delete_all();
+    SUAccountingProject::delete_all();
+}
+
 function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
     global $job_keywords;
 
@@ -41,7 +53,7 @@ function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
             $web_rpc_url_base = $url;
         }
         $url_signature = implode("\n", $out);
-        $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, allocation) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10)");
+        $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
     } else {
         $id = $project->id;
     }
@@ -49,17 +61,7 @@ function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
     foreach ($keywords as $k) {
         $kw_id = $k[0];
         $frac = $k[1];
-        while (true) {
-            // insert all ancestors too
-            //
-            SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw_id, $frac)");
-            $kw = $job_keywords[$kw_id];
-            if ($kw->level > 0) {
-                $kw_id = $kw->parent;
-            } else {
-                break;
-            }
-        }
+        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw_id, $frac)");
     }
 
     echo "Added project $name\n";
@@ -133,6 +135,16 @@ function make_projects() {
     $projects = $x->project;
     foreach ($projects as $p) {
         if ((int)$p->id == PROJ_WCG) continue;
+        if ((int)$p->id == PROJ_QCN) continue;
+        if ((int)$p->id == PROJ_RADIOACTIVE) continue;
+        if ((int)$p->id == PROJ_LEIDEN) continue;
+        if ((int)$p->id == PROJ_MOO) continue;
+        if ((int)$p->id == PROJ_YOYO) continue;
+        // the following require invitation code
+        //
+        if ((int)$p->id == PROJ_COLLATZ) continue;
+        if ((int)$p->id == PROJ_PRIMABOINCA) continue;
+        if ((int)$p->id == PROJ_SRBASE) continue;
         $keywords = array();
         $ks = explode(" ", (string)$p->keywords);
         foreach ($ks as $k) {
@@ -147,8 +159,7 @@ function make_projects() {
     }
 }
 
-//make_projects_limited();
-
+clean();
 make_projects();
 
 ?>

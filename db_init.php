@@ -54,9 +54,6 @@ function make_users() {
 }
 
 function clean() {
-    foreach (SUProject::enum() as $p) {
-        $p->delete();
-    }
     foreach (BoincUser::enum("") as $u) {
         if ($u->email_addr == "davea@ssl.berkeley.edu") {
             continue;
@@ -66,12 +63,8 @@ function clean() {
     foreach (BoincForumPrefs::enum("") as $p) {
         $p->delete();
     }
-    SUProjectKeyword::delete_all();
     SUUserKeyword::delete_all();
-    SUAccount::delete_all();
-    SUHostProject::delete_all();
     SUAccounting::delete_all();
-    SUAccountingProject::delete_all();
     SUAccountingUser::delete_all();
 }
 
@@ -274,7 +267,6 @@ if ($argc > 1) {
     }
 } else {
     clean();
-    make_projects();
     make_users();
     make_accounts();
     init_accounting();

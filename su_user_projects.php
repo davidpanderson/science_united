@@ -85,7 +85,7 @@ function su_show_project($user, $project_id) {
     page_head($project->name);
     start_table();
     row2("First contribution", date_str($acct->create_time));
-    row2("Account status", "foo");
+    row2("Account status", account_status_string($acct->state));
     row2("Science keywords", "");
     row2("Location keywords", "");
     row2("CPU computing", $acct->cpu_ec);
@@ -97,6 +97,7 @@ function su_show_project($user, $project_id) {
     row2("# jobs succeeded", $acct->njobs_success);
     row2("# jobs failed", $acct->njobs_fail);
     end_table();
+    echo "<a href=su_create_retry.php?project_id=$project_id>retry</a>";
     page_tail();
 }
 

@@ -1,6 +1,6 @@
 <?php
 require_once("../inc/util.inc");
-page_head(tra("Get Help"));
+page_head(tra("Need help?"));
 echo sprintf("
 <ul>
 <li>
@@ -15,7 +15,7 @@ on the <a href=forum_index.php>%s message boards</a>.
 <li>
 To report a bug or request a feature in %s,
 create an issue on <a href=https://github.com/davidpanderson/science_united>the %s Github repository</a>
-(you'll need a Github account; this is free).
+(you'll need a free Github account).
 </ul>",
     PROJECT, PROJECT, PROJECT, PROJECT
 );

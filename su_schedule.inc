@@ -50,7 +50,7 @@ function project_score($project, $ukws) {
         }
         $score += $s;
     }
-    return $score*$project->allocation;
+    return $score*$project->share;
 
     // TODO: give an edge to projects the host is already running
 }
@@ -96,12 +96,14 @@ function choose_projects_join($user) {
 
 // decide what projects to have this user/host run.
 // Called from AM RPC handler.
-// Return list of accounts that are confirmed.
+// Return list of accounts that are confirmed,
+// and a flag indicating new accounts were requested
 //
 function choose_projects_rpc($user, $host) {
     $projects = rank_projects($user, $host);
     $n = 0;
     $accounts_to_send = array();
+    $new_accounts = false;
     foreach ($projects as $p) {
         $account = SUAccount::lookup(
             "project_id = $p->id and user_id = $user->id"
@@ -123,9 +125,11 @@ function choose_projects_rpc($user, $host) {
             if (!$ret) {
                 su_error(-1, "account insert failed");
             }
+            touch("make_accounts_trigger");
+            $new_accounts = true;
         }
     }
-    return $accounts_to_send;
+    return array($accounts_to_send, $new_accounts);
 }
 
 ?>
