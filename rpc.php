@@ -479,7 +479,9 @@ function main() {
     list($user, $host) = lookup_records($req);
     log_write("processing request from user $user->id host $host->id");
     do_accounting($req, $user, $host);
-    list($accounts_to_send, $new_accounts) = choose_projects_rpc($user, $host);
+    list($accounts_to_send, $new_accounts) =
+        choose_projects_rpc($user, $host, $req)
+    ;
     send_reply($user, $host, $accounts_to_send, $new_accounts, $req);
 }
 

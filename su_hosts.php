@@ -60,7 +60,7 @@ function su_delete_host() {
 
 function su_host_detail($user, $host) {
     page_head("Host $host->domain_name");
-    $projects = rank_projects($user, $host);
+    $projects = rank_projects($user, $host, null);
     foreach($projects as $p) {
         echo "$p->url $p->score<br>\n";
     }

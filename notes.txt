@@ -473,3 +473,24 @@ Github
     learn project interface
 
 communication channels
+
+---------------------------
+
+project app version info
+
+need to know whether a host
+a) can do work for a project at all
+b) can use its GPU (s) for the project
+
+where to store project AV info?
+
+digest projects.xml and for each project produce a list of triples
+(platform, GPU type, vbox flag)
+
+store these either in JSON, XML, or serialize
+
+function host_project_compatible() returns whether
+    - host can do work for project at all
+    - it can do work w/ vbox
+    - it can do work using a GPU
+

@@ -47,6 +47,18 @@ function project_status_string($status) {
     return "unknown: $status";
 }
 
+function get_platforms($id) {
+    $avs = unserialize(file_get_contents("project_avs.ser"));
+    $x = $avs[$id];
+    $s = "";
+    foreach ($x as $y) {
+        $s .= "$y->platform $y->gpu ";
+        if ($y->vbox) $s .= "VirtualBox";
+        $s .= "<br>\n";
+    }
+    return $s;
+}
+
 function su_show_project() {
     global $job_keywords;
 
@@ -79,6 +91,7 @@ function su_show_project() {
     }
     row2("Science keywords", array_to_string($sci));
     row2("Location keywords", array_to_string($loc));
+    row2("Platforms", get_platforms($id));
     end_table();
     echo '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit project</a>
     ';

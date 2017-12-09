@@ -36,99 +36,55 @@ function clean() {
     SUAccountingProject::delete_all();
 }
 
-function make_project($name, $url, $keywords, $web_rpc_url_base=null) {
-    global $job_keywords;
-
-    $project = SUProject::lookup("url='$url'");
-    if (!$project) {
-        $now = time();
-        $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
-        $out = array();
-        $retval = 0;
-        exec($cmd, $out, $retval);
-        if ($retval) {
-            die("$cmd failed\n");
+function get_keywords($p) {
+    $keywords = array();
+    $ks = explode(" ", (string)$p->keywords);
+    foreach ($ks as $k) {
+        $x = explode(":", $k);
+        if (count($x) > 1) {
+            $keywords[] = array((int)$x[0], (double)$x[1]);
+        } else {
+            $keywords[] = array((int)$x[0], 1);
         }
-        if (!$web_rpc_url_base) {
-            $web_rpc_url_base = $url;
-        }
-        $url_signature = implode("\n", $out);
-        $id = SUProject::insert("(create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
-    } else {
-        $id = $project->id;
     }
+    return $keywords;
+}
 
+function make_project($p) {
+    $name = (string)$p->name;
+    $url = (string)$p->url;
+    $web_rpc_url_base = (string)$p->web_rpc_url_base;
+    if (!$web_rpc_url_base) {
+        $web_rpc_url_base = $url;
+    }
+    $project_id = (string)$p->id;
+    $project = SUProject::lookup_id($project_id);
+    $now = time();
+    $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
+    $out = array();
+    $retval = 0;
+    exec($cmd, $out, $retval);
+    if ($retval) {
+        die("$cmd failed\n");
+    }
+    $url_signature = implode("\n", $out);
+    SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
+
+    $keywords = get_keywords($p);
     foreach ($keywords as $k) {
         $kw_id = $k[0];
         $frac = $k[1];
-        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($id, $kw_id, $frac)");
+        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($project_id, $kw_id, $frac)");
+    }
+
+    if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
+        die("su_accounting_project insert failed\n");
     }
 
     echo "Added project $name\n";
 }
 
-// create a limited set of projects (for testing)
-//
-function make_projects_limited() {
-    make_project("LHC@home",
-        "https://lhcathome.cern.ch/lhcathome/",
-        array(
-            array(KW_PARTICLE_PHYSICS, 1),
-            array(KW_CERN, 1),
-        )
-    );
-    make_project("SETI@home",
-        "https://setiathome.berkeley.edu/",
-        array(
-            array(KW_SETI, 1),
-            array(KW_UCB, 1),
-        ),
-        "https://setiathome.berkeley.edu/"
-    );
-    make_project("Rosetta@home",
-        "https://boinc.bakerlab.org/rosetta/",
-        array(
-            array(KW_PROTEINS, 1),
-            array(KW_UW, 1),
-        )
-    );
-    make_project("BOINC Test Project",
-        "https://boinc.berkeley.edu/test/",
-        array(
-            array(KW_MATH_CS, 1),
-            array(KW_UCB, 1),
-        )
-    );
-if (0) {
-    // WCG is problematic because it doesn't use email addr for user ID
-    make_project("World Community Grid",
-        "https://www.worldcommunitygrid.org/",
-        array(
-            array(KW_BIOMED, .5),
-            array(KW_EARTH_SCI, .7),
-            array(KW_US, .5),
-        ),
-        "https://www.worldcommunitygrid.org/"
-    );
-}
-    make_project("Herd",
-        "https://herd.tacc.utexas.edu/",
-        array(
-            array(KW_BIOMED, .5),
-            array(KW_PHYSICS, .5),
-            array(KW_US, 1),
-        )
-    );
-    make_project("nanoHUB",
-        "https://boinc.nanohub.org",
-        array(
-            array(KW_NANOSCIENCE, 1),
-            array(KW_US, 1),
-        )
-    );
-}
-
-// make projects based on master list
+// make projects based on projects.xml
 //
 function make_projects() {
     $x = simplexml_load_file("projects.xml");
@@ -140,22 +96,13 @@ function make_projects() {
         if ((int)$p->id == PROJ_LEIDEN) continue;
         if ((int)$p->id == PROJ_MOO) continue;
         if ((int)$p->id == PROJ_YOYO) continue;
-        // the following require invitation code
+
+        // the following require invitation code; skip
         //
         if ((int)$p->id == PROJ_COLLATZ) continue;
         if ((int)$p->id == PROJ_PRIMABOINCA) continue;
         if ((int)$p->id == PROJ_SRBASE) continue;
-        $keywords = array();
-        $ks = explode(" ", (string)$p->keywords);
-        foreach ($ks as $k) {
-            $x = explode(":", $k);
-            if (count($x) > 1) {
-                $keywords[] = array((int)$x[0], (double)$x[1]);
-            } else {
-                $keywords[] = array((int)$x[0], 1);
-            }
-        }
-        make_project((string)$p->name, (string)$p->url, $keywords);
+        make_project($p);
     }
 }
 
