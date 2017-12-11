@@ -144,15 +144,19 @@ function make_serialnum($req) {
     $x = sprintf("[BOINC|%s]", (string)($req->client_version));
     $c = $req->host_info->coprocs->coproc_cuda;
     if ($c) {
-        $x .= sprintf("[CUDA|%s|%d]", $c->name, $c->count);
+        $x .= sprintf("[CUDA|%s|%d]", (string)$c->name, (int)$c->count);
     }
     $c = $req->host_info->coprocs->coproc_ati;
     if ($c) {
-        $x .= sprintf("[CAL|%s|%d]", $c->name, $c->count);
+        $x .= sprintf("[CAL|%s|%d]", (string)$c->name, (int)$c->count);
     }
     $c = $req->host_info->coprocs->coproc_intel_gpu;
     if ($c) {
-        $x .= sprintf("[INTEL|%s|%d]", $c->name, $c->count);
+        $x .= sprintf("[INTEL|%s|%d]", (string)$c->name, (int)$c->count);
+    }
+    $v = (string)$req->host_info->virtualbox_version;
+    if ($v) {
+        $x .= sprintf("[vbox|%s]", $v);
     }
     return $x;
 }

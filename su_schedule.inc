@@ -32,7 +32,7 @@ function keyword_score($kw_id, $ukws) {
     return 0;
 }
 
-$project_avs = null;
+$project_avs = unserialize(file_get_contents("project_avs.ser"));
 
 // return
 // -1 if host and project have no common "extended platforms"
@@ -43,9 +43,6 @@ $project_avs = null;
 //
 function platform_score($project, $host) {
     global $project_avs;
-    if (!$project_avs) {
-        $project_avs = unserialize(file_get_contents("project_avs.ser"));
-    }
     $avs = $project_avs[$project->id];
     if (!$avs) {
         return -2;
@@ -55,7 +52,7 @@ function platform_score($project, $host) {
         if (!in_array($av->platform, $host->platforms)) {
             continue;
         }
-        if ($av->gpu && !in_array($av->gpu, $host->gpus)) {
+        if ($av->gpu && !in_array($av->gpu, $host->resources)) {
             continue;
         }
         if ($av->vbox && !$host->vbox) {
@@ -76,24 +73,34 @@ function platform_score($project, $host) {
 // higher = more preferable
 // -1 means don't use
 //
-// Currently based just on keywords.
-// TODO: take GPUs into account?
-// TODO: take balance into account
-//
 function project_score($project, $ukws, $host) {
     $pkws = SUProjectKeyword::enum("project_id = $project->id");
-    $score = 0;
+
+    $s = platform_score($project, $host);
+    if ($s < 0) {
+        $project->platform_score = $s;
+        $project->score = $s;
+        return $project;
+    }
+    $score = $s;
+    $project->platform_score = $s;
+
     foreach ($pkws as $pwk) {
-        $s = platform_score($project, $host);
         $s = keyword_score($pwk->keyword_id, $ukws);
         if ($s == KW_NO) {
-            return -1;
+            $project->keyword_score = -1;
+            $project->score = -1;
+            return $project;
         }
+        $project->keyword_score += $s;
         $score += $s;
     }
-    return $score*$project->share;
+
+    $project->score = $score + $project->projected_balance;
 
     // TODO: give an edge to projects the host is already running
+
+    return $project;
 }
 
 // populate host->platforms based on CPU and OS info
@@ -120,10 +127,10 @@ function host_info_to_platforms($host) {
     return $host;
 }
 
-// populate $host->gpus and $host->vbox based on contents of serialnum
+// populate $host->resources and $host->vbox based on contents of serialnum
 //
-function host_info_to_gpus_vbox($host) {
-    $host->gpus = array();
+function host_serialnum_to_gpus_vbox($host) {
+    $host->resources = array("cpu");
     $host->vbox = false;
     $descs = explode("]", $host->serialnum);
     foreach ($descs as $desc) {
@@ -132,17 +139,17 @@ function host_info_to_gpus_vbox($host) {
         if ($d[0] == "vbox") {
             $host->vbox = true;
         } else if ($d[0] == "CUDA") {
-            $host->gpus[] = "nvidia";
+            $host->resources[] = "nvidia";
         } else if ($d[0] == "CAL") {
-            $host->gpus[] = "ati";
+            $host->resources[] = "ati";
         } else if ($d[0] == "INTEL") {
-            $host->gpus[] = "intel_gpu";
+            $host->resources[] = "intel_gpu";
         }
     }
     return $host;
 }
 
-// populate $host->platforms, $host->gpus, $host_vbox
+// populate $host->platforms, $host->resources, $host_vbox
 //
 function populate_host($host, $req) {
     if (!$host) {
@@ -170,15 +177,27 @@ function populate_host($host, $req) {
                 $host->platforms[] = $p;
             }
         }
+        $host->resources = array("cpu");
+        if ($req->host_info->coprocs->coproc_cuda) {
+            $host->resources[] = "nvidia";
+        }
+        if ($req->host_info->coprocs->coproc_ati) {
+            $host->resources[] = "amd";
+        }
+        if ($req->host_info->coprocs->coproc_intel_gpu) {
+            $host->resources[] = "intel_gpu";
+        }
+
+        $host->vbox = (string)$req->host_info->virtualbox_version?true:false;
     } else {
         // no request - get platform from processor and OS info
         //
         $host = host_info_to_platforms($host);
+        // get GPUs and Vbox info
+        //
+        $host = host_serialnum_to_gpus_vbox($host);
     }
 
-    // get GPUs and Vbox info
-    //
-    $host = host_info_to_gpus_vbox($host);
 
     return $host;
 }
@@ -193,28 +212,92 @@ function rank_projects($user, $host, $req) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
     $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
     $host = populate_host($host, $req);
+    $p2 = array();
     foreach ($projects as $p) {
-        $p->score = project_score($p, $ukws, $host);
+        $p = project_score($p, $ukws, $host);
+        if ($p->score >= 0) {
+            $p2[] = $p;
+        }
     }
-    usort($projects,
+    usort($p2,
         function($x, $y){
             if ($x->score < $y->score) return 1;
             if ($x->score == $y->score) return 0;
             return -1;
         }
     );
-    return $projects;
+
+    // if we know about the host, reorder the list to use all resources
+    //
+    if (!$host) {
+        $p2 = select_projects_resource($host, $p2);;
+    }
+
+    return $p2;
 }
 
-// decide what projects to have this user run.
-// called when account is first created.
-// we don't know anything about host at this point.
+function all_used($used) {
+    foreach ($used as $r => $u) {
+        if (!$u) return false;
+    }
+    return true;
+}
+
+// can the project use resource r on the given host?
+//
+function can_use($project, $host, $r) {
+    global $project_avs;
+    foreach ($project_avs[$project->id] as $av) {
+        if (!in_array($av->platform, $host->platforms)) continue;
+        if ($av->vbox && !$host->vbox) continue;
+        if ($r == "cpu") {
+            if ($av->gpu) continue;
+        } else {
+            if ($av->gpu != $r) continue;
+        }
+        return true;
+    }
+    return false;
+}
+
+// Given the score-ordered list of projects,
+// select a list that uses all resources.
+// For each project, include an array of resources that it should use.
+//
+function select_projects_resource($host, $projects) {
+    $used = array();
+    foreach ($host->resources as $r) {
+        $used[$r] = false;
+    }
+    $p2 = array();
+    foreach ($projects as $p) {
+        $p->use = array();
+        foreach ($used as $r => $u) {
+            if ($u) continue;
+            $found = false;
+            if (can_use($p, $host, $r)) {
+                $found = true;
+                $p->use[] = $r;
+                $used[$r] = true;
+            }
+        }
+        if ($found) {
+            $p2 = $p;
+        }
+        if (all_used($used)) break;
+    }
+}
+
+// Called when account is first created.
+// Decide what projects to have this user run initially.
+// We don't know anything about the host at this point.
 //
 function choose_projects_join($user) {
     $projects = rank_projects($user, null, null);
     $n = 0;
     $chosen_projects = array();
     foreach ($projects as $p) {
+        if ($p->score < 0) break;
         $ret = SUAccount::insert(
             sprintf("(project_id, user_id, state) values (%d, %d, %d)",
                 $p->id, $user->id, ACCT_INIT
@@ -222,15 +305,15 @@ function choose_projects_join($user) {
         );
         $chosen_projects[] = $p;
         $n++;
-        if ($n == 3) break;
+        if ($n == 1) break;     // 1 is enough for now
     }
     return $chosen_projects;
 }
 
-// decide what projects to have this user/host run.
+// Decide what projects to have this user/host run.
 // Called from AM RPC handler.
 // Return list of accounts that are confirmed,
-// and a flag indicating new accounts were requested
+// and a flag indicating whether new accounts were requested
 //
 function choose_projects_rpc($user, $host, $req) {
     $projects = rank_projects($user, $host, $req);
@@ -238,6 +321,8 @@ function choose_projects_rpc($user, $host, $req) {
     $accounts_to_send = array();
     $new_accounts = false;
     foreach ($projects as $p) {
+        // see if user has account on the project
+        //
         $account = SUAccount::lookup(
             "project_id = $p->id and user_id = $user->id"
         );
@@ -250,6 +335,8 @@ function choose_projects_rpc($user, $host, $req) {
                 continue;
             }
         } else {
+            // if not, initiate the creation of one
+            //
             $ret = SUAccount::insert(
                 sprintf("(project_id, user_id, state) values (%d, %d, %d)",
                     $p->id, $user->id, ACCT_INIT

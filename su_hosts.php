@@ -59,11 +59,30 @@ function su_delete_host() {
 }
 
 function su_host_detail($user, $host) {
-    page_head("Host $host->domain_name");
+    page_head("Project score details for $host->domain_name");
     $projects = rank_projects($user, $host, null);
-    foreach($projects as $p) {
-        echo "$p->url $p->score<br>\n";
+    start_table("table-striped");
+    $x = array(
+        "Project", "Keyword score", "Platform score", "Balance", "Score"
+    );
+    foreach ($host->resources as $r) {
+        $x[] = "Can use $r";
     }
+    row_heading_array($x);
+    foreach($projects as $p) {
+        $x = array(
+            "<a href=>$p->url</a>,
+            $p->keyword_score,
+            $p->platform_score,
+            $p->projected_balance,
+            $p->score
+        );
+        foreach ($host->resources as $r) {
+            $x[] = can_use($p, $host, $r) ? "yes" : "no";
+        }
+        row_array($x);
+    }
+    end_table();
     page_tail();
 }
 
@@ -75,6 +94,7 @@ if ($action == "del") {
 } else if ($action == "detail") {
     $id = get_int("host_id");
     $host = BoincHost::lookup_id($id);
+    $host = populate_host($host, null);
     su_host_detail($user, $host);
 } else {
     su_show_user_hosts($user);

@@ -23,81 +23,6 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
 require_once("../inc/keywords.inc");
 
-function array_to_string($arr) {
-    $x = "";
-    foreach ($arr as $y) {
-        $pkw = $y[0];
-        $wd = $y[1];
-        $frac = $pkw->work_fraction;
-        $pct = $frac*100;
-        if ($x) {
-            $x .= "<br>";
-        }
-        $x .= "$wd ($pct%)";
-    }
-    return $x;
-}
-
-function project_status_string($status) {
-    switch ($status) {
-    case PROJECT_STATUS_HIDE: return "<font color=red>hidden</font>";
-    case PROJECT_STATUS_ON_DEMAND: return "<font color=brown>on demand</font>";
-    case PROJECT_STATUS_AUTO: return "<font color=green>normal</font>";
-    }
-    return "unknown: $status";
-}
-
-function get_platforms($id) {
-    $avs = unserialize(file_get_contents("project_avs.ser"));
-    $x = $avs[$id];
-    $s = "";
-    foreach ($x as $y) {
-        $s .= "$y->platform $y->gpu ";
-        if ($y->vbox) $s .= "VirtualBox";
-        $s .= "<br>\n";
-    }
-    return $s;
-}
-
-function su_show_project() {
-    global $job_keywords;
-
-    $id = get_int('id');
-    $project = SUProject::lookup_id($id);
-    if (!$project) {
-        error_page("no such project");
-    }
-    page_head($project->name);
-    start_table();
-    row2("name", $project->name);
-    row2("URL", $project->url);
-    row2("Created", date_str($project->create_time));
-    row2("Share", $project->share);
-    row2("Status", project_status_string($project->status));
-    $pks = SUProjectKeyword::enum("project_id=$project->id");
-    $sci = array();
-    $loc = array();
-    if ($pks) {
-        foreach ($pks as $pk) {
-            $kwd = $job_keywords[$pk->keyword_id];
-            $x = array($pk, $kwd->name);
-            if ($kwd->category == KW_CATEGORY_SCIENCE) {
-                $sci[] = $x;
-            }
-            if ($kwd->category == KW_CATEGORY_LOC) {
-                $loc[] = $x;
-            }
-        }
-    }
-    row2("Science keywords", array_to_string($sci));
-    row2("Location keywords", array_to_string($loc));
-    row2("Platforms", get_platforms($id));
-    end_table();
-    echo '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit project</a>
-    ';
-    page_tail();
-}
-
 function project_kw_string($p, $category) {
     global $job_keywords;
 
@@ -129,7 +54,7 @@ function show_projects() {
         ));
         foreach ($projects as $p) {
             table_row(
-                '<a href="su_projects_edit.php?action=show_project&id='.$p->id.'">'.$p->name.'</a>',
+                '<a href="su_show_project.php?id='.$p->id.'">'.$p->name.'</a>',
                 $p->url,
                 project_kw_string($p, SCIENCE),
                 project_kw_string($p, LOCATION),
@@ -359,9 +284,6 @@ case 'show_projects':
     show_projects();
     echo '<p></p><a href="su_manage.php">Return to Admin page</a>';
     page_tail();
-    break;
-case 'show_project':
-    su_show_project();
     break;
 case 'add_project_form':
     add_project_form();

@@ -11,6 +11,47 @@ function admin_only() {
     }
 }
 
+function project_status_string($status) {
+    switch ($status) {
+    case PROJECT_STATUS_HIDE: return "<font color=red>hidden</font>";
+    case PROJECT_STATUS_ON_DEMAND: return "<font color=brown>on demand</font>";
+    case PROJECT_STATUS_AUTO: return "<font color=green>normal</font>";
+    }
+    return "unknown: $status";
+}
+
+// convert list of project keywords to human-readable string
+//
+function array_to_string($arr) {
+    $x = "";
+    foreach ($arr as $y) {
+        $pkw = $y[0];
+        $wd = $y[1];
+        $frac = $pkw->work_fraction;
+        $pct = $frac*100;
+        if ($x) {
+            $x .= "<br>";
+        }
+        $x .= "$wd ($pct%)";
+    }
+    return $x;
+}
+
+// get a project's platform list, as a string
+//
+function get_platforms_string($project_id) {
+    $avs = unserialize(file_get_contents("project_avs.ser"));
+    $x = $avs[$project_id];
+    $s = "";
+    foreach ($x as $y) {
+        $s .= "$y->platform";
+        if ($y->gpu) $s .= " + $y->gpu ";
+        if ($y->vbox) $s .= " + VirtualBox";
+        $s .= "<br>\n";
+    }
+    return $s;
+}
+
 ////////////// UI INVOLVING KEYWORDS ////////////////
 
 // show select for keywords (don't use)
