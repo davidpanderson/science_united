@@ -60,7 +60,7 @@ function su_delete_host() {
 
 function su_host_detail($user, $host) {
     page_head("Project score details for $host->domain_name");
-    $projects = rank_projects($user, $host, null);
+    $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(
         "Project", "Keyword score", "Platform score", "Balance", "Score"
@@ -71,7 +71,7 @@ function su_host_detail($user, $host) {
     row_heading_array($x);
     foreach($projects as $p) {
         $x = array(
-            "<a href=>$p->url</a>,
+            "<a href=su_show_project.php?id=$p->id>$p->url</a>",
             $p->keyword_score,
             $p->platform_score,
             $p->projected_balance,
@@ -79,6 +79,26 @@ function su_host_detail($user, $host) {
         );
         foreach ($host->resources as $r) {
             $x[] = can_use($p, $host, $r) ? "yes" : "no";
+        }
+        row_array($x);
+    }
+    end_table();
+
+    echo "<h2>selected projects</h2>\n";
+    $projects = select_projects_resource($host, $projects);
+    start_table("table-striped");
+    $x = array("Project", "Score");
+    foreach ($host->resources as $r) {
+        $x[] = "Use $r?";
+    }
+    row_heading_array($x);
+    foreach($projects as $p) {
+        $x = array(
+            "<a href=su_show_project.php?id=$p->id>$p->url</a>",
+            $p->score,
+        );
+        foreach ($host->resources as $r) {
+            $x[] = $p->use[$r] ? "yes" : "no";
         }
         row_array($x);
     }

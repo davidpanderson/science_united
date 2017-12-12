@@ -113,8 +113,16 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
             ."   <url>$proj->url</url>\n"
             ."   <url_signature>\n$proj->url_signature\n</url_signature>\n"
             ."   <authenticator>$acct->authenticator</authenticator>\n"
-            ."</account>\n"
         ;
+
+        // tell client which processing resources to use for this project
+        //
+        foreach ($host->resources as $r) {
+            if (!$proj->use[$r]) {
+                echo "   <no_rsc>$r</no_rsc>\n";
+            }
+        }
+        echo "</account>\n";
     }
 
     // tell it to detach from other projects it's currently attached to
@@ -122,7 +130,7 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
     // but set resource share to zero.
     //
     foreach ($req->project as $rp) {
-        log_write("sending detach from $proj->url");
+        log_write("sending detach from $rp->url");
         $url = (string)$rp->url;
         if (is_in_accounts($url, $accounts)) {
             continue;

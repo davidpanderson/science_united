@@ -16,7 +16,20 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// functions for choosing projects to attach a user to
+// functions for choosing projects to attach a host to
+//
+// this is used in three places:
+//
+// AM RPC (rpc.php)
+//      choose_projects_rpc(user, host, req)
+//          rank_projects(user, host, req)
+//              select_projects_resource(host, projects)
+// account creation
+//      choose_projects_join(user)
+//          rank_projects(user, null, null)
+// host/projects web page
+//      rank_projects(user, host, null)
+//      select_projects_resource()
 
 require_once("../inc/su_db.inc");
 
@@ -85,6 +98,7 @@ function project_score($project, $ukws, $host) {
     $score = $s;
     $project->platform_score = $s;
 
+    $project->keyword_score = 0;
     foreach ($pkws as $pwk) {
         $s = keyword_score($pwk->keyword_id, $ukws);
         if ($s == KW_NO) {
@@ -207,6 +221,7 @@ function populate_host($host, $req) {
 // - at join time (host, req = null)
 // - from host detail page (req = null)
 // - from RPC (host, req not null)
+//      don't return projects w/ negative scores
 //
 function rank_projects($user, $host, $req) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
@@ -215,9 +230,8 @@ function rank_projects($user, $host, $req) {
     $p2 = array();
     foreach ($projects as $p) {
         $p = project_score($p, $ukws, $host);
-        if ($p->score >= 0) {
-            $p2[] = $p;
-        }
+        if ($req && $p->score < 0) continue;
+        $p2[] = $p;
     }
     usort($p2,
         function($x, $y){
@@ -229,8 +243,8 @@ function rank_projects($user, $host, $req) {
 
     // if we know about the host, reorder the list to use all resources
     //
-    if (!$host) {
-        $p2 = select_projects_resource($host, $p2);;
+    if ($req) {
+        $p2 = select_projects_resource($host, $p2);
     }
 
     return $p2;
@@ -262,7 +276,7 @@ function can_use($project, $host, $r) {
 
 // Given the score-ordered list of projects,
 // select a list that uses all resources.
-// For each project, include an array of resources that it should use.
+// For each project p, include an array p->use of resources that it should use.
 //
 function select_projects_resource($host, $projects) {
     $used = array();
@@ -272,20 +286,22 @@ function select_projects_resource($host, $projects) {
     $p2 = array();
     foreach ($projects as $p) {
         $p->use = array();
+        $found = false;
         foreach ($used as $r => $u) {
+            $p->use[$r] = false;
             if ($u) continue;
-            $found = false;
             if (can_use($p, $host, $r)) {
                 $found = true;
-                $p->use[] = $r;
+                $p->use[$r] = true;
                 $used[$r] = true;
             }
         }
         if ($found) {
-            $p2 = $p;
+            $p2[] = $p;
         }
         if (all_used($used)) break;
     }
+    return $p2;
 }
 
 // Called when account is first created.

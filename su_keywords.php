@@ -62,7 +62,6 @@ function show_all() {
 }
 
 function edit_all_action() {
-    print_r($_GET);
     $new_kw_sci = get_str('new_kw_sci', true);
     if ($new_kw_sci) {
         SUKeyword::insert(

@@ -493,4 +493,12 @@ function host_project_compatible() returns whether
     - host can do work for project at all
     - it can do work w/ vbox
     - it can do work using a GPU
+-------------------
+notion of backup project
 
+Send 1-2 extra projects w/ zero resource share as backups,
+in case higher-score project has no work, is down,
+doesn't work for this host, etc.
+
+More generally: we should notice if a host can't get work done
+for a particular project, and treat it differently.
