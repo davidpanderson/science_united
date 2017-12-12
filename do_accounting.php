@@ -30,6 +30,10 @@
 
 require_once("../inc/su_db.inc");
 
+function log_write($x) {
+    echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
+}
+
 function do_total($now) {
     $x = SUAccounting::last();
     if ($x) {
@@ -55,6 +59,8 @@ function do_projects($now) {
     }
 }
 
+// TODO: only insert a record if something changed?
+//
 function do_user($u, $now) {
     $x = SUAccountingUser::last($u->id);
     if ($x) {
@@ -71,13 +77,15 @@ function do_users($now) {
 }
 
 function main() {
+    log_write("starting");
     $now = time();
-    echo "doing totals\n";
+    log_write("doing totals");
     do_total($now);
-    echo "doing projects\n";
+    log_write("doing projects");
     do_projects($now);
-    echo "doing users\n";
+    log_write("doing users");
     do_users($now);
+    log_write("done");
 }
 
 main();

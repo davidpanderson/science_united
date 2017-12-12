@@ -45,7 +45,7 @@ function log_write($x) {
 
     if (!$verbose) return;
     if (!$log_file) {
-        $log_file = fopen("rpc_log.txt", "a");
+        $log_file = fopen("../../log_isaac/rpc_log.txt", "a");
     }
     fwrite($log_file, sprintf("%s: %s\n", date(DATE_RFC822), $x));
 }
@@ -53,6 +53,7 @@ function log_write($x) {
 // return error
 //
 function su_error($num, $msg) {
+    log_write("ERROR: $msg");
     echo "<acct_mgr_reply>
     <error_num>$num</error_num>
     <error_msg>$msg</error_msg>
@@ -296,28 +297,39 @@ function lookup_records($req) {
     return array($user, $host);
 }
 
+// sanity-check limits on #s and speed of CPU cores, GPUs
+//
+define("MAX_CPU_INST", 256);
+define("MAX_CPU_FLOPS", 100e9);
+define("MAX_GPU_INST", 8);
+define("MAX_GPU_FLOPS", 100e12);
+define("MAX_JOBS_DAY", 10000);
+
+// make sure a time delta (for CPU or GPU time) is legit
+// dt is the wall time delta
 //
 function check_time_delta($dt, $delta, $is_gpu) {
     if ($delta < 0) return 0;
-    $max_inst = $is_gpu?8:256;
+    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST;
     $max_delta = $max_inst*$dt;
     return min($delta, $max_delta);
 }
 
+// make sure an EC delta is legit
+//
 function check_ec_delta($dt, $delta, $is_gpu) {
     if ($delta < 0) return 0;
-    $max_inst = $is_gpu?8:256;
-    $max_rate = $is_gpu?100e12/COBBLESTONE_SCALE:100e9/COBBLESTONE_SCALE;
+    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST56;
+    $max_rate = $is_gpu?MAX_GPU_FLOPS/COBBLESTONE_SCALE:MAX_CPU_FLOPS/COBBLESTONE_SCALE;
     $max_delta = $max_inst*$max_rate*$dt;
     return min($delta, $max_delta);
 }
 
-// limit on the # of jobs a host could process in one day.
-// Let's say 10000
+// sanity check limit on the # of jobs a host can process in one day.
 //
 function check_njobs($dt, $njobs) {
     if ($njobs < 0) return 0;
-    return min($njobs, 10000.*$dt/86400.);
+    return min($njobs, MAX_JOBS_DAY*$dt/86400.);
 }
 
 // - compute accounting deltas based on AM request message
@@ -477,8 +489,8 @@ function do_accounting(
 function main() {
     global $now;
 
-    $req = simplexml_load_file('php://input');
-    //$req = simplexml_load_file('req.xml');
+    //$req = simplexml_load_file('php://input');
+    $req = simplexml_load_file('req.xml');
     if (!$req) {
         log_write("can't parse request");
         su_error(-1, "can't parse request");

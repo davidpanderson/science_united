@@ -32,6 +32,7 @@
 //      select_projects_resource()
 
 require_once("../inc/su_db.inc");
+require_once("../inc/su_project_infos.inc");
 
 // if user has a pref for this keyword, return -1/1, else 0
 // TODO: should more specific keywords (e.g. level > 0) get a higher score?
@@ -45,8 +46,6 @@ function keyword_score($kw_id, $ukws) {
     return 0;
 }
 
-$project_avs = unserialize(file_get_contents("project_avs.ser"));
-
 // return
 // -1 if host and project have no common "extended platforms"
 //   (platform, gpu, vbox)
@@ -55,8 +54,8 @@ $project_avs = unserialize(file_get_contents("project_avs.ser"));
 // "host" has been populated with platforms, gpu, vbox
 //
 function platform_score($project, $host) {
-    global $project_avs;
-    $avs = $project_avs[$project->id];
+    global $project_infos;
+    $avs = $project_infos[$project->id]->avs;
     if (!$avs) {
         return -2;
     }
@@ -87,7 +86,8 @@ function platform_score($project, $host) {
 // -1 means don't use
 //
 function project_score($project, $ukws, $host) {
-    $pkws = SUProjectKeyword::enum("project_id = $project->id");
+    global $project_infos;
+    $pkws = $project_infos[$project->id]->kws;
 
     $s = platform_score($project, $host);
     if ($s < 0) {
@@ -260,8 +260,9 @@ function all_used($used) {
 // can the project use resource r on the given host?
 //
 function can_use($project, $host, $r) {
-    global $project_avs;
-    foreach ($project_avs[$project->id] as $av) {
+    global $project_infos;
+    $avs = $project_infos[$project->id]->avs;
+    foreach ($avs as $av) {
         if (!in_array($av->platform, $host->platforms)) continue;
         if ($av->vbox && !$host->vbox) continue;
         if ($r == "cpu") {

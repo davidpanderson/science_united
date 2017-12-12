@@ -22,12 +22,12 @@ function project_status_string($status) {
 
 // convert list of project keywords to human-readable string
 //
-function array_to_string($arr) {
+function project_keyword_array_to_string($arr) {
     $x = "";
     foreach ($arr as $y) {
         $pkw = $y[0];
         $wd = $y[1];
-        $frac = $pkw->work_fraction;
+        $frac = $pkw->fraction;
         $pct = $frac*100;
         if ($x) {
             $x .= "<br>";
@@ -40,8 +40,9 @@ function array_to_string($arr) {
 // get a project's platform list, as a string
 //
 function get_platforms_string($project_id) {
-    $avs = unserialize(file_get_contents("project_avs.ser"));
-    $x = $avs[$project_id];
+    $project_infos = unserialize(file_get_contents("projects.ser"));
+    $p = $project_infos[$project_id];
+    $x = $p->avs;
     $s = "";
     foreach ($x as $y) {
         $s .= "$y->platform";

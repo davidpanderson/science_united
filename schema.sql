@@ -24,14 +24,6 @@ create table su_allocation (
     primary key (id)
 ) engine=InnoDB;
 
-create table su_project_keyword (
-    project_id              integer         not null,
-    keyword_id              integer         not null,
-    work_fraction           double          not null,
-        /* fraction of project's work with this keyword */
-    unique(project_id, keyword_id)
-) engine=InnoDB;
-
 create table su_user_keyword (
     user_id                 integer         not null,
     keyword_id              integer         not null,

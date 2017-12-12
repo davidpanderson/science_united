@@ -30,7 +30,6 @@ function clean() {
     foreach (SUProject::enum() as $p) {
         $p->delete();
     }
-    SUProjectKeyword::delete_all();
     SUAccount::delete_all();
     SUHostProject::delete_all();
     SUAccountingProject::delete_all();
@@ -69,13 +68,6 @@ function make_project($p) {
     }
     $url_signature = implode("\n", $out);
     SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
-
-    $keywords = get_keywords($p);
-    foreach ($keywords as $k) {
-        $kw_id = $k[0];
-        $frac = $k[1];
-        SUProjectKeyword::insert("(project_id, keyword_id, work_fraction) values ($project_id, $kw_id, $frac)");
-    }
 
     if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
         die("su_accounting_project insert failed\n");
