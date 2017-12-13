@@ -34,11 +34,11 @@ require_once("../inc/su.inc");
 function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $min_time = time() - $ndays*86400;
     if ($type == 'user') {
-        $accts = SUAccountingUser::enum("user_id=$id and create_time>$min_time");
+        $accts = SUAccountingUser::enum("user_id=$id and create_time>$min_time order by id");
     } else if ($type == 'project') {
-        $accts = SUAccountingProject::enum("project_id=$id and create_time>$min_time");
+        $accts = SUAccountingProject::enum("project_id=$id and create_time>$min_time order by id");
     } else {
-        $accts = SUAccounting::enum("create_time>$min_time");
+        $accts = SUAccounting::enum("create_time>$min_time order by id");
     }
 
     if (!$accts) {
@@ -51,22 +51,29 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $fn = tempnam("/tmp", "su_data");
     $f = fopen($fn, "w");
     $have_gpu = false;
-    foreach ($accts as $a) {
+    $n = count($accts);
+    for ($i=0; $i<$n-1; $i++) {
+        $a = $accts[$i];
+        $b = $accts[$i+1];
+        $x = 86400./($b->create_time - $a->create_time);
         if ($what == "job") {
             fprintf($f, "%f %d %d\n",
-                $a->create_time, $a->njobs_success_delta, $a->njobs_fail_delta
+                $a->create_time,
+                $x*$a->njobs_success_delta,
+                $x*$a->njobs_fail_delta
             );
         } else if ($what = "time") {
             fprintf($f, "%f %f %f\n",
-                $a->create_time, $a->cpu_time_delta/3600,
-                ($a->cpu_time_delta+$a->gpu_time_delta)/3600
+                $a->create_time,
+                $x*$a->cpu_time_delta/3600,
+                $x*($a->cpu_time_delta+$a->gpu_time_delta)/3600
             );
             if ($a->gpu_time_delta) {
                 $have_gpu = true;
             }
         } else if ($what = "ec") {
             fprintf($f, "%f %f %f\n",
-                $a->create_time, $a->cpu_ec_delta, $a->gpu_ec_delta
+                $a->create_time, $x*$a->cpu_ec_delta, $x*$a->gpu_ec_delta
             );
             if ($a->gpu_ec_delta) {
                 $have_gpu = true;
@@ -82,14 +89,14 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     if ($have_gpu) {
         $plot = sprintf('
 set style fill noborder
-plot "%s" using 1:3 with filledcurve x1 title "GPU time" lc rgb "orange", \
-"%s" using 1:2 with filledcurve x1 title "CPU time" lc rgb "khaki"
+plot "%s" using 1:3 with filledcurve x1 title "GPU hours" lc rgb "orange", \
+"%s" using 1:2 with filledcurve x1 title "CPU hours" lc rgb "khaki"
 ',
             $fn, $fn
         );
     } else {
         $plot = sprintf(
-            'plot "%s" using 1:2 with filledcurve x1 title "CPU time"',
+            'plot "%s" using 1:2 with filledcurve x1 title "CPU hours"',
             $fn
         );
     }

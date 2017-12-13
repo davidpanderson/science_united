@@ -19,14 +19,14 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // Daily accounting program - run this every ~1 day
-// Make new records based on the previous:
-// - new totals = previous totals + previous deltas
-// - new deltas = 0
 //
 // For each of the following:
-// - user accounting records
-// - project accounting records
-// - total accounting record
+// - users
+// - projects
+// - total
+// Make new records based on the previous one, where
+// - new totals = previous totals + previous deltas
+// - new deltas = 0
 
 require_once("../inc/su_db.inc");
 
@@ -59,11 +59,19 @@ function do_projects($now) {
     }
 }
 
-// TODO: only insert a record if something changed?
-//
+function nonzero_delta($x) {
+    if ($x->cpu_time_delta) return true;
+    if ($x->cpu_ec_delta) return true;
+    if ($x->gpu_time_delta) return true;
+    if ($x->gpu_ec_delta) return true;
+    if ($x->njobs_success_delta) return true;
+    if ($x->njobs_fail_delta) return true;
+    return false;
+}
+
 function do_user($u, $now) {
     $x = SUAccountingUser::last($u->id);
-    if ($x) {
+    if ($x && nonzero_delta($x)) {
         SUAccountingUser::insert("(create_time, user_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $u->id, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     }
 }
@@ -73,7 +81,6 @@ function do_users($now) {
     foreach($users as $u) {
         do_user($u, $now);
     }
-    // TODO: make this more efficient using join?
 }
 
 function main() {

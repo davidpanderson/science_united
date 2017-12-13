@@ -33,6 +33,10 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");
 
+define('REPEAT_DELAY', 86400./2);
+    // interval between AM requests
+define('REPEAT_DELAY_INITIAL', 30);
+    // delay after initial request - enough time for account creation
 define('COBBLESTONE_SCALE', 200./86400e9);
 
 $now = 0;
@@ -97,7 +101,7 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
-    $repeat_sec = $new_accounts?30:86400;
+    $repeat_sec = $new_accounts?REPEAT_DELAY_INITIAL:REPEAT_DELAY;
     echo "</signing_key>\n"
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
     ;
@@ -319,7 +323,7 @@ function check_time_delta($dt, $delta, $is_gpu) {
 //
 function check_ec_delta($dt, $delta, $is_gpu) {
     if ($delta < 0) return 0;
-    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST56;
+    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST;
     $max_rate = $is_gpu?MAX_GPU_FLOPS/COBBLESTONE_SCALE:MAX_CPU_FLOPS/COBBLESTONE_SCALE;
     $max_delta = $max_inst*$max_rate*$dt;
     return min($delta, $max_delta);
@@ -330,6 +334,56 @@ function check_ec_delta($dt, $delta, $is_gpu) {
 function check_njobs($dt, $njobs) {
     if ($njobs < 0) return 0;
     return min($njobs, MAX_JOBS_DAY*$dt/86400.);
+}
+
+function new_delta_set() {
+    $x = new StdClass;
+    $x->cpu_time = 0;
+    $x->cpu_ec = 0;
+    $x->gpu_time = 0;
+    $x->gpu_ec = 0;
+    $x->njobs_success = 0;
+    $x->njobs_fail = 0;
+    return $x;
+}
+
+function delta_set_nonzero($ds) {
+    if ($ds->cpu_time) return true;
+    if ($ds->cpu_ec) return true;
+    if ($ds->gpu_time) return true;
+    if ($ds->gpu_ec) return true;
+    if ($ds->njobs_success) return true;
+    if ($ds->njobs_fail) return true;
+    return false;
+}
+
+function add_delta_set($x, $y) {
+    $y->cpu_time += $x->cpu_time;
+    $y->cpu_ec += $x->cpu_ec;
+    $y->gpu_time += $x->gpu_time;
+    $y->gpu_ec += $x->gpu_ec;
+    $y->njobs_success += $x->njobs_success;
+    $y->njobs_fail += $x->njobs_fail;
+    return $y;
+}
+
+function log_write_deltas($ds) {
+    log_write("   CPU time:        $ds->cpu_time");
+    log_write("   CPU EC:          $ds->cpu_ec");
+    log_write("   GPU time:        $ds->gpu_time");
+    log_write("   GPU EC:          $ds->gpu_ec");
+    log_write("   #jobs success:   $ds->njobs_success");
+    log_write("   #jobs fail:      $ds->njobs_fail");
+}
+
+function delta_update_string($d) {
+    return "cpu_ec_delta = cpu_ec_delta + $d->cpu_ec,
+        gpu_ec_delta = gpu_ec_delta + $d->gpu_ec,
+        cpu_time_delta = cpu_time_delta + $d->cpu_time,
+        gpu_time_delta = gpu_time_delta + $d->gpu_time,
+        njobs_success_delta = njobs_success_delta + $d->njobs_success,
+        njobs_fail_delta = njobs_fail_delta + $d->njobs_fail
+    ";
 }
 
 // - compute accounting deltas based on AM request message
@@ -353,12 +407,7 @@ function do_accounting(
     // the client reports totals per project.
     // the following are sums across all projects
     //
-    $sum_delta_cpu_time = 0;
-    $sum_delta_cpu_ec = 0;
-    $sum_delta_gpu_time = 0;
-    $sum_delta_gpu_ec = 0;
-    $sum_delta_njobs_success = 0;
-    $sum_delta_njobs_fail = 0;
+    $sum_delta = new_delta_set();
 
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
@@ -391,18 +440,24 @@ function do_accounting(
 
         // compute deltas for this project
         //
+        $dproj = new_delta_set();
         $d = $rp_cpu_time - $hp->cpu_time;
-        $d_cpu_time = check_time_delta($dt, $d, false);
+        $dproj->cpu_time = check_time_delta($dt, $d, false);
         $d = $rp_cpu_ec - $hp->cpu_ec;
-        $d_cpu_ec = check_ec_delta($dt, $d, false);
+        $dproj->cpu_ec = check_ec_delta($dt, $d, false);
         $d = $rp_gpu_time - $hp->gpu_time;
-        $d_gpu_time = check_time_delta($dt, $d, true);
+        $dproj->gpu_time = check_time_delta($dt, $d, true);
         $d = $rp_gpu_ec - $hp->gpu_ec;
-        $d_gpu_ec = check_ec_delta($dt, $d, true);
+        $dproj->gpu_ec = check_ec_delta($dt, $d, true);
         $d = $rp_njobs_success - $hp->njobs_success;
-        $d_njobs_success = check_njobs($dt, $d);
+        $dproj->njobs_success = check_njobs($dt, $d);
         $d = $rp_njobs_fail - $hp->njobs_fail;
-        $d_njobs_fail = check_njobs($dt, $d);
+        $dproj->njobs_fail = check_njobs($dt, $d);
+
+        if (1) {
+            log_write("Deltas for $project->name:");
+            log_write_deltas($dproj);
+        }
 
         // update host/project record (totals)
         //
@@ -422,28 +477,23 @@ function do_accounting(
 
         // add deltas to deltas in project's current accounting record
         //
-        $ap = SUAccountingProject::last($project->id);
-        $ret = $ap->update("
-            cpu_ec_delta = cpu_ec_delta + $d_cpu_ec,
-            gpu_ec_delta = gpu_ec_delta + $d_gpu_ec,
-            cpu_time_delta = cpu_time_delta + $d_cpu_time,
-            gpu_time_delta = gpu_time_delta + $d_gpu_time,
-            njobs_success_delta = njobs_success_delta + $d_njobs_success,
-            njobs_fail_delta = njobs_fail_delta + $d_njobs_fail
-        ");
-        if (!$ret) {
-            log_write("ap->update failed");
-            su_error(-1, "ap->update failed");
+        if (delta_set_nonzero($dproj)) {
+            $ap = SUAccountingProject::last($project->id);
+            $ret = $ap->update(delta_update_string($dproj));
+            if (!$ret) {
+                log_write("ap->update failed");
+                su_error(-1, "ap->update failed");
+            }
         }
 
         // add to all-project delta sums
         //
-        $sum_delta_cpu_time += $d_cpu_time;
-        $sum_delta_cpu_ec += $d_cpu_ec;
-        $sum_delta_gpu_time += $d_gpu_time;
-        $sum_delta_gpu_ec += $d_gpu_ec;
-        $sum_delta_njobs_success += $d_njobs_success;
-        $sum_delta_njobs_fail += $d_njobs_fail;
+        $sum_delta = add_delta_set($dproj, $sum_delta);
+    }
+
+    if (1) {
+        log_write("Total deltas:");
+        log_write_deltas($sum_delta);
     }
 
     // update user accounting record with deltas summed over projects;
@@ -456,41 +506,31 @@ function do_accounting(
         );
         $au = SUAccountingUser::last($user->id);
     }
-    $ret = $au->update("
-        cpu_time_delta = cpu_time_delta + $sum_delta_cpu_time,
-        cpu_ec_delta = cpu_ec_delta + $sum_delta_cpu_ec,
-        gpu_time_delta = gpu_time_delta + $sum_delta_gpu_time,
-        gpu_ec_delta = gpu_ec_delta + $sum_delta_gpu_ec,
-        njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
-        njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
-    ");
-    if (!$ret) {
-        log_write("au->update failed");
-        su_error(-1, "au->update failed");
+    if (delta_set_nonzero($sum_delta)) {
+        $ret = $au->update(delta_update_string($sum_delta));
+        if (!$ret) {
+            log_write("au->update failed");
+            su_error(-1, "au->update failed");
+        }
     }
 
     // update global accounting record
     //
-    $acc = SUAccounting::last();
-    $ret = $acc->update("
-        cpu_time_delta = cpu_time_delta + $sum_delta_cpu_time,
-        cpu_ec_delta = cpu_ec_delta + $sum_delta_cpu_ec,
-        gpu_time_delta = gpu_time_delta + $sum_delta_gpu_time,
-        gpu_ec_delta = gpu_ec_delta + $sum_delta_gpu_ec,
-        njobs_success_delta = njobs_success_delta + $sum_delta_njobs_success,
-        njobs_fail_delta = njobs_fail_delta + $sum_delta_njobs_fail
-    ");
-    if (!$ret) {
-        log_write("acc->update failed");
-        su_error(-1, "acc->update failed");
+    if (delta_set_nonzero($sum_delta)) {
+        $acc = SUAccounting::last();
+        $ret = $acc->update(delta_update_string($sum_delta));
+        if (!$ret) {
+            log_write("acc->update failed");
+            su_error(-1, "acc->update failed");
+        }
     }
 }
 
 function main() {
     global $now;
 
-    //$req = simplexml_load_file('php://input');
-    $req = simplexml_load_file('req.xml');
+    $req = simplexml_load_file('php://input');
+    //$req = simplexml_load_file('req.xml');
     if (!$req) {
         log_write("can't parse request");
         su_error(-1, "can't parse request");
