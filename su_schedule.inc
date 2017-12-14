@@ -191,6 +191,10 @@ function populate_host($host, $req) {
                 $host->platforms[] = $p;
             }
         }
+        if (count($host->platforms) == 0) {
+            log_write("request has no platforms");
+            am_error_reply("Incomplete request message.  Please upgrade to the latest BOINC client.");
+        }
         $host->resources = array("cpu");
         if ($req->host_info->coprocs->coproc_cuda) {
             $host->resources[] = "nvidia";
@@ -211,7 +215,6 @@ function populate_host($host, $req) {
         //
         $host = host_serialnum_to_gpus_vbox($host);
     }
-
 
     return $host;
 }

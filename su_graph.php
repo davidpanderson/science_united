@@ -54,26 +54,26 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $n = count($accts);
     for ($i=0; $i<$n-1; $i++) {
         $a = $accts[$i];
-        $b = $accts[$i+1];
-        $x = 86400./($b->create_time - $a->create_time);
         if ($what == "job") {
             fprintf($f, "%f %d %d\n",
                 $a->create_time,
-                $x*$a->njobs_success_delta,
-                $x*$a->njobs_fail_delta
+                $a->njobs_success_delta,
+                $a->njobs_fail_delta
             );
         } else if ($what = "time") {
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
-                $x*$a->cpu_time_delta/3600,
-                $x*($a->cpu_time_delta+$a->gpu_time_delta)/3600
+                $a->cpu_time_delta/3600,
+                ($a->cpu_time_delta+$a->gpu_time_delta)/3600
             );
             if ($a->gpu_time_delta) {
                 $have_gpu = true;
             }
         } else if ($what = "ec") {
             fprintf($f, "%f %f %f\n",
-                $a->create_time, $x*$a->cpu_ec_delta, $x*$a->gpu_ec_delta
+                $a->create_time,
+                $a->cpu_ec_delta,
+                $a->gpu_ec_delta
             );
             if ($a->gpu_ec_delta) {
                 $have_gpu = true;

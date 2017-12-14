@@ -130,18 +130,27 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         echo "</account>\n";
     }
 
-    // tell it to detach from other projects it's currently attached to
+    // tell client to detach from other projects it's currently attached to,
+    // (that we know about, and with attached_via_acct_mgr set)
     // TODO: leave attached to those with large disk usage,
     // but set resource share to zero.
     //
     foreach ($req->project as $rp) {
-        log_write("sending detach from $rp->url");
-        $url = (string)$rp->url;
+        if (!(int)$rp->attached_via_acct_mgr) {
+            continue;
+        }
+        $url = BoincDb::escape_string((string)$rp->url);
         if (is_in_accounts($url, $accounts)) {
             continue;
         }
+        $project = SUProject::lookup("url='$url'");
+        if (!$project) {
+            continue;
+        }
+        log_write("sending detach from $url");
         echo "<account>\n"
             ."   <url>$url</url>\n"
+            ."   <url_signature>\n$project->url_signature\n</url_signature>\n"
             ."   <dont_request_more_work/>\n"
             ."   <detach_when_done/>\n"
             ."</account>\n"
@@ -524,6 +533,14 @@ function do_accounting(
             su_error(-1, "acc->update failed");
         }
     }
+}
+
+function am_error_reply($msg) {
+    echo "<acct_mgr_reply>
+        <error_msg>$msg</error_msg>
+        </acct_mgr_reply>
+    ";
+    exit;
 }
 
 function main() {
