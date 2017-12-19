@@ -347,6 +347,13 @@ function show_host_projects($host) {
 
 ///////////// UI INVOLVING ACCOUNTING ////////////////
 //
+
+function ec_to_gflop_hours($ec) {
+    // 24 GFLOP/hrs = 200 points
+
+    return .12*$ec;
+}
+
 function show_user_acct_totals($user) {
     $au = SUAccountingUser::last($user->id);
     if (!$au) {
@@ -363,6 +370,10 @@ function show_user_acct_totals($user) {
     end_table();
 }
 
+function show_num($x) {
+    return number_format($x, 2);
+}
+
 function show_user_acct_history($user) {
     $saus = SUAccountingUser::enum(
         "user_id=$user->id", "order by id desc limit 200"
@@ -374,20 +385,20 @@ function show_user_acct_history($user) {
     start_table();
     row_heading_array(array(
         "When",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
+        "CPU hours",
+        "CPU GFLOP/hours",
+        "GPU hours",
+        "GPU GFLOP/hours",
         "Jobs succeeded",
         "Jobs failed",
     ));
     foreach ($saus as $sau) {
         row_array(array(
             date_str($sau->create_time),
-            $sau->cpu_time_delta,
-            $sau->cpu_ec_delta,
-            $sau->gpu_time_delta,
-            $sau->gpu_ec_delta,
+            show_num($sau->cpu_time_delta/3600.),
+            show_num(ec_to_gflop_hours($sau->cpu_ec_delta)),
+            show_num($sau->gpu_time_delta/3600.),
+            show_num(ec_to_gflop_hours($sau->gpu_ec_delta)),
             $sau->njobs_success_delta,
             $sau->njobs_fail_delta,
         ));

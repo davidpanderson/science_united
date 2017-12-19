@@ -18,7 +18,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// Daily accounting program - run this every ~1 day
+// Make historical accounting records - run this every ~1 day
 //
 // For each of the following:
 // - users

@@ -319,8 +319,8 @@ function choose_projects_join($user) {
     foreach ($projects as $p) {
         if ($p->score < 0) break;
         $ret = SUAccount::insert(
-            sprintf("(project_id, user_id, state) values (%d, %d, %d)",
-                $p->id, $user->id, ACCT_INIT
+            sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
+                $p->id, $user->id, time(), ACCT_INIT
             )
         );
         $chosen_projects[] = $p;

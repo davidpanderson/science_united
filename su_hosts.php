@@ -59,7 +59,10 @@ function su_delete_host() {
 }
 
 function su_host_detail($user, $host) {
-    page_head("Project score details for $host->domain_name");
+    page_head("Project selection details for $host->domain_name");
+    echo "
+        Projects 
+    ";
     $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(

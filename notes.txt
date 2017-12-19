@@ -502,3 +502,31 @@ doesn't work for this host, etc.
 
 More generally: we should notice if a host can't get work done
 for a particular project, and treat it differently.
+===========
+New allocation model
+
+share/total share = fraction of total FLOPS this project gets
+balance = FLOPs owed to this project
+
+daily accounting:
+    x = total FLOPS in last day
+    for each project p
+        p.balance += x*(p.share/total_share)
+        record balance, share in project accounting record
+
+RPC
+    for each project p
+        p.balance -= reported EC
+
+projected balance
+    The idea is that there will be a ~24 period from
+    when we start attaching a project to when
+    the first reports of EC come in, and its balance declines.
+    During that period we might over-attach it.
+
+    So we could maintain a separate "projected balance",
+    reset periodically to the balance,
+    and decremented each time we attach the project by,
+    say, half the estimated EC over the next day
+
+    I'm not sure we need this; let's not do it for now.

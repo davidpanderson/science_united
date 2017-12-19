@@ -484,6 +484,25 @@ function do_accounting(
             su_error(-1, "hp->update failed");
         }
 
+        // update user/project record (totals)
+        //
+        if (delta_set_nonzero($dproj)) {
+            $a = new SUAccount;
+            $a->user_id = $user->id;
+            $a->project_id = $project->id;
+            $ret = $a->update("cpu_time = cpu_time + $dproj->cpu_time,
+                cpu_ec = cpu_ec + $dproj->cpu_ec,
+                gpu_ec = gpu_time + $dproj->gpu_time,
+                gpu_ec = gpu_ec + $dproj->gpu_ec,
+                njobs_success = njobs_success + $dproj->njobs_success,
+                njobs_fail = njobs_fail + $dproj->njobs_fail
+            ");
+            if (!$ret) {
+                log_write("account->update failed");
+                su_error(-1, "account->update failed");
+            }
+        }
+
         // add deltas to deltas in project's current accounting record
         //
         if (delta_set_nonzero($dproj)) {

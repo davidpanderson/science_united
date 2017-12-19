@@ -27,14 +27,14 @@ function show_projects($user) {
     if (count($accounts) == 0) {
         echo "No accounts yet";
     } else {
+        echo "You are eligible to contribute to these projects:<p>";
         $first = true;
         foreach ($accounts as $a) {
             if ($a->state != ACCT_SUCCESS) continue;
             if ($first) {
-                echo "<h2>Accounts</h2>\n";
                 start_table();
                 row_heading_array(array(
-                    "Name", "since", "CPU time", "GPU time",
+                    "Name", "since", "CPU hours", "GPU hours",
                     "# successful jobs", "# failed jobs"
                 ));
                 $first = false;
@@ -43,8 +43,8 @@ function show_projects($user) {
             row_array(array(
                 "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
                 date_str($a->create_time),
-                $a->cpu_time,
-                $a->gpu_time,
+                show_num($a->cpu_time/3600.),
+                show_num($a->gpu_time/3600.),
                 $a->njobs_success,
                 $a->njobs_fail
             ));

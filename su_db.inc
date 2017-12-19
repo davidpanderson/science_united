@@ -205,9 +205,9 @@ class SUAccountingProject {
         $db = BoincDb::get();
         return $db->insert('su_accounting_project', $clause);
     }
-    static function enum($where_clause) {
+    static function enum($where_clause, $order_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_accounting_project', 'SUAccountingProject', $where_clause);
+        return $db->enum('su_accounting_project', 'SUAccountingProject', $where_clause, $order_clause);
     }
     static function last($proj_id) {
         $db = BoincDb::get();
@@ -233,9 +233,9 @@ class SUAccountingUser {
         $db = BoincDb::get();
         return $db->insert('su_accounting_user', $clause);
     }
-    static function enum($where_clause) {
+    static function enum($where_clause, $order_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_accounting_user', 'SUAccountingUser', $where_clause);
+        return $db->enum('su_accounting_user', 'SUAccountingUser', $where_clause, $order_clause);
     }
     static function last($user_id) {
         $db = BoincDb::get();
