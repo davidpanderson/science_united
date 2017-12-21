@@ -17,6 +17,40 @@ require_once("su.inc");
 // textK: the plus or minus sign, or spaces
 // radioK: the radio buttons
 
+
+// for each kw K
+// nprefs(K) = how many descendants of K have nonzero pref
+// expanded(K): true if user chose to expand K
+//      persists if ancestors are contracted;
+//      doesn't persist if nprefs becomes nonzero
+//
+// actions:
+// click on expand or contract: set or clear expanded(K)
+// radio: recompute nprefs for all ancestors
+//
+// render:
+//  for each terminal node K
+//      if nprefs(parent)
+//          unhide
+//      else if all ancesters are either nprefs<>0 or expanded
+//          unhide
+//      else
+//          hide
+//
+//  for each nonterminal node K
+//      if nprefs(K)
+//          expanded=true
+//          unhide
+//          button=none
+//      else if nprefs(parent)
+//          unhide
+//          set button according to expanded
+//      else if all ancestors are expanded
+//          set button according to expanded
+//      else
+//          hide
+
+
 // for each keyword K:
 // - generate list of K's children
 //
@@ -86,7 +120,6 @@ function generate_javascript($uprefs) {
         var levels = new Array;
         var parent = new Array;
         var radio_value = new Array;
-        var children = new Array;
 ";
     foreach ($job_keywords as $id=>$k) {
         $val = $uprefs[$id];
@@ -95,7 +128,6 @@ function generate_javascript($uprefs) {
             levels[$id] = $k->level;
             parent[$id] = $k->parent;
             radio_value[$id] = $val;
-            children[$id] = new Array;
             ids.push($id);
         ";
     }
@@ -103,34 +135,35 @@ function generate_javascript($uprefs) {
     echo <<<EOT
     var rows = new Array;
     var texts = new Array;
-    var children = new Array;
     var expanded = new Array;
+    var terminal = new Array;
+    var nprefs = new Array;
+
+    // initialize stuff
+
     for (i=0; i<nkws; i++) {
-        children[ids[i]] = new Array;
+        terminal[ids[i]] = true;
+        nprefs[ids[i]] = 0;
     }
     for (i=0; i<nkws; i++) {
         var j = ids[i];
-        var pid = parent[j];
-        if (pid) {
-            children[pid].push(j);
-        }
         var rowid = "row"+j;
         var textid = "text"+j;
         rows[j] = document.getElementById(rowid);
         texts[j] = document.getElementById(textid);
+        if (parent[j]) {
+            terminal[parent[j]] = false;
+        }
         expanded[j] = false;
-    }
 
-    function all_siblings_maybe(id) {
-        siblings = children[parent[id]];
-        for (i=0; i<siblings.length; i++) {
-            j = siblings[i];
-            if (j == id) continue;
-            if (radio_value[j]) {
-                return false;
+        if (radio_value[j]) {
+            k = j;
+            while (1) {
+                k = parent[k];
+                if (!k) break;
+                nprefs[k]++;
             }
         }
-        return true;
     }
 
     var font_size = [120, 108, 92, 80];
@@ -142,7 +175,7 @@ function generate_javascript($uprefs) {
     // 1: show "expand" button
     //
     function set_expand(k, val) {
-        console.log('set_expand ', k, val);
+        //console.log('set_expand ', k, val);
         var level = levels[k];
         var x = '<span style="font-size:'+font_size[level]+'%">';
         x += '<span style="padding-left:'+indent[level]+'em"/>';
@@ -154,78 +187,83 @@ function generate_javascript($uprefs) {
             x += '<a onclick="expand_contract('+k+')" id="t'+k+'" href=#/>&boxplus;</a> ';
         }
         x += names[k];
-        var t = texts[k];
-        t.innerHTML = x;
+        texts[k].innerHTML = x;
     }
 
     function radio(k, val) {
-        console.log('radio ', k, val, parent[k]);
+        //console.log('radio ', k, val, parent[k]);
+        old_val = radio_value[k];
         radio_value[k] = val;
-        if (parent[k]) {
-            if (val) {
-                // if yes or no, disable contraction of parent
-                //
-                set_expand(parent[k], 0);
-            } else {
-                // if "maybe", see if all siblings are maybe,
-                // and if so enable contraction of parent
-                if (all_siblings_maybe(k)) {
-                    set_expand(parent[k], -1);
-                }
+        inc = 0;
+        if (val && !old_val) inc = 1;
+        if (!val && old_val) inc = -1;
+        if (inc) {
+            while (1) {
+                k = parent[k];
+                if (!k) break;
+                nprefs[k] += inc;
             }
         }
+        render();
     }
 
     // click on expand/contract link
     //
     function expand_contract(k) {
-        var x = children[k];
-        var a = rows[k];
-        var t = texts[k];
         expanded[k] = !expanded[k];
         set_expand(k, expanded[k]?-1:1);
         var h = expanded[k]?false:true;
-        console.log('expand_contract ', k, h);
-        for (i=0; i<x.length; i++) {
-            var b = rows[x[i]];
-            b.hidden = h;
-        }
+        //console.log('expand_contract ', k, h);
+        render();
         return false;
     }
 
-    function init() {
+    // return true if all ancestrors of i are expanded or nprefs>0
+    //
+    function ancestors_expanded(i) {
+        while (1) {
+            i = parent[i];
+            if (!i) break;
+            if (!nprefs[i] && !expanded[i]) return false;
+        }
+        return true;
+    }
+
+    function render() {
         for (i=0; i<nkws; i++) {
-            var j = ids[i];
-            console.log(i, j);
-            if (radio_value[j]) {
-                while (1) {
-                    j = parent[j];
-                    if (!j) break;
+            j = ids[i];
+            if (terminal[j]) {
+                set_expand(j, 0);
+                if (nprefs[parent[j]]>0 || ancestors_expanded(j)) {
+                    rows[j].hidden = false;
+                } else {
+                    rows[j].hidden = true;
+                }
+            } else {
+                console.log("nprefs ", j, nprefs[j]);
+                if (nprefs[j]) {
                     expanded[j] = true;
-                    for (k=0; k<children[j].length; k++) {
-                        c = (children[j])[k];
-                        rows[c].hidden = false;
+                    rows[j].hidden = false;
+                    set_expand(j, 0);
+                } else {
+                    p = parent[j];
+                    if (p) {
+                        if (nprefs[parent[j]]>0 || ancestors_expanded(j)) {
+                            rows[j].hidden = false;
+                            set_expand(j, expanded[j]?-1:1);
+                        } else {
+                            rows[j].hidden = true;
+                        }
+                    } else {
+                        rows[j].hidden = false;
+                        set_expand(j, expanded[j]?-1:1);
                     }
                 }
             }
         }
-        for (i=0; i<nkws; i++) {
-            var j = ids[i];
-            console.log(i, j);
-            var a = rows[j];
-            if (expanded[j]) {
-                a.hidden = false;
-                set_expand(j, 0);
-            } else if (!parent[j]) {
-                a.hidden = false;
-                set_expand(j, 1);
-            } else {
-                set_expand(j, 0);
-            }
-        }
     }
 
-    init();
+    render();
 
 EOT;
     echo "</script>\n";
@@ -248,7 +286,7 @@ function prefs_edit_form($user) {
     keyword_setup($uprefs);
 
     page_head("Edit preferences");
-    form_start("su_prefs2.php");
+    form_start("su_prefs.php");
     form_input_hidden('action', 'submit');
     start_table("table-striped");
     row_heading("Science areas", "bg-info");
