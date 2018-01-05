@@ -21,41 +21,62 @@ require_once("../inc/user.inc");
 require_once("../inc/forum.inc");
 require_once("../inc/su_user.inc");
 
-function su_user_stats($user) {
-}
-
-function su_preference_links() {
-    panel("Computing",
+function su_contribution($user) {
+    panel("Contribution",
         function() {
-            echo "<p><a href=su_prefs.php>Science preferences</a>";
-            echo "<p><a href=su_compute_prefs.php>Computing preferences</a>";
-            echo "<p><a href=su_hosts.php>Your computers</a>";
-            echo "<p><a href=su_user_projects.php>Projects</a>";
-            echo "<p><a href=su_user_accounting.php>Accounting</a>";
+            start_table();
+            row2("Your computers", '<a href=su_hosts.php class="btn btn-success">View</a>', false, "50%");
+            row2("Projects you've supported", '<a href=su_user_projects.php class="btn btn-success">View</a>');
+            row2("History", '<a href=su_user_accounting.php class="btn btn-success">View</a>');
+            end_table();
         }
     );
 }
 
-function su_show_account_private($user) {
+function su_community($user) {
+    panel("Community", function() use($user) {
+        start_table();
+        show_community_private($user);
+        end_table();
+    });
+}
+
+function su_settings($user) {
+    panel("Settings",
+        function() {
+            start_table();
+            row2(
+                "Science and location preferences</br><small>Choose the types of research you want to support</small>",
+                '<a href=su_prefs.php class="btn btn-success">Edit</a>',
+                false, "70%"
+            );
+            row2(
+                "Computing preferences</br><small>Choose how to use your computers</small>",
+                '<a href=su_compute_prefs.php class="btn btn-success">Edit</a>'
+            );
+            row2(
+                "Community preferences</br><small>Settings for message boards and private messages</small>",
+                '<a href=edit_forum_preferences_form.php class="btn btn-success">Edit</a>'
+            );
+            row2(
+                "Accounting settings</br><small>Name, password, email address</small>",
+                '<a href=su_account_settings.php class="btn btn-success">Edit</a>'
+            );
+            end_table();
+        }
+    );
+}
+
+function main($user) {
     show_problem_accounts($user);
     grid(
-        false,
+        null,
         function() use ($user) {
-            su_preference_links();
-            su_user_stats($user);
+            su_contribution($user);
         },
         function() use ($user) {
-            panel("Account info", function() use($user) {
-                start_table();
-                show_user_info_private($user);
-                end_table();
-            });
-            panel("Community", function() use($user) {
-                start_table();
-                show_community_private($user);
-                table_row("", "<a href=edit_form_preferences_form.php>Community preferences</a>");
-                end_table();
-            });
+            su_community($user);
+            su_settings($user);
         }
     );
 }
@@ -65,9 +86,9 @@ function su_show_account_private($user) {
 $user = get_logged_in_user();
 BoincForumPrefs::lookup($user);
 
-page_head(tra("Your account"));
+page_head(tra("Your home page"));
 
-su_show_account_private($user);
+main($user);
 
 page_tail();
 

@@ -28,6 +28,7 @@ define("SYS_ADMIN_EMAIL", "admin@$master_url");
 define("SHORTCUT_ICON", "power.png");
 define("UOTD_ADMIN_EMAIL", "admin@$master_url");
     // who gets user of the day pool running low e-mails?
+define ("DISABLE_TEAMS", true);
 define ("DISABLE_PROFILES", true);
     // enable profiles only after enabling reCAPTCHA
     // http://boinc.berkeley.edu/trac/wiki/ProtectionFromSpam
@@ -127,17 +128,6 @@ function su_navbar(
 
     $x = array(
         array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php"),
-        array(tra("Statistics"), $url_prefix."stats.php"),
-    );
-    $x = array_merge($x,
-        array(
-            'Leader boards:',
-            array(tra("Participants"), $url_prefix."top_users.php"),
-            array(tra("Computers"), $url_prefix."top_hosts.php"),
-            array(tra("Teams"), $url_prefix."top_teams.php"),
-            array(tra("GPU models"), $url_prefix."gpu_list.php"),
-            array(tra("CPU models"), $url_prefix."cpu_list.php"),
-        )
     );
     navbar_menu(tra("Computing"), $x);
 
@@ -152,7 +142,7 @@ function su_navbar(
         array(tra("Certificate"), $url_prefix."cert1.php", "", "_blank"),
     ));
     navbar_menu(tra("Site"), array(
-        array(tra("Site search"), $url_prefix."site_search.php"),
+        array(tra("Search"), $url_prefix."site_search.php"),
         array(tra("Languages"), $url_prefix."language_select.php")
     ));
 

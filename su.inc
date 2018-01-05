@@ -1,7 +1,26 @@
 <?php
+// This file is part of BOINC.
+// http://boinc.berkeley.edu
+// Copyright (C) 2017 University of California
+//
+// BOINC is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation,
+// either version 3 of the License, or (at your option) any later version.
+//
+// BOINC is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
+
+// utility functions involving YI
 
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
+require_once("../inc/su_util.inc");
 
 function admin_only() {
     $user = get_logged_in_user();
@@ -54,16 +73,6 @@ function get_platforms_string($project_id) {
 }
 
 ////////////// UI INVOLVING KEYWORDS ////////////////
-
-// show select for keywords (don't use)
-
-function keyword_select ($keywords, $category) {
-    foreach ($keywords as $k) {
-        if ($k->category != $category) continue;
-        echo '"<option value="'.$k->id.'">'.$k->name.'
-        ';
-    }
-}
 
 // look up the given keyword ID in the user KW list
 //
@@ -185,50 +194,29 @@ function show_problem_projects($user) {
 
 ///////////// UI INVOLVING HOSTS /////////////
 
-function show_user_computers($user) {
-    $hosts = BoincHost::enum("userid=$user->id");
-    start_table('table-striped');
-    row_heading_array(array('Name', 'average throughput'));
-    foreach($hosts as $host) {
-        row_array(array($host->domain_name, $host->expavg_credit));
+// table description of a host
+//
+function show_host_detail($host) {
+    row2(tra("Domain name"), $host->domain_name);
+    if ($host->product_name) {
+        row2(tra("Product name"), $host->product_name);
     }
-    end_table();
+    $x = $host->timezone/3600;
+    if ($x >= 0) $x="+$x";
+    row2(tra("Local Standard Time"), tra("UTC %1 hours", $x));
+    row2(tra("Created"), time_str($host->create_time));
+    row2(tra("Number of times client has contacted server"), $host->rpc_seqno);
+    row2(tra("Last time contacted server"), sched_log_link($host->rpc_time));
+    row2(tra("Fraction of time BOINC is running"), number_format(100*$host->on_frac, 2)."%");
+    if ($host->connected_frac > 0) {
+        row2(tra("While BOINC is running, fraction of time computer has an Internet connection"), number_format(100*$host->connected_frac, 2)."%");
+    }
+    row2(tra("While BOINC is running, fraction of time computing is allowed"), number_format(100*$host->active_frac, 2)."%");
+    row2(tra("While is BOINC running, fraction of time GPU computing is allowed"), number_format(100*$host->gpu_active_frac, 2)."%");
 }
 
-// Show full-page description of $host.
-// If $user is non-null, it's both the owner of the host
-// and the logged in user (so show some extra fields)
-//
-function show_host_detail($host, $user, $ipprivate) {
-    start_table();
-    row1(tra("Computer information"));
-    $anonymous = false;
-    if ($user) {
-        if ($ipprivate) {
-            row2(tra("IP address"), "$host->last_ip_addr<br>".tra("(same the last %1 times)", $host->nsame_ip_addr));
-            if ($host->last_ip_addr != $host->external_ip_addr) {
-                row2(tra("External IP address"), $host->external_ip_addr);
-            }
-        } else { 
-            row2(tra("IP address"), "<a href=show_host.php?hostid=$host->id&ipprivate=1>".tra("Show IP address")."</a>");
-        }
-        row2(tra("Domain name"), $host->domain_name);
-        if ($host->product_name) {
-            row2(tra("Product name"), $host->product_name);
-        }
-        $x = $host->timezone/3600;
-        if ($x >= 0) $x="+$x";
-        row2(tra("Local Standard Time"), tra("UTC %1 hours", $x));
-    } else {
-        $owner = BoincUser::lookup_id($host->userid);
-        if ($owner && $owner->show_hosts) {
-            row2(tra("Owner"), user_links($owner, BADGE_HEIGHT_MEDIUM));
-        } else {
-            row2(tra("Owner"), tra("Anonymous"));
-            $anonymous = true;
-        }
-    }
-    row2(tra("Created"), time_str($host->create_time));
+function show_host_hw_sw($host) {
+    row2("Name", $host->domain_name);
     row2(tra("CPU type"), "$host->p_vendor <br> $host->p_model");
     row2(tra("Number of processors"), $host->p_ncpus);
     if ($host->serialnum) {
@@ -248,17 +236,15 @@ function show_host_detail($host, $user, $ipprivate) {
         row2(tra("Cache"), tra("%1 KB", $y));
     }
 
-    if ($user) {
-        $x = $host->m_swap/MEGA;
-        $y = round($x, 2);
-        row2(tra("Swap space"), tra("%1 MB", $y));
-        $x = $host->d_total/GIGA;
-        $y = round($x, 2);
-        row2(tra("Total disk space"), tra("%1 GB", $y));
-        $x = $host->d_free/GIGA;
-        $y = round($x, 2);
-        row2(tra("Free Disk Space"), tra("%1 GB", $y));
-    }
+    $x = $host->m_swap/MEGA;
+    $y = round($x, 2);
+    row2(tra("Swap space"), tra("%1 MB", $y));
+    $x = $host->d_total/GIGA;
+    $y = round($x, 2);
+    row2(tra("Total disk space"), tra("%1 GB", $y));
+    $x = $host->d_free/GIGA;
+    $y = round($x, 2);
+    row2(tra("Free Disk Space"), tra("%1 GB", $y));
     $x = $host->p_fpops/(1000*1000);
     $y = round($x, 2);
     row2(tra("Measured floating point speed"), tra("%1 million ops/sec", $y));
@@ -279,39 +265,15 @@ function show_host_detail($host, $user, $ipprivate) {
     } else {
         row2(tra("Average download rate"), tra("Unknown"));
     }
-    $x = $host->avg_turnaround/86400;
-    row2(tra("Average turnaround time"), tra("%1 days", round($x, 2)));
 
-    if ($user) {
-        row2(tra("Number of times client has contacted server"), $host->rpc_seqno);
-        row2(tra("Last time contacted server"), sched_log_link($host->rpc_time));
-        row2(tra("Fraction of time BOINC is running"), number_format(100*$host->on_frac, 2)."%");
-        if ($host->connected_frac > 0) {
-            row2(tra("While BOINC is running, fraction of time computer has an Internet connection"), number_format(100*$host->connected_frac, 2)."%");
-        }
-        row2(tra("While BOINC is running, fraction of time computing is allowed"), number_format(100*$host->active_frac, 2)."%");
-        row2(tra("While is BOINC running, fraction of time GPU computing is allowed"), number_format(100*$host->gpu_active_frac, 2)."%");
-        if ($host->cpu_efficiency) {
-            row2(tra("Average CPU efficiency"), $host->cpu_efficiency);
-        }
-    } else {
-        row2(tra("Number of times client has contacted server"), $host->rpc_seqno);
-        row2(tra("Last contact"), date_str($host->rpc_time));
-    }
     row2("CPU features", $host->p_features);
-    row2("BOINC client version", $host->boinc_client_version);
-    row2("Has usable GPU?", $host->has_usable_gpu?"yes":"no");
     row2("VM extensions disabled?", $host->p_vm_extensions_disabled?"yes":"no");
     row2("VirtualBox version", $host->virtualbox_version);
-    row2("CPU time", $host->cpu_time);
-    row2("CPU FLOPs", $host->cpu_ec);
-    row2("GPU time", $host->gpu_time);
-    row2("GPU FLOPs", $host->gpu_ec);
-    row2("# jobs success", $host->njobs_success);
-    row2("# jobs fail", $host->njobs_fail);
-    echo "</table>\n";
+    row2("BOINC client version", $host->boinc_client_version);
 }
 
+// show list of projects a host has computed for
+//
 function show_host_projects($host) {
     $hps = SUHostProject::enum("host_id=$host->id");
     if (count($hps) == 0) {
@@ -346,128 +308,83 @@ function show_host_projects($host) {
 }
 
 ///////////// UI INVOLVING ACCOUNTING ////////////////
+
+// Design philsophy:
+// use only the following accounting units:
+// - device time in days
+// - GFLOPS/TFLOPS/PFLOPS as appropriate
+
+// generic function to show accounting totals
 //
-
-function ec_to_gflop_hours($ec) {
-    // 24 GFLOP/hrs = 200 points
-
-    return .12*$ec;
-}
-
-function show_user_acct_totals($user) {
-    $au = SUAccountingUser::last($user->id);
-    if (!$au) {
+function show_accounting_totals($a) {
+    if (!$a) {
         echo "No accounting records yet";
         return;
     }
     start_table();
-    row2("CPU time", $au->cpu_time_total);
-    row2("CPU FLOPS", $au->cpu_ec_total);
-    row2("GPU time", $au->gpu_time_total);
-    row2("GPU FLOPS", $au->gpu_ec_total);
-    row2("Jobs: successful", $au->njobs_success_total);
-    row2("Jobs: failed", $au->njobs_fail_total);
+    row2("CPU days", show_days($a->cpu_time_total));
+    row2("GPU days", show_days($a->gpu_time_total));
+    row2("Successful jobs", $a->njobs_success_total);
+    row2("Failed jobs", $a->njobs_fail_total);
     end_table();
 }
 
-function show_num($x) {
-    return number_format($x, 2);
+function show_accounting_deltas($a, $active=false) {
+    start_table();
+    row2("CPU days", show_days($a->cpu_time_delta));
+    row2("GPU days", show_days($a->gpu_time_delta));
+    row2("Successful jobs", $a->njobs_success_delta);
+    row2("Failed jobs", $a->njobs_fail_delta);
+    if ($active) {
+        row2("Active volunteers", $a->nactive_users);
+        row2("Active computers", $a->nactive_hosts);
+        row2("Active computers with GPU", $a->nactive_hosts_gpu);
+    }
+    end_table();
 }
 
-function show_user_acct_history($user) {
-    $saus = SUAccountingUser::enum(
-        "user_id=$user->id", "order by id desc limit 200"
-    );
-    if (count($saus) == 0) {
-        echo "No history yet";
+// generic function to show accounting history
+//
+function show_accounting_history($as) {
+    if (count($as) == 0) {
+        echo "No records yet";
         return;
     }
     start_table();
     row_heading_array(array(
-        "When",
-        "CPU hours",
-        "CPU GFLOP/hours",
-        "GPU hours",
-        "GPU GFLOP/hours",
+        "Start",
+        "CPU days",
+        "CPU GFLOPS",
+        "GPU days",
+        "GPU GFLOPS",
         "Jobs succeeded",
         "Jobs failed",
     ));
-    foreach ($saus as $sau) {
-        row_array(array(
-            date_str($sau->create_time),
-            show_num($sau->cpu_time_delta/3600.),
-            show_num(ec_to_gflop_hours($sau->cpu_ec_delta)),
-            show_num($sau->gpu_time_delta/3600.),
-            show_num(ec_to_gflop_hours($sau->gpu_ec_delta)),
-            $sau->njobs_success_delta,
-            $sau->njobs_fail_delta,
-        ));
-    }
-    end_table();
-}
 
-function show_user_acct_history_ec($user) {
-    $saus = SUAccountingUser::enum(
-        "user_id=$user->id", "order by id desc limit 20"
-    );
-    if (count($saus) == 0) {
-        echo "No history yet";
-        return;
-    }
-    start_table();
-    row_heading_array(array(
-        "When",
-        "FLOPS",
-    ));
-    foreach ($saus as $sau) {
-        row_array(array(
-            date_str($sau->create_time),
-            $sau->cpu_ec_delta + $sau->gpu_ec_delta
-        ));
-    }
-    end_table();
-}
-
-// show accountings totals
-//
-function show_acct_history() {
-    $as = SUAccounting::enum(
-        "", "order by id desc limit 20"
-    );
-    if (count($as) == 0) {
-        echo "No history yet";
-        return;
-    }
-    start_table();
-    $first = true;
-    row_heading_array(array(
-        "When",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
-        "Jobs success",
-        "Jobs fail",
-    ));
-    foreach ($as as $a) {
-        if ($first) {
-            $first = false;
+    for($i=0; $i<count($as); $i++) {
+        $a = $as[$i];
+        if ($i == 0) {
             row_array(array(
                 "Totals",
-                $a->cpu_time_total + $a->cpu_time_delta,
-                $a->cpu_ec_total + $a->cpu_ec_delta,
-                $a->gpu_time_total + $a->gpu_time_delta,
-                $a->gpu_ec_total + $a->gpu_ec_delta,
-                $a->njobs_success_total + $a->njobs_success_delta,
-                $a->njobs_fail_total + $a->njobs_fail_delta,
+                show_days($a->cpu_time_total),
+                "",
+                show_days($a->cpu_time_total),
+                "",
+                $a->njobs_success_total,
+                $a->njobs_fail_total,
             ));
+            $dt = time() - $a->create_time;
+        } else {
+            $dt = $as[$i-1]->create_time - $a->create_time ;
         }
         row_array(array(
-            date_str($a->create_time),
+            time_str($a->create_time),
+            //show_days($a->cpu_time_delta),
             $a->cpu_time_delta,
-            $a->cpu_ec_delta,
+            show_gflops($a->cpu_ec_delta, $dt),
+            //show_days($a->gpu_time_delta),
             $a->gpu_time_delta,
-            $a->gpu_ec_delta,
+            show_gflops($a->gpu_ec_delta, $dt),
             $a->njobs_success_delta,
             $a->njobs_fail_delta,
         ));

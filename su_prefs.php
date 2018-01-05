@@ -86,14 +86,14 @@ function generate_html_kw($id, $uprefs) {
 
     echo sprintf('<tr id="%s" hidden>%s', "row$id", "\n");
     echo sprintf('   <td id="%s"></td>%s', "text$id", "\n");
-    echo sprintf('   <td><input onclick="radio(%d, 1)" type="radio" name="%s" value="%d" %s></td>%s',
-        $id, "radio$id", KW_YES, $yes_checked, "\n"
+    echo sprintf('   <td><input onclick="radio(%d, 1)" type="radio" name="%s" id="%s" value="%d" %s></td>%s',
+        $id, "radio$id", "radio$id"."_0", KW_YES, $yes_checked, "\n"
     );
-    echo sprintf('   <td><input onclick="radio(%d, 0)" type="radio" name="%s" value="%d" %s></td>%s',
-        $id, "radio$id", KW_MAYBE, $maybe_checked, "\n"
+    echo sprintf('   <td><input onclick="radio(%d, 0)" type="radio" name="%s" id="%s" value="%d" %s></td>%s',
+        $id, "radio$id", "radio$id"."_1", KW_MAYBE, $maybe_checked, "\n"
     );
-    echo sprintf('   <td><input onclick="radio(%d, -1)" type="radio" name="%s" value="%d" %s></td>%s',
-        $id, "radio$id", KW_NO, $no_checked, "\n"
+    echo sprintf('   <td><input onclick="radio(%d, -1)" type="radio" name="%s" id="%s" value="%d" %s></td>%s',
+        $id, "radio$id", "radio$id"."_2", KW_NO, $no_checked, "\n"
     );
     echo "</tr>\n";
 
@@ -104,7 +104,7 @@ function generate_html_kw($id, $uprefs) {
 
 function generate_html_category($category, $uprefs) {
     global $job_keywords;
-    row_heading_array(array('', 'Priority', 'As needed', 'Never'), null, 'bg-default');
+    row_heading_array(array('', 'Prefer', 'As needed', 'Never'), null, 'bg-default');
     foreach ($job_keywords as $id=>$k) {
         if ($k->category != $category) continue;
         if ($k->parent) continue;
@@ -163,6 +163,19 @@ function generate_javascript($uprefs) {
                 if (!k) break;
                 nprefs[k]++;
             }
+        }
+    }
+
+    // Firefox doesn't set radio buttons correctly.
+    //
+    for (i=0; i<nkws; i++) {
+        var j = ids[i];
+        if (!terminal[j]) continue;
+        for (k=0; k<3; k++) {
+            id = "radio"+j+"_"+k;
+            r = document.getElementById(id);
+            //console.log(id, r);
+            r.checked= (k == 1-radio_value[j]);
         }
     }
 
@@ -240,7 +253,7 @@ function generate_javascript($uprefs) {
                     rows[j].hidden = true;
                 }
             } else {
-                console.log("nprefs ", j, nprefs[j]);
+                //console.log("nprefs ", j, nprefs[j]);
                 if (nprefs[j]) {
                     expanded[j] = true;
                     rows[j].hidden = false;
@@ -269,7 +282,7 @@ EOT;
     echo "</script>\n";
 }
 
-function prefs_edit_form($user) {
+function prefs_edit_form($user, $show_saved) {
     global $job_keywords;
     $ukws = SUUserKeyword::enum("user_id = $user->id");
 
@@ -285,7 +298,18 @@ function prefs_edit_form($user) {
 
     keyword_setup($uprefs);
 
-    page_head("Edit preferences");
+    page_head("Science and location preferences");
+
+    if ($show_saved) {
+        echo '<span class="text-success"> Preferenced saved.</span><p><p>';
+    }
+
+    echo "
+        Select science areas and locations you do or don't want to support.
+        Click &boxplus; for more detail, &boxminus; for less.
+        When done, click the Save button at the bottom.
+        <p>
+    ";
     form_start("su_prefs.php");
     form_input_hidden('action', 'submit');
     start_table("table-striped");
@@ -294,7 +318,7 @@ function prefs_edit_form($user) {
     row_heading("Locations", "bg-info");
     generate_html_category(KW_CATEGORY_LOC, $uprefs);
     end_table();
-    form_submit("OK");
+    echo '<button type="submit" class="btn btn-success">Save</button>';
     form_end();
     generate_javascript($uprefs);
     page_tail();
@@ -342,7 +366,9 @@ $action = get_str('action', true);
 
 if ($action == "submit") {
     prefs_edit_action($user);
+    prefs_edit_form($user, true);
+} else {
+    prefs_edit_form($user, false);
 }
-prefs_edit_form($user);
 
 ?>

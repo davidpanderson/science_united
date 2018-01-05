@@ -55,6 +55,10 @@ function su_show_project($project) {
     row2("Location keywords", project_keyword_array_to_string($loc));
     row2("Platforms", get_platforms_string($project->id));
     end_table();
+    echo sprintf(
+        '<img src="su_graph.php?type=project&id=%d&what=ec&ndays=%d&xsize=%d&ysize=%d">',
+        $project->id, 30, 500, 300
+    );
     echo '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit project</a>
     ';
     page_tail();

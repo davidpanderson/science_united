@@ -34,7 +34,6 @@ require_once("../inc/text_transform.inc");
 require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
 require_once("../inc/su_user.inc");
-require_once("../inc/su_join.inc");
 
 define('CURRENT_CLIENT_VERSION', '7.6.0');
 
@@ -58,15 +57,16 @@ function user_summary($user) {
     show_download($user);
     show_problem_accounts($user);
     //show_supported_keywords($user);
-    echo "<h3>Your contributions</h3>\n";
+    echo "<h3>Recent contribution</h3>\n";
     show_last_month($user);
-    show_last_day($user);
     show_calls_to_action();
+    echo '<center><a href=su_home.php class="btn btn-success">Continue to your home page</a></center>
+    ';
 }
 
 function left(){
     global $user, $master_url;
-    $title = $user?"Welcome back, $user->name": tra("Join", PROJECT);
+    $title = $user?"Welcome, $user->name": null;
     panel(
         $title,
         function() use($user) {
@@ -75,7 +75,7 @@ function left(){
             } else {
                 echo sprintf('
                     <p>
-                    %s lets you join scientific research projects
+                    <b>%s</b> lets you join scientific research projects
                     by giving them computing power.
                     These projects do research in astronomy, physics,
                     biomedicine, mathematics, and environmental science;
@@ -83,15 +83,12 @@ function left(){
                     <p>
                     You help by installing BOINC, a free program
                     that runs scientific jobs in the background
-                    and when you\'re not at the computer.
-                    BOINC is secure and will not
-                    affect your normal use of the computer.
+                    and when you\'re not using the computer.
+                    BOINC is secure and will not affect your normal use of the computer.
                     <p>
-                    %s is supported by the <a href=https://nsf.gov>National Science Foundation</a>
-                    and is based at the <a href=https://berkeley.edu>University of California, Berkeley</a>.
                     %s and the research projects it supports are non-profit.
                     <br><br>
-                    ', PROJECT, PROJECT, PROJECT
+                    ', PROJECT, PROJECT
                 );
                 //show_join_form();
                 echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
@@ -129,9 +126,23 @@ function right() {
 }
 
 echo "<p>";
-page_head(PROJECT, null, true, null, boinc_recaptcha_get_head_extra());
+page_head(PROJECT, null, true);
 
 grid('top', 'left', 'right');
+
+echo "
+<table width=100%>
+<tr>
+<td width=50%></td>
+<td valign=top>
+    <nobr><img src=nsf1.jpg height=120> <img src=uc_logo.jpg height=120></nobr>
+    <br><center><small>
+        Science United is funded by the <a href=https://nsf.gov>National Science Foundation</a>, award #1664190, and is based at the <a href=https://berkeley.edu>University of California, Berkeley</a>.
+    </small></center>
+</td>
+<td width=50%></td>
+</tr></table>
+";
 
 page_tail(false, "", true);
 

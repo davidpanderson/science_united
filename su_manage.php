@@ -20,15 +20,38 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
+require_once("../inc/su_util.inc");
+
+function top() {
+    start_table();
+    row2("", '<a class="btn btn-primary" href="su_projects_edit.php">Manage projects</a>');
+    row2("Accounting details",
+        '<a class="btn btn-primary" href="su_projects_acct.php">Projects</a>
+        <a class="btn btn-primary" href="su_accounting.php">Totals</a>'
+    );
+    end_table();
+}
+
+function left() {
+    echo '
+        <img src="su_graph.php?type=total&what=ec&ndays=30&xsize=500&ysize=300">
+        <img src="su_graph.php?type=total&what=users&ndays=30&xsize=500&ysize=300">
+        <img src="su_graph.php?type=total&what=jobs&ndays=30&xsize=500&ysize=300">
+    ';
+}
+
+function right() {
+    echo "<h3>Last accounting period</h3>\n";
+    $a = SUAccounting::last(1);
+    show_accounting_deltas($a, true);
+    echo "<h3>Accounting totals</h3>\n";
+    $a = SUAccounting::last();
+    show_accounting_totals($a);
+}
 
 function main() {
-    page_head("Science United Administration");
-    echo '
-        <a class="btn btn-primary" href="su_projects_edit.php">Projects</a>
-        <h3>Accounting</h3>
-        <p> <a class="btn btn-primary" href="su_projects_acct.php">Projects</a>
-        <p> <a class="btn btn-primary" href="su_accounting.php">Totals</a>
-    ';
+    page_head("Science United: Management");
+    grid('top', 'left', 'right');
     page_tail();
 }
 

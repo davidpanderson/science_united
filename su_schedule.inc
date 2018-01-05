@@ -90,27 +90,25 @@ function project_score($project, $ukws, $host) {
     $pkws = $project_infos[$project->id]->kws;
 
     $s = platform_score($project, $host);
-    if ($s < 0) {
-        $project->platform_score = $s;
-        $project->score = $s;
-        return $project;
-    }
-    $score = $s;
     $project->platform_score = $s;
+    $project->score = $s;
 
     $project->keyword_score = 0;
     foreach ($pkws as $pwk) {
         $s = keyword_score($pwk->keyword_id, $ukws);
         if ($s == KW_NO) {
             $project->keyword_score = -1;
-            $project->score = -1;
-            return $project;
+            break;
+        } else {
+            $project->keyword_score += $s;
         }
-        $project->keyword_score += $s;
-        $score += $s;
     }
 
-    $project->score = $score + $project->projected_balance;
+    if ($project->platform_score < 0 || $project->keyword_score < 0) {
+        $project->score = -1;
+    } else {
+        $project->score = $project->platform_score + $project->keyword_score + $project->projected_balance;
+    }
 
     // TODO: give an edge to projects the host is already running
 
@@ -165,7 +163,7 @@ function host_serialnum_to_gpus_vbox($host) {
 
 // populate $host->platforms, $host->resources, $host_vbox
 //
-function populate_host($host, $req) {
+function populate_score_info($host, $req) {
     if (!$host) {
         // return a host w/ platforms based on agent string
         //
@@ -229,7 +227,7 @@ function populate_host($host, $req) {
 function rank_projects($user, $host, $req) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
     $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
-    $host = populate_host($host, $req);
+    $host = populate_score_info($host, $req);
     $p2 = array();
     foreach ($projects as $p) {
         $p = project_score($p, $ukws, $host);

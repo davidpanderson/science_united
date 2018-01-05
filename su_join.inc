@@ -22,6 +22,64 @@ require_once("../inc/account.inc");
 require_once("../inc/keywords.inc");
 require_once("../inc/recaptchalib.php");
 
+function su_join_form($next_url) {
+    global $recaptcha_public_key;
+    echo '
+<script>
+function toggle_passwd() {
+    var x = document.getElementById("passwd");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+</script>
+';
+
+    form_input_hidden('next_url', $next_url);
+
+    // Using invitation codes to restrict access?
+    //
+    if (defined('INVITE_CODES')) {
+        form_input_text(
+            sprintf('<span title="%s">%s</span>',
+                tra("An invitation code is required to create an account."),
+                tra("Invitation code")
+            ),
+            "invite_code"
+        );
+    }
+
+    form_input_text(
+        sprintf('<span title="%s">%s</span>',
+            tra("Identifies you on this web site. Use your real name or a nickname."),
+            tra("Screen name")
+        ),
+        "new_name"
+    );
+    form_input_text(
+        sprintf('<span title="%s">%s</span>',
+            tra("Must be a valid address of the form 'name@domain'."),
+            tra("Email address")
+        ),
+        "new_email_addr"
+    );
+    $min_passwd_length = parse_element(get_config(), "<min_passwd_length>");
+    if (!$min_passwd_length) {
+        $min_passwd_length = 6;
+    }
+
+    form_input_text(
+        sprintf('<span title="%s">%s</span>',
+            tra("Must be at least %1 characters", $min_passwd_length),
+            tra("Password")
+        ),
+        "passwd", "", "password", 'id="passwd"',
+        '<input type="checkbox" onclick="toggle_passwd()"><small> Show password</small>'
+    );
+}
+
 function keyword_prefs_form() {
     global $job_keywords;
 
@@ -32,7 +90,7 @@ function keyword_prefs_form() {
         $items[] = array("keywd_".$id, $k->name);
     }
     form_checkboxes(
-        "Check the areas of science you most want to support",
+        "Science areas you most want to support",
         $items
     );
 }
@@ -55,7 +113,7 @@ function show_join_form() {
 
     form_start("su_join.php", "post");
     form_input_hidden("action", "join");
-    create_account_form(0, "su_download.php");
+    su_join_form(0, "su_download.php");
     keyword_prefs_form();
     global_prefs_form();
     if ($recaptcha_public_key) {

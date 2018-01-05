@@ -21,11 +21,11 @@
 // URL args:
 // type=user/project/total
 // id=n
-// what=jobs/time/ec
-//      job: show success and fail job deltas
+// what:
+//      jobs: show success and fail job deltas
 //      time: show CPU and GPU time deltas
 //      ec: show CPU and GPU EC deltas
-// ndays=n
+//      users: show # active users and hosts
 // xsize=n,ysize=m
 
 require_once("../inc/util.inc");
@@ -33,12 +33,17 @@ require_once("../inc/su.inc");
 
 function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $min_time = time() - $ndays*86400;
-    if ($type == 'user') {
+    $accts = null;
+    switch ($type) {
+    case 'user':
         $accts = SUAccountingUser::enum("user_id=$id and create_time>$min_time order by id");
-    } else if ($type == 'project') {
+        break;
+    case 'project':
         $accts = SUAccountingProject::enum("project_id=$id and create_time>$min_time order by id");
-    } else {
+        break;
+    case 'total':
         $accts = SUAccounting::enum("create_time>$min_time order by id");
+        break;
     }
 
     if (!$accts) {
@@ -52,15 +57,19 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $f = fopen($fn, "w");
     $have_gpu = false;
     $n = count($accts);
-    for ($i=0; $i<$n-1; $i++) {
+    for ($i=0; $i<$n; $i++) {
         $a = $accts[$i];
-        if ($what == "job") {
+        switch ($what) {
+        case 'jobs':
             fprintf($f, "%f %d %d\n",
                 $a->create_time,
                 $a->njobs_success_delta,
                 $a->njobs_fail_delta
             );
-        } else if ($what = "time") {
+            $title1 = "Successful jobs";
+            $title2 = "Failed jobs";
+            break;
+        case 'time':
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
                 $a->cpu_time_delta/3600,
@@ -69,7 +78,10 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             if ($a->gpu_time_delta) {
                 $have_gpu = true;
             }
-        } else if ($what = "ec") {
+            $title1 = "CPU hours";
+            $title2 = "GPU hours";
+            break;
+        case 'ec':
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
                 $a->cpu_ec_delta,
@@ -78,6 +90,18 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             if ($a->gpu_ec_delta) {
                 $have_gpu = true;
             }
+            $title1 = "CPU GFLOPS";
+            $title2 = "GPU GFLOPS";
+            break;
+        case 'users':
+            fprintf($f, "%f %d %d\n",
+                $a->create_time,
+                $a->nactive_users,
+                $a->nactive_hosts
+            );
+            $title1 = "Active users";
+            $title2 = "Active computers";
+            break;
         }
     }
     fclose($f);
@@ -89,21 +113,24 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     if ($have_gpu) {
         $plot = sprintf('
 set style fill noborder
-plot "%s" using 1:3 with filledcurve x1 title "GPU hours" lc rgb "orange", \
-"%s" using 1:2 with filledcurve x1 title "CPU hours" lc rgb "khaki"
+plot "%s" using 1:3 with filledcurve x1 title "%s" lc rgb "orange", \
+"%s" using 1:2 with filledcurve x1 title "%s" lc rgb "khaki"
 ',
-            $fn, $fn
+            $fn, $title2, $fn, $title1
         );
     } else {
         $plot = sprintf(
-            'plot "%s" using 1:2 with filledcurve x1 title "CPU hours"',
-            $fn
+            'plot "%s" using 1:2 with filledcurve x1 title "%s"',
+            $fn, $title1
         );
     }
     fprintf($g,
         'set terminal png size %s,%s
         set xdata time
         set timefmt "%%s"
+        set format x "%%d %%b"
+        set yrange [0:]
+        set xtics 604800
         %s
         ',
         $xsize, $ysize, $plot

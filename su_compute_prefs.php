@@ -43,7 +43,7 @@ function show_prefs($user) {
     echo "<form method=post action=su_compute_prefs.php>
         <input type=hidden name=action value=update>
     ";
-    table_header("", "Green", "Standard", "Max computing");
+    table_header("Computer location", "Green", "Standard", "Max computing");
     $default = null;
     if ($prefs) {
         $default = (string)$prefs->preset;
@@ -76,7 +76,7 @@ function show_prefs($user) {
     prefs_row("work", $work);
     prefs_row("school", $school);
     end_table();
-    echo '<input type="submit" class="btn btn-success" value="Update">
+    echo '<input type="submit" class="btn btn-success" value="Save">
         </form>
 ';
     page_tail();

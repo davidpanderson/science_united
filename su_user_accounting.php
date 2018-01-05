@@ -21,7 +21,9 @@ require_once("../inc/su.inc");
 
 $user = get_logged_in_user();
 page_head("Your contribution history");
-show_user_acct_history($user);
+show_accounting_history(
+    SUAccountingUser::enum("user_id=$user->id", "order by id desc limit 200")
+);
 page_tail();
 
 ?>

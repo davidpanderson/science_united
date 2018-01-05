@@ -336,16 +336,6 @@ new items
 forums
     for discussion of projects, keywords?
 ==================
-Admin web site
-main page (su_manage.php)
-    links to
-        edit projects
-        edit keywords
-        accounting pages
-project add/remove/edit (su_projects_edit.php)
-keyword edit page (su_keywords.php)
-    show list of keywords; checkbox for major; button for edit/delete
-==================
 RPC handler
 
 when are accounts created?
@@ -530,3 +520,42 @@ projected balance
     say, half the estimated EC over the next day
 
     I'm not sure we need this; let's not do it for now.
+================
+Admin page
+30-day graphs
+    FLOPS
+    jobs success/fail
+    #active hosts
+    #active users
+Text:
+    24-hour accounting
+    total accounting
+
+links to
+    project list
+-------
+project detail page
+    30-day graphs
+        FLOPS
+        jobs success/fail
+    text:
+        24-hours
+        total
+
+
+================
+Use of email
+
+email prefs:
+- send status emails: never / weekly / monthly
+    default: week
+    store this in user.send_email
+    seti_last_result_time: when to send next email
+
+status email
+    if some device has been active in last week/month
+        show totals for that period
+    for devices not active in that period
+        show
+    if no device has ever been active
+        link to help

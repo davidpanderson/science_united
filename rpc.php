@@ -32,6 +32,7 @@ require_once("../inc/boinc_db.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");
+require_once("../inc/su_util.inc");
 
 define('REPEAT_DELAY', 86400./2);
     // interval between AM requests
@@ -164,18 +165,30 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
 
 function make_serialnum($req) {
     $x = sprintf("[BOINC|%s]", (string)($req->client_version));
+
     $c = $req->host_info->coprocs->coproc_cuda;
     if ($c) {
-        $x .= sprintf("[CUDA|%s|%d]", (string)$c->name, (int)$c->count);
+        $x .= sprintf("[CUDA|%s|%d|%dMB]",
+            (string)$c->name,
+            (int)$c->count,
+            ((double)$c->totalGlobalMem)/MEGA
+        );
     }
     $c = $req->host_info->coprocs->coproc_ati;
     if ($c) {
-        $x .= sprintf("[CAL|%s|%d]", (string)$c->name, (int)$c->count);
+        $x .= sprintf("[CAL|%s|%d|%dMB]",
+            (string)$c->name, (int)$c->count,
+            (int)$c->localRAM
+        );
     }
     $c = $req->host_info->coprocs->coproc_intel_gpu;
     if ($c) {
-        $x .= sprintf("[INTEL|%s|%d]", (string)$c->name, (int)$c->count);
+        $x .= sprintf("[INTEL|%s|%d|%dMB]",
+            (string)$c->name, (int)$c->count,
+            (int)$c->global_mem_size/MEGA
+        );
     }
+
     $v = (string)$req->host_info->virtualbox_version;
     if ($v) {
         $x .= sprintf("[vbox|%s]", $v);
@@ -232,7 +245,10 @@ function update_host($req, $host) {
         $p_gpu_fpops += (double)$c->peak_flops;
     }
 
+    // we use total_credit as a "hidden" flag
+
     $query = "
+        total_credit=0,
         boinc_client_version = '$boinc_client_version',
         virtualbox_version = '$virtualbox_version',
         rpc_time = $now,
@@ -343,56 +359,6 @@ function check_ec_delta($dt, $delta, $is_gpu) {
 function check_njobs($dt, $njobs) {
     if ($njobs < 0) return 0;
     return min($njobs, MAX_JOBS_DAY*$dt/86400.);
-}
-
-function new_delta_set() {
-    $x = new StdClass;
-    $x->cpu_time = 0;
-    $x->cpu_ec = 0;
-    $x->gpu_time = 0;
-    $x->gpu_ec = 0;
-    $x->njobs_success = 0;
-    $x->njobs_fail = 0;
-    return $x;
-}
-
-function delta_set_nonzero($ds) {
-    if ($ds->cpu_time) return true;
-    if ($ds->cpu_ec) return true;
-    if ($ds->gpu_time) return true;
-    if ($ds->gpu_ec) return true;
-    if ($ds->njobs_success) return true;
-    if ($ds->njobs_fail) return true;
-    return false;
-}
-
-function add_delta_set($x, $y) {
-    $y->cpu_time += $x->cpu_time;
-    $y->cpu_ec += $x->cpu_ec;
-    $y->gpu_time += $x->gpu_time;
-    $y->gpu_ec += $x->gpu_ec;
-    $y->njobs_success += $x->njobs_success;
-    $y->njobs_fail += $x->njobs_fail;
-    return $y;
-}
-
-function log_write_deltas($ds) {
-    log_write("   CPU time:        $ds->cpu_time");
-    log_write("   CPU EC:          $ds->cpu_ec");
-    log_write("   GPU time:        $ds->gpu_time");
-    log_write("   GPU EC:          $ds->gpu_ec");
-    log_write("   #jobs success:   $ds->njobs_success");
-    log_write("   #jobs fail:      $ds->njobs_fail");
-}
-
-function delta_update_string($d) {
-    return "cpu_ec_delta = cpu_ec_delta + $d->cpu_ec,
-        gpu_ec_delta = gpu_ec_delta + $d->gpu_ec,
-        cpu_time_delta = cpu_time_delta + $d->cpu_time,
-        gpu_time_delta = gpu_time_delta + $d->gpu_time,
-        njobs_success_delta = njobs_success_delta + $d->njobs_success,
-        njobs_fail_delta = njobs_fail_delta + $d->njobs_fail
-    ";
 }
 
 // - compute accounting deltas based on AM request message
@@ -513,6 +479,11 @@ function do_accounting(
                 su_error(-1, "ap->update failed");
             }
         }
+
+        // update project balance
+        //
+        $flops = ec_to_gflops($dproj->cpu_ec + $dproj->gpu_ec);
+        $project->update("balance = max(0, balance-$flops");
 
         // add to all-project delta sums
         //

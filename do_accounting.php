@@ -29,15 +29,52 @@
 // - new deltas = 0
 
 require_once("../inc/su_db.inc");
+require_once("../inc/boinc_db.inc");
 
 function log_write($x) {
     echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
 }
 
+function do_allocation() {
+    $x = SUAccounting::last();
+    $flops = ec_to_gflops($x->cpu_ec_delta + $x->gpu_ec_delta);
+    $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
+    $total_share = 0;
+    foreach ($projects as $p) {
+        $total_share += $p->share;
+    }
+    foreach ($projects as $p) {
+        $x = $flops*$p->share/$total_share;
+        $p->update("balance = balance + $x");
+    }
+}
+
+function nactive_users($ndays) {
+    $t = time() - $ndays*86400;
+    $db = BoincDb::get();
+    return $db->get_int(
+        "select count(distinct(user_id)) as total from su_accounting_user where create_time > $t",
+        "total"
+    );
+}
+
+function nactive_hosts($ndays) {
+    $t = time() - $ndays*86400;
+    return BoincHost::count("rpc_time > $t");
+}
+
+function nactive_hosts_gpu($ndays) {
+    $t = time() - $ndays*86400;
+    return BoincHost::count("rpc_time > $t and p_ngpus>0");
+}
+
 function do_total($now) {
+    $nh = nactive_hosts(7);
+    $nhg = nactive_hosts_gpu(7);
+    $nu = nactive_users(7);
     $x = SUAccounting::last();
     if ($x) {
-        SUAccounting::insert("(create_time, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
+        SUAccounting::insert("(create_time, nactive_hosts, nactive_hosts_gpu, nactive_users, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $nh, $nhg, $nu, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     } else {
         SUAccounting::insert("(create_time) values ($now)");
     }

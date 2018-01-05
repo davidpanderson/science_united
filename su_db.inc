@@ -4,8 +4,13 @@
 // In addition we use some fields from BOINC tables:
 //
 // host.rpc_time
-// host.expavg_credit
-// host.expavg_time
+//      last AM RPC
+// host.total_credit
+//      -1 means host is hidden
+// user.send_email
+//      days between status emails.  zero means don't send
+// user.seti_last_result_time
+//      when to send next status email
 
 $dir = getcwd();
 chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
@@ -181,11 +186,12 @@ class SUAccounting {
         $db = BoincDb::get();
         return $db->enum('su_accounting', 'SUAccounting', $where_clause, $order_clause);
     }
-    static function last() {
+    static function last($i=0) {
         $db = BoincDb::get();
-        $x = SUAccounting::enum("", "order by id desc limit 1");
-        if ($x) {
-            return $x[0];
+        $n = $i+1;
+        $x = SUAccounting::enum("", "order by id desc limit $n");
+        if ($x && count($x) > $i) {
+            return $x[$i];
         } else {
             return null;
         }

@@ -16,28 +16,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-DEPRECATED
-
 require_once("../inc/util.inc");
+require_once("../inc/user.inc");
 
-function show_user_hosts($user) {
-    start_table('table-striped');
-    row_heading_array(array(
-        "name<br><small>click for details</small>",
-        "last RPC",
-    ));
-    $hosts = BoincHost::enum("userid=$user->id");
-    foreach ($hosts as $host) {
-        row_array(array(
-            '<a href="user_host.php?host_id='.$host->id.'">'.$host->domain_name.'</a>',
-            date_str($host->rpc_time)
-        ));
-    }
+function main($user) {
+    page_head("Account settings");
+    start_table();
+    show_user_info_private($user);
     end_table();
+    page_tail();
 }
 
-$user = get_logged_in_user();
-page_head("Your computers");
-show_user_hosts($user);
-page_tail();
+main(get_logged_in_user());
+
 ?>

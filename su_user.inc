@@ -121,7 +121,7 @@ function show_last_month($user) {
             <p>
             Past month:
             <p>
-            <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=500&ysize=250>
+            <img src=su_graph.php?type=user&id=$user->id&what=ec&ndays=30&xsize=450&ysize=250>
         ";
     } else {
         echo "No activity in last 30 days";
