@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'iec_symbols_unicoderegular';
+    src: url('Unicode_IEC_symbol.eot');
+    src: url('Unicode_IEC_symbol.eot?#iefix') format('embedded-opentype'),
+         url('Unicode_IEC_symbol.woff2') format('woff2'),
+         url('Unicode_IEC_symbol.woff') format('woff'),
+         url('Unicode_IEC_symbol.ttf') format('truetype'),
+         url('Unicode_IEC_symbol.svg#iec_symbols_unicoderegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.iec_power{
+    font-family: 'iec_symbols_unicoderegular';
+    font-style: normal;
+}

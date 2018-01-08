@@ -18,7 +18,8 @@ define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
 define("PROFILE_URL", "user_profile/");
-define("STYLESHEET", "test2_custom.css");
+define("STYLESHEET", "custom.css");
+define("STYLESHEET2", "su.css");
 define("LANGUAGE_FILE", "languages.txt");
     // add your own stylesheets (included after bootstrap)
 define("FORUM_QA_MERGED_MODE", true);
@@ -117,29 +118,17 @@ function su_navbar(
     navbar_start($brand, $fixed, $inverse);
 
     $x = array();
-    if ($user) {
-        $x[] = array(tra("Account"), $url_prefix."su_home.php");
-        $x[] = array(tra("Join"), $url_prefix."join.php");
-        $x[] = array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php");
-    }
     $x[] = array(tra("About %1", PROJECT), $url_prefix."su_about.php");
     $x[] = array(tra("Help"), $url_prefix."su_help.php");
     navbar_menu(tra("Project"), $x);
-
-    $x = array(
-        array(tra("Compute preferences"), $url_prefix."su_compute_prefs.php"),
-    );
-    navbar_menu(tra("Computing"), $x);
 
     navbar_menu(tra("Community"), array(
         array(tra("Message boards"), $url_prefix."forum_index.php"),
         //array(tra("Questions and Answers"), $url_prefix."forum_help_desk.php"),
         array(tra("Teams"), $url_prefix."team.php", tra("create or join a team")),
         array(tra("Profiles"), $url_prefix."profile_menu.php"),
-        array(tra("Preferences"), $url_prefix."edit_forum_preferences_form.php"),
-        array(tra("User search"), $url_prefix."user_search.php"),
+        //array(tra("User search"), $url_prefix."user_search.php"),
         array(tra("User of the day"), $url_prefix."uotd.php"),
-        array(tra("Certificate"), $url_prefix."cert1.php", "", "_blank"),
     ));
     navbar_menu(tra("Site"), array(
         array(tra("Search"), $url_prefix."site_search.php"),

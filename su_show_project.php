@@ -33,9 +33,10 @@ function su_show_project($project) {
     row2("name", $project->name);
     row2("URL", $project->url);
     row2("Created", date_str($project->create_time));
-    row2("Share", $project->share);
-    row2("Balance", $project->projected_balance);
     row2("Status", project_status_string($project->status));
+    row2("Allocation share", $project->share);
+    row2("", '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit status and share</a>');
+    row2("Allocation balance", $project->projected_balance);
     $pks = $project_infos[$project->id]->kws;
     $sci = array();
     $loc = array();
@@ -54,13 +55,13 @@ function su_show_project($project) {
     row2("Science keywords", project_keyword_array_to_string($sci));
     row2("Location keywords", project_keyword_array_to_string($loc));
     row2("Platforms", get_platforms_string($project->id));
-    end_table();
-    echo sprintf(
-        '<img src="su_graph.php?type=project&id=%d&what=ec&ndays=%d&xsize=%d&ysize=%d">',
-        $project->id, 30, 500, 300
+    row2("Accounting",
+        sprintf(
+            'Last 30 days:<br><img src="su_graph.php?type=project&id=%d&what=ec&ndays=%d&xsize=%d&ysize=%d"><br><a href=su_projects_acct.php?project_id=%d class="btn btn-success">History</a>',
+            $project->id, 30, 500, 300, $project->id
+        )
     );
-    echo '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit project</a>
-    ';
+    end_table();
     page_tail();
 }
 

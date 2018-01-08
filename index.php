@@ -16,13 +16,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// This is a template for your web site's front page.
-// You are encouraged to customize this file,
-// and to create a graphical identity for your web site.
-// by customizing the header/footer functions in html/project/project.inc
-// and picking a Bootstrap theme
-//
-// If you add text, put it in tra() to make it translatable.
+// SU home page
 
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
@@ -56,7 +50,6 @@ function top() {
 function user_summary($user) {
     show_download($user);
     show_problem_accounts($user);
-    //show_supported_keywords($user);
     echo "<h3>Recent contribution</h3>\n";
     show_last_month($user);
     show_calls_to_action();
@@ -90,7 +83,6 @@ function left(){
                     <br><br>
                     ', PROJECT, PROJECT
                 );
-                //show_join_form();
                 echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
                 ';
                 echo "

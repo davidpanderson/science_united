@@ -24,18 +24,6 @@ require_once("../inc/recaptchalib.php");
 
 function su_join_form($next_url) {
     global $recaptcha_public_key;
-    echo '
-<script>
-function toggle_passwd() {
-    var x = document.getElementById("passwd");
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    }
-}
-</script>
-';
 
     form_input_hidden('next_url', $next_url);
 
@@ -76,7 +64,7 @@ function toggle_passwd() {
             tra("Password")
         ),
         "passwd", "", "password", 'id="passwd"',
-        '<input type="checkbox" onclick="toggle_passwd()"><small> Show password</small>'
+        passwd_visible_checkbox("passwd")
     );
 }
 
@@ -87,7 +75,7 @@ function keyword_prefs_form() {
     foreach ($job_keywords as $id=>$k) {
         if ($k->category != KW_CATEGORY_SCIENCE) continue;
         if ($k->level > 0) continue;
-        $items[] = array("keywd_".$id, $k->name);
+        $items[] = array("keywd_".$id, $k->name, false);
     }
     form_checkboxes(
         "Science areas you most want to support",

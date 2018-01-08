@@ -24,89 +24,82 @@ require_once("../inc/util.inc");
 require_once("../inc/su.inc");
 require_once("../inc/su_compute_prefs.inc");
 
-function prefs_row($venue, $pref) {
-    $green_checked = ($pref=='green')?"checked":"";
-    $standard_checked = ($pref=='standard')?"checked":"";
-    $max_checked = ($pref=='max')?"checked":"";
-    row_array(array(
-        $venue,
-        "<input type=radio name=$venue value=green $green_checked>",
-        "<input type=radio name=$venue value=standard $standard_checked>",
-        "<input type=radio name=$venue value=max $max_checked>"
-    ));
-}
-
 function show_prefs($user) {
-    page_head("Computing preferences");
-    $prefs = simplexml_load_string($user->global_prefs);
-    start_table('table-striped');
-    echo "<form method=post action=su_compute_prefs.php>
-        <input type=hidden name=action value=update>
-    ";
-    table_header("Computer location", "Green", "Standard", "Max computing");
-    $default = null;
-    if ($prefs) {
-        $default = (string)$prefs->preset;
-    }
+    page_head("Computing settings");
+    $x = simplexml_load_string($user->global_prefs);
+    $pref = (string)$x->preset;
 
     // if prefs are missing or don't parse, reset them
     //
-    if (!$default) {
-        $default = "standard";
-        $p= compute_prefs_xml($default);
+    if (!$pref) {
+        $p = compute_prefs_xml("standard");
         $user->update("global_prefs='$p'");
         $prefs = simplexml_load_string($p);
     }
-    prefs_row("default", $default);
-    $home = null;
-    $work = null;
-    $school = null;
-    if ($prefs && $prefs->venue) {
-        foreach ($prefs->venue as $venue) {
-            $name = $venue['name'];
-            $pref = $venue->preset;
-            switch ($name) {
-            case 'home': $home = $pref; break;
-            case 'work': $work = $pref; break;
-            case 'school': $school = $pref; break;
-            }
-        }
-    }
-    prefs_row("home", $home);
-    prefs_row("work", $work);
-    prefs_row("school", $school);
-    end_table();
-    echo '<input type="submit" class="btn btn-success" value="Save">
-        </form>
-';
+
+    $green_checked = ($pref=='green')?"checked":"";
+    $standard_checked = ($pref=='standard')?"checked":"";
+    $max_checked = ($pref=='max')?"checked":"";
+
+    echo "
+        You can control how many processors to use
+        (most computers have 4 or 8 processors) and when to use them.
+        <p>
+        <ul>
+        <li>This may affect your electricity costs
+        and your computer's fan speeds.
+        <li> Settings affect all your computers.
+        Changes take effect the next time the computer
+        synchs with Science United.
+        <li> You can change settings for a particular computer
+        using the BOINC Manager.
+        This also gives you more detailed options.
+        </ul>
+        Choose one of:
+    ";
+
+    form_start("su_compute_prefs.php");
+    form_input_hidden("action", "update");
+    form_radio_buttons(
+        "Green<br><small>Stop computing when computer is idle.  Use 25% of processors.</small>",
+        "pref",
+        array(array("green", "")),
+        $pref=="green"
+    );
+    form_radio_buttons(
+        "Standard<br><small>Use 50% of processors.</small>",
+        "pref",
+        array(array("standard", "")),
+        $pref=="standard"
+    );
+    form_radio_buttons(
+        "Max computing<br><small>Use all processors.</small>",
+        "pref",
+        array(array("max", "")),
+        $pref=="max"
+    );
+
+    form_submit("Update");
+    form_end();
     page_tail();
 }
 
 function update_prefs($user) {
-    $default = post_str('default');
-    $home = post_str('home', true);
-    $work = post_str('work', true);
-    $school = post_str('school', true);
-    $x = "<global_preferences>
-    <preset>$default</preset>
-";
-    if ($home) {
-        $x .= "<venue name=\"home\">\n<preset>$home</preset>\n</venue>\n";
-    }
-    if ($work) {
-        $x .= "<venue name=\"work\">\n<preset>$work</preset>\n</venue>\n";
-    }
-    if ($school) {
-        $x .= "<venue name=\"school\">\n<preset>$school</preset>\n</venue>\n";
-    }
-    $x .= "</global_preferences>\n";
+    $pref = get_str("pref");
+    $x = compute_prefs_xml($pref);
     $user->update("global_prefs='$x'");
-    page_head("Preferences updated");
+    page_head("Computing settings updated");
+    echo '
+        The new settings take effect the next time your computer
+        synchs with Science United.
+        <p><p>
+        <a href=su_home.php class="btn btn-success">Continue to home page</a>
+    ';
     page_tail();
 }
 
 $user = get_logged_in_user();
-$action = post_str("action", true);
+$action = get_str("action", true);
 if ($action == "update") {
     update_prefs($user);
 } else {

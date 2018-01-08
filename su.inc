@@ -46,12 +46,15 @@ function project_keyword_array_to_string($arr) {
     foreach ($arr as $y) {
         $pkw = $y[0];
         $wd = $y[1];
-        $frac = $pkw->fraction;
-        $pct = $frac*100;
         if ($x) {
             $x .= "<br>";
         }
-        $x .= "$wd ($pct%)";
+        $x .= $wd;
+        $frac = $pkw->fraction;
+        if ($frac < 1) {
+            $pct = $frac*100;
+            $x .= " ($pct%)";
+        }
     }
     return $x;
 }

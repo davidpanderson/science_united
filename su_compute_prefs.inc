@@ -48,7 +48,7 @@ define('PREFS_MAX',
 ");
 
 define('PREFS_STANDARD',
-"<max_ncpus_pct>85</max_ncpus_pct>
+"<max_ncpus_pct>50</max_ncpus_pct>
 <cpu_usage_limit>100</cpu_usage_limit>
 <run_on_batteries>0</run_on_batteries>
 <run_if_user_active>1</run_if_user_active>
@@ -70,7 +70,7 @@ define('PREFS_STANDARD',
 ");
 
 define('PREFS_GREEN',
-"<max_ncpus_pct>60</max_ncpus_pct>
+"<max_ncpus_pct>25</max_ncpus_pct>
 <cpu_usage_limit>100</cpu_usage_limit>
 <run_on_batteries>0</run_on_batteries>
 <run_if_user_active>1</run_if_user_active>

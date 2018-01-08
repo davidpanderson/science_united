@@ -21,6 +21,7 @@
 // Does a pass:
 // - every 10 min, to do retries
 // - when trigger file is present
+//   (this lets us respond quickly to AM RPC actions)
 //
 
 require_once("../inc/db_conn.inc");

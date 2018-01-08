@@ -18,10 +18,10 @@
 
 // initialize or update the project DB table
 //
-// run this from test2/html/ops
+// run this from html/ops
 
-require_once("/mydisks/a/users/boincadm/boinc-site/keywords.inc");
-require_once("/mydisks/a/users/boincadm/boinc-site/project_ids.inc");
+require_once("../keywords.inc");
+require_once("../project_ids.inc");
 require_once("../inc/su_db.inc");
 
 // remove projects and everything that refers to them

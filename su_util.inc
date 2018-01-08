@@ -82,6 +82,16 @@ function add_delta_set($x, $y) {
     return $y;
 }
 
+function add_record($x, $y) {
+    $y->cpu_time += $x->cpu_time_delta;
+    $y->cpu_ec += $x->cpu_ec_delta;
+    $y->gpu_time += $x->gpu_time_delta;
+    $y->gpu_ec += $x->gpu_ec_delta;
+    $y->njobs_success += $x->njobs_success_delta;
+    $y->njobs_fail += $x->njobs_fail_delta;
+    return $y;
+}
+
 function log_write_deltas($ds) {
     log_write("   CPU time:        $ds->cpu_time");
     log_write("   CPU EC:          $ds->cpu_ec");

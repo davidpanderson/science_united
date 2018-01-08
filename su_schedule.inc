@@ -33,6 +33,7 @@
 
 require_once("../inc/su_db.inc");
 require_once("../inc/su_project_infos.inc");
+require_once("../inc/download_util.inc");
 
 // if user has a pref for this keyword, return -1/1, else 0
 // TODO: should more specific keywords (e.g. level > 0) get a higher score?

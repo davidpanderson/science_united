@@ -20,10 +20,8 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/account.inc");
-
-chdir("/mydisks/a/users/boincadm/boinc-site");
-require_once("versions.inc");
-require_once("download_util.inc");
+require_once("../inc/versions.inc");
+require_once("../inc/download_util.inc");
 
 function main($user) {
     page_head("Install software");

@@ -17,7 +17,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// join page for new users
+// "join" page for new users
 
 require_once("../inc/user_util.inc");
 require_once("../inc/account.inc");
@@ -38,6 +38,7 @@ function handle_submit() {
     if (!$user) {
         error_page("Couldn't create user record");
     }
+    $user->update("send_email=7");
     $preset = post_str("preset");
     $prefs = compute_prefs_xml($preset);
     $user->update("global_prefs='$prefs'");

@@ -46,21 +46,25 @@ function su_settings($user) {
         function() {
             start_table();
             row2(
-                "Science and location preferences</br><small>Choose the types of research you want to support</small>",
+                "Science area and location</br><small>Choose the types of research you want to support</small>",
                 '<a href=su_prefs.php class="btn btn-success">Edit</a>',
                 false, "70%"
             );
             row2(
-                "Computing preferences</br><small>Choose how to use your computers</small>",
+                "Computing</br><small>Choose how to use your computers</small>",
                 '<a href=su_compute_prefs.php class="btn btn-success">Edit</a>'
             );
             row2(
-                "Community preferences</br><small>Settings for message boards and private messages</small>",
+                "Community</br><small>Settings for message boards and private messages</small>",
                 '<a href=edit_forum_preferences_form.php class="btn btn-success">Edit</a>'
             );
             row2(
-                "Accounting settings</br><small>Name, password, email address</small>",
+                "Account</br><small>Name, password, email address</small>",
                 '<a href=su_account_settings.php class="btn btn-success">Edit</a>'
+            );
+            row2(
+                "Email",
+                '<a href=su_email_prefs.php class="btn btn-success">Edit</a>'
             );
             end_table();
         }

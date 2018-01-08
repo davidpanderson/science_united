@@ -4,7 +4,7 @@
 
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2018 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -19,13 +19,13 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// script to populate the SU database
+// script to populate the SU database for testing
 // - a set of users
 // - random accounts
 // - accounting data
 //
-// run this from test2/html/ops
-// RUN project_init.php FIRST
+// run this from project/html/ops
+// ==> Run project_init.php first
 //
 // db_init.php --update
 // add accounting records for period until now

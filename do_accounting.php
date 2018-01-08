@@ -3,7 +3,7 @@
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2018 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -18,7 +18,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// Make historical accounting records - run this every ~1 day
+// Make historical accounting records,
+// and update allocation balances
+// Run this every ~1 day
 //
 // For each of the following:
 // - users
@@ -35,6 +37,8 @@ function log_write($x) {
     echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
 }
 
+// increment balances in proportion to shares
+//
 function do_allocation() {
     $x = SUAccounting::last();
     $flops = ec_to_gflops($x->cpu_ec_delta + $x->gpu_ec_delta);
