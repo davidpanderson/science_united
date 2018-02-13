@@ -20,30 +20,33 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su_db.inc");
+require_once("../inc/su_util.inc");
 
 function show_projects_acct() {
     $projects = SUProject::enum("");
     start_table('table-striped');
     row_heading_array(array(
         "Name<br>click for details",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
+        "CPU hours",
+        "CPU GFLOP/hours",
+        "GPU hours",
+        "GPU GFLOP/hours",
         "# jobs success",
         "# jobs fail",
+        "Balance"
     ));
     foreach ($projects as $p) {
         $ap = SUAccountingProject::last($p->id);
         if (!$ap) continue;
         row_array(array(
             '<a href="su_projects_acct.php?project_id='.$p->id.'">'.$p->name.'</a>',
-            $ap->cpu_time_total,
-            $ap->cpu_ec_total,
-            $ap->gpu_time_total,
-            $ap->gpu_ec_total,
+            show_num($ap->cpu_time_total/3600),
+            show_num(ec_to_gflop_hours($ap->cpu_ec_total)),
+            show_num($ap->gpu_time_total/3600),
+            show_num(ec_to_gflop_hours($ap->gpu_ec_total)),
             $ap->njobs_success_total,
             $ap->njobs_fail_total,
+            $p->balance
         ));
     }
     end_table();

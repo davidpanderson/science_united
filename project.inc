@@ -36,7 +36,7 @@ define ("DISABLE_PROFILES", true);
 define("USE_STOPFORUMSPAM", true);
     // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
-define("USER_HOME", "su_home.php");
+define("USER_HOME", "index.php");
 define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
 
@@ -147,7 +147,7 @@ function su_navbar(
 //
 function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
-        echo '<center><font size=+6>
+        echo '<p><center><font size=+6>
 <img style="vertical-align: sub; height:1.2em;" src=power.png>
             '.PROJECT.'</font>';
         echo '<br><font size=+1>Do science research on your computer, tablet, or phone</font></center>

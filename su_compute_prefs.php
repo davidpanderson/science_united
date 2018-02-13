@@ -90,8 +90,7 @@ function update_prefs($user) {
     $user->update("global_prefs='$x'");
     page_head("Computing settings updated");
     echo '
-        The new settings take effect the next time your computer
-        synchs with Science United.
+        The new settings will take effect when your computer synchs with Science United.
         <p><p>
         <a href=su_home.php class="btn btn-success">Continue to home page</a>
     ';

@@ -85,7 +85,7 @@ function generate_html_kw($id, $uprefs) {
     $maybe_checked = ($u == KW_MAYBE)?"checked":"";
 
     echo sprintf('<tr id="%s" hidden>%s', "row$id", "\n");
-    echo sprintf('   <td id="%s"></td>%s', "text$id", "\n");
+    echo sprintf('   <td width=50%% id="%s"></td>%s', "text$id", "\n");
     echo sprintf('   <td><input onclick="radio(%d, 1)" type="radio" name="%s" id="%s" value="%d" %s></td>%s',
         $id, "radio$id", "radio$id"."_0", KW_YES, $yes_checked, "\n"
     );
@@ -312,10 +312,12 @@ function prefs_edit_form($user, $show_saved) {
     ";
     form_start("su_prefs.php");
     form_input_hidden('action', 'submit');
+    echo "<h3>Science areas</h3>\n";
     start_table("table-striped");
-    row_heading("Science areas", "bg-info");
     generate_html_category(KW_CATEGORY_SCIENCE, $uprefs);
-    row_heading("Locations", "bg-info");
+    end_table();
+    echo "<h3>Locations</h3>\n";
+    start_table("table-striped");
     generate_html_category(KW_CATEGORY_LOC, $uprefs);
     end_table();
     echo '<button type="submit" class="btn btn-success">Save</button>';

@@ -16,6 +16,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
+// first
+// wget https://boinc.berkeley.edu/project_list.php?test=1
+// and put it in projects.xml
+
 // read projects.xml and, for each project, make
 // - a list of (keyword_id, frac)
 // - a list of (platform, GPU type, is_vbox)
@@ -78,9 +82,11 @@ function main() {
     $y = array();
     foreach ($x->project as $p) {
         $x = new StdClass;
+        $x->id = (int)$p->id;
+        $x->name = (string)$p->name;
         $x->avs = get_avs($p);
         $x->kws = get_kws($p);
-        $y[(int)$p->id] = $x;
+        $y[$x->id] = $x;
     }
     file_put_contents("projects.ser", serialize($y));
 }

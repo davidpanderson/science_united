@@ -48,6 +48,7 @@ create table su_account (
     gpu_time                double          not null,
     njobs_success           integer         not null,
     njobs_fail              integer         not null,
+    opt_out                 tinyint         not null,
     unique(user_id, project_id),
     index account_state (state)
 ) engine=InnoDB;

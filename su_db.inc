@@ -13,7 +13,7 @@
 //      when to send next status email
 
 $dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/test2/html/user');
+chdir('/mydisks/a/users/boincadm/projects/scienceunited/html/user');
 require_once("../inc/boinc_db.inc");
 chdir($dir);
 
@@ -129,9 +129,9 @@ class SUAccount {
         $db = BoincDb::get();
         return $db->insert('su_account', $clause);
     }
-    static function enum($where_clause=null) {
+    static function enum($where_clause=null, $order_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_account', 'SUAccount', $where_clause);
+        return $db->enum('su_account', 'SUAccount', $where_clause, $order_clause);
     }
     static function lookup($where_clause) {
         $db = BoincDb::get();

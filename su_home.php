@@ -26,8 +26,9 @@ function su_contribution($user) {
         function() {
             start_table();
             row2("Your computers", '<a href=su_hosts.php class="btn btn-success">View</a>', false, "50%");
-            row2("Projects you've supported", '<a href=su_user_projects.php class="btn btn-success">View</a>');
-            row2("History", '<a href=su_user_accounting.php class="btn btn-success">View</a>');
+            row2("Computing: graphs", '<a href=su_user_accounting.php?graphs=1 class="btn btn-success">View</a>');
+            row2("Computing: details", '<a href=su_user_accounting.php class="btn btn-success">View</a>');
+            row2("Science projects", '<a href=su_user_projects.php class="btn btn-success">View</a>');
             end_table();
         }
     );
@@ -46,7 +47,7 @@ function su_settings($user) {
         function() {
             start_table();
             row2(
-                "Science area and location</br><small>Choose the types of research you want to support</small>",
+                "Science areas and locations</br><small>Choose the types of research you want to support</small>",
                 '<a href=su_prefs.php class="btn btn-success">Edit</a>',
                 false, "70%"
             );
@@ -63,7 +64,7 @@ function su_settings($user) {
                 '<a href=su_account_settings.php class="btn btn-success">Edit</a>'
             );
             row2(
-                "Email",
+                "Email</br><small>When and whether we should email you</small>",
                 '<a href=su_email_prefs.php class="btn btn-success">Edit</a>'
             );
             end_table();

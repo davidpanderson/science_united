@@ -24,23 +24,6 @@ require_once("../inc/su.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/keywords.inc");
 
-function project_kw_string($p, $category) {
-    global $job_keywords;
-    global $project_infos;
-
-    $x = "";
-    $pkws = $project_infos[$p->id]->kws;
-    $first = true;
-    foreach ($pkws as $pkw) {
-        $kw = $job_keywords[$pkw->keyword_id];
-        if ($kw->category != $category) continue;
-        if (!$first) $x .= ', ';
-        $first = false;
-        $x .= $kw->name;
-    }
-    return $x;
-}
-
 function show_projects() {
     $projects = SUproject::enum("");
     if ($projects) {
@@ -58,8 +41,8 @@ function show_projects() {
             table_row(
                 '<a href="su_show_project.php?id='.$p->id.'">'.$p->name.'</a>',
                 $p->url,
-                project_kw_string($p, SCIENCE),
-                project_kw_string($p, LOCATION),
+                project_kw_string($p->id, SCIENCE),
+                project_kw_string($p->id, LOCATION),
                 date_str($p->create_time),
                 $p->share,
                 project_status_string($p->status)

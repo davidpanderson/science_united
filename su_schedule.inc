@@ -35,13 +35,24 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/download_util.inc");
 
-// if user has a pref for this keyword, return -1/1, else 0
+// return project keyword's contribution to project score.
+// -1 means don't use.
 // TODO: should more specific keywords (e.g. level > 0) get a higher score?
 //
-function keyword_score($kw_id, $ukws) {
+function keyword_score($kw, $ukws) {
+    // lookup up keyword in user list
+    //
     foreach ($ukws as $ukw) {
-        if ($ukw->keyword_id == $kw_id) {
-            return $ukw->yesno;
+        if ($ukw->keyword_id == $kw->keyword_id) {
+            if ($ukw->yesno == KW_YES) {
+                return $kw->fraction;
+            } else if ($ukw->yesno = KW_NO) {
+                if ($kw->fraction == 1) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
         }
     }
     return 0;
@@ -82,6 +93,20 @@ function platform_score($project, $host) {
     return -1;
 }
 
+function keywd_score($pkws, $ukws) {
+    $x = 0;
+    foreach ($pkws as $pwk) {
+        $s = keyword_score($pwk, $ukws);
+        if ($s == KW_NO) {
+            $x = -1;
+            break;
+        } else {
+            $x += $s;
+        }
+    }
+    return $x;
+}
+
 // compute a score for this project, given user prefs.
 // higher = more preferable
 // -1 means don't use
@@ -91,19 +116,11 @@ function project_score($project, $ukws, $host) {
     $pkws = $project_infos[$project->id]->kws;
 
     $s = platform_score($project, $host);
+
     $project->platform_score = $s;
     $project->score = $s;
 
-    $project->keyword_score = 0;
-    foreach ($pkws as $pwk) {
-        $s = keyword_score($pwk->keyword_id, $ukws);
-        if ($s == KW_NO) {
-            $project->keyword_score = -1;
-            break;
-        } else {
-            $project->keyword_score += $s;
-        }
-    }
+    $project->keyword_score = keywd_score($pkws, $ukws);
 
     if ($project->platform_score < 0 || $project->keyword_score < 0) {
         $project->score = -1;
@@ -228,11 +245,25 @@ function populate_score_info($host, $req) {
 function rank_projects($user, $host, $req) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
     $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
+    $accts = SUAccount::enum("user_id=$user->id and opt_out>0");
+    $opt_out = array();
+    foreach ($accts as $a) {
+        $opt_out[$a->project_id] = 1;
+    }
+
     $host = populate_score_info($host, $req);
     $p2 = array();
     foreach ($projects as $p) {
         $p = project_score($p, $ukws, $host);
-        if ($req && $p->score < 0) continue;
+        $p->opt_out = false;
+        if (array_key_exists($p->id, $opt_out)) {
+            $p->score = -1;
+            $p->opt_out = true;
+        }
+        if ($req) {
+            if ($p->score < 0) continue;
+            $p->score += rand(0, 10000)/1000000.;
+        }
         $p2[] = $p;
     }
     usort($p2,
@@ -242,12 +273,6 @@ function rank_projects($user, $host, $req) {
             return -1;
         }
     );
-
-    // if we know about the host, reorder the list to use all resources
-    //
-    if ($req) {
-        $p2 = select_projects_resource($host, $p2);
-    }
 
     return $p2;
 }
@@ -336,6 +361,11 @@ function choose_projects_join($user) {
 //
 function choose_projects_rpc($user, $host, $req) {
     $projects = rank_projects($user, $host, $req);
+
+    // select subset of projects that use all resources
+    //
+    $projects = select_projects_resource($host, $projects);
+
     $n = 0;
     $accounts_to_send = array();
     $new_accounts = false;
@@ -349,7 +379,6 @@ function choose_projects_rpc($user, $host, $req) {
             if ($account->state == ACCT_SUCCESS) {
                 $accounts_to_send[] = array($p, $account);
                 $n++;
-                if ($n == 3) break;
             } else {
                 continue;
             }

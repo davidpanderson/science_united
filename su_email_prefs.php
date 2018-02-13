@@ -25,18 +25,25 @@ require_once("../inc/util.inc");
 
 function su_email_form($user, $update= false) {
     BoincForumPrefs::lookup($user);
-    page_head("e-mail preferences");
+    page_head("Email settings");
     if ($update) {
         echo "Preferences updated.";
     }
     form_start("su_email_prefs.php");
     form_input_hidden("action", "submit");
+    if (0) {
     form_checkboxes("Don't send me any emails",
         array(
             array("none", "", false)
         )
     );
-    form_radio_buttons("Send status emails", "status_period",
+    }
+    form_radio_buttons(
+        "Status emails
+            <br><small>These tell you how much
+            work your computer(s) have done recently</small>
+        ",
+        "status_period",
         array(
             array(0, "Never"),
             array(1, "Daily"),
@@ -45,7 +52,12 @@ function su_email_form($user, $update= false) {
         ),
         $user->send_email
     );
-    form_radio_buttons("Send community emails", "community",
+    form_radio_buttons(
+        "Community emails
+            <br><small>These tell you about private messages,
+            forum posts, and friend requests</small>
+        ",
+        "community",
         array(
             array(0, "Never"),
             array(1, "Immediately"),

@@ -18,12 +18,35 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
+require_once("../inc/su_graph.inc");
+
+function show_data($user) {
+    page_head("Your contribution history");
+    show_accounting_history(
+        SUAccountingUser::enum(
+            "user_id=$user->id", "order by id desc limit 200"
+        )
+    );
+    page_tail();
+}
+
+function show_graphs($user, $ndays) {
+    page_head("Your contribution history");
+    echo "<h3>Computing power</h3>\n";
+    show_user_graph($user, "ec", $ndays);
+    echo "<p> <h3>Computing time</h3>\n";
+    show_user_graph($user, "time", $ndays);
+    echo "<p> <h3>Completed jobs</h3>\n";
+    show_user_graph($user, "jobs", $ndays);
+    page_tail();
+}
 
 $user = get_logged_in_user();
-page_head("Your contribution history");
-show_accounting_history(
-    SUAccountingUser::enum("user_id=$user->id", "order by id desc limit 200")
-);
-page_tail();
+if (get_int("graphs", true)) {
+    show_graphs($user, 30);
+} else {
+    show_data($user);
+}
+
 
 ?>

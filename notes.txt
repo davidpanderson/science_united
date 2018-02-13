@@ -559,3 +559,24 @@ status email
         show
     if no device has ever been active
         link to help
+
+=============
+Message boards
+News
+Questions
+    get help
+Problems
+    report things that are broken
+Suggestions
+    suggest changes or additions
+=============
+on home page:
+"Science projects" links to projects page
+user projects page:
+    show all projects
+        put ones w/ work at top
+    fix "since"
+    new cols:
+    account status (created, pending, problem, none)
+    allowed by prefs?
+    opt-out checkbox

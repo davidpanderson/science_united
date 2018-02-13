@@ -24,10 +24,10 @@ require_once("../inc/su_util.inc");
 
 function top() {
     start_table();
-    row2("", '<a class="btn btn-primary" href="su_projects_edit.php">Manage projects</a>');
-    row2("Accounting details",
+    row2("", '<a class="btn btn-primary" href="su_projects_edit.php">Project info</a>');
+    row2("Accounting",
         '<a class="btn btn-primary" href="su_projects_acct.php">Projects</a>
-        <a class="btn btn-primary" href="su_accounting.php">Totals</a>'
+        <a class="btn btn-primary" href="su_accounting.php">Daily history</a>'
     );
     end_table();
 }

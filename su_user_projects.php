@@ -20,60 +20,98 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
+require_once("../inc/su_schedule.inc");
 
-function show_projects($user) {
-    page_head("Projects");
-    $accounts = SUAccount::enum("user_id = $user->id");
-    if (count($accounts) == 0) {
-        echo "No accounts yet";
+function project_row($p, $ukws, $a) {
+    if ($a) {
+        switch ($a->state) {
+        case ACCT_INIT:
+            $x = "New";
+            break;
+        case ACCT_SUCCESS:
+            $x = "Established";
+            break;
+        case ACCT_DIFFERENT_PASSWORD:
+            $x = "Password mismatch<br><a href=su_connect.php?id=$project->id>resolve</a>";
+            break;
+        case ACCT_TRANSIENT_ERROR:
+            $x = "In progress";
+            break;
+        }
+        $checked = $a->opt_out?"checked":"";
+        $d = date_str($a->create_time);
+        $c = $a->cpu_time/3600.;
+        $g = $a->gpu_time/3600.;
+        $njs = $a->njobs_success;
+        $njf = $a->njobs_fail;
     } else {
-        echo "You are eligible to contribute to these projects:<p>";
-        $first = true;
-        foreach ($accounts as $a) {
-            if ($a->state != ACCT_SUCCESS) continue;
-            if ($first) {
-                start_table();
-                row_heading_array(array(
-                    "Name", "since", "CPU hours", "GPU hours",
-                    "# successful jobs", "# failed jobs"
-                ));
-                $first = false;
-            }
-            $project = SUProject::lookup_id($a->project_id);
-            row_array(array(
-                "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
-                date_str($a->create_time),
-                show_num($a->cpu_time/3600.),
-                show_num($a->gpu_time/3600.),
-                $a->njobs_success,
-                $a->njobs_fail
-            ));
-        }
-        if (!$first) {
-            end_table();
-        }
-
-        $first = true;
-        foreach ($accounts as $a) {
-            if ($a->state == ACCT_SUCCESS) continue;
-            if ($first) {
-                echo "<h2>Accounts in progress</h2>\n";
-                start_table();
-                row_heading_array(array("Name", "status", "retry"));
-                $first = false;
-            }
-            $project = SUProject::lookup_id($a->project_id);
-            $x = $a->state==ACCT_DIFFERENT_PASSWORD?" <a href=su_connect.php?id=$project->id>(resolve)</a>":"";
-            row_array(array(
-                "<a href=su_user_projects.php?project_id=$project->id>$project->name</a>",
-                account_status_string($a->state).$x,
-                time_str($a->retry_time)
-            ));
-        }
-        if (!$first) {
-            end_table();
-        }
+        $checked = "";
+        $d = "---";
+        $c = 0;
+        $g = 0;
+        $njs = 0;
+        $njf = 0;
+        $x = "---";
     }
+    row_array(array(
+        sprintf('<a href=su_user_projects.php?project_id=%d>%s</a>',
+            $p->id,
+            $p->name
+        ),
+        $d,
+        show_num($c),
+        show_num($g),
+        $njs,
+        $njf,
+        $x,
+        (keywd_score($p->kws, $ukws)<0)?"no":"yes",
+        sprintf('<input type="checkbox" name="optout_%d" %s>',
+            $p->id,
+            $checked
+        )
+    ));
+}
+
+// show all the projects, with the ones user has contributed to at top.
+//
+function show_projects($user) {
+    page_head("Science projects");
+    $accounts = SUAccount::enum("user_id = $user->id", "order by cpu_time desc");
+    $project_infos = unserialize(file_get_contents("projects.ser"));
+    foreach ($project_infos as $id=>$p) {
+        $p->id = $id;
+        $p->done = false;
+    }
+    $first = true;
+    form_start("su_user_projects.php");
+    form_input_hidden("action", "opt_out");
+    start_table();
+    row_heading_array(array(
+        "Name", "since", "CPU hours", "GPU hours",
+        "# successful jobs", "# failed jobs",
+        "Account status",
+        "Allowed by prefs?",
+        "Opt out?<br><small>Use Update button at bottom of page</small>"
+    ));
+
+    $ukws = SUUserKeyword::enum("user_id=$user->id");
+
+    // show projects w/ accounts
+    //
+    foreach ($accounts as $a) {
+        $p = $project_infos[$a->project_id];
+        project_row($p, $ukws, $a);
+        $p->done = true;
+    }
+
+    // show other projects
+    foreach ($project_infos as $id=>$p) {
+        if ($p->done) continue;
+        project_row($p, $ukws, null);
+    }
+    end_table();
+    form_submit("Update opt-out selections");
+    form_end();
     page_tail();
 }
 
@@ -86,8 +124,8 @@ function su_show_project($user, $project_id) {
     start_table();
     row2("First contribution", date_str($acct->create_time));
     row2("Account status", account_status_string($acct->state));
-    row2("Science keywords", "");
-    row2("Location keywords", "");
+    row2("Science keywords", project_kw_string($project->id, SCIENCE));
+    row2("Location keywords", project_kw_string($project->id, LOCATION));
     row2("CPU computing", $acct->cpu_ec);
     row2("CPU time", $acct->cpu_time);
     if ($acct->gpu_ec) {
@@ -96,15 +134,55 @@ function su_show_project($user, $project_id) {
     }
     row2("# jobs succeeded", $acct->njobs_success);
     row2("# jobs failed", $acct->njobs_fail);
+    if ($acct->opt_out) {
+        row2("Opt out", "Yes");
+    }
     end_table();
-    echo "<a href=su_create_retry.php?project_id=$project_id>retry</a>";
+    //echo "<a href=su_create_retry.php?project_id=$project_id>retry</a>";
     page_tail();
+}
+
+function do_opt_out($user) {
+    $projects = unserialize(file_get_contents("projects.ser"));
+    $accounts = SUAccount::enum("user_id = $user->id");
+    foreach ($projects as $id=>$p) {
+        $p->done = false;
+    }
+    foreach ($accounts as $a) {
+        $pid = $a->project_id;
+        if (get_str("optout_$pid", true)) {
+            if (!$a->opt_out) {
+                $a->update("opt_out = 1");
+            }
+        } else {
+            if ($a->opt_out) {
+                $a->update("opt_out = 0");
+            }
+        }
+        $projects[$pid]->done = true;
+    }
+    foreach ($projects as $p) {
+        if ($p->done) continue;
+        if (get_str("optout_$pid", true)) {
+            // opting out of a project w/ no account.
+            // create one just for this purpose.
+            $ret = SUAccount::insert(
+                sprintf("(project_id, user_id, create_time, state, opt_out) values (%d, %d, %f, %d)",
+                    $p->id, $user->id, time(), ACCT_INIT, 1
+                )
+            );
+        }
+    }
 }
 
 $user = get_logged_in_user();
 $project_id = get_int("project_id", true);
+$action = get_str("action", true);
 if ($project_id) {
     su_show_project($user, $project_id);
+} else if ($action == "opt_out") {
+    do_opt_out($user);
+    show_projects($user);
 } else {
     show_projects($user);
 }

@@ -85,12 +85,12 @@ function keyword_prefs_form() {
 
 function global_prefs_form() {
     form_radio_buttons(
-        "Computer usage",
+        "Use of your computer",
         "preset",
         array(
             array('green', "Green - limit power consumption"),
             array('standard', "Standard"),
-            array('max', "Maximum computing"),
+            array('max', "Maximum"),
         ),
         'standard'
     );

@@ -51,47 +51,91 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
         exit;
     }
 
+    switch ($what) {
+    case 'jobs':
+        $title1 = "Successful jobs/day";
+        $title2 = "Failed jobs/day";
+        $color1 = "green";
+        $color2 = "red";
+        $graph_two = true;
+        $graph_type = 'lines';
+        break;
+    case 'time':
+        $title1 = "CPU hours/day";
+        $title2 = "GPU hours/day";
+        $color1 = "khaki";
+        $color2 = "orange";
+        $graph_two = false;
+        $graph_type = 'filledcurve x1';
+        break;
+    case 'ec':
+        $title1 = "CPU GFLOPS";
+        $title2 = "GPU GFLOPS";
+        $color1 = "khaki";
+        $color2 = "orange";
+        $graph_two = false;
+        $graph_type = 'filledcurve x1';
+        break;
+    case 'users':
+        $title1 = "Active users";
+        $title2 = "Active computers";
+        $color1 = "green";
+        $color2 = "blue";
+        $graph_two = true;
+        $graph_type = 'lines';
+        break;
+    }
+
     // write data to temp file
     //
     $fn = tempnam("/tmp", "su_data");
     $f = fopen($fn, "w");
-    $have_gpu = false;
     $n = count($accts);
+
     for ($i=0; $i<$n; $i++) {
         $a = $accts[$i];
+        if ($i == $n-1) {
+            // don't show the last segment because computers
+            // may not have done RPCs during it,
+            // so it will generally show a downturn
+            //
+
+            continue;
+        }
+        $end_time = $accts[$i+1]->create_time;
+        $dt = $end_time - $a->create_time;
         switch ($what) {
         case 'jobs':
-            fprintf($f, "%f %d %d\n",
+            $dt /= 86400;
+            fprintf($f, "%f %f %f\n",
                 $a->create_time,
-                $a->njobs_success_delta,
-                $a->njobs_fail_delta
+                $a->njobs_success_delta/$dt,
+                $a->njobs_fail_delta/$dt
             );
-            $title1 = "Successful jobs";
-            $title2 = "Failed jobs";
             break;
         case 'time':
+            $dt /= 24;
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
-                $a->cpu_time_delta/3600,
-                ($a->cpu_time_delta+$a->gpu_time_delta)/3600
+                $a->cpu_time_delta/$dt,
+                ($a->cpu_time_delta+$a->gpu_time_delta)/$dt
             );
             if ($a->gpu_time_delta) {
-                $have_gpu = true;
+                $graph_two = true;
             }
-            $title1 = "CPU hours";
-            $title2 = "GPU hours";
             break;
         case 'ec':
+            $c = ec_to_gflop_hours($a->cpu_ec_delta);
+            $g = ec_to_gflop_hours($a->gpu_ec_delta);
+            $dt /= 3600;
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
-                $a->cpu_ec_delta,
-                $a->gpu_ec_delta
+                $c/($dt),
+                ($c+$g)/($dt)
             );
             if ($a->gpu_ec_delta) {
-                $have_gpu = true;
+                $graph_two = true;
             }
-            $title1 = "CPU GFLOPS";
-            $title2 = "GPU GFLOPS";
             break;
         case 'users':
             fprintf($f, "%f %d %d\n",
@@ -99,8 +143,6 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
                 $a->nactive_users,
                 $a->nactive_hosts
             );
-            $title1 = "Active users";
-            $title2 = "Active computers";
             break;
         }
     }
@@ -110,18 +152,19 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     //
     $gn = tempnam("/tmp", "su_gp");
     $g = fopen($gn, 'c');
-    if ($have_gpu) {
+    if ($graph_two) {
         $plot = sprintf('
 set style fill noborder
-plot "%s" using 1:3 with filledcurve x1 title "%s" lc rgb "orange", \
-"%s" using 1:2 with filledcurve x1 title "%s" lc rgb "khaki"
+plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
+"%s" using 1:2 with %s title "%s" lc rgb "%s"
 ',
-            $fn, $title2, $fn, $title1
+            $fn, $graph_type, $title2, $color2,
+            $fn, $graph_type, $title1, $color1
         );
     } else {
         $plot = sprintf(
-            'plot "%s" using 1:2 with filledcurve x1 title "%s"',
-            $fn, $title1
+            'plot "%s" using 1:2 with %s title "%s" lc rgb"%s"',
+            $fn, $graph_type, $title1, $color1
         );
     }
     fprintf($g,
@@ -137,6 +180,7 @@ plot "%s" using 1:3 with filledcurve x1 title "%s" lc rgb "orange", \
     );
 
     fclose($g);
+
 
     $cmd = "gnuplot $gn";
     header("Content-Type: image/png");

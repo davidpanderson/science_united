@@ -47,8 +47,10 @@ function do_allocation() {
     foreach ($projects as $p) {
         $total_share += $p->share;
     }
+    log_write("flops: $flops; total_share: $total_share");
     foreach ($projects as $p) {
         $x = $flops*$p->share/$total_share;
+        log_write("adding $x to balance of $p->name);
         $p->update("balance = balance + $x");
     }
 }

@@ -25,18 +25,20 @@ require_once("../inc/su.inc");
 // show list of user's hosts, minimal info, link to details
 //
 function su_show_user_hosts($user) {
-    $hosts = BoincHost::enum("userid=$user->id and total_credit=0 order by domain_name, rpc_time desc");
+    $hosts = BoincHost::enum(
+        "userid=$user->id and total_credit=0 order by domain_name, rpc_time desc"
+    );
     page_head("Your computers");
     if (count($hosts) == 0) {
         echo "No computers yet";
         page_tail();
         return;
     }
-    start_table();
-    row_heading_array(array("Name<br><small>Click for details</small>", "Operating system", "Last contact", "Remove<br><small>... if this is a duplicate or the computer is no longer running BOINC</small>"));
+    start_table("table-striped");
+    row_heading_array(array("Computer name<br><small>Click for details</small>", "Operating system", "Last contact", "Remove<br><small>... if this is a duplicate or the computer is no longer running BOINC</small>"));
     $now = time();
     foreach($hosts as $h) {
-        $link = sprintf('<a class="btn btn-success" "href=su_hosts.php?action=del&id=%d>Remove</a>',
+        $link = sprintf('<a class="btn btn-success" href="su_hosts.php?action=del&host_id=%d">Remove</a>',
             $h->id
         );
         row_array(array(
@@ -52,9 +54,8 @@ function su_show_user_hosts($user) {
     page_tail();
 }
 
-function su_hide_host() {
-    $id = get_int("id");
-    $user = get_logged_in_user();
+function su_hide_host($user) {
+    $id = get_int("host_id");
     $h = BoincHost::lookup_id($id);
     if (!$h || $h->userid != $user->id) {
         error_page("no such host");
@@ -64,10 +65,23 @@ function su_hide_host() {
 
 function su_host_project_select($user, $host) {
     page_head("Project selection details for $host->domain_name");
+    echo '
+        To decide which projects this host should work for,
+        we compute a "score" for each projects.
+        The components of the score are:
+        <ul>
+        <li><b>Keyword score</b>: How well your keyword preferences match the project\'s keywords.
+        <li><b>Platform score</b>: -1 if the project has no programs that will run on the computer; 0 if it does; +1 if one of them uses a GPU or VirtuaBox.
+        <li><b>Balance</b>: How much work is owed to the project.
+        </ul>
+        We then choose the highest-scoring projects
+        that together can use all the computer\'s processors.
+        <p>
+    ';
     $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(
-        "Project", "Keyword score", "Platform score", "Balance", "Score"
+        "Project", "Keyword score", "Platform score", "Balance", "Opt out", "Score"
     );
     foreach ($host->resources as $r) {
         $x[] = "Can use $r";
@@ -75,10 +89,11 @@ function su_host_project_select($user, $host) {
     row_heading_array($x);
     foreach($projects as $p) {
         $x = array(
-            "<a href=su_show_project.php?id=$p->id>$p->url</a>",
+            "<a href=su_show_project.php?id=$p->id>$p->name</a>",
             $p->keyword_score,
             $p->platform_score,
             $p->projected_balance,
+            $p->opt_out?"Yes":"",
             $p->score
         );
         foreach ($host->resources as $r) {
@@ -88,7 +103,8 @@ function su_host_project_select($user, $host) {
     }
     end_table();
 
-    echo "Given the above info, this computer would do work for the followingprojects:
+    echo "Given the above info, this computer would do work for these projects:
+    <p>
     ";
     $projects = select_projects_resource($host, $projects);
     start_table("table-striped");
@@ -99,7 +115,7 @@ function su_host_project_select($user, $host) {
     row_heading_array($x);
     foreach($projects as $p) {
         $x = array(
-            "<a href=su_show_project.php?id=$p->id>$p->url</a>",
+            "<a href=su_show_project.php?id=$p->id>$p->name</a>",
             $p->score,
         );
         foreach ($host->resources as $r) {
@@ -113,7 +129,7 @@ function su_host_project_select($user, $host) {
 
 function su_host_detail($host) {
     page_head("Computer hardware and software");
-    start_table();
+    start_table("table-striped");
     show_host_hw_sw($host);
     end_table();
     page_tail();
@@ -122,7 +138,7 @@ function su_host_detail($host) {
 function su_host_project_accounting($host) {
     page_head("Projects for which this computer has done work");
     $ps = SUHostProject::enum("host_id=$host->id");
-    start_table();
+    start_table("table-striped");
     row_heading_array(array(
         "Name",
         "CPU FLOPS", "CPU time",
@@ -147,7 +163,7 @@ function su_host_summary($host) {
     start_table("table-striped");
     row2("Name", $host->domain_name);
     row2("Hardware/software details", "<a href=su_hosts.php?action=detail&host_id=$host->id>View</a>");
-    row2("Last heard from", time_str($host->rpc_time));
+    row2("Last contact", time_str($host->rpc_time));
     row2("How projects are chosen for this computer", "<a href=su_hosts.php?action=project_select&host_id=$host->id>View</a>");
     row2("Projects for which this computer has done work", "<a href=su_hosts.php?action=project_accounting&host_id=$host->id>View</a>");
     show_host_detail($host);
@@ -157,22 +173,28 @@ function su_host_summary($host) {
 
 $user = get_logged_in_user();
 $action = get_str("action", true);
-if ($action == "del") {
-    su_hide_host();
+switch ($action) {
+case "del":
+    su_hide_host($user);
     su_show_user_hosts($user);
-} else if ($action == "summary") {
+    break;
+case "summary":
     $host = BoincHost::lookup_id(get_int("host_id"));
     su_host_summary($host);
-} else if ($action == "detail") {
+    break;
+case "detail":
     $host = BoincHost::lookup_id(get_int("host_id"));
     su_host_detail($host);
-} else if ($action == "project_select") {
+    break;
+case "project_select":
     $host = BoincHost::lookup_id(get_int("host_id"));
     $host = populate_score_info($host, null);
     su_host_project_select($user, $host);
-} else if ($action == "project_accounting") {
+    break;
+case "project_accounting":
     $host = BoincHost::lookup_id(get_int("host_id"));
     su_host_project_accounting($host);
-} else {
+    break;
+default:
     su_show_user_hosts($user);
 }

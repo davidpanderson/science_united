@@ -24,19 +24,21 @@ require_once("../inc/su.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/keywords.inc");
 
-function su_show_project($project) {
+function su_show_project($project, $user) {
     global $job_keywords;
     global $project_infos;
 
     page_head($project->name);
-    start_table();
-    row2("name", $project->name);
+    start_table("table-striped");
+    row2("Name", $project->name);
     row2("URL", $project->url);
-    row2("Created", date_str($project->create_time));
-    row2("Status", project_status_string($project->status));
-    row2("Allocation share", $project->share);
-    row2("", '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit status and share</a>');
-    row2("Allocation balance", $project->projected_balance);
+    if (is_admin($user)) {
+        row2("Created", date_str($project->create_time));
+        row2("Status", project_status_string($project->status));
+        row2("Allocation share", $project->share);
+        row2("", '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit status and share</a>');
+        row2("Allocation balance", $project->projected_balance);
+    }
     $pks = $project_infos[$project->id]->kws;
     $sci = array();
     $loc = array();
@@ -70,6 +72,9 @@ $project = SUProject::lookup_id($id);
 if (!$project) {
     error_page("no such project");
 }
-su_show_project($project);
+
+$user = get_logged_in_user(false);
+BoincForumPrefs::lookup($user);
+su_show_project($project, $user);
 
 ?>

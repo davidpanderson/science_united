@@ -21,6 +21,7 @@
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su_util.inc");
+require_once("../inc/keywords.inc");
 
 function admin_only() {
     $user = get_logged_in_user();
@@ -125,6 +126,23 @@ function prefs_show($user) {
 
     echo '<p><a class="btn btn-success" href="su_prefs.php?action=prefs_edit_form">Edit preferences</a>
     ';
+}
+
+function project_kw_string($project_id, $category) {
+    global $job_keywords;
+    global $project_infos;
+
+    $x = "";
+    $pkws = $project_infos[$project_id]->kws;
+    $first = true;
+    foreach ($pkws as $pkw) {
+        $kw = $job_keywords[$pkw->keyword_id];
+        if ($kw->category != $category) continue;
+        if (!$first) $x .= ', ';
+        $first = false;
+        $x .= $kw->name;
+    }
+    return $x;
 }
 
 ///////////// UI INVOLVING PROJECTS /////////////
@@ -371,7 +389,7 @@ function show_accounting_history($as) {
                 "Totals",
                 show_days($a->cpu_time_total),
                 "",
-                show_days($a->cpu_time_total),
+                show_days($a->gpu_time_total),
                 "",
                 $a->njobs_success_total,
                 $a->njobs_fail_total,
@@ -382,11 +400,11 @@ function show_accounting_history($as) {
         }
         row_array(array(
             time_str($a->create_time),
-            //show_days($a->cpu_time_delta),
-            $a->cpu_time_delta,
+            show_days($a->cpu_time_delta),
+            //$a->cpu_time_delta,
             show_gflops($a->cpu_ec_delta, $dt),
-            //show_days($a->gpu_time_delta),
-            $a->gpu_time_delta,
+            show_days($a->gpu_time_delta),
+            //$a->gpu_time_delta,
             show_gflops($a->gpu_ec_delta, $dt),
             $a->njobs_success_delta,
             $a->njobs_fail_delta,

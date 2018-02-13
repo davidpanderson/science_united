@@ -52,7 +52,7 @@ function do_pass() {
             log_write("missing project $acct->project_id");
             $acct->delete();
         }
-        log_write(sprintf('making account for user %d on %s',
+        log_write(sprintf('trying to make account for user %d on %s',
             $user->id,
             $project->name
         ));
@@ -94,13 +94,16 @@ function main() {
     $t = 0;
     log_write("Starting");
     while (1) {
-        if (file_exists("make_accounts_trigger")) {
+        if (file_exists("../user/make_accounts_trigger")) {
+            log_write("doing trigger pass");
             // AM RPC asked us to create accounts
             //
-            unlink("make_accounts_trigger");
+            unlink("../user/make_accounts_trigger");
             do_pass();
         } else if ($t>600) {
+            log_write("doing time pass");
             do_pass();
+            $t = 0;
         } else {
             sleep(1);
             $t++;
