@@ -16,14 +16,16 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// first
-// wget https://boinc.berkeley.edu/project_list.php?test=1
+// first:
+// wget http://boinc.berkeley.edu/project_list.php
 // and put it in projects.xml
 
-// read projects.xml and, for each project, make
+// read projects.xml and, for each project in our DB, make
 // - a list of (keyword_id, frac)
 // - a list of (platform, GPU type, is_vbox)
 // and write these, serialized, to a file
+
+require_once("../inc/su_db.inc");
 
 function get_avs($p) {
     $avs = array();
@@ -83,12 +85,14 @@ function main() {
     foreach ($x->project as $p) {
         $x = new StdClass;
         $x->id = (int)$p->id;
+        $sup = SUProject::lookup_id($x->id);
+        if (!$sup) continue;
         $x->name = (string)$p->name;
         $x->avs = get_avs($p);
         $x->kws = get_kws($p);
         $y[$x->id] = $x;
     }
-    file_put_contents("projects.ser", serialize($y));
+    file_put_contents("../user/projects.ser", serialize($y));
 }
 
 main();

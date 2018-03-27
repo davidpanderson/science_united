@@ -99,6 +99,7 @@ function is_in_accounts($url, $accounts) {
 function send_reply($user, $host, $accounts, $new_accounts, $req) {
     echo "<acct_mgr_reply>\n"
         ."<name>".PROJECT."</name>\n"
+        ."<authenticator>$user->authenticator</authenticator>\n"
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
@@ -298,16 +299,23 @@ function create_host($req, $user) {
 // look up user and host records; create host if needed
 //
 function lookup_records($req) {
-    $email_addr = (string)$req->name;
-    $user = BoincUser::lookup_email_addr($email_addr);
+    $authenticator = (string)$req->authenticator;
+    if ($authenticator) {
+        $user = BoincUser::lookup_auth($authenticator);
+    } else {
+        $email_addr = (string)$req->name;
+        $user = BoincUser::lookup_email_addr($email_addr);
+    }
     if (!$user) {
         log_write("account $email_addr not found");
         su_error(-1, 'no account found');
     }
 
-    $passwd_hash = (string)$req->password_hash;
-    if ($passwd_hash != $user->passwd_hash) {
-        su_error(-1, 'bad password');
+    if (!$authenticator) {
+        $passwd_hash = (string)$req->password_hash;
+        if ($passwd_hash != $user->passwd_hash) {
+            su_error(-1, 'bad password');
+        }
     }
 
     if (array_key_exists('opaque', $req)) {
@@ -539,7 +547,7 @@ function main() {
     $req = simplexml_load_file('php://input');
     //$req = simplexml_load_file('req.xml');
     if (!$req) {
-        log_write("can't parse request");
+        log_write("can't parse request: $req");
         su_error(-1, "can't parse request");
     }
 

@@ -1,7 +1,7 @@
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2018 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -34,6 +34,11 @@
 require_once("../inc/su_db.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/download_util.inc");
+
+define('MIN_PROJECTS', 2);
+    // min # of projects to have a client run (if possibl).
+    // this is for appearance's sake,
+    // to emphasize that there are multiple projects
 
 // return project keyword's contribution to project score.
 // -1 means don't use.
@@ -188,6 +193,8 @@ function populate_score_info($host, $req) {
         $h = new StdClass;
         $client_info = $_SERVER['HTTP_USER_AGENT'];
         $h->platforms = array(client_info_to_platform_long($client_info));
+        $h->resources = array("cpu");
+        $h->vbox = false;
         return $h;
     }
 
@@ -277,6 +284,9 @@ function rank_projects($user, $host, $req) {
     return $p2;
 }
 
+// $used is an array of rsc => used_flag
+// Return true if all resources used
+//
 function all_used($used) {
     foreach ($used as $r => $u) {
         if (!$u) return false;
@@ -311,6 +321,9 @@ function select_projects_resource($host, $projects) {
     foreach ($host->resources as $r) {
         $used[$r] = false;
     }
+    foreach ($projects as $p) {
+        $p->included = false;
+    }
     $p2 = array();
     foreach ($projects as $p) {
         $p->use = array();
@@ -326,8 +339,33 @@ function select_projects_resource($host, $projects) {
         }
         if ($found) {
             $p2[] = $p;
+            $p->included = true;
         }
-        if (all_used($used)) break;
+
+        if (all_used($used)) {
+            break;
+        }
+    }
+
+    // if not enough projects, add ones that can use some resource
+    //
+    foreach ($projects as $p) {
+        if (count($p2) >= MIN_PROJECTS) {
+            break;
+        }
+        if ($p->included) continue;
+        //echo "considering $p->name\n";
+        $found = false;
+        foreach ($host->resources as $r) {
+            if (can_use($p, $host, $r)) {
+                $p->use[$r] = true;
+                $found = true;
+            }
+        }
+        //echo "found: $found\n";
+        if ($found) {
+            $p2[] = $p;
+        }
     }
     return $p2;
 }

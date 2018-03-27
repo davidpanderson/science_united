@@ -81,10 +81,11 @@ function su_host_project_select($user, $host) {
     $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(
-        "Project", "Keyword score", "Platform score", "Balance", "Opt out", "Score"
+        "Project", "Keyword score", "Platform score", "Balance",
+        "Opted out?", "Score"
     );
     foreach ($host->resources as $r) {
-        $x[] = "Can use $r";
+        $x[] = "Can use $r?";
     }
     row_heading_array($x);
     foreach($projects as $p) {

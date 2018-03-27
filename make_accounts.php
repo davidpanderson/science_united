@@ -93,6 +93,7 @@ function do_pass() {
 function main() {
     $t = 0;
     log_write("Starting");
+    $ppid = posix_getppid();
     while (1) {
         if (file_exists("../user/make_accounts_trigger")) {
             log_write("doing trigger pass");
@@ -107,6 +108,10 @@ function main() {
         } else {
             sleep(1);
             $t++;
+        }
+        if (!file_exists("/proc/$ppid")) {
+            log_write("Parent shell exited; exiting");
+            break;
         }
     }
 }

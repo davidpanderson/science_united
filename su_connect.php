@@ -74,13 +74,59 @@ function get_auth($user, $project) {
     }
 }
 
+function show_list($user) {
+    page_head("Password mismatches");
+    $accts = SUAccount::enum(
+        sprintf("user_id=%d and state=%d and opt_out=0",
+            $user->id, ACCT_DIFFERENT_PASSWORD
+        )
+    );
+    if (count($accts) == 0) {
+        echo "You have no accounts with mismatched passwords.";
+    } else {
+        echo "<p>".sprintf(
+            "We found accounts on the following BOINC projects
+            with the same email address (%s) as your %s account,
+            but with different passwords.
+            %s can't attach your computer to these accounts.",
+            $user->email_addr, PROJECT, PROJECT
+        );
+        echo "<p>";
+        echo sprintf(
+            "You can resolve this by entering your project account password.
+            %s will use this to connect to the account,
+            but will not save it beyond that.
+            Click on a project name to do this:",
+            PROJECT
+        );
+        foreach($accts as $acct) {
+            $project = SUProject::lookup_id($acct->project_id);
+            if (!$project) {
+                echo "Missing project $acct->project_id. <p>\n";
+                continue;
+            }
+            echo "<p><a href=su_connect.php?id=$acct->project_id>$project->name</a><p>\n";
+        }
+        echo sprintf(
+            "Alternatively, you can visit the project web site
+            and change your password to your %s password.
+            %s will automatically retry the project later.",
+            PROJECT, PROJECT
+        );
+    }
+    page_tail();
+}
+
 $user = get_logged_in_user();
 
 $action = post_str("action", true);
+if (!$action) $action = get_str("action", true);
 if ($action == "get_auth") {
     $id = post_int("id");
     $project = SUProject::lookup_id($id);
     get_auth($user, $project);
+} else if ($action == "list") {
+    show_list($user);
 } else {
     $id = get_int("id");
     $project = SUProject::lookup_id($id);

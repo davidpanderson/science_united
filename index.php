@@ -124,7 +124,7 @@ function slide_show() {
         "protein.png"=>"Structure of protein GIF",
         "hubble.jpg"=>"The Hubble ultra-deep field image",
     );
-    echo '<div class="carousel slide" data-ride="carousel">
+    echo '<div class="carousel slide" data-interval="4000" data-ride="carousel">
         <div class="carousel-inner">
     ';
     
@@ -132,7 +132,7 @@ function slide_show() {
     foreach ($pics as $pic=>$caption) {
         echo sprintf('
             <div class="%s">
-            <img class="img-responsive" width=400 src="pictures/%s">
+            <img class="d-block img-fluid" width=400 src="pictures/%s">
             <div class="carousel-caption">%s</div>
             </div>
             ', $c, $pic, $caption

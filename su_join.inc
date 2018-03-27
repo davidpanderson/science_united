@@ -42,14 +42,14 @@ function su_join_form($next_url) {
     form_input_text(
         sprintf('<span title="%s">%s</span>',
             tra("Identifies you on this web site. Use your real name or a nickname."),
-            tra("Screen name")
+            tra("Choose screen name")
         ),
         "new_name"
     );
     form_input_text(
         sprintf('<span title="%s">%s</span>',
-            tra("Must be a valid address of the form 'name@domain'."),
-            tra("Email address")
+            tra("An address where you can receive emails."),
+            tra("Your email address")
         ),
         "new_email_addr"
     );
@@ -61,7 +61,7 @@ function su_join_form($next_url) {
     form_input_text(
         sprintf('<span title="%s">%s</span>',
             tra("Must be at least %1 characters", $min_passwd_length),
-            tra("Password")
+            tra("Choose password")
         ),
         "passwd", "", "password", 'id="passwd"',
         passwd_visible_checkbox("passwd")
@@ -78,7 +78,9 @@ function keyword_prefs_form() {
         $items[] = array("keywd_".$id, $k->name, false);
     }
     form_checkboxes(
-        "Science areas you most want to support",
+        "Science areas you most want to support
+            <br><small>You can refine your preferences later</small>
+        ",
         $items
     );
 }
@@ -101,7 +103,8 @@ function show_join_form() {
 
     form_start("su_join.php", "post");
     form_input_hidden("action", "join");
-    su_join_form(0, "su_download.php");
+    form_general("", "Already using BOINC? <a href=su_boinc_users.php>Read this first.</a>");
+    su_join_form(0, "download.php?dev=1");
     keyword_prefs_form();
     global_prefs_form();
     if ($recaptcha_public_key) {

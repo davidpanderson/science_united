@@ -30,8 +30,9 @@
 // - new totals = previous totals + previous deltas
 // - new deltas = 0
 
-require_once("../inc/su_db.inc");
 require_once("../inc/boinc_db.inc");
+require_once("../inc/su_db.inc");
+require_once("../inc/su_util.inc");
 
 function log_write($x) {
     echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
@@ -50,7 +51,7 @@ function do_allocation() {
     log_write("flops: $flops; total_share: $total_share");
     foreach ($projects as $p) {
         $x = $flops*$p->share/$total_share;
-        log_write("adding $x to balance of $p->name);
+        log_write("adding $x to balance of $p->name");
         $p->update("balance = balance + $x");
     }
 }
@@ -128,6 +129,12 @@ function do_users($now) {
 
 function main() {
     log_write("starting");
+
+    // do this first, before we create a new accounting record
+    //
+    log_write("doing allocation");
+    do_allocation($now);
+
     $now = time();
     log_write("doing totals");
     do_total($now);

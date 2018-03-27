@@ -32,7 +32,7 @@ function project_row($p, $ukws, $a) {
             $x = "Established";
             break;
         case ACCT_DIFFERENT_PASSWORD:
-            $x = "Password mismatch<br><a href=su_connect.php?id=$project->id>resolve</a>";
+            $x = "Password mismatch<br><a href=su_connect.php?id=$p->id>resolve</a>";
             break;
         case ACCT_TRANSIENT_ERROR:
             $x = "In progress";
@@ -91,7 +91,7 @@ function show_projects($user) {
         "# successful jobs", "# failed jobs",
         "Account status",
         "Allowed by prefs?",
-        "Opt out?<br><small>Use Update button at bottom of page</small>"
+        "Opt out?<br><small>Check projects you don't want to help.  Use Update button at bottom of page</small>"
     ));
 
     $ukws = SUUserKeyword::enum("user_id=$user->id");
@@ -99,6 +99,13 @@ function show_projects($user) {
     // show projects w/ accounts
     //
     foreach ($accounts as $a) {
+        if ($a->opt_out) continue;
+        $p = $project_infos[$a->project_id];
+        project_row($p, $ukws, $a);
+        $p->done = true;
+    }
+    foreach ($accounts as $a) {
+        if (!$a->opt_out) continue;
         $p = $project_infos[$a->project_id];
         project_row($p, $ukws, $a);
         $p->done = true;
@@ -163,11 +170,13 @@ function do_opt_out($user) {
     }
     foreach ($projects as $p) {
         if ($p->done) continue;
+        $pid = $p->id;
         if (get_str("optout_$pid", true)) {
             // opting out of a project w/ no account.
             // create one just for this purpose.
+            //
             $ret = SUAccount::insert(
-                sprintf("(project_id, user_id, create_time, state, opt_out) values (%d, %d, %f, %d)",
+                sprintf("(project_id, user_id, create_time, state, opt_out) values (%d, %d, %f, %d, 1)",
                     $p->id, $user->id, time(), ACCT_INIT, 1
                 )
             );

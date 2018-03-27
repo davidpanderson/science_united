@@ -20,7 +20,9 @@ and who are motivated primarily by science goals.
 The computing power of SU participants is divided among
 a set of vetted projects.
 The choice of projects and the allocation policy
-will be made by a panel of independent scientists.
+will be made by independent scientists.
+For now, all vetted science projects are included,
+with equal shares.
 
 <h3>Science areas, not projects</h3>
 
@@ -37,17 +39,19 @@ based on their preferences and other factors.
 This may change over time, even from day to day.
 They may end up running a project that didn't exist when they first signed up.
 
-This is preferable for time-limited users;
-they don't have to browse and evaluate projects;
-SU does that for them.
+Time-limited users don't have to browse and evaluate projects;
+in effect, SU does that for them.
 
 <p>
 Equally importantly, it means that a new project,
-if it is vetted by SU, is guaranteed to get a
+if vetted by SU, is guaranteed to get a
 (hopefully large) amount of computing power,
 without doing any publicity or even developing a web site.
-The need to do these things has been a major barrier
+The need to do these things,
+and the risk of investing in BOINC,
+have been major barriers
 to entry for scientists who might want to use BOINC.
+The hope is that SU will lead to the creation of many more projects.
 
 <h3>User-friendliness</h3>
 
@@ -57,7 +61,8 @@ set it, and forget it.
 They may or may not ever return to the SU web site.
 
 <p>
-There are few things that you might notice:
+In looking at the SU site,
+there are few things that you might notice:
 
 <ul>
 <li> New users download BOINC by the new "auto-attach" mechanism
@@ -66,10 +71,10 @@ BOINC web site, and b) when BOINC starts up, it is already attached to SU.
 
 <li> There are no leader boards.
 Credit isn't shown anywhere.
-SU shows users graphs of their own work history,
-but there are no comparisons with other users.
+Users see graphs of their own work history,
+but no comparisons with other users.
 
-<li> We try to avoid technical terminology like CPU, GPU, and FLOPS.
+<li> We try to minimize the use of technical terms like CPU, GPU, and FLOPS.
 Words like "computer" and "job" are OK.
 
 <li> Computing preferences have been reduced to three options:
@@ -103,8 +108,7 @@ you might want to use your standard password.
 
 <p>
 You're also encouraged to test the "new user" scenario,
-where you use an email address that you haven't used
-on any BOINC projects.
+where you use an email address that you haven't used on any BOINC projects.
 
 <p>
 To test SU, you'll need version 7.9.1 or later of the BOINC client.
@@ -116,7 +120,7 @@ Give testing feedback (bugs, questions, feature requests)
 on the SU message boards.
 You can also email me (David Anderson) directly.
 Remember that the target audience of SU is not you;
-I'm not going to be adding "power user" features to SU.
+we're not going to add "power user" features to SU.
 Pretend you're interested in science but no very little about computers.
 Would you understand the overall idea?
 Would you be able to follow the instructions?

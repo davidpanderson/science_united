@@ -25,27 +25,44 @@ require_once("../inc/su_db.inc");
 // send status emails
 //
 
-
 function log_write($x) {
     echo date(DATE_RFC822), ": $x\n";
 }
 
+function su_send_email($user, $x) {
+    $x .= "\nThanks for participating in Science United.\n\n";
+    $x .= sprintf(
+        "To unsubscribe or change the frequency of these emails, go here:\n%s\n",
+        "https://scienceunited.org/su_email_prefs.php"
+    );
+    send_email($user, "Science United status", $x);
+    log_write("sent email to $user->email_addr");
+}
+
 function do_user($user) {
-    $ndays = $user->send_email;
-    if ($ndays < 2) {
-        $ndays = 2;
+    $x = "Dear $user->name:\n\nGreetings from Science United.\n\n";
+
+    $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
+    if (count($hosts) == 0) {
+        $x .= "We haven't heard from your computer.  Make sure that BOINC is installed and running.  To install BOINC, go here:\nhttps://scienceunited.org/download.php\n";
+        su_send_email($user, $x);
+        return;
     }
 
-    // show the last $ndays of statistics
+    // $ndays is the user's requested email frequency.
+    // report progress in that period
     //
-    $t0 = time() - $ndays*86400;
+    $ndays = $user->send_email;
+
+    // add 1 day because of accounting period
+    //
+    $t0 = time() - ($ndays+1)*86400;
     $uas = SUAccountingUser::enum("user_id = $user->id and create_time > $t0");
     $delta = new_delta_set();
     foreach ($uas as $ua) {
         add_record($ua, $delta);
     }
 
-    $x = "Dear $user->name:\n\nGreetings from Science United.\n\n";
     if (delta_set_nonzero($delta)) {
         $x .= sprintf('In the last %d days your computers have contributed %s hours of processing time, and have completed %d jobs.  Congratulations!',
             $ndays,
@@ -53,13 +70,12 @@ function do_user($user) {
             $delta->njobs_success+$delta->njobs_fail
         );
     } else {
-        $x .= sprintf("We haven't heard from your computers in the last %d days.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
+        $x .= sprintf("Your computers haven't reported work in the last %d days.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
             $ndays
         );
     }
     $x .= "\n\nFor details, visit https://scienceunited.org/\n\n";
     $t0 = time() - 86400.*7;
-    $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     foreach ($hosts as $host) {
         $idle_days = (time() - $host->rpc_time)/86400;
         if ($host->rpc_time < $t0) {
@@ -69,13 +85,7 @@ function do_user($user) {
             );
         }
     }
-    $x .= "\nThanks for participating in Science United.\n\n";
-    $x .= sprintf(
-        "To unsubscribe or change the frequency of these emails, go here:\n%s\n",
-        "https://scienceunited.org/su_email_prefs.php"
-    );
-    send_email($user, "Science United status", $x);
-    log_write("sent email to $user->email_addr");
+    su_send_email($user, $x);
 }
 
 function main() {

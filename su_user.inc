@@ -49,7 +49,7 @@ function show_download($user) {
     $hosts = BoincHost::enum("userid=$user->id");
     if (count($hosts) == 0) {
         echo WARNING."It looks like BOINC isn't running on your computer.
-            Try <a href=su_download.php>re-installing it</a>.
+            Try <a href=download.php?dev=1>re-installing it</a>.
             If you need help,
             <a href=https://boinc.berkeley.edu/help.php>go here</a>.
             <br>
@@ -60,7 +60,7 @@ function show_download($user) {
     if ($dt > 7*86400) {
         echo WARNING."None of your computers has contacted us in the last ".time_diff($dt, 0)." ago.
             Please check that BOINC is running.
-            You may need to <a href=su_download.php>re-install BOINC</a>.
+            You may need to <a href=download.php?dev=1>re-install BOINC</a>.
             <br>
         ";
         return;
@@ -80,21 +80,20 @@ function show_download($user) {
 }
 
 function show_problem_accounts($user) {
-    $accts = SUAccount::enum("user_id=$user->id");
-    $x = "";
-    foreach ($accts as $a) {
-        if ($a->state == ACCT_DIFFERENT_PASSWORD) {
-            $p = SUProject::lookup_id($a->project_id);
-            if ($x) $x .= "<br>";
-            $x .= WARNING;
-            $x .= sprintf('You already have an account on %s,
-                but we can\'t access it because it has a different password.
-                <a href=su_connect.php?id=%d>Click here to resolve</a>.',
-                $p->name, $a->project_id
-            );
-        }
-    }
-    echo $x;
+    $accts = SUAccount::enum(
+        sprintf("user_id=%d and state=%d and opt_out=0",
+            $user->id, ACCT_DIFFERENT_PASSWORD
+        )
+    );
+    $n = count($accts);
+    if ($n == 0) return;
+    echo sprintf("%s You have accounts on one or more BOINC projects
+            that we can't access because their password
+            is different from your %s password.
+            <a href=su_connect.php?action=list>Click here to resolve</a>.<p>\n",
+            WARNING, $n, PROJECT
+        )
+    ;
 }
 
 // show keywords of recent jobs

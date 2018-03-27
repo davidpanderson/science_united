@@ -37,8 +37,9 @@ define("USE_STOPFORUMSPAM", true);
     // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
 define("USER_HOME", "index.php");
-define("INVITE_CODES", '/foobar/');
+//define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
+define("NOSSL", 1);
 
 define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
     // Email addresses separated by pipe ( | ) that will receive user reports

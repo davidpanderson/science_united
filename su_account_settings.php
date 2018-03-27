@@ -19,10 +19,17 @@
 require_once("../inc/util.inc");
 require_once("../inc/user.inc");
 
+function su_user_info_private($user) {
+    row2(tra("Name"), $user->name);
+    row2(tra("Email address"), $user->email_addr);
+    row2(tra("%1 member since", PROJECT), date_str($user->create_time));
+    row2(tra("User ID")."<br/><p class=\"small\">".tra("Used in community functions")."</p>", $user->id);
+}
+
 function main($user) {
     page_head("Account settings");
     start_table();
-    show_user_info_private($user);
+    su_user_info_private($user);
     end_table();
     page_tail();
 }
