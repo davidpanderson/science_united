@@ -64,17 +64,18 @@ function su_hide_host($user) {
 }
 
 function su_host_project_select($user, $host) {
-    page_head("Project selection details for $host->domain_name");
+    page_head("How projects are chosen for $host->domain_name");
     echo '
-        To decide which projects this host should work for,
-        we compute a "score" for each projects.
+        To decide which projects this computer should work for,
+        we compute a "score" for each project.
         The components of the score are:
         <ul>
         <li><b>Keyword score</b>: How well your keyword preferences match the project\'s keywords.
         <li><b>Platform score</b>: -1 if the project has no programs that will run on the computer; 0 if it does; +1 if one of them uses a GPU or VirtuaBox.
-        <li><b>Balance</b>: How much work is owed to the project.
+        <li><b>Balance</b>: How much work is owed to the project;
+        this changes from one day to the next.
         </ul>
-        We then choose the highest-scoring projects
+        We then choose the highest-scoring projects (at least 2)
         that together can use all the computer\'s processors.
         <p>
     ';

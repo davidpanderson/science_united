@@ -94,13 +94,15 @@ function user_panel(){
         },
         "panel-info"
     );
-    $profile = get_current_uotd();
-    if ($profile) {
-        panel('User of the Day',
-            function() use ($profile) {
-                show_uotd($profile);
-            }
-        );
+    if (!DISABLE_PROFILES) {
+        $profile = get_current_uotd();
+        if ($profile) {
+            panel('User of the Day',
+                function() use ($profile) {
+                    show_uotd($profile);
+                }
+            );
+        }
     }
 }
 

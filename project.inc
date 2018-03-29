@@ -39,7 +39,6 @@ define("NO_COMPUTING", true);
 define("USER_HOME", "index.php");
 //define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
-define("NOSSL", 1);
 
 define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
     // Email addresses separated by pipe ( | ) that will receive user reports
@@ -127,9 +126,9 @@ function su_navbar(
         array(tra("Message boards"), $url_prefix."forum_index.php"),
         //array(tra("Questions and Answers"), $url_prefix."forum_help_desk.php"),
         array(tra("Teams"), $url_prefix."team.php", tra("create or join a team")),
-        array(tra("Profiles"), $url_prefix."profile_menu.php"),
+        //array(tra("Profiles"), $url_prefix."profile_menu.php"),
         //array(tra("User search"), $url_prefix."user_search.php"),
-        array(tra("User of the day"), $url_prefix."uotd.php"),
+        //array(tra("User of the day"), $url_prefix."uotd.php"),
     ));
     navbar_menu(tra("Site"), array(
         array(tra("Search"), $url_prefix."site_search.php"),

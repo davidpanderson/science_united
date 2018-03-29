@@ -152,7 +152,7 @@ function account_status_string($i) {
     case ACCT_INIT:
         return "Initial";
     case ACCT_SUCCESS:
-        return "Attached";
+        return "Established";
     case ACCT_DIFFERENT_PASSWORD:
         return "Password mismatch";
     case ACCT_TRANSIENT_ERROR:

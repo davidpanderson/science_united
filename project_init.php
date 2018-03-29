@@ -1,7 +1,7 @@
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2018 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -20,8 +20,8 @@
 //
 // run this from html/ops
 
-require_once("../keywords.inc");
-require_once("../project_ids.inc");
+require_once("../inc/keywords.inc");
+require_once("../inc/project_ids.inc");
 require_once("../inc/su_db.inc");
 
 // remove projects and everything that refers to them
@@ -57,7 +57,6 @@ function make_project($p) {
         $web_rpc_url_base = $url;
     }
     $project_id = (string)$p->id;
-    $project = SUProject::lookup_id($project_id);
     $now = time();
     $cmd = "~/boinc/lib/crypt_prog -sign_string $url ~/science_united/code_sign_private";
     $out = array();
@@ -67,13 +66,20 @@ function make_project($p) {
         die("$cmd failed\n");
     }
     $url_signature = implode("\n", $out);
-    SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
 
-    if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
-        die("su_accounting_project insert failed\n");
+    $project = SUProject::lookup_id($project_id);
+    if ($project) {
+        if ($url_signature != $project->url_signature) {
+            echo "$project->name needs signature update\n";
+        }
+    } else {
+        SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
+
+        if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
+            die("su_accounting_project insert failed\n");
+        }
+        echo "Added project $name\n";
     }
-
-    echo "Added project $name\n";
 }
 
 // make projects based on projects.xml
@@ -98,7 +104,7 @@ function make_projects() {
     }
 }
 
-clean();
+//clean();
 make_projects();
 
 ?>

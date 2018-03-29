@@ -491,7 +491,12 @@ function do_accounting(
         // update project balance
         //
         $flops = ec_to_gflops($dproj->cpu_ec + $dproj->gpu_ec);
-        $project->update("balance = max(0, balance-$flops");
+        log_write("subtracting $flops from balance of $project->name");
+        $ret = $project->update("balance = greatest(0, balance-$flops)");
+        if (!$ret) {
+            log_write("project->update failed");
+                su_error(-1, "project->update failed");
+        }
 
         // add to all-project delta sums
         //

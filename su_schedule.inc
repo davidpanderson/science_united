@@ -357,6 +357,7 @@ function select_projects_resource($host, $projects) {
         //echo "considering $p->name\n";
         $found = false;
         foreach ($host->resources as $r) {
+            $p->use[$r] = false;
             if (can_use($p, $host, $r)) {
                 $p->use[$r] = true;
                 $found = true;

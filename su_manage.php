@@ -25,6 +25,7 @@ require_once("../inc/su_util.inc");
 function top() {
     start_table();
     row2("", '<a class="btn btn-primary" href="su_projects_edit.php">Project info</a>');
+    row2("", '<a class="btn btn-primary" href="su_keyword_stats.php">Keyword statistics</a>');
     row2("Accounting",
         '<a class="btn btn-primary" href="su_projects_acct.php">Projects</a>
         <a class="btn btn-primary" href="su_accounting.php">Daily history</a>'
