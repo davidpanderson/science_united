@@ -97,7 +97,7 @@ function main() {
     }
 
     page_head("Keyword statistics");
-    start_table();
+    start_table("table-striped");
     row_heading("Science Area");
     show_keywords(KW_CATEGORY_SCIENCE);
     row_heading("Location");

@@ -580,3 +580,58 @@ user projects page:
     account status (created, pending, problem, none)
     allowed by prefs?
     opt-out checkbox
+
+========================
+starvation
+
+Some projects may be down, or have no jobs, for arbitrary periods.
+If we attach a client to such projects, they'll starve.
+
+This applies only to dynamic AMs;
+use "send_rec" flag as proxy for this
+
+Questions:
+
+- When should the client make an "starved" RPC to SU?
+    use exponential backoff 10 min .. 1 day to prevent flooding SU
+    when a resource is idle
+        we know this after doing a rr simulation
+        write a func to do it fast!
+            scan minimal # of jobs
+    keep track of:
+        first_starved: start of starvation interval, or zero
+        starved_rpc_backoff: delay between starved RPCs, or zero
+        starved_rpc_min_time: earliest time to do a starved RPC
+    if using dynamic AM
+        every 1 min
+            check idle rsc
+            if none
+                first_starved = 0
+            else
+                if first_starved == 0
+                    first_starved = now;
+                    starved_rpc_backoff = 10 min
+                    starved_rpc_min_time = now + 10 min
+                else if now > starved_rpc_min_time
+                    do AM RPC
+                    starved_rpc_backoff = min(starved_rpc_backoff*2, 1 day)
+                    starved_rpc_min_time = now + starved_rpc_backoff
+
+    A starved RPC may not return any new projects (e.g. because of prefs)
+
+- What additional info should be in the AM RPC request?
+    for each project: flags saying we didn't get work
+    we expected from this project, namely:
+    - <sched_req_failed/>: last sched request failed
+        get this from PROJECT::nrpc_failures
+    - <sched_req_no_work>rsc</sched_req_no_work>
+        last sched request requested work for rsc and didn't get any
+        (not counting "too soon" error)
+    set this stuff in PROJECT after scheduler req
+
+- What changes to the scheduling algorithm are needed?
+    in scan over projects:
+    
+    if last request failed or zero jobs, add to list but
+        don't mark any resources
+    if didn't get work for some resources, don't mark those resources

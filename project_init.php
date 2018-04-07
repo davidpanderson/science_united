@@ -17,14 +17,20 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // initialize or update the project DB table
-//
 // run this from html/ops
+//
+// input: html/ops/projects.xml
+// get this from https://boinc.berkeley.edu/project_list.php
+//
+// IF ANY KEYWORDS OR PLATFORM INFO HAS CHANGED:
+// run project_digest.php as well (to update projects.ser)
 
 require_once("../inc/keywords.inc");
 require_once("../inc/project_ids.inc");
 require_once("../inc/su_db.inc");
 
 // remove projects and everything that refers to them
+// THINK TWICE BEFORE DOING THIS
 //
 function clean() {
     foreach (SUProject::enum() as $p) {
@@ -71,6 +77,8 @@ function make_project($p) {
     if ($project) {
         if ($url_signature != $project->url_signature) {
             echo "$project->name needs signature update\n";
+            $ret = $project->update("url_signature = '$url_signature'");
+            if (!$ret) echo "update failed\n";
         }
     } else {
         SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
@@ -104,7 +112,6 @@ function make_projects() {
     }
 }
 
-//clean();
 make_projects();
 
 ?>
