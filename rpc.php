@@ -30,7 +30,7 @@ require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
 
 require_once("../inc/su_db.inc");
-require_once("../inc/su_schedule.inc");
+require_once("../inc/su_schedule2.inc");
 require_once("../inc/su_compute_prefs.inc");
 require_once("../inc/su_util.inc");
 
@@ -106,6 +106,7 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
     $repeat_sec = $new_accounts?REPEAT_DELAY_INITIAL:REPEAT_DELAY;
     echo "</signing_key>\n"
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
+        ."<dynamic/>\n"
     ;
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
@@ -114,7 +115,6 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
     //
     foreach ($accounts as $a) {
         $proj = $a[0];
-        log_write("sending attach to project $proj->url");
         $acct = $a[1];
         echo "<account>\n"
             ."   <url>$proj->url</url>\n"

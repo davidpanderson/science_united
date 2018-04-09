@@ -36,9 +36,25 @@ require_once("../inc/su_project_infos.inc");
 require_once("../inc/download_util.inc");
 
 define('MIN_PROJECTS', 2);
-    // min # of projects to have a client run (if possibl).
+    // min # of projects to have a client run (if possible).
     // this is for appearance's sake,
     // to emphasize that there are multiple projects
+define('MAX_PROJECTS', 10);
+    // max # of projects.
+    // this could happen if lots of project aren't supplying work to the host
+
+// Our "canonical" resource names are cpu, nvidia, amd, and intel_gpu
+// Convert other variants to canonical
+//
+function canonical_resource_name($x) {
+    switch ($x) {
+    case "CPU": return "cpu";
+    case "NVIDIA": return "nvidia";
+    case "ATI": return "amd";
+    }
+    log_write("Unknown resource $x");
+    return $x;
+}
 
 // return project keyword's contribution to project score.
 // -1 means don't use.
@@ -90,7 +106,7 @@ function platform_score($project, $host) {
         // here if host supports this platform
         //
         if ($av->gpu || $av->vbox) {
-            return 1;
+            return .1;
         }
         $found = true;
     }
@@ -176,7 +192,7 @@ function host_serialnum_to_gpus_vbox($host) {
         } else if ($d[0] == "CUDA") {
             $host->resources[] = "nvidia";
         } else if ($d[0] == "CAL") {
-            $host->resources[] = "ati";
+            $host->resources[] = "amd";
         } else if ($d[0] == "INTEL") {
             $host->resources[] = "intel_gpu";
         }
@@ -248,6 +264,9 @@ function populate_score_info($host, $req) {
 // - from host detail page (req = null)
 // - from RPC (host, req not null)
 //      don't return projects w/ negative scores
+//      set these fields in projects:
+//          nrpc_failures: nonzero means last RPC failed
+//          sched_req_no_work[]: resources where last sched req return no work
 //
 function rank_projects($user, $host, $req) {
     $ukws = SUUserKeyword::enum("user_id=$user->id");
@@ -268,8 +287,27 @@ function rank_projects($user, $host, $req) {
             $p->opt_out = true;
         }
         if ($req) {
+            // add small random factor for project variety
+            // TODO: remove this; balance does this
+            //
             if ($p->score < 0) continue;
             $p->score += rand(0, 10000)/1000000.;
+
+            // look for starvation info in request
+            //
+            $p->sched_req_no_work = array();
+            $p->nrpc_failures = 0;
+            foreach ($req->project as $reqp) {
+                if ((string)$reqp->url == $p->url) {
+                    if ($reqp->nrpc_failures) {
+                        $p->nrpc_failures = (int)$reqp->nrpc_failures;
+                    }
+                    foreach ($reqp->sched_req_no_work as $rsc) {
+                        $p->sched_req_no_work[] = canonical_resource_name((string)$rsc);
+                    }
+                    break;
+                }
+            }
         }
         $p2[] = $p;
     }
@@ -313,7 +351,7 @@ function can_use($project, $host, $r) {
 }
 
 // Given the score-ordered list of projects,
-// select a list that uses all resources.
+// select a list that uses all of the host's resources.
 // For each project p, include an array p->use of resources that it should use.
 //
 function select_projects_resource($host, $projects) {
@@ -334,7 +372,15 @@ function select_projects_resource($host, $projects) {
             if (can_use($p, $host, $r)) {
                 $found = true;
                 $p->use[$r] = true;
-                $used[$r] = true;
+
+                // don't count this project as using this resource
+                // if it hasn't supplied work for the resource recently
+                //
+                if (!$p->nrpc_failures
+                    && !in_array($r, $p->sched_req_no_work)
+                ) {
+                    $used[$r] = true;
+                }
             }
         }
         if ($found) {
@@ -343,6 +389,9 @@ function select_projects_resource($host, $projects) {
         }
 
         if (all_used($used)) {
+            break;
+        }
+        if (count($p2) >= MAX_PROJECTS) {
             break;
         }
     }
@@ -354,7 +403,6 @@ function select_projects_resource($host, $projects) {
             break;
         }
         if ($p->included) continue;
-        //echo "considering $p->name\n";
         $found = false;
         foreach ($host->resources as $r) {
             $p->use[$r] = false;
@@ -363,7 +411,6 @@ function select_projects_resource($host, $projects) {
                 $found = true;
             }
         }
-        //echo "found: $found\n";
         if ($found) {
             $p2[] = $p;
         }
@@ -418,10 +465,13 @@ function choose_projects_rpc($user, $host, $req) {
             if ($account->state == ACCT_SUCCESS) {
                 $accounts_to_send[] = array($p, $account);
                 $n++;
+                log_write("sending attach to $p->name");
             } else {
+                log_write("account on $p->name is pending");
                 continue;
             }
         } else {
+            log_write("no account on $p->name; creating one\n");
             // if not, initiate the creation of one
             //
             $ret = SUAccount::insert(

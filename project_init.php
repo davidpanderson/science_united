@@ -76,8 +76,18 @@ function make_project($p) {
     $project = SUProject::lookup_id($project_id);
     if ($project) {
         if ($url_signature != $project->url_signature) {
-            echo "$project->name needs signature update\n";
-            $ret = $project->update("url_signature = '$url_signature'");
+            echo "updating $project->name URL signature\n";
+            $ret = $project->update("url_signature='$url_signature'");
+            if (!$ret) echo "update failed\n";
+        }
+        if ($url != $project->url) {
+            echo "updating $project->name URL\n";
+            $ret = $project->update("url='$url'");
+            if (!$ret) echo "update failed\n";
+        }
+        if ($web_rpc_url_base != $project->web_rpc_url_base) {
+            echo "updating $project->name RPC URL base\n";
+            $ret = $project->update("web_rpc_url_base='$web_rpc_url_base'");
             if (!$ret) echo "update failed\n";
         }
     } else {
