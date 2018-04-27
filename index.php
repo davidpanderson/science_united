@@ -48,7 +48,6 @@ function closed_panel() {
 
 function user_summary($user) {
     show_download($user);
-    show_problem_accounts($user);
     echo "<h3>Recent contribution</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
@@ -163,7 +162,7 @@ echo "
 <tr>
 <td width=50%></td>
 <td valign=top>
-    <nobr><img src=nsf1.jpg height=120> <img src=uc_logo.jpg height=120></nobr>
+    <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
     <br><center><small>
         Science United is funded by the <a href=https://nsf.gov>National Science Foundation</a>, award #1664190, and is based at the <a href=https://berkeley.edu>University of California, Berkeley</a>.
     </small></center>

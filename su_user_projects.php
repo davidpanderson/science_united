@@ -31,9 +31,6 @@ function project_row($p, $ukws, $a) {
         case ACCT_SUCCESS:
             $x = "Established";
             break;
-        case ACCT_DIFFERENT_PASSWORD:
-            $x = "Password mismatch<br><a href=su_connect.php?id=$p->id>resolve</a>";
-            break;
         case ACCT_TRANSIENT_ERROR:
             $x = "In progress";
             break;

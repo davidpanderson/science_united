@@ -73,7 +73,6 @@ function su_settings($user) {
 }
 
 function main($user) {
-    show_problem_accounts($user);
     grid(
         null,
         function() use ($user) {

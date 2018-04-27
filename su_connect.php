@@ -1,3 +1,5 @@
+DEPRECATED
+
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu

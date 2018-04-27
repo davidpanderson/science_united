@@ -34,7 +34,6 @@ function admin_only() {
 function project_status_string($status) {
     switch ($status) {
     case PROJECT_STATUS_HIDE: return "<font color=red>hidden</font>";
-    case PROJECT_STATUS_ON_DEMAND: return "<font color=brown>on demand</font>";
     case PROJECT_STATUS_AUTO: return "<font color=green>normal</font>";
     }
     return "unknown: $status";
@@ -192,25 +191,6 @@ function show_user_projects($user) {
         ));
     }
     end_table();
-}
-
-function show_problem_projects($user) {
-    $accounts = SUAccount::enum(
-        sprintf("user_id=%d and state=%d", $user->id, ACCT_DIFFERENT_PASSWD)
-    );
-    if (!count($accounts)) return;
-    echo "
-        <h3>Password mismatch</h3>
-        Your accounts on the following projects
-        have a password that's different from your Science United password.
-        We can't use these projects unless the passwords match.
-        Please go to the project web site and change your password
-        to your Science United password.
-    ";
-    foreach($accounts as $a) {
-        $p = SUProject::lookup_id($a->project_id);
-        echo sprintf('<p><a href="%s">%s</a>', $p->url, $p->name);
-    }
 }
 
 ///////////// UI INVOLVING HOSTS /////////////

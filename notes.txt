@@ -635,3 +635,29 @@ Questions:
     if last request failed or zero jobs, add to list but
         don't mark any resources
     if didn't get work for some resources, don't mark those resources
+=============================
+Anonymous accounts
+
+Project accounts created by SU should be anonymous:
+- User name is "Science United user random-str"
+- email address is su_randomstring@nonexistent.domain
+    different per project?
+    I think so.
+- password hash is random string (use new crypt code)
+
+Purposes:
+- simplify GDPR implementation
+- reduce security risk (password guessing)
+- eliminate stuff for resolving passwords
+- let projects see how much computing comes from SU users
+
+Implementation
+DB:
+add email_addr, passwd_hash to su_account
+
+Web code:
+change account creation
+    if "email already exists", try new one
+remove password resolution code
+
+make script for handling existing accounts

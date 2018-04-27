@@ -79,23 +79,6 @@ function show_download($user) {
     }
 }
 
-function show_problem_accounts($user) {
-    $accts = SUAccount::enum(
-        sprintf("user_id=%d and state=%d and opt_out=0",
-            $user->id, ACCT_DIFFERENT_PASSWORD
-        )
-    );
-    $n = count($accts);
-    if ($n == 0) return;
-    echo sprintf("%s You have accounts on one or more BOINC projects
-            that we can't access because their password
-            is different from your %s password.
-            <a href=su_connect.php?action=list>Click here to resolve</a>.<p>\n",
-            WARNING, $n, PROJECT
-        )
-    ;
-}
-
 // show keywords of recent jobs
 //
 // TODO: need client/scheduler support for this.

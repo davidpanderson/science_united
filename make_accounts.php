@@ -56,17 +56,20 @@ function do_pass() {
             $user->id,
             $project->name
         ));
+        $email_addr = "su_".substr(random_string(), 0, 8)."@nonexistent.domain";
+        $passwd_hash = random_string();
+        $name = "Science United user ".substr(random_string(), 0, 8);
         list($auth, $err, $msg) = create_account(
             $project->web_rpc_url_base,
-            $user->email_addr,
-            $user->passwd_hash,
-            $user->name
+            $email_addr,
+            $passwd_hash,
+            $name
         );
         if ($err == ERR_DB_NOT_UNIQUE) {
             log_write("   account exists, but different password");
-            $ret = $acct->update(sprintf("state=%d", ACCT_DIFFERENT_PASSWORD));
+            $ret = $acct->update(sprintf("state=%d", ACCT_TRANSIENT_ERROR));
             if (!$ret) {
-                log_write("acct update 1 failed");
+                log_write("su_account update 1 failed");
             }
         } else if ($err) {
             log_write("create_account failed: error $err ($msg)");
@@ -75,15 +78,17 @@ function do_pass() {
                 sprintf("state=%d, retry_time=%d", ACCT_TRANSIENT_ERROR, $retry_time)
             );
             if (!$ret) {
-                log_write("acct update 2 failed");
+                log_write("su_account update 2 failed");
             }
         } else {
             $ret = $acct->update(
-                sprintf("state=%d, authenticator='%s'", ACCT_SUCCESS, $auth)
+                sprintf("state=%d, authenticator='%s', email_addr='%s', passwd_hash='%s', name='%s'",
+                    ACCT_SUCCESS, $auth, $email_addr, $passwd_hash, $name
+                )
             );
             if (!$ret) {
                 log_write("acct update 3 failed");
-                echo "update 3 failed\n";
+                echo "su_account update 3 failed\n";
             }
             log_write("create_account success");
         }

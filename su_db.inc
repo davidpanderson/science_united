@@ -28,11 +28,10 @@ define('KW_YES', 1);
 define('KW_MAYBE', 0);
 define('KW_NO', -1);
 
-// values for account.state
+// values for su_account.state
 //
 define('ACCT_INIT', 0);
 define('ACCT_SUCCESS', 1);
-define('ACCT_DIFFERENT_PASSWORD', 2);
 define('ACCT_TRANSIENT_ERROR', 3);
 
 // values of keyword.priority
@@ -44,10 +43,8 @@ define('KW_MAJOR', 2);
 //
 define('PROJECT_STATUS_HIDE', 0);
     // don't show; deprecated
-define('PROJECT_STATUS_ON_DEMAND', 1);
-    // let volunteers attach, but don't assign
 define('PROJECT_STATUS_AUTO', 2);
-    // assign as needed
+    // normal
 
 class SUProject {
     static function insert($clause) {

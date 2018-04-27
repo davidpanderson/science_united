@@ -49,6 +49,9 @@ create table su_account (
     njobs_success           integer         not null,
     njobs_fail              integer         not null,
     opt_out                 tinyint         not null,
+    email_addr              varchar(254)    not null,
+    passwd_hash             varchar(254)    not null,
+    name                    varchar(254)    not null,
     unique(user_id, project_id),
     index account_state (state)
 ) engine=InnoDB;
