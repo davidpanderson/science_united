@@ -63,15 +63,23 @@ function do_user($user) {
         add_record($ua, $delta);
     }
 
+    if ($ndays == 1) {
+        $ndays_str = "day";
+    } else {
+        $ndays_str = "$ndays days";
+    }
+
     if (delta_set_nonzero($delta)) {
-        $x .= sprintf('In the last %d days your computers have contributed %s hours of processing time, and have completed %d jobs.  Congratulations!',
-            $ndays,
+        $x .= sprintf(
+            'In the last %s your computers have contributed %s hours of processing time, and have completed %d jobs.  Congratulations!',
+            $ndays_str,
             show_num(($delta->cpu_time+$delta->gpu_time)/3600.),
             $delta->njobs_success+$delta->njobs_fail
         );
     } else {
-        $x .= sprintf("Your computers haven't reported work in the last %d days.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
-            $ndays
+        $x .= sprintf(
+            "Your computers haven't reported work in the last %s.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
+            $ndays_str
         );
     }
     $x .= "\n\nFor details, visit https://scienceunited.org/\n\n";

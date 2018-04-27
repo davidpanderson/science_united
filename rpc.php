@@ -30,7 +30,7 @@ require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
 
 require_once("../inc/su_db.inc");
-require_once("../inc/su_schedule2.inc");
+require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");
 require_once("../inc/su_util.inc");
 
@@ -39,6 +39,12 @@ define('REPEAT_DELAY', 86400./2);
 define('REPEAT_DELAY_INITIAL', 30);
     // delay after initial request - enough time for account creation
 define('COBBLESTONE_SCALE', 200./86400e9);
+
+$in_rpc = true;
+
+// logging options
+//
+define('LOG_DELTAS', false);
 
 $now = 0;
 
@@ -52,7 +58,7 @@ function log_write($x) {
     if (!$log_file) {
         $log_file = fopen("../../log_isaac/rpc_log.txt", "a");
     }
-    fwrite($log_file, sprintf("%s: %s\n", date(DATE_RFC822), $x));
+    fwrite($log_file, sprintf("%s: %s\n", strftime("%c"), $x));
 }
 
 // return error
@@ -437,7 +443,7 @@ function do_accounting(
         $d = $rp_njobs_fail - $hp->njobs_fail;
         $dproj->njobs_fail = check_njobs($dt, $d);
 
-        if (1) {
+        if (LOG_DELTAS) {
             log_write("Deltas for $project->name:");
             log_write_deltas($dproj);
         }
@@ -503,7 +509,7 @@ function do_accounting(
         $sum_delta = add_delta_set($dproj, $sum_delta);
     }
 
-    if (1) {
+    if (LOG_DELTAS) {
         log_write("Total deltas:");
         log_write_deltas($sum_delta);
     }

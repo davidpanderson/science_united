@@ -82,7 +82,7 @@ function su_host_project_select($user, $host) {
     $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(
-        "Project", "Keyword score", "Platform score", "Balance",
+        "Project", "Keyword score", "Platform score", "Balance (GFLOPS days)",
         "Opted out?", "Score"
     );
     foreach ($host->resources as $r) {
@@ -94,7 +94,7 @@ function su_host_project_select($user, $host) {
             "<a href=su_show_project.php?id=$p->id>$p->name</a>",
             $p->keyword_score,
             $p->platform_score,
-            $p->projected_balance,
+            number_format($p->balance/(86400*1e9), 2),
             $p->opt_out?"Yes":"",
             $p->score
         );

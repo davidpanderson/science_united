@@ -22,6 +22,8 @@
 // 24 GFLOP/hrs = 200 points
 //
 
+date_default_timezone_set("America/Los_Angeles");
+
 function ec_to_flops($ec) {
     return $ec*86400.*1e9/200.;
 }

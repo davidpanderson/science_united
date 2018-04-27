@@ -18,6 +18,7 @@
 
 require_once("../inc/util.inc");
 page_head(sprintf("%s %s", tra("About"), PROJECT));
+text_start();
 echo sprintf("
     <h2>Goals</h2>
     <p>
@@ -103,5 +104,6 @@ echo sprintf("
     ", PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT,
     PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT
 );
+text_end();
 page_tail();
 ?>

@@ -35,6 +35,8 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/download_util.inc");
 
+define('LOG_PROJECT_SELECT', true);
+
 define('MIN_PROJECTS', 2);
     // min # of projects to have a client run (if possible).
     // this is for appearance's sake,
@@ -355,6 +357,8 @@ function can_use($project, $host, $r) {
 // For each project p, include an array p->use of resources that it should use.
 //
 function select_projects_resource($host, $projects) {
+    global $in_rpc;
+
     $used = array();
     foreach ($host->resources as $r) {
         $used[$r] = false;
@@ -364,6 +368,9 @@ function select_projects_resource($host, $projects) {
     }
     $p2 = array();
     foreach ($projects as $p) {
+        if (LOG_PROJECT_SELECT && $in_rpc) {
+            log_write("select: $p->name $p->score");
+        }
         $p->use = array();
         $found = false;
         foreach ($used as $r => $u) {
@@ -376,9 +383,20 @@ function select_projects_resource($host, $projects) {
                 // don't count this project as using this resource
                 // if it hasn't supplied work for the resource recently
                 //
-                if (!$p->nrpc_failures
-                    && !in_array($r, $p->sched_req_no_work)
-                ) {
+                if ($in_rpc) {
+                    if (!$p->nrpc_failures
+                        && !in_array($r, $p->sched_req_no_work)
+                    ) {
+                        $used[$r] = true;
+                        if (LOG_PROJECT_SELECT) {
+                            log_write("select: $p->name can use $r");
+                        }
+                    } else {
+                        if (LOG_PROJECT_SELECT) {
+                            log_write("select: $p->name can't use $r");
+                        }
+                    }
+                } else {
                     $used[$r] = true;
                 }
             }
@@ -386,6 +404,9 @@ function select_projects_resource($host, $projects) {
         if ($found) {
             $p2[] = $p;
             $p->included = true;
+            if (LOG_PROJECT_SELECT && $in_rpc) {
+                log_write("select: adding $p->name");
+            }
         }
 
         if (all_used($used)) {
@@ -413,6 +434,9 @@ function select_projects_resource($host, $projects) {
         }
         if ($found) {
             $p2[] = $p;
+            if (LOG_PROJECT_SELECT && $in_rpc) {
+                log_write("select: adding $p->name to reach MIN_PROJECTS");
+            }
         }
     }
     return $p2;
@@ -466,6 +490,11 @@ function choose_projects_rpc($user, $host, $req) {
                 $accounts_to_send[] = array($p, $account);
                 $n++;
                 log_write("sending attach to $p->name");
+                $x = "";
+                foreach ($p->use as $r=>$v) {
+                    if ($v) $x .= "$r ";
+                }
+                log_write("   use: $x");
             } else {
                 log_write("account on $p->name is pending");
                 continue;
