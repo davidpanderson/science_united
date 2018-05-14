@@ -30,7 +30,7 @@ function show_user_graph($user, $what, $ndays) {
         ', $user->id, $what, $ndays
         );
     } else {
-        echo "No enough data yet";
+        echo "Not enough data yet";
     }
 }
 

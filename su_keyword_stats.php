@@ -20,7 +20,7 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su_db.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 
 $nusers = 0;
 

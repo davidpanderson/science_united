@@ -19,7 +19,7 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/account.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 require_once("../inc/recaptchalib.php");
 
 function su_join_form($next_url) {

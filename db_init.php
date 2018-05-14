@@ -33,7 +33,7 @@
 require_once("../inc/su_db.inc");
 require_once("../ops/project_init.php");
 require_once("../inc/user_util.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 
 function su_make_user($name) {
     $email = strtolower($name."@gmail.com");

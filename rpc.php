@@ -28,6 +28,7 @@
 
 require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
+require_once("../inc/user_util.inc");
 
 require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
@@ -218,7 +219,7 @@ function update_host($req, $host) {
     $n_usable_coprocs = (int)$hi->n_usable_coprocs;
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
-    $host_cpid = BoincDb::escape_string((string)$req->host_cpid);
+    $host_cpid = BoincDb::escape_string((string)$hi->host_cpid);
     $serialnum = make_serialnum($req);
     $ip_addr = BoincDb::escape_string((string)$hi->ip_addr);
     $external_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
@@ -261,6 +262,7 @@ function update_host($req, $host) {
         rpc_time = $now,
         timezone = $timezone,
         domain_name = '$domain_name',
+        host_cpid = '$host_cpid',
         serialnum = '$serialnum',
         last_ip_addr = '$ip_addr',
         external_ip_addr = '$external_ip_addr',
@@ -302,6 +304,13 @@ function create_host($req, $user) {
     return $host;
 }
 
+function similar_host($h, $req) {
+    $hi = $req->host_info;
+    if ($h->host_cpid != (string)$hi->host_cpid) return false;
+    if ($h->domain_name != (string)$hi->domain_name) return false;
+    return true;
+}
+
 // look up user and host records; create host if needed
 //
 function lookup_records($req) {
@@ -319,7 +328,7 @@ function lookup_records($req) {
 
     if (!$authenticator) {
         $passwd_hash = (string)$req->password_hash;
-        if ($passwd_hash != $user->passwd_hash) {
+        if (!check_passwd_hash($user, $passwd_hash)) {
             su_error(-1, 'bad password');
         }
     }
@@ -328,9 +337,17 @@ function lookup_records($req) {
         $host_id = (int)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
     } else {
-        // TODO: this host might be re-attaching to the AM.
+        // This host might be re-attaching to the AM.
         // See if there's an existing host record that matches this host
+        //
         $host = null;
+        $hosts = BoincHost::enum("userid=$user->id");
+        foreach ($hosts as $h) {
+            if (similar_host($h, $req)) {
+                $host = $h;
+                break;
+            }
+        }
     }
     if ($host) {
         update_host($req, $host);
