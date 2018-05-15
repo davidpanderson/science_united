@@ -22,8 +22,8 @@ The computing power of SU participants is divided among
 a set of vetted projects.
 Eventually, the choice of projects and the allocation policy will be made by
 an independent committee.
-For now, all vetted science projects are included,
-with equal shares.
+For now, all science projects vetted by BOINC are included,
+with equal allocation shares.
 
 <h3>Science areas, not projects</h3>
 
@@ -34,12 +34,12 @@ and the ones you don't.
 Similarly for the location of the research.
 
 <p>
-SU - which is implemented as an "account manager", like BAM! and GridRepublic -
-tells your computer what projects to run,
+SU is implemented as an "account manager", like BAM! and GridRepublic.
+When you attach a computer to SU,
+it tells your computer what projects to run,
 based on your preferences and other factors.
 This may change over time, even from day to day.
 You may end up running a project that didn't exist when you first signed up.
-
 You don't have to browse and evaluate projects;
 in effect, SU does that for you.
 
@@ -49,8 +49,7 @@ if vetted by SU, is guaranteed to get a
 (hopefully large) amount of computing power,
 without doing any publicity or even developing a web site.
 The need to do these things, and the risk of investing in BOINC,
-have been major barriers to entry for scientists
-who might otherwise use BOINC.
+have been major barriers to entry for scientists who might otherwise use BOINC.
 The hope is that SU will lead to the creation of many more projects.
 
 <h3>User-friendliness</h3>
@@ -124,6 +123,17 @@ Pretend you're interested in science but know little about computers.
 Would you understand the overall idea?
 Would you be able to follow the instructions?
 Would you follow through to the end?
+
+<h3>More information</h3>
+<p>
+Two more detailed documents are available:
+<p>
+<a href=doc/model.pdf>Coordinated Volunteer Computing</a>
+describes why Science United is needed.
+<p>
+<a href=doc/implementation.pdf>Science United: Implementation</a>
+explains how things work under the hood.
+
 EOT;
 text_end();
 

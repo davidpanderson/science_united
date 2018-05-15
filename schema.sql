@@ -9,6 +9,7 @@ create table su_project (
     status                  tinyint         not null,
     balance                 double          not null,
     projected_balance       double          not null,
+    web_url                 varchar(254)    not null,
     primary key (id)
 ) engine=InnoDB;
 

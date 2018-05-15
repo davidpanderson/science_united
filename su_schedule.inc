@@ -271,10 +271,14 @@ function populate_score_info($host, $req) {
 //          sched_req_no_work[]: resources where last sched req return no work
 //
 function rank_projects($user, $host, $req) {
+    global $project_infos;
     $ukws = SUUserKeyword::enum("user_id=$user->id");
     $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
-    $accts = SUAccount::enum("user_id=$user->id and opt_out>0");
+
+    // get opted-out projects
+    //
     $opt_out = array();
+    $accts = SUAccount::enum("user_id=$user->id and opt_out>0");
     foreach ($accts as $a) {
         $opt_out[$a->project_id] = 1;
     }
@@ -282,6 +286,12 @@ function rank_projects($user, $host, $req) {
     $host = populate_score_info($host, $req);
     $p2 = array();
     foreach ($projects as $p) {
+        // skip old projects
+        //
+        if (!array_key_exists($p->id, $project_infos)) {
+            continue;
+        }
+
         $p = project_score($p, $ukws, $host);
         $p->opt_out = false;
         if (array_key_exists($p->id, $opt_out)) {
@@ -504,8 +514,8 @@ function choose_projects_rpc($user, $host, $req) {
             // if not, initiate the creation of one
             //
             $ret = SUAccount::insert(
-                sprintf("(project_id, user_id, state) values (%d, %d, %d)",
-                    $p->id, $user->id, ACCT_INIT
+                sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
+                    $p->id, $user->id, time(), ACCT_INIT
                 )
             );
             if (!$ret) {

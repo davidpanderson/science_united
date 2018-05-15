@@ -22,7 +22,7 @@ require_once("../inc/util.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su.inc");
 require_once("../inc/su_project_infos.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 
 function su_show_project($project, $user) {
     global $job_keywords;
@@ -32,6 +32,9 @@ function su_show_project($project, $user) {
     start_table("table-striped");
     row2("Name", $project->name);
     row2("URL", $project->url);
+    if ($project->url != $project->web_url) {
+        row2("Web URL", $project->web_url);
+    }
     if (is_admin($user)) {
         row2("Created", date_str($project->create_time));
         row2("Status", project_status_string($project->status));

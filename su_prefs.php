@@ -1,7 +1,7 @@
 <?php
 
 require_once("../inc/util.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 
 require_once("su_db.inc");
 require_once("su.inc");

@@ -25,7 +25,7 @@
 // IF ANY KEYWORDS OR PLATFORM INFO HAS CHANGED:
 // run project_digest.php as well (to update projects.ser)
 
-require_once("../inc/keywords.inc");
+require_once("../inc/keywords2.inc");
 require_once("../inc/project_ids.inc");
 require_once("../inc/su_db.inc");
 
@@ -33,6 +33,7 @@ require_once("../inc/su_db.inc");
 // THINK TWICE BEFORE DOING THIS
 //
 function clean() {
+    die();
     foreach (SUProject::enum() as $p) {
         $p->delete();
     }
@@ -41,23 +42,10 @@ function clean() {
     SUAccountingProject::delete_all();
 }
 
-function get_keywords($p) {
-    $keywords = array();
-    $ks = explode(" ", (string)$p->keywords);
-    foreach ($ks as $k) {
-        $x = explode(":", $k);
-        if (count($x) > 1) {
-            $keywords[] = array((int)$x[0], (double)$x[1]);
-        } else {
-            $keywords[] = array((int)$x[0], 1);
-        }
-    }
-    return $keywords;
-}
-
-function make_project($p) {
+function update_project($p) {
     $name = (string)$p->name;
     $url = (string)$p->url;
+    $web_url = (string)$p->web_url;
     $web_rpc_url_base = (string)$p->web_rpc_url_base;
     if (!$web_rpc_url_base) {
         $web_rpc_url_base = $url;
@@ -85,6 +73,11 @@ function make_project($p) {
             $ret = $project->update("url='$url'");
             if (!$ret) echo "update failed\n";
         }
+        if ($web_url != $project->web_url) {
+            echo "updating $project->name web URL\n";
+            $ret = $project->update("web_url='$web_url'");
+            if (!$ret) echo "update failed\n";
+        }
         if ($web_rpc_url_base != $project->web_rpc_url_base) {
             echo "updating $project->name RPC URL base\n";
             $ret = $project->update("web_rpc_url_base='$web_rpc_url_base'");
@@ -100,9 +93,9 @@ function make_project($p) {
     }
 }
 
-// make projects based on projects.xml
+// create or update projects based on projects.xml
 //
-function make_projects() {
+function update_projects() {
     $x = simplexml_load_file("projects.xml");
     $projects = $x->project;
     foreach ($projects as $p) {
@@ -118,10 +111,10 @@ function make_projects() {
         if ((int)$p->id == PROJ_COLLATZ) continue;
         if ((int)$p->id == PROJ_PRIMABOINCA) continue;
         if ((int)$p->id == PROJ_SRBASE) continue;
-        make_project($p);
+        update_project($p);
     }
 }
 
-make_projects();
+update_projects();
 
 ?>
