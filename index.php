@@ -51,35 +51,31 @@ function user_summary($user) {
     echo "<h3>Recent contribution</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
-    echo '<center><a href=su_home.php class="btn btn-success">Continue to your home page</a></center>
-    ';
+    echo sprintf('<center><a href=su_home.php class="btn btn-success">%s</a></center>
+',
+        tra('Continue to your home page')
+    );
 }
 
 function intro_panel() {
     panel(null,
         function() {
-            echo sprintf('
-                <p>
-                <b>%s</b> lets you help scientific research projects
-                by giving them computing power.
-                These projects do research in astronomy, physics,
-                biomedicine, mathematics, and environmental science;
-                you can pick the areas you want to support.
-                <p>
-                You help by installing BOINC, a free program
-                that runs scientific jobs in the background
-                and when you\'re not using the computer.
-                BOINC is secure and will not affect your normal use of the computer.
-                <p>
-                %s and the research projects it supports are non-profit.
-                <br><br>
-                ', PROJECT, PROJECT
+            echo "<p>";
+            echo tra("%1 lets you help scientific research projects by giving them computing power.  These projects do research in astronomy, physics, biomedicine, mathematics, and environmental science; you can pick the areas you want to support.", "<b>".PROJECT."</b>");
+            echo "<p>";
+            echo tra("You help by installing BOINC, a free program that runs scientific jobs in the background and when you're not using the computer.  BOINC is secure and will not affect your normal use of the computer.");
+            echo "<p>";
+            echo tra(
+                "%1 and the research projects it supports are non-profit.",
+                PROJECT
             );
+            echo "<br><br>\n";
             echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
             ';
-            echo "
-            <br><br>Already joined? <a href=login_form.php>Log in.</a>
-            ";
+            echo sprintf('<br><br>%s <a href=login_form.php>%s</a>',
+                tra("Already joined?"),
+                tra("Log in.")
+            );
         }
     );
 }
@@ -119,11 +115,11 @@ function news_panel() {
 
 function slide_show() {
     $pics = array(
-        "virus.jpg"=>"Ebola-Infected VERO E6 Cell",
-        "higgs.jpg"=>"Simulation of Higgs boson detection",
-        "earth.jpg"=>"The Earth's interrelated climate systems",
-        "protein.png"=>"Structure of protein GIF",
-        "hubble.jpg"=>"The Hubble ultra-deep field image",
+        "virus.jpg"=>tra("Ebola-Infected VERO E6 Cell"),
+        "higgs.jpg"=>tra("Simulation of Higgs boson detection"),
+        "earth.jpg"=>tra("The Earth's interrelated climate systems"),
+        "protein.png"=>tra("Structure of protein GIF"),
+        "hubble.jpg"=>tra("The Hubble ultra-deep field image"),
     );
     echo '<div class="carousel slide" data-interval="4000" data-ride="carousel">
         <div class="carousel-inner">
@@ -164,7 +160,12 @@ echo "
 <td valign=top>
     <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
     <br><center><small>
-        Science United is funded by the <a href=https://nsf.gov>National Science Foundation</a>, award #1664190, and is based at the <a href=https://berkeley.edu>University of California, Berkeley</a>.
+";
+echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",
+        "<a href=https://nsf.gov>", "</a>",
+        "<a href=https://berkeley.edu>", "</a>"
+);
+echo "
     </small></center>
 </td>
 <td width=50%></td>

@@ -22,40 +22,36 @@
 require_once("../inc/util.inc");
 
 function main() {
-    page_head("Getting started");
-    echo sprintf('
-        Welcome to %s.
+    page_head(tra("Getting started"));
+    echo tra("Welcome to %1", PROJECT);
+    echo sprintf("
         <p>
-        By now you should have downloaded and run BOINC.
-        If so, you\'re done!
-        Your computer will do run science jobs in the background,
-        supporting research in the areas you selected.
+        %s
         <p>
-        Scientists need all the computing power they can get.
-        To help further, you can:
         <ul>
-        <li> Tell your family, friends, and co-workers about %s,
-        and encourage them to volunteer.
-        <li>
-        Run %s on all your computing devices:
+        <li> %s
+        <li> %s
             <ul>
-            <li> Desktops and laptops (Windows, Linux, Mac OS X):
-                On that device, visit this web site (%s) and log in.
-                Then select Download from the Project menu,
-                and install BOINC as you did on this computer.
-            <li> Android phones and tablets: install the BOINC app
-                from the Google Play Store or (for Fire) the Amazon App Store.
-                Choose Use Account Manager, select %s, and log in.
+            <li> %s
+            <li> %s
             </ul>
         </ul>
         <p>
-        You can <a href=team.php>Join or create a Team</a>.
+        %s
         <p>
-        Computing prefs
+        %s
         <p>
-        Science prefs
-        ',
-        PROJECT, PROJECT, PROJECT, URL_BASE, PROJECT
+        %s
+    ",
+    tra("By now you should have downloaded and run BOINC.  If so, you're done!  Your computer will do run science jobs in the background, supporting research in the areas you selected."),
+    tra("Scientists need all the computing power they can get.  To help further, you can:"),
+    tra("Tell your family, friends, and co-workers about %1, and encourage them to volunteer.", PROJECT),
+    tra("Run %1 on all your computing devices:", PROJECT),
+    tra("Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this web site (%1) and log in.  Then select Download from the Project menu, and install BOINC as you did on this computer.", URL_BASE),
+    tra("Android phones and tablets: install the BOINC app from the Google Play Store or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1, and log in.", PROJECT),
+    tra("You can %1 Join or create a Team%2.", "<a href=team.php>", "</a>"),
+    tra("Computing prefs"),
+    tra("Science prefs")
     );
     page_tail();
 }

@@ -113,17 +113,17 @@ function prefs_show($user) {
     $kws = SUKeyword::enum();
     start_table();
     row_heading('Types of science');
-    row2('Yes', user_keyword_string($ukws, $kws, SCIENCE, KW_YES));
-    row2('No', user_keyword_string($ukws, $kws, SCIENCE, KW_NO));
-    row2('Maybe', user_keyword_string($ukws, $kws, SCIENCE, KW_MAYBE));
+    row2(tra('Yes'), user_keyword_string($ukws, $kws, SCIENCE, KW_YES));
+    row2(tra('No'), user_keyword_string($ukws, $kws, SCIENCE, KW_NO));
+    row2(tra('Maybe'), user_keyword_string($ukws, $kws, SCIENCE, KW_MAYBE));
 
     row_heading('Locations');
-    row2('Yes', user_keyword_string($ukws, $kws, LOCATION, KW_YES));
-    row2('No', user_keyword_string($ukws, $kws, LOCATION, KW_NO));
-    row2('Maybe', user_keyword_string($ukws, $kws, LOCATION, KW_MAYBE));
+    row2(tra('Yes'), user_keyword_string($ukws, $kws, LOCATION, KW_YES));
+    row2(tra('No'), user_keyword_string($ukws, $kws, LOCATION, KW_NO));
+    row2(tra('Maybe'), user_keyword_string($ukws, $kws, LOCATION, KW_MAYBE));
     end_table();
 
-    echo '<p><a class="btn btn-success" href="su_prefs.php?action=prefs_edit_form">Edit preferences</a>
+    echo '<p><a class="btn btn-success" href="su_prefs.php?action=prefs_edit_form">'.tra("Edit preferences").'</a>
     ';
 }
 
@@ -149,13 +149,11 @@ function project_kw_string($project_id, $category) {
 function account_status_string($i) {
     switch ($i) {
     case ACCT_INIT:
-        return "Initial";
+        return tra("Initial");
     case ACCT_SUCCESS:
-        return "Established";
-    case ACCT_DIFFERENT_PASSWORD:
-        return "Password mismatch";
+        return tra("Established");
     case ACCT_TRANSIENT_ERROR:
-        return "Transient error";
+        return tra("Transient error");
     }
     return "Unknown";
 }
@@ -163,19 +161,19 @@ function account_status_string($i) {
 function show_user_projects($user) {
     $accounts = SUAccount::enum("user_id=$user->id");
     if (count($accounts) == 0) {
-        echo "No accounts yet";
+        echo tra("No accounts yet");
         return;
     }
     start_table('table-striped');
     row_heading_array(array(
-        "Name",
-        "Status",
-        "CPU time",
-        "CPU FLOPS",
-        "GPU time",
-        "GPU FLOPS",
-        "# jobs success",
-        "# jobs fail"
+        tra("Name"),
+        tra("Status"),
+        tra("CPU time"),
+        tra("CPU FLOPS"),
+        tra("GPU time"),
+        tra("GPU FLOPS"),
+        tra("# jobs success"),
+        tra("# jobs fail")
     ));
     foreach ($accounts as $a) {
         $project = SUProject::lookup_id($a->project_id);
@@ -310,7 +308,7 @@ function show_host_projects($host) {
 
 ///////////// UI INVOLVING ACCOUNTING ////////////////
 
-// Design philsophy:
+// Design philosophy:
 // use only the following accounting units:
 // - device time in days
 // - GFLOPS/TFLOPS/PFLOPS as appropriate
@@ -319,23 +317,23 @@ function show_host_projects($host) {
 //
 function show_accounting_totals($a) {
     if (!$a) {
-        echo "No accounting records yet";
+        echo tra("No accounting records yet");
         return;
     }
     start_table();
-    row2("CPU days", show_days($a->cpu_time_total));
-    row2("GPU days", show_days($a->gpu_time_total));
-    row2("Successful jobs", $a->njobs_success_total);
-    row2("Failed jobs", $a->njobs_fail_total);
+    row2(tra("CPU days"), show_days($a->cpu_time_total));
+    row2(tra("GPU days"), show_days($a->gpu_time_total));
+    row2(tra("Successful jobs"), $a->njobs_success_total);
+    row2(tra("Failed jobs"), $a->njobs_fail_total);
     end_table();
 }
 
 function show_accounting_deltas($a, $active=false) {
     start_table();
-    row2("CPU days", show_days($a->cpu_time_delta));
-    row2("GPU days", show_days($a->gpu_time_delta));
-    row2("Successful jobs", $a->njobs_success_delta);
-    row2("Failed jobs", $a->njobs_fail_delta);
+    row2(tra("CPU days"), show_days($a->cpu_time_delta));
+    row2(tra("GPU days"), show_days($a->gpu_time_delta));
+    row2(tra("Successful jobs"), $a->njobs_success_delta);
+    row2(tra("Failed jobs"), $a->njobs_fail_delta);
     if ($active) {
         row2("Active volunteers", $a->nactive_users);
         row2("Active computers", $a->nactive_hosts);

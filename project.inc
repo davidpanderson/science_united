@@ -88,14 +88,14 @@ function su_navbar_right($user) {
                 ', url_base()
             );
             $url_tokens = url_tokens($user->authenticator);
-            echo sprintf('<li><a href="%slogout.php?%s">Log out</a></li>',
-                url_base(), $url_tokens
+            echo sprintf('<li><a href="%slogout.php?%s">%s</a></li>',
+                url_base(), $url_tokens, tra("Log out")
             );
         } else {
             echo sprintf('
-                <li><a href="%ssu_join.php">Join</a></li>
-                <li><a href="%slogin_form.php">Login</a></li>
-                ', url_base(), url_base()
+                <li><a href="%ssu_join.php">%s</a></li>
+                <li><a href="%slogin_form.php">%s</a></li>
+                ', url_base(), tra("Join"), url_base(), tra("Login")
             );
         }
     }

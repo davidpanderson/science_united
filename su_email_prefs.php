@@ -25,47 +25,47 @@ require_once("../inc/util.inc");
 
 function su_email_form($user, $update= false) {
     BoincForumPrefs::lookup($user);
-    page_head("Email settings");
+    page_head(tra("Email settings"));
     if ($update) {
-        echo "Preferences updated.";
+        echo tra("Preferences updated.");
     }
     form_start("su_email_prefs.php");
     form_input_hidden("action", "submit");
     if (0) {
-    form_checkboxes("Don't send me any emails",
+    form_checkboxes(tra("Don't send me any emails"),
         array(
             array("none", "", false)
         )
     );
     }
     form_radio_buttons(
-        "Status emails
-            <br><small>These tell you how much
-            work your computer(s) have done recently</small>
-        ",
+        tra("Status emails %1 These tell you how much work your computer(s) have done recently %2",
+            "<br><small>",
+            "</small>"
+        ),
         "status_period",
         array(
-            array(0, "Never"),
-            array(1, "Daily"),
-            array(7, "Weekly"),
-            array(30, "Monthly"),
+            array(0, tra("Never")),
+            array(1, tra("Daily")),
+            array(7, tra("Weekly")),
+            array(30, tra("Monthly")),
         ),
         $user->send_email
     );
     form_radio_buttons(
-        "Community emails
-            <br><small>These tell you about private messages,
-            forum posts, and friend requests</small>
-        ",
+        tra("Community emails %1 These tell you about private messages, forum posts, and friend requests %2",
+            "<br><small>",
+            "</small>"
+           ),
         "community",
         array(
-            array(0, "Never"),
-            array(1, "Immediately"),
-            array(2, "Daily summary"),
+            array(0, tra("Never")),
+            array(1, tra("Immediately")),
+            array(2, tra("Daily summary")),
         ),
         $user->prefs->pm_notification
     );
-    form_submit("Save");
+    form_submit(tra("Save"));
     form_end();
     page_tail();
 }

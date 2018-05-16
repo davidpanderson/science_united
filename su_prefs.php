@@ -104,7 +104,14 @@ function generate_html_kw($id, $uprefs) {
 
 function generate_html_category($category, $uprefs) {
     global $job_keywords;
-    row_heading_array(array('', 'Prefer', 'As needed', 'Never'), null, 'bg-default');
+    row_heading_array(array(
+        '',
+        tra('Prefer'),
+        tra('As needed'),
+        tra('Never')),
+        null,
+        'bg-default'
+    );
     foreach ($job_keywords as $id=>$k) {
         if ($k->category != $category) continue;
         if ($k->parent) continue;
@@ -298,29 +305,30 @@ function prefs_edit_form($user, $show_saved) {
 
     keyword_setup($uprefs);
 
-    page_head("Science and location preferences");
+    page_head(tra("Science and location preferences"));
 
     if ($show_saved) {
-        echo '<span class="text-success"> Preferenced saved.</span><p><p>';
+        echo '<span class="text-success">'.tra("Preferenced saved.").'</span><p><p>';
     }
 
+    echo tra("Select science areas and locations you do or don't want to support.  Click %1; for more detail, %2; for less.  When done, click the Save button at the bottom.",
+        "boxplus",
+        "boxmoinus"
+    );
     echo "
-        Select science areas and locations you do or don't want to support.
-        Click &boxplus; for more detail, &boxminus; for less.
-        When done, click the Save button at the bottom.
         <p>
     ";
     form_start("su_prefs.php");
     form_input_hidden('action', 'submit');
-    echo "<h3>Science areas</h3>\n";
+    echo "<h3>".tra("Science areas")."</h3>\n";
     start_table("table-striped");
     generate_html_category(KW_CATEGORY_SCIENCE, $uprefs);
     end_table();
-    echo "<h3>Locations</h3>\n";
+    echo "<h3>".tra("Locations")."</h3>\n";
     start_table("table-striped");
     generate_html_category(KW_CATEGORY_LOC, $uprefs);
     end_table();
-    echo '<button type="submit" class="btn btn-success">Save</button>';
+    echo '<button type="submit" class="btn btn-success">'.tra("Save").'</button>';
     form_end();
     generate_javascript($uprefs);
     page_tail();

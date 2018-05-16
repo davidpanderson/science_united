@@ -25,7 +25,7 @@ require_once("../inc/su.inc");
 require_once("../inc/su_compute_prefs.inc");
 
 function show_prefs($user) {
-    page_head("Computing settings");
+    page_head(tra("Computing settings"));
     $x = simplexml_load_string($user->global_prefs);
     $pref = (string)$x->preset;
 
@@ -41,45 +41,49 @@ function show_prefs($user) {
     $standard_checked = ($pref=='standard')?"checked":"";
     $max_checked = ($pref=='max')?"checked":"";
 
+    echo tra("You can control how many processors to use (most computers have 4 or 8 processors) and when to use them.");
     echo "
-        You can control how many processors to use
-        (most computers have 4 or 8 processors) and when to use them.
         <p>
         <ul>
-        <li>This may affect your electricity costs
-        and your computer's fan speeds.
-        <li> Settings affect all your computers.
-        Changes take effect the next time the computer
-        synchs with Science United.
-        <li> You can change settings for a particular computer
-        using the BOINC Manager.
-        This also gives you more detailed options.
-        </ul>
-        Choose one of:
+        <li>
     ";
+    echo tra("This may affect your electricity costs and your computer's fan speeds.");
+    echo "<li>";
+    echo tra("Settings affect all your computers.  Changes take effect the next time the computer synchs with Science United.");
+    echo "<li>";
+    echo tra("You can change settings for a particular computer using the BOINC Manager.  This also gives you more detailed options.");
+    echo "</ul>";
+    echo tra("Choose one of:");
 
     form_start("su_compute_prefs.php");
     form_input_hidden("action", "update");
     form_radio_buttons(
-        "Green<br><small>Stop computing when computer is idle.  Use 25% of processors.</small>",
+        tra("Green %1 Use 25% of processors, and stop computing when computer is idle.%2",  "<br><small>", "</small>"
+        ),
         "pref",
         array(array("green", "")),
         $pref=="green"
     );
     form_radio_buttons(
-        "Standard<br><small>Use 50% of processors.</small>",
+        tra("Standard %1 Use 50% of processors.%2",
+            "<br><small>",
+            "</small>"
+        ),
         "pref",
         array(array("standard", "")),
         $pref=="standard"
     );
     form_radio_buttons(
-        "Max computing<br><small>Use all processors.</small>",
+        tra("Max computing %1 Use all processors.%2",
+            "<br><small>",
+            "</small>"
+        ),
         "pref",
         array(array("max", "")),
         $pref=="max"
     );
 
-    form_submit("Update");
+    form_submit(tra("Update"));
     form_end();
     page_tail();
 }
@@ -88,11 +92,13 @@ function update_prefs($user) {
     $pref = get_str("pref");
     $x = compute_prefs_xml($pref);
     $user->update("global_prefs='$x'");
-    page_head("Computing settings updated");
-    echo '
-        The new settings will take effect when your computer synchs with Science United.
-        <p><p>
-        <a href=su_home.php class="btn btn-success">Continue to home page</a>
+    page_head(tra("Computing settings updated"));
+    echo tra("The new settings will take effect when your computer synchs with Science United.");
+    echo '<p><p>
+        <a href=su_home.php class="btn btn-success">
+    ';
+    echo tra("Continue to home page");
+    echo '</a>
     ';
     page_tail();
 }

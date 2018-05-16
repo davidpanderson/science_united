@@ -27,7 +27,7 @@ function su_user_info_private($user) {
 }
 
 function main($user) {
-    page_head("Account settings");
+    page_head(tra("Account settings"));
     start_table();
     show_user_info_private($user);
     end_table();

@@ -25,8 +25,9 @@ require_once("../inc/versions.inc");
 require_once("../inc/download_util.inc");
 
 function main($user) {
-    page_head("Install software");
-    echo sprintf("To participate in %s you must install BOINC and VirtualBox on your computer.<p>", PROJECT);
+    page_head(tra("Install software"));
+    echo tra("To participate in %1 you must install BOINC and VirtualBox on your computer.", PROJECT);
+    echo "<p>";
     $client_info = $_SERVER['HTTP_USER_AGENT'];
 
     $token = make_login_token($user);

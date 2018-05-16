@@ -23,8 +23,8 @@ require_once("../inc/util.inc");
 function show_user_hosts($user) {
     start_table('table-striped');
     row_heading_array(array(
-        "name<br><small>click for details</small>",
-        "last RPC",
+        tra("Name")."<br><small>".tra("click for details")."</small>",
+        tra("Last RPC"),
     ));
     $hosts = BoincHost::enum("userid=$user->id");
     foreach ($hosts as $host) {
@@ -37,7 +37,7 @@ function show_user_hosts($user) {
 }
 
 $user = get_logged_in_user();
-page_head("Your computers");
+page_head(tra("Your computers"));
 show_user_hosts($user);
 page_tail();
 ?>

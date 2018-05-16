@@ -53,16 +53,16 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
 
     switch ($what) {
     case 'jobs':
-        $title1 = "Successful jobs/day";
-        $title2 = "Failed jobs/day";
+        $title1 = tra("Successful jobs/day");
+        $title2 = tra("Failed jobs/day");
         $color1 = "green";
         $color2 = "red";
         $graph_two = true;
         $graph_type = 'lines';
         break;
     case 'time':
-        $title1 = "CPU hours/day";
-        $title2 = "GPU hours/day";
+        $title1 = tra("CPU hours/day");
+        $title2 = tra("GPU hours/day");
         $color1 = "khaki";
         $color2 = "orange";
         $graph_two = false;

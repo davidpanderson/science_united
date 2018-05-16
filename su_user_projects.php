@@ -22,19 +22,20 @@ require_once("../inc/util.inc");
 require_once("../inc/su.inc");
 require_once("../inc/su_schedule.inc");
 
+function account_state_str($state) {
+    switch ($state) {
+    case ACCT_INIT:
+        return tra("New");
+    case ACCT_SUCCESS:
+        return tra("Established");
+    case ACCT_TRANSIENT_ERROR:
+        return tra("In progress");
+    }
+    return tra("Unknown");
+}
 function project_row($p, $ukws, $a) {
     if ($a) {
-        switch ($a->state) {
-        case ACCT_INIT:
-            $x = "New";
-            break;
-        case ACCT_SUCCESS:
-            $x = "Established";
-            break;
-        case ACCT_TRANSIENT_ERROR:
-            $x = "In progress";
-            break;
-        }
+        $x = account_state_str($a->state);
         $checked = $a->opt_out?"checked":"";
         $d = date_str($a->create_time);
         $c = $a->cpu_time/3600.;
@@ -80,10 +81,14 @@ function show_projects($user) {
     $first = true;
     start_table();
     row_heading_array(array(
-        "Name<br><small>Click for details</small>", "since", "CPU hours", "GPU hours",
-        "# successful jobs", "# failed jobs",
-        "Account status",
-        "Allowed by prefs?",
+        tra("Name")."<br><small>".tra("Click for details")."</small>",
+        tra("since"),
+        tra("CPU hours"),
+        tra("GPU hours"),
+        tra("# successful jobs"),
+        tra("# failed jobs"),
+        tra("Account status"),
+        tra("Allowed by prefs?"),
     ));
 
     $ukws = SUUserKeyword::enum("user_id=$user->id");
@@ -116,34 +121,36 @@ function su_show_project($user, $project_id) {
     $project = SUProject::lookup_id($project_id);
     if (!$project) die("no such project");
     $acct = SUAccount::lookup("user_id=$user->id and project_id=$project_id");
-    if (!$acct) die("no account");
     page_head($project->name);
     start_table();
-    row2("Web site", "<a href=$project->url>$project->url</a>");
-    //row2("First contribution", date_str($acct->create_time));
-    row2("Science keywords", project_kw_string($project->id, SCIENCE));
-    row2("Location keywords", project_kw_string($project->id, LOCATION));
-    row2("Account status", account_status_string($acct->state));
-    row2("CPU computing", $acct->cpu_ec);
-    row2("CPU time", $acct->cpu_time);
-    if ($acct->gpu_ec) {
-        row2("GPU computing", $acct->gpu_ec);
-        row2("GPU time", $acct->gpu_time);
-    }
-    row2("# jobs succeeded", $acct->njobs_success);
-    row2("# jobs failed", $acct->njobs_fail);
-    if ($acct->opt_out) {
-        $x = "Yes"."&nbsp".button_text("su_user_projects.php?action=include&project_id=$project_id", "Include");
+    row2(tra("Web site"), "<a href=$project->url>$project->url</a>");
+    row2(tra("Science keywords"), project_kw_string($project->id, SCIENCE));
+    row2(tra("Location keywords"), project_kw_string($project->id, LOCATION));
+    if ($acct) {
+        //row2(tra("First contribution"), date_str($acct->create_time));
+        row2(tra("Account status"), account_status_string($acct->state));
+        row2(tra("CPU computing"), $acct->cpu_ec);
+        row2(tra("CPU time"), $acct->cpu_time);
+        if ($acct->gpu_ec) {
+            row2(tra("GPU computing"), $acct->gpu_ec);
+            row2(tra("GPU time"), $acct->gpu_time);
+        }
+        row2(tra("# jobs succeeded"), $acct->njobs_success);
+        row2(tra("# jobs failed"), $acct->njobs_fail);
+        if ($acct->opt_out) {
+            $x = tra("Yes")."&nbsp".button_text("su_user_projects.php?action=include&project_id=$project_id", tra("Include"));
+        } else {
+            $x = tra("No")."&nbsp".button_text("su_user_projects.php?action=exclude&project_id=$project_id", tra("Exclude"));
+        }
+        row2(
+            tra("Excluded?")."<br><small>".tra("Use if this project causes problems on your computer")."</small>",
+            $x
+        );
     } else {
-        $x = "No"."&nbsp".button_text("su_user_projects.php?action=exclude&project_id=$project_id", "Exclude");
+        row2(tra("Account status"), tra("None"));
     }
-    row2(
-        "Excluded?<br><small>Use if this project causes problems on your computer</small>",
-        $x
-    );
-    row2("", "<a href=su_user_projects.php>Return to project list</a>");
+    row2("", "<a href=su_user_projects.php>".tra("Return to project list")."</a>");
     end_table();
-    //echo "<a href=su_create_retry.php?project_id=$project_id>retry</a>";
     page_tail();
 }
 

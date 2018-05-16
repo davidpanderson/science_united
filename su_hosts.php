@@ -28,18 +28,23 @@ function su_show_user_hosts($user) {
     $hosts = BoincHost::enum(
         "userid=$user->id and total_credit=0 order by domain_name, rpc_time desc"
     );
-    page_head("Your computers");
+    page_head(tra("Your computers"));
     if (count($hosts) == 0) {
-        echo "No computers yet";
+        echo tra("No computers yet");
         page_tail();
         return;
     }
     start_table("table-striped");
-    row_heading_array(array("Computer name<br><small>Click for details</small>", "Operating system", "Last contact", "Remove<br><small>... if this is a duplicate or the computer is no longer running BOINC</small>"));
+    row_heading_array(array(
+        tra("Computer name")."<br><small>".tra("Click for details")."</small>",
+        tra("Operating system"),
+        tra("Last contact"),
+        tra("Remove")."<br><small>".tra("... if this is a duplicate or the computer is no longer running BOINC")."</small>"));
     $now = time();
     foreach($hosts as $h) {
-        $link = sprintf('<a class="btn btn-success" href="su_hosts.php?action=del&host_id=%d">Remove</a>',
-            $h->id
+        $link = sprintf('<a class="btn btn-success" href="su_hosts.php?action=del&host_id=%d">%s</a>',
+            $h->id,
+            tra("Remove")
         );
         row_array(array(
             sprintf("<a href=%s>%s</a>",
@@ -64,29 +69,38 @@ function su_hide_host($user) {
 }
 
 function su_host_project_select($user, $host) {
-    page_head("How projects are chosen for $host->domain_name");
-    echo '
-        To decide which projects this computer should work for,
-        we compute a "score" for each project.
-        The components of the score are:
+    page_head(tra("How projects are chosen for %1", $host->domain_name));
+    echo tra('To decide which projects this computer should work for, we compute a "score" for each project.  The components of the score are:');
+    echo sprintf("
         <ul>
-        <li><b>Keyword score</b>: How well your keyword preferences match the project\'s keywords.
-        <li><b>Platform score</b>: -1 if the project has no programs that will run on the computer; 0 if it does; +1 if one of them uses a GPU or VirtuaBox.
-        <li><b>Balance</b>: How much work is owed to the project;
-        this changes from one day to the next.
-        </ul>
-        We then choose the highest-scoring projects (at least 2)
-        that together can use all the computer\'s processors.
+        <li><b>%s</b>: %s
+        <li><b>%s</b>: %s
+        <li><b>%s</b>: %s
+        </ul>",
+        tra("Keyword score"),
+        tra("How well your keyword preferences match the project's keywords."),
+        tra("Platform score"),
+        tra("-1 if the project has no programs that will run on the computer; 0 if it does; +1 if one of them uses a GPU or VirtuaBox."),
+        tra("Balance"),
+        tra("How much work is owed to the project; this changes from one day to the next.")
+    );
+    echo tra("We then choose the highest-scoring projects (at least 2) that together can use all the computer's processors."
+    );
+    echo "
         <p>
-    ';
+    ";
     $projects = rank_projects($user, $host, null, false);
     start_table("table-striped");
     $x = array(
-        "Project", "Keyword score", "Platform score", "Balance (GFLOPS days)",
-        "Opted out?", "Score"
+        tra("Project"),
+        tra("Keyword score"),
+        tra("Platform score"),
+        tra("Balance (GFLOPS days)"),
+        tra("Opted out?"),
+        tra("Score")
     );
     foreach ($host->resources as $r) {
-        $x[] = "Can use $r?";
+        $x[] = tra("Can use %1?", $r);
     }
     row_heading_array($x);
     foreach($projects as $p) {
@@ -95,7 +109,7 @@ function su_host_project_select($user, $host) {
             $p->keyword_score,
             $p->platform_score,
             number_format($p->balance/(86400*1e9), 2),
-            $p->opt_out?"Yes":"",
+            $p->opt_out?tra("Yes"):"",
             $p->score
         );
         foreach ($host->resources as $r) {
@@ -105,12 +119,13 @@ function su_host_project_select($user, $host) {
     }
     end_table();
 
-    echo "Given the above info, this computer would do work for these projects:
+    echo tra("Given the above info, this computer would do work for these projects:");
+    echo "
     <p>
     ";
     $projects = select_projects_resource($host, $projects);
     start_table("table-striped");
-    $x = array("Project", "Score");
+    $x = array(tra("Project"), tra("Score"));
     foreach ($host->resources as $r) {
         $x[] = "Use $r?";
     }
@@ -121,7 +136,7 @@ function su_host_project_select($user, $host) {
             $p->score,
         );
         foreach ($host->resources as $r) {
-            $x[] = $p->use[$r] ? "yes" : "no";
+            $x[] = $p->use[$r] ? tra("Yes") : tra("No");
         }
         row_array($x);
     }
@@ -130,7 +145,7 @@ function su_host_project_select($user, $host) {
 }
 
 function su_host_detail($host) {
-    page_head("Computer hardware and software");
+    page_head(tra("Computer hardware and software"));
     start_table("table-striped");
     show_host_hw_sw($host);
     end_table();
@@ -138,14 +153,17 @@ function su_host_detail($host) {
 }
 
 function su_host_project_accounting($host) {
-    page_head("Projects for which this computer has done work");
+    page_head(tra("Projects for which this computer has done work"));
     $ps = SUHostProject::enum("host_id=$host->id");
     start_table("table-striped");
     row_heading_array(array(
-        "Name",
-        "CPU FLOPS", "CPU time",
-        "GPU FLOPS", "GPU time",
-        "# jobs success", "#jobs fail"
+        tra("Name"),
+        tra("CPU FLOPS"),
+        tra("CPU time"),
+        tra("GPU FLOPS"),
+        tra("GPU time"),
+        tra("# jobs success"),
+        tra("#jobs fail")
     ));
     foreach ($ps as $p) {
         $project = SUProject::lookup_id($p->project_id);
@@ -161,13 +179,23 @@ function su_host_project_accounting($host) {
 }
 
 function su_host_summary($host) {
-    page_head("Computer details");
+    page_head(tra("Computer details"));
     start_table("table-striped");
-    row2("Name", $host->domain_name);
-    row2("Hardware/software details", "<a href=su_hosts.php?action=detail&host_id=$host->id>View</a>");
-    row2("Last contact", time_str($host->rpc_time));
-    row2("How projects are chosen for this computer", "<a href=su_hosts.php?action=project_select&host_id=$host->id>View</a>");
-    row2("Projects for which this computer has done work", "<a href=su_hosts.php?action=project_accounting&host_id=$host->id>View</a>");
+    $view = tra("View");
+    row2(tra("Name"), $host->domain_name);
+    row2(
+        tra("Hardware/software details"),
+        "<a href=su_hosts.php?action=detail&host_id=$host->id>$view</a>"
+    );
+    row2(tra("Last contact"), time_str($host->rpc_time));
+    row2(
+        tra("How projects are chosen for this computer"),
+        "<a href=su_hosts.php?action=project_select&host_id=$host->id>$view</a>"
+    );
+    row2(
+        tra("Projects for which this computer has done work"),
+        "<a href=su_hosts.php?action=project_accounting&host_id=$host->id>$view</a>"
+    );
     show_host_detail($host);
     end_table();
     page_tail();

@@ -1,7 +1,7 @@
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2018 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -25,17 +25,22 @@ function su_contribution($user) {
     panel("Contribution",
         function() {
             start_table();
-            row2("Your computers", '<a href=su_hosts.php class="btn btn-success">View</a>', false, "50%");
-            row2("Computing: graphs", '<a href=su_user_accounting.php?graphs=1 class="btn btn-success">View</a>');
-            row2("Computing: details", '<a href=su_user_accounting.php class="btn btn-success">View</a>');
-            row2("Science projects", '<a href=su_user_projects.php class="btn btn-success">View</a>');
+            $view = tra("View");
+            row2(
+                tra("Your computers"),
+                '<a href=su_hosts.php class="btn btn-success">'.$view.'</a>',
+                false, "50%"
+            );
+            row2(tra("Computing: graphs"), '<a href=su_user_accounting.php?graphs=1 class="btn btn-success">'.$view.'</a>');
+            row2(tra("Computing: details"), '<a href=su_user_accounting.php class="btn btn-success">'.$view.'</a>');
+            row2(tra("Science projects"), '<a href=su_user_projects.php class="btn btn-success">'.$view.'</a>');
             end_table();
         }
     );
 }
 
 function su_community($user) {
-    panel("Community", function() use($user) {
+    panel(tra("Community"), function() use($user) {
         start_table();
         show_community_private($user);
         end_table();
@@ -46,26 +51,27 @@ function su_settings($user) {
     panel("Settings",
         function() {
             start_table();
+            $edit = tra("Edit");
             row2(
-                "Science areas and locations</br><small>Choose the types of research you want to support</small>",
-                '<a href=su_prefs.php class="btn btn-success">Edit</a>',
+                tra("Science areas and locations")."</br><small>".tra("Choose the types of research you want to support")."</small>",
+                '<a href=su_prefs.php class="btn btn-success">'.$edit.'</a>',
                 false, "70%"
             );
             row2(
-                "Computing</br><small>Choose how to use your computers</small>",
-                '<a href=su_compute_prefs.php class="btn btn-success">Edit</a>'
+                tra("Computing")."</br><small>".tra("Choose how to use your computers")."</small>",
+                '<a href=su_compute_prefs.php class="btn btn-success">'.$edit.'</a>'
             );
             row2(
-                "Community</br><small>Settings for message boards and private messages</small>",
-                '<a href=edit_forum_preferences_form.php class="btn btn-success">Edit</a>'
+                tra("Community")."</br><small>".tra("Settings for message boards and private messages")."</small>",
+                '<a href=edit_forum_preferences_form.php class="btn btn-success">'.$edit.'</a>'
             );
             row2(
-                "Account</br><small>Name, password, email address</small>",
-                '<a href=su_account_settings.php class="btn btn-success">Edit</a>'
+                tra("Account")."</br><small>".tra("Name, password, email address")."</small>",
+                '<a href=su_account_settings.php class="btn btn-success">'.$edit.'</a>'
             );
             row2(
-                "Email</br><small>When and whether we should email you</small>",
-                '<a href=su_email_prefs.php class="btn btn-success">Edit</a>'
+                tra("Email")."</br><small>".tra("When and whether we should email you")."</small>",
+                '<a href=su_email_prefs.php class="btn btn-success">'.$edit.'</a>'
             );
             end_table();
         }

@@ -24,13 +24,14 @@ function show_user_graph($user, $what, $ndays) {
     if ($n>1) {
         echo sprintf('
             <p>
-            Past month:
+            %s
             <p>
             <img class="img-responsive" src="su_graph.php?type=user&id=%d&what=%s&ndays=%d&xsize=450&ysize=250">
-        ', $user->id, $what, $ndays
+        ',
+        tra("Past month:"), $user->id, $what, $ndays
         );
     } else {
-        echo "Not enough data yet";
+        echo tra("Not enough data yet");
     }
 }
 

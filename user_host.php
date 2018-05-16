@@ -25,9 +25,9 @@ $host = BoincHost::lookup_id($host_id);
 if ($host->userid != $user->id) {
     error_page("not your host");
 }
-page_head("Computer details");
+page_head(tra("Computer details"));
 show_host_detail($host, $user, true);
-echo "<h3>Projects</h3>\n";
+echo "<h3>".tra("Projects")."</h3>\n";
 show_host_projects($host);
 page_tail();
 ?>
