@@ -55,13 +55,19 @@ The hope is that SU will lead to the creation of many more projects.
 <h3>User-friendliness</h3>
 
 <p>
-In my conversations with "average" computer owners about the BOINC UI/UX,
+In my conversations with "average" computer owners
+(e.g. friends and family) about the BOINC UI/UX,
 several themes emerge:
-it's too complex, it presents too much information,
-and it emphasizes competition to an intimidating extent.
+<ul>
+<li> It's too complex.
+<li> It presents too much information, and especially textual information.
+When people are shown too much information they
+assume they should understand it all, and this stresses them.
+<li> It emphasizes competition (e.g. leaderboards).
+Some volunteers are intimidated and put off by this.
+</ul>
 SU tries to remedy these problems.
-In looking at the SU site,
-there are few things that you might notice:
+In looking at the SU site, there are few things that you might notice:
 
 <ul>
 <li> New users download BOINC by the new "auto-attach" mechanism
@@ -73,17 +79,17 @@ Credit isn't shown anywhere.
 Users see graphs of their own work history,
 but no comparisons with other users.
 
-<li> We try to minimize the use of technical terms like CPU, GPU, and FLOPS.
-Words like "computer" and "job" are OK.
+<li> We try to minimize the use of technical terms like FLOPS.
 
 <li> Computing preferences have been reduced to three options:
 green, standard, and max.
 
 <li> We avoid showing lots of information.
-When people are shown too much information they
-assume they should understand it all, and this stresses them.
 
 <li> We show information graphically rather than textually where possible.
+
+<li> We de-emphasize the notion of project.
+Users can see what projects they're contributing to, but only by drilling down a bit.
 </ul>
 
 <p>
@@ -98,21 +104,9 @@ and to alert them if any of their computers have stopped doing work.
 <h3>Testing Science United</h3>
 <p>
 You create an SU account with an email and password.
-SU will try to create accounts on various BOINC projects
-with the same credentials.
-If these fail because there's already an account with that email
-but different password,
-you'll be notified on the SU web site
-and you can enter the project-specific password.
-
-<p>
-So if you have an email address and password
-that you use across BOINC projects,
-you might want to use these for your SU account too.
-
-<p>
-You're also encouraged to test the "new user" scenario,
-using an email address that you haven't used on any BOINC projects.
+These are used only for SU.
+Project accounts will be created with anonymous credentials,
+even if you already have accounts there.
 
 <p>
 To test SU, you'll need version 7.9.1 or later of the BOINC client.
