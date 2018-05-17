@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT"
 "Report-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-05-15 09:59 PDT\n"
+"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
 "Last-Translator: Generated automatically from source files\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,6 +16,10 @@ msgstr ""
 
 #: index.php:44
 msgid "%1 is temporarily shut down for maintenance."
+msgstr ""
+
+#: index.php:51
+msgid "Recent contribution"
 msgstr ""
 
 #: index.php:56
@@ -51,6 +55,10 @@ msgstr ""
 
 #: index.php:77
 msgid "Log in."
+msgstr ""
+
+#: index.php:86
+msgid "Welcome, %1"
 msgstr ""
 
 #: index.php:105
@@ -274,6 +282,10 @@ msgid ""
 "Github repository%4 (you'll need a free Github account)."
 msgstr ""
 
+#: su_home.php:25
+msgid "Contribution"
+msgstr ""
+
 #: su_home.php:28 su_hosts.php:184
 msgid "View"
 msgstr ""
@@ -296,6 +308,10 @@ msgstr ""
 
 #: su_home.php:43 su_home.php:65 project.inc:126
 msgid "Community"
+msgstr ""
+
+#: su_home.php:51
+msgid "Settings"
 msgstr ""
 
 #: su_home.php:54
@@ -746,6 +762,10 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
+#: project.inc:154
+msgid "Do science research on your computer, tablet, or phone"
+msgstr ""
+
 #: project.inc:174
 msgid "Generated"
 msgstr ""
@@ -980,4 +1000,22 @@ msgstr ""
 
 #: su_join.inc:64
 msgid "Choose password"
+msgstr ""
+
+#: su_user.inc:154
+msgid "Want to help more?"
+msgstr ""
+
+#: su_user.inc:155
+msgid "Tell friends and family about %1."
+msgstr ""
+
+#: su_user.inc:156
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr ""
+
+#: su_user.inc:157
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr ""

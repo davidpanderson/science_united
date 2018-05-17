@@ -48,7 +48,7 @@ function closed_panel() {
 
 function user_summary($user) {
     show_download($user);
-    echo "<h3>Recent contribution</h3>\n";
+    echo "<h3>".tra("Recent contribution")."</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
     echo sprintf('<center><a href=su_home.php class="btn btn-success">%s</a></center>
@@ -83,7 +83,7 @@ function intro_panel() {
 function user_panel(){
     global $user, $master_url;
     panel(
-        "Welcome, $user->name",
+        tra("Welcome, %1", $user->name),
         function() use($user) {
             user_summary($user);
         },

@@ -151,7 +151,7 @@ function project_banner($title, $prefix, $is_main) {
         echo '<p><center><font size=+6>
 <img style="vertical-align: sub; height:1.2em;" src=power.png>
             '.PROJECT.'</font>';
-        echo '<br><font size=+1>Do science research on your computer, tablet, or phone</font></center>
+        echo '<br><font size=+1>'.tra('Do science research on your computer, tablet, or phone').'</font></center>
             <p>
         ';
         //echo '<center><img class="img-responsive" src="logo.png"></center>';

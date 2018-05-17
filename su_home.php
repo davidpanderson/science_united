@@ -22,7 +22,7 @@ require_once("../inc/forum.inc");
 require_once("../inc/su_user.inc");
 
 function su_contribution($user) {
-    panel("Contribution",
+    panel(tra("Contribution"),
         function() {
             start_table();
             $view = tra("View");
@@ -48,7 +48,7 @@ function su_community($user) {
 }
 
 function su_settings($user) {
-    panel("Settings",
+    panel(tra("Settings"),
         function() {
             start_table();
             $edit = tra("Edit");

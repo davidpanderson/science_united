@@ -144,16 +144,20 @@ function show_last_day($user) {
 
 function show_calls_to_action() {
     echo sprintf('
-        <h3>Want to help more?</h3>
+        <h3>%s</h3>
         <ul>
-        <li> Tell friends and family about %s.
-        <li> Run BOINC on your other computing devices
-            (desktops, laptops, tablets, Android phones).
+        <li> %s
+        <li> %s
         </ul>
-        Is BOINC running on this computer?
-        If not,
-        <a href="download.php">Download it<a/>.
-        ', PROJECT, PROJECT
+        %s
+        ',
+        tra('Want to help more?'),
+        tra('Tell friends and family about %1.', PROJECT),
+        tra("Run BOINC on your other computing devices (desktops, laptops, tablets, Android phones)."),
+        tra("Is BOINC running on this computer?  If not, %1Download it%2.",
+            '<a href="download.php">',
+            '<a/>'
+        )
     );
     echo "<p>\n";
 }
