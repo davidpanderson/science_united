@@ -51,7 +51,7 @@ function user_summary($user) {
     echo "<h3>".tra("Recent contribution")."</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
-    echo sprintf('<center><a href=su_home.php class="btn btn-success">%s</a></center>
+    echo sprintf('<center><a href=https://scienceunited.org/su_home.php class="btn btn-success">%s</a></center>
 ',
         tra('Continue to your home page')
     );
@@ -70,9 +70,9 @@ function intro_panel() {
                 PROJECT
             );
             echo "<br><br>\n";
-            echo '<center><a href="su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
+            echo '<center><a href="https://scienceunited.org/su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
             ';
-            echo sprintf('<br><br>%s <a href=login_form.php>%s</a>',
+            echo sprintf('<br><br>%s <a href=https://scienceunited.org/login_form.php>%s</a>',
                 tra("Already joined?"),
                 tra("Log in.")
             );

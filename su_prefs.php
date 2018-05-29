@@ -188,7 +188,7 @@ function generate_javascript($uprefs) {
 
     var font_size = [120, 108, 92, 80];
     var indent = [0, 1.3, 2.6, 3.9];
-    var button_indent = 1.3;
+    var button_indent = 1.0;
 
     // -1: show "contract" button
     // 0: no button
@@ -311,9 +311,9 @@ function prefs_edit_form($user, $show_saved) {
         echo '<span class="text-success">'.tra("Preferenced saved.").'</span><p><p>';
     }
 
-    echo tra("Select science areas and locations you do or don't want to support.  Click %1; for more detail, %2; for less.  When done, click the Save button at the bottom.",
-        "boxplus",
-        "boxmoinus"
+    echo tra("Select science areas and locations you do or don't want to support.  Click %1 for more detail, %2 for less.  When done, click the Save button at the bottom.",
+        "<a>&boxplus;</a>",
+        "<a>&boxminus;</a>"
     );
     echo "
         <p>
