@@ -37,7 +37,7 @@ function show_prefs($user) {
         $prefs = simplexml_load_string($p);
     }
 
-    $green_checked = ($pref=='green')?"checked":"";
+    $low_power_checked = ($pref=='low_power')?"checked":"";
     $standard_checked = ($pref=='standard')?"checked":"";
     $max_checked = ($pref=='max')?"checked":"";
 
@@ -58,11 +58,11 @@ function show_prefs($user) {
     form_start("su_compute_prefs.php");
     form_input_hidden("action", "update");
     form_radio_buttons(
-        tra("Green %1 Use 25% of processors, and stop computing when computer is idle.%2",  "<br><small>", "</small>"
+        tra("Low power %1 Use 25% of processors, and stop computing when computer is idle.%2",  "<br><small>", "</small>"
         ),
         "pref",
-        array(array("green", "")),
-        $pref=="green"
+        array(array("low_power", "")),
+        $pref=="low_power"
     );
     form_radio_buttons(
         tra("Standard %1 Use 50% of processors.%2",

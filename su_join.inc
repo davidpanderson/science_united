@@ -90,7 +90,7 @@ function global_prefs_form() {
         "Use of your computer",
         "preset",
         array(
-            array('green', "Green - limit power consumption"),
+            array('low_power', "Low power"),
             array('standard', "Standard"),
             array('max', "Maximum"),
         ),
@@ -114,4 +114,4 @@ function show_join_form() {
     form_end();
 }
 
-?>
+

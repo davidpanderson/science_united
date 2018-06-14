@@ -101,6 +101,13 @@ function is_in_accounts($url, $accounts) {
     return false;
 }
 
+// TODO: move this to boinc/html/inc/util_basic.inc
+//
+function version_to_int($v) {
+    $v = explode(".", $v);
+    return $v[0]*10000 + $v[1]*100 + $v[2];
+}
+
 // $accounts is an array of array(project, account)
 //
 function send_reply($user, $host, $accounts, $new_accounts, $req) {
@@ -115,6 +122,7 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
         ."<dynamic/>\n"
     ;
+    $client_ver = version_to_int((string)$req->client_version);
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
 

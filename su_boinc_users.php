@@ -22,16 +22,25 @@ require_once("../inc/su.inc");
 
 function main() {
     page_head("Info for current BOINC users");
+    text_start();
     echo "
         <p>
-        Science United (SU) attaches your computer
+        Science United attaches your computer
         to projects based on your science preferences.
         For example, if you select cancer research,
-        your computer will compute for existing BOINC projects
+        your computer will compute for BOINC projects
         doing cancer research;
-        if a new one comes along it will probably compute for that too.
+        if a new cancer project starts up, it will compute for that one too.
+        <p>
         <a href=su_about.php>Read why this helps volunteer computing</a>.
+        <p>
+        Science United automatically creates project accounts for you.
+        These accounts are 'anonymous' - they have random
+        name, email address, and password.
+        Your Science United account information
+        is not shared with projects.
     ";
+    text_end();
 }
 
 main();
