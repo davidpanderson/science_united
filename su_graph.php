@@ -75,6 +75,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
         $color2 = "orange";
         $graph_two = false;
         $graph_type = 'filledcurve x1';
+        $graph_type = 'boxes';
         break;
     case 'users':
         $title1 = "Active users";
@@ -100,9 +101,11 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             // so it will generally show a downturn
             //
 
-            continue;
+            //continue;
+            $end_time = time();
+        } else {
+            $end_time = $accts[$i+1]->create_time;
         }
-        $end_time = $accts[$i+1]->create_time;
         $dt = $end_time - $a->create_time;
         switch ($what) {
         case 'jobs':
@@ -172,6 +175,8 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
         set xdata time
         set timefmt "%%s"
         set format x "%%d %%b"
+        set style fill solid 1.0
+        set boxwidth 70000
         set yrange [0:]
         set xtics 604800
         %s

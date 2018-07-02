@@ -45,7 +45,7 @@ $in_rpc = true;
 
 // logging options
 //
-define('LOG_DELTAS', false);
+define('LOG_DELTAS', true);
 
 $now = 0;
 
@@ -577,11 +577,52 @@ function am_error_reply($msg) {
     exit;
 }
 
+
+function xml_split($x, $tagname) {
+    $open_tag = "<$tagname>";
+    $close_tag = "</$tagname>";
+    $n = strpos($x, $open_tag);
+    $m = strpos($x, $close_tag);
+    if ($n === FALSE || $m === FALSE) {
+        return array($x, null, null);
+    }
+    $m += strlen($close_tag);
+    return array(
+        substr($x, 0, $n),
+        substr($x, $n, $m-$n),
+        substr($x, $m)
+    );
+
+}
+
+// Request messages include global prefs,
+// which come from projects and may be invalid XML.
+// The following function takes a request message and returns
+// - the request message minus the <global_preferences>..</global_preferences>
+//   part; we assume this is valid XML
+// - working global prefs (valid XML)
+// - the <global_preferences> part, which may not be valid.
+//
+function req_split($r) {
+    list($a, $b, $c) = xml_split($r, "working_global_preferences");
+    list($d, $e, $f) = xml_split($a.$c, "global_preferences");
+    return array(
+        $d.$f,
+        $b,
+        $e
+    );
+}
+
 function main() {
     global $now;
-
-    $req = simplexml_load_file('php://input');
-    //$req = simplexml_load_file('req.xml');
+    if (1) {
+        log_write("Got request from ".$_SERVER['HTTP_USER_AGENT']);
+        $req = file_get_contents('php://input');
+    } else {
+        $req = file_get_contents('req.xml');
+    }
+    list($a, $b, $c) = req_split($req);
+    $req = @simplexml_load_string($a);
     if (!$req) {
         log_write("can't parse request: $req");
         su_error(-1, "can't parse request");

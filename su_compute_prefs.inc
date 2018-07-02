@@ -19,8 +19,12 @@
 // return XML for default prefs w/ given setting
 //
 
+// called when we're about to set or modify the prefs in the DB
+//
 function compute_prefs_xml($preset) {
+    $now = time();
     return "<global_preferences>
+    <mod_time>$now</mod_time>
     <preset>$preset</preset>
 </global_preferences>
 ";

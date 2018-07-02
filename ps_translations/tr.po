@@ -1,0 +1,1073 @@
+# PROJECT translation
+# Copyright (C) PROJECT
+# 
+# This file is distributed under the same license as BOINC.
+# 
+# Translators:
+# ilkeryus <ilkeryus@gmail.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
+"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
+"Last-Translator: ilkeryus <ilkeryus@gmail.com>, 2018\n"
+"Language-Team: Turkish (https://www.transifex.com/boinc/teams/35581/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: index.php:44
+msgid "%1 is temporarily shut down for maintenance."
+msgstr "%1 bakım için geçici olarak kapalıdır."
+
+#: index.php:51
+msgid "Recent contribution"
+msgstr "Son katkı"
+
+#: index.php:56
+msgid "Continue to your home page"
+msgstr "Ana sayfanıza devam edin"
+
+#: index.php:64
+msgid ""
+"%1 lets you help scientific research projects by giving them computing "
+"power.  These projects do research in astronomy, physics, biomedicine, "
+"mathematics, and environmental science; you can pick the areas you want to "
+"support."
+msgstr ""
+"%1, bilimsel araştırma projelerine bilgi işlem gücü vererek yardımcı "
+"olmanızı sağlar. Bu projeler astronomi, fizik, biyomedikal, matematik ve "
+"çevre bilimlerinde araştırma yapar; desteklemek istediğiniz alanları "
+"seçebilirsiniz."
+
+#: index.php:66
+msgid ""
+"You help by installing BOINC, a free program that runs scientific jobs in "
+"the background and when you're not using the computer.  BOINC is secure and "
+"will not affect your normal use of the computer."
+msgstr ""
+"Bilimsel işleri arka planda çalıştıran ve bilgisayarı kullanmadığınız "
+"zamanlarda çalışan ücretsiz bir program olan BOINC'i kurarak yardımcı "
+"olursunuz. BOINC güvenlidir ve normal bilgisayar kullanımınızı etkilemez."
+
+#: index.php:69
+msgid "%1 and the research projects it supports are non-profit."
+msgstr "% 1 ve desteklediği araştırma projeleri kar amacı gütmemektedir."
+
+#: index.php:73
+msgid "Join %1"
+msgstr "%1 projesine katılın"
+
+#: index.php:76
+msgid "Already joined?"
+msgstr "Zaten katıldınız mı?"
+
+#: index.php:77
+msgid "Log in."
+msgstr "Giriş Yapın"
+
+#: index.php:86
+msgid "Welcome, %1"
+msgstr "Hoşgeldiniz, %1"
+
+#: index.php:105
+msgid "News"
+msgstr "Haberler"
+
+#: index.php:118
+msgid "Ebola-Infected VERO E6 Cell"
+msgstr "Ebola bulaşmış VERO E6 Hücresi"
+
+#: index.php:119
+msgid "Simulation of Higgs boson detection"
+msgstr "Higgs bozonu tespiti simülasyonu"
+
+#: index.php:120
+msgid "The Earth's interrelated climate systems"
+msgstr "Dünya'nın birbiriyle bağlantılı iklim sistemleri"
+
+#: index.php:121
+msgid "Structure of protein GIF"
+msgstr "Protein GIF yapısı"
+
+#: index.php:122
+msgid "The Hubble ultra-deep field image"
+msgstr "Hubble ultra derin alan görüntüsü"
+
+#: index.php:164
+msgid ""
+"Science United is funded by the %1National Science Foundation%2, award "
+"#1664190, and is based at the %3University of California, Berkeley%4."
+msgstr ""
+
+#: su_about.php:20
+msgid "About"
+msgstr "Hakkında"
+
+#: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
+#: su_user_projects.php:84 user_hosts.php:26 su.inc:169
+msgid "Name"
+msgstr "Ad"
+
+#: su_account_settings.php:24
+msgid "Email address"
+msgstr "E-posta adresi"
+
+#: su_account_settings.php:25
+msgid "%1 member since"
+msgstr "Şu zamandır %1 üyesi: "
+
+#: su_account_settings.php:26
+msgid "User ID"
+msgstr "Kullanıcı Kimliği"
+
+#: su_account_settings.php:26
+msgid "Used in community functions"
+msgstr "Topluluk işlevlerinde kullanılır"
+
+#: su_account_settings.php:30
+msgid "Account settings"
+msgstr "Hesap Ayarları"
+
+#: su_accounting.php:29
+msgid "Computing history"
+msgstr "Hesaplama Geçmişi"
+
+#: su_compute_prefs.php:28
+msgid "Computing settings"
+msgstr "Hesaplama Ayarları"
+
+#: su_compute_prefs.php:44
+msgid ""
+"You can control how many processors to use (most computers have 4 or 8 "
+"processors) and when to use them."
+msgstr ""
+"Kaç tane işlemcinin kullanılacağını (birçok bilgisayar 4 ila 8 işlemciye "
+"sahiptir) ve bunların ne zaman kullanılacağını belirleyebilirsiniz."
+
+#: su_compute_prefs.php:50
+msgid "This may affect your electricity costs and your computer's fan speeds."
+msgstr ""
+"Bu, elektrik maliyetlerinizi ve bilgisayarınızın fan hızlarını "
+"etkileyebilir."
+
+#: su_compute_prefs.php:52
+msgid ""
+"Settings affect all your computers.  Changes take effect the next time the "
+"computer synchs with Science United."
+msgstr ""
+"Ayarlar tüm bilgisayarlarınızı etkiler. Değişiklikler, bilgisayarın Science "
+"United ile bir sonraki senkronizasyonunda etkili olur."
+
+#: su_compute_prefs.php:54
+msgid ""
+"You can change settings for a particular computer using the BOINC Manager.  "
+"This also gives you more detailed options."
+msgstr ""
+"Belirli bir bilgisayarın ayarlarını BOINC Manager kullanarak "
+"değiştirebilirsiniz. Bu ayrıca size daha ayrıntılı seçenekler sunar."
+
+#: su_compute_prefs.php:56
+msgid "Choose one of:"
+msgstr "Aşağıdakilerden birini seçin:"
+
+#: su_compute_prefs.php:61
+msgid ""
+"Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
+msgstr ""
+"Yeşil %1 İşlemcilerin %25'ini kullanın ve bilgisayar boştayken hesaplamayı "
+"durdurun.%2"
+
+#: su_compute_prefs.php:68
+msgid "Standard %1 Use 50% of processors.%2"
+msgstr "Standard %1  İşlemcilerin %50'sini kullanın.%2"
+
+#: su_compute_prefs.php:77
+msgid "Max computing %1 Use all processors.%2"
+msgstr "Azami hesaplama %1 Tüm işlemcileri kullanın. %2"
+
+#: su_compute_prefs.php:86
+msgid "Update"
+msgstr "Güncelle"
+
+#: su_compute_prefs.php:95
+msgid "Computing settings updated"
+msgstr "Hesaplama ayarları güncellendi"
+
+#: su_compute_prefs.php:96
+msgid ""
+"The new settings will take effect when your computer synchs with Science "
+"United."
+msgstr ""
+"Yeni ayarlar, bilgisayarınız Science United ile senkronize olduğunda etkili "
+"olacaktır."
+
+#: su_compute_prefs.php:100
+msgid "Continue to home page"
+msgstr "Ana sayfaya devam et"
+
+#: su_download.php:28
+msgid "Install software"
+msgstr "Yazılımı kur"
+
+#: su_download.php:29
+msgid ""
+"To participate in %1 you must install BOINC and VirtualBox on your computer."
+msgstr ""
+"% 1 programına katılmak için BOINC ve VirtualBox'ı bilgisayarınıza "
+"yüklemelisiniz."
+
+#: su_email_prefs.php:28
+msgid "Email settings"
+msgstr "E-posta ayarları"
+
+#: su_email_prefs.php:30
+msgid "Preferences updated."
+msgstr "Tercihler güncellendi."
+
+#: su_email_prefs.php:35
+msgid "Don't send me any emails"
+msgstr "Bana e-posta göndermeyin"
+
+#: su_email_prefs.php:42
+msgid ""
+"Status emails %1 These tell you how much work your computer(s) have done "
+"recently %2"
+msgstr ""
+
+#: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
+msgid "Never"
+msgstr "Asla"
+
+#: su_email_prefs.php:49
+msgid "Daily"
+msgstr "Günlük"
+
+#: su_email_prefs.php:50
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: su_email_prefs.php:51
+msgid "Monthly"
+msgstr "Aylık"
+
+#: su_email_prefs.php:56
+msgid ""
+"Community emails %1 These tell you about private messages, forum posts, and "
+"friend requests %2"
+msgstr ""
+
+#: su_email_prefs.php:63
+msgid "Immediately"
+msgstr "Hemen"
+
+#: su_email_prefs.php:64
+msgid "Daily summary"
+msgstr "Günlük özet"
+
+#: su_email_prefs.php:68 su_prefs.php:331
+msgid "Save"
+msgstr "Kaydet"
+
+#: su_graph.php:56
+msgid "Successful jobs/day"
+msgstr "Gün başına başarılı iş"
+
+#: su_graph.php:57
+msgid "Failed jobs/day"
+msgstr "Gün başına başarısız iş"
+
+#: su_graph.php:64
+msgid "CPU hours/day"
+msgstr "Gün başına CPU saatleri"
+
+#: su_graph.php:65
+msgid "GPU hours/day"
+msgstr "Gün başına GPU saatleri"
+
+#: su_help.php:3
+msgid "Need help?"
+msgstr "Yardıma ihtiyacınız mı var?"
+
+#: su_help.php:8
+msgid "Problems installing or running BOINC: %1 get help here%2."
+msgstr ""
+
+#: su_help.php:16
+msgid ""
+"Problems with %1: ask for help on the\n"
+"        %2 %3 message boards.%4"
+msgstr ""
+
+#: su_help.php:27
+msgid ""
+"To report a bug or request a feature in %1, create an issue on %2 the %3 "
+"Github repository%4 (you'll need a free Github account)."
+msgstr ""
+
+#: su_home.php:25
+msgid "Contribution"
+msgstr "Katkı"
+
+#: su_home.php:28 su_hosts.php:184
+msgid "View"
+msgstr "Görünüm"
+
+#: su_home.php:30 su_hosts.php:31 user_hosts.php:40
+msgid "Your computers"
+msgstr "Bilgisayarlarınız"
+
+#: su_home.php:34
+msgid "Computing: graphs"
+msgstr "Hesaplama: grafikler"
+
+#: su_home.php:35
+msgid "Computing: details"
+msgstr "Hesaplama: ayrıntılar"
+
+#: su_home.php:36
+msgid "Science projects"
+msgstr "Bilimsel Projeler"
+
+#: su_home.php:43 su_home.php:65 project.inc:126
+msgid "Community"
+msgstr "Topluluk"
+
+#: su_home.php:51
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: su_home.php:54
+msgid "Edit"
+msgstr "Düzenle"
+
+#: su_home.php:56
+msgid "Science areas and locations"
+msgstr "Bilim alanları ve yerleri"
+
+#: su_home.php:56
+msgid "Choose the types of research you want to support"
+msgstr "Desteklemek istediğiniz araştırma türlerini seçin"
+
+#: su_home.php:61
+msgid "Computing"
+msgstr "Hesaplama"
+
+#: su_home.php:61
+msgid "Choose how to use your computers"
+msgstr "Bilgisayarlarınızı nasıl kullanacağınızı seçin"
+
+#: su_home.php:65
+msgid "Settings for message boards and private messages"
+msgstr "Mesaj panoları ve özel mesajlar için ayarlar"
+
+#: su_home.php:69
+msgid "Account"
+msgstr "Hesap"
+
+#: su_home.php:69
+msgid "Name, password, email address"
+msgstr "Ad, şifre, e-posta adresi"
+
+#: su_home.php:73
+msgid "Email"
+msgstr "E-posta"
+
+#: su_home.php:73
+msgid "When and whether we should email you"
+msgstr ""
+"Size e-posta göndermemiz gerekip gerekmediği ve bunun ne zaman olabileceği"
+
+#: su_home.php:99
+msgid "Your home page"
+msgstr "Ana sayfanız"
+
+#: su_hosts.php:33
+msgid "No computers yet"
+msgstr "Henüz bilgisayar yok"
+
+#: su_hosts.php:39
+msgid "Computer name"
+msgstr "Bilgisayar adı"
+
+#: su_hosts.php:39 su_user_projects.php:84
+msgid "Click for details"
+msgstr "Ayrıntılar için tıklayın"
+
+#: su_hosts.php:40
+msgid "Operating system"
+msgstr "İşletim sistemi"
+
+#: su_hosts.php:41 su_hosts.php:190
+msgid "Last contact"
+msgstr "Son iletişim"
+
+#: su_hosts.php:42 su_hosts.php:47
+msgid "Remove"
+msgstr "Kaldır"
+
+#: su_hosts.php:42
+msgid "... if this is a duplicate or the computer is no longer running BOINC"
+msgstr ""
+"... eğer bu bilgisayar artık BOINC çalıştırmıyorsa veya bir bilgisayarın "
+"tekrar kaydıysa"
+
+#: su_hosts.php:72
+msgid "How projects are chosen for %1"
+msgstr "%1 için projeler nasıl seçilir?"
+
+#: su_hosts.php:73
+msgid ""
+"To decide which projects this computer should work for, we compute a "
+"\"score\" for each project.  The components of the score are:"
+msgstr ""
+"Bu bilgisayarın hangi projeler için çalışması gerektiğine karar vermek için "
+"her proje için bir \"skor\" hesaplıyoruz. Puanlamanın bileşenleri şunlardır:"
+
+#: su_hosts.php:80 su_hosts.php:96
+msgid "Keyword score"
+msgstr "Anahtar kelime puanı"
+
+#: su_hosts.php:81
+msgid "How well your keyword preferences match the project's keywords."
+msgstr ""
+"Anahtar kelime tercihleriniz projenin anahtar kelimelerine ne kadar iyi "
+"uyuyor."
+
+#: su_hosts.php:82 su_hosts.php:97
+msgid "Platform score"
+msgstr "Platform puanı"
+
+#: su_hosts.php:83
+msgid ""
+"-1 if the project has no programs that will run on the computer; 0 if it "
+"does; +1 if one of them uses a GPU or VirtuaBox."
+msgstr ""
+
+#: su_hosts.php:84
+msgid "Balance"
+msgstr "Denge"
+
+#: su_hosts.php:85
+msgid ""
+"How much work is owed to the project; this changes from one day to the next."
+msgstr ""
+
+#: su_hosts.php:87
+msgid ""
+"We then choose the highest-scoring projects (at least 2) that together can "
+"use all the computer's processors."
+msgstr ""
+
+#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+msgid "Project"
+msgstr "Proje"
+
+#: su_hosts.php:98
+msgid "Balance (GFLOPS days)"
+msgstr "Denge (GFLOPS günleri)"
+
+#: su_hosts.php:99
+msgid "Opted out?"
+msgstr "Vazgeçildi mi?"
+
+#: su_hosts.php:100 su_hosts.php:128
+msgid "Score"
+msgstr "Puan"
+
+#: su_hosts.php:103
+msgid "Can use %1?"
+msgstr "%1 kullanabilir mi?"
+
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
+#: su.inc:121
+msgid "Yes"
+msgstr "Evet"
+
+#: su_hosts.php:122
+msgid "Given the above info, this computer would do work for these projects:"
+msgstr ""
+"Yukarıdaki bilgi verildiğinde, bu bilgisayar aşağıdaki projeler için "
+"çalışacaktır:"
+
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+msgid "No"
+msgstr "Hayır"
+
+#: su_hosts.php:148
+msgid "Computer hardware and software"
+msgstr "Bilgisayar donanım ve yazılımı"
+
+#: su_hosts.php:156 su_hosts.php:196
+msgid "Projects for which this computer has done work"
+msgstr "Bu bilgisayarın çalıştığı projeler"
+
+#: su_hosts.php:161 su.inc:172
+msgid "CPU FLOPS"
+msgstr "CPU FLOPS"
+
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+msgid "CPU time"
+msgstr "CPU zamanı"
+
+#: su_hosts.php:163 su.inc:174
+msgid "GPU FLOPS"
+msgstr "GPU FLOPS"
+
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+msgid "GPU time"
+msgstr "GPU zamanı"
+
+#: su_hosts.php:165 su.inc:175
+msgid "# jobs success"
+msgstr "# başarılı iş"
+
+#: su_hosts.php:166
+msgid "#jobs fail"
+msgstr "# başarısız iş"
+
+#: su_hosts.php:182 user_host.php:28
+msgid "Computer details"
+msgstr "Bilgisayar ayrıntıları"
+
+#: su_hosts.php:187
+msgid "Hardware/software details"
+msgstr "Donanım/yazılım ayrıntıları"
+
+#: su_hosts.php:192
+msgid "How projects are chosen for this computer"
+msgstr "Bu bilgisayar için projeler nasıl seçildi"
+
+#: su_intro.php:25
+msgid "Getting started"
+msgstr "Başlamak"
+
+#: su_intro.php:26
+msgid "Welcome to %1"
+msgstr "% 1'e hoş geldiniz"
+
+#: su_intro.php:46
+msgid ""
+"By now you should have downloaded and run BOINC.  If so, you're done!  Your "
+"computer will do run science jobs in the background, supporting research in "
+"the areas you selected."
+msgstr ""
+
+#: su_intro.php:47
+msgid ""
+"Scientists need all the computing power they can get.  To help further, you "
+"can:"
+msgstr ""
+"Bilim adamlarının alabilecekleri tüm hesaplama gücüne ihtiyaçları var. Daha "
+"fazla yardımcı olmak için şunları yapabilirsiniz:"
+
+#: su_intro.php:48
+msgid ""
+"Tell your family, friends, and co-workers about %1, and encourage them to "
+"volunteer."
+msgstr ""
+"Ailenize, arkadaşlarınıza ve iş arkadaşlarınıza %1 hakkında bilgi verin ve "
+"onları gönüllü olmaya teşvik edin."
+
+#: su_intro.php:49
+msgid "Run %1 on all your computing devices:"
+msgstr "Tüm bilgisayar cihazlarınızda% 1 uygulamasını çalıştırın:"
+
+#: su_intro.php:50
+msgid ""
+"Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
+"web site (%1) and log in.  Then select Download from the Project menu, and "
+"install BOINC as you did on this computer."
+msgstr ""
+"Masaüstü ve dizüstü bilgisayarlar (Windows, Linux, Mac OS X): Bu cihazda, bu"
+" web sitesini ziyaret edin (%1) ve giriş yapın. Ardından Proje menüsünden "
+"İndir'i seçin ve bu bilgisayarda yaptığınız gibi BOINC'ı yükleyin."
+
+#: su_intro.php:51
+msgid ""
+"Android phones and tablets: install the BOINC app from the Google Play Store"
+" or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
+" and log in."
+msgstr ""
+"Android telefonlar ve tabletler: BOINC uygulamasını Google Play Store'dan "
+"veya (Fire için) Amazon App Store'dan yükleyin. Hesap Yöneticisini Kullan'ı "
+"seçin, %1'i seçin ve giriş yapın."
+
+#: su_intro.php:52
+msgid "You can %1 Join or create a Team%2."
+msgstr "%1Bir takıma katılabilir veya takım oluşturabilisiniz%2."
+
+#: su_intro.php:53
+msgid "Computing prefs"
+msgstr "Hesaplama tercihleri"
+
+#: su_intro.php:54
+msgid "Science prefs"
+msgstr "Bilim tercihleri"
+
+#: su_join.php:77 project.inc:98
+msgid "Join"
+msgstr "Katıl"
+
+#: su_prefs.php:109
+msgid "Prefer"
+msgstr "Tercih Et"
+
+#: su_prefs.php:110
+msgid "As needed"
+msgstr "Gerektikçe"
+
+#: su_prefs.php:308
+msgid "Science and location preferences"
+msgstr "Bilim ve konum tercihleri"
+
+#: su_prefs.php:311
+msgid "Preferenced saved."
+msgstr "Tercih kaydedildi."
+
+#: su_prefs.php:314
+msgid ""
+"Select science areas and locations you do or don't want to support.  Click "
+"%1; for more detail, %2; for less.  When done, click the Save button at the "
+"bottom."
+msgstr ""
+
+#: su_prefs.php:323
+msgid "Science areas"
+msgstr "Bilim alanları"
+
+#: su_prefs.php:327
+msgid "Locations"
+msgstr "Konum"
+
+#: su_user_accounting.php:24 su_user_accounting.php:34
+msgid "Your contribution history"
+msgstr "Katkı geçmişiniz"
+
+#: su_user_accounting.php:35
+msgid "Computing power"
+msgstr "Hesaplama gücü"
+
+#: su_user_accounting.php:37
+msgid "Computing time"
+msgstr "Hesaplama süresi"
+
+#: su_user_accounting.php:39
+msgid "Completed jobs"
+msgstr "Tamamlanmış işler"
+
+#: su_user_projects.php:28
+msgid "New"
+msgstr "Yeni"
+
+#: su_user_projects.php:30 su.inc:154
+msgid "Established"
+msgstr "Kurulmuş"
+
+#: su_user_projects.php:32
+msgid "In progress"
+msgstr "Devam etmekte"
+
+#: su_user_projects.php:34 su.inc:258 su.inc:265
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: su_user_projects.php:85
+msgid "since"
+msgstr "Şu zamandan beri:"
+
+#: su_user_projects.php:86
+msgid "CPU hours"
+msgstr "CPU saatleri"
+
+#: su_user_projects.php:87
+msgid "GPU hours"
+msgstr "GPU saatleri"
+
+#: su_user_projects.php:88
+msgid "# successful jobs"
+msgstr "# başarılı iş"
+
+#: su_user_projects.php:89
+msgid "# failed jobs"
+msgstr "# başarısız iş"
+
+#: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
+msgid "Account status"
+msgstr "Hesap durumu"
+
+#: su_user_projects.php:91
+msgid "Allowed by prefs?"
+msgstr ""
+
+#: su_user_projects.php:126
+msgid "Web site"
+msgstr "Web sitesi"
+
+#: su_user_projects.php:127
+msgid "Science keywords"
+msgstr "Bilim anahtar kelimeleri"
+
+#: su_user_projects.php:128
+msgid "Location keywords"
+msgstr "Konum anahtar kelimeleri"
+
+#: su_user_projects.php:132
+msgid "CPU computing"
+msgstr "CPU hesaplama"
+
+#: su_user_projects.php:135
+msgid "GPU computing"
+msgstr "GPU hesaplama"
+
+#: su_user_projects.php:138
+msgid "# jobs succeeded"
+msgstr "# iş başarıldı"
+
+#: su_user_projects.php:139
+msgid "# jobs failed"
+msgstr "# iş başarısız oldu"
+
+#: su_user_projects.php:141
+msgid "Include"
+msgstr "Dahil et"
+
+#: su_user_projects.php:143
+msgid "Exclude"
+msgstr "Hariç tut"
+
+#: su_user_projects.php:146
+msgid "Excluded?"
+msgstr "Hariç tutulan?"
+
+#: su_user_projects.php:146
+msgid "Use if this project causes problems on your computer"
+msgstr "Bu projenin bilgisayarınızda sorun çıkarması durumunda kullanın"
+
+#: su_user_projects.php:150
+msgid "None"
+msgstr "Hiçbiri"
+
+#: su_user_projects.php:152
+msgid "Return to project list"
+msgstr "Proje listesine geri dön"
+
+#: user_host.php:30 user_projects.php:23
+msgid "Projects"
+msgstr "Projeler"
+
+#: user_hosts.php:26
+msgid "click for details"
+msgstr "ayrıntılar için tıklayın"
+
+#: user_hosts.php:27
+msgid "Last RPC"
+msgstr "Son RPC"
+
+#: project.inc:92
+msgid "Log out"
+msgstr "Çıkış yap"
+
+#: project.inc:98
+msgid "Login"
+msgstr "Giriş yap"
+
+#: project.inc:122
+msgid "About %1"
+msgstr "%1 Hakkında"
+
+#: project.inc:123
+msgid "Help"
+msgstr "Yardım"
+
+#: project.inc:127
+msgid "Message boards"
+msgstr "Mesaj Panoları"
+
+#: project.inc:129
+msgid "Teams"
+msgstr "Takımlar"
+
+#: project.inc:129
+msgid "create or join a team"
+msgstr "bir takıma katıl veya takım oluştur"
+
+#: project.inc:134
+msgid "Site"
+msgstr "Site"
+
+#: project.inc:135
+msgid "Search"
+msgstr "Arama yap"
+
+#: project.inc:136
+msgid "Languages"
+msgstr "Diller"
+
+#: project.inc:154
+msgid "Do science research on your computer, tablet, or phone"
+msgstr ""
+"Bilgisayarınızda, tabletinizde veya telefonunuzda bilim araştırması yapın"
+
+#: project.inc:174
+msgid "Generated"
+msgstr "Oluşturulan"
+
+#: project.inc:205
+msgid "Your personal background."
+msgstr "Kişisel geçmişiniz."
+
+#: project.inc:209
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr ""
+"Bize kendinizden bahsedin. Bize yaşadığınız yeri, yaşınızı, mesleğinizi, "
+"hobilerinizi ya da kendiniz hakkında başka bir şeyi söyleyebilirsiniz."
+
+#: project.inc:213
+msgid "Your opinions about %1"
+msgstr "%1 ile ilgili görüşleriniz"
+
+#: project.inc:217
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+
+#: su.inc:118 su.inc:123
+msgid "Maybe"
+msgstr "Olabilir"
+
+#: su.inc:126
+msgid "Edit preferences"
+msgstr "Tercihleri düzenle"
+
+#: su.inc:152
+msgid "Initial"
+msgstr "Baştaki"
+
+#: su.inc:156
+msgid "Transient error"
+msgstr "Geçici hata"
+
+#: su.inc:164
+msgid "No accounts yet"
+msgstr "Henüz hesap yok"
+
+#: su.inc:170
+msgid "Status"
+msgstr "Durum"
+
+#: su.inc:176
+msgid "# jobs fail"
+msgstr "# iş başarısız"
+
+#: su.inc:199
+msgid "Domain name"
+msgstr "Alan adı"
+
+#: su.inc:201
+msgid "Product name"
+msgstr "Ürün adı"
+
+#: su.inc:205
+msgid "Local Standard Time"
+msgstr "Yerel Standart Zaman"
+
+#: su.inc:205
+msgid "UTC %1 hours"
+msgstr "UTC %1 saat"
+
+#: su.inc:206
+msgid "Created"
+msgstr "Oluşturuldu"
+
+#: su.inc:207
+msgid "Number of times client has contacted server"
+msgstr "İstemcinin sunucuyla iletişim kurma sayısı"
+
+#: su.inc:208
+msgid "Last time contacted server"
+msgstr "Son kez iletişim kurulan sunucu"
+
+#: su.inc:209
+msgid "Fraction of time BOINC is running"
+msgstr "BOINC'in çalıştığı zaman kesiri"
+
+#: su.inc:211
+msgid ""
+"While BOINC is running, fraction of time computer has an Internet connection"
+msgstr ""
+
+#: su.inc:213
+msgid "While BOINC is running, fraction of time computing is allowed"
+msgstr ""
+
+#: su.inc:214
+msgid "While is BOINC running, fraction of time GPU computing is allowed"
+msgstr ""
+
+#: su.inc:219
+msgid "CPU type"
+msgstr "CPU türü"
+
+#: su.inc:220
+msgid "Number of processors"
+msgstr "İşlemci sayısı"
+
+#: su.inc:222
+msgid "Coprocessors"
+msgstr "Yardımcı işlemciler"
+
+#: su.inc:224
+msgid "Operating System"
+msgstr "İşletim Sistemi"
+
+#: su.inc:227
+msgid "BOINC version"
+msgstr "BOINC sürümü"
+
+#: su.inc:231
+msgid "Memory"
+msgstr "Bellek"
+
+#: su.inc:231 su.inc:240
+msgid "%1 MB"
+msgstr "%1 MB"
+
+#: su.inc:235
+msgid "Cache"
+msgstr "Önbellek"
+
+#: su.inc:235
+msgid "%1 KB"
+msgstr "%1 KB"
+
+#: su.inc:240
+msgid "Swap space"
+msgstr "Takas alanı"
+
+#: su.inc:243
+msgid "Total disk space"
+msgstr "Toplam disk alanı"
+
+#: su.inc:243 su.inc:246
+msgid "%1 GB"
+msgstr "%1 GB"
+
+#: su.inc:246
+msgid "Free Disk Space"
+msgstr "Boş disk alanı"
+
+#: su.inc:249
+msgid "Measured floating point speed"
+msgstr "Ölçülen kayar nokta hızı"
+
+#: su.inc:249 su.inc:252
+msgid "%1 million ops/sec"
+msgstr ""
+
+#: su.inc:252
+msgid "Measured integer speed"
+msgstr "Ölçülen tamsayı hızı"
+
+#: su.inc:256 su.inc:258
+msgid "Average upload rate"
+msgstr "Ortalama yükleme hızı"
+
+#: su.inc:256 su.inc:263
+msgid "%1 KB/sec"
+msgstr "%1 KB/saniye"
+
+#: su.inc:263 su.inc:265
+msgid "Average download rate"
+msgstr "Ortalama indirme hızı"
+
+#: su.inc:320
+msgid "No accounting records yet"
+msgstr ""
+
+#: su.inc:324 su.inc:333
+msgid "CPU days"
+msgstr "CPU günleri"
+
+#: su.inc:325 su.inc:334
+msgid "GPU days"
+msgstr "GPU günleri"
+
+#: su.inc:326 su.inc:335
+msgid "Successful jobs"
+msgstr "Başarılı işler"
+
+#: su.inc:327 su.inc:336
+msgid "Failed jobs"
+msgstr "Başarısız işler"
+
+#: su_graph.inc:31
+msgid "Past month:"
+msgstr "Geçmiş ay:"
+
+#: su_graph.inc:34
+msgid "Not enough data yet"
+msgstr "Henüz yeterli veri yok"
+
+#: su_join.inc:35
+msgid "An invitation code is required to create an account."
+msgstr "Hesap oluşturmak için bir davet kodu gereklidir."
+
+#: su_join.inc:36
+msgid "Invitation code"
+msgstr "Davet kodu"
+
+#: su_join.inc:44
+msgid "Identifies you on this web site. Use your real name or a nickname."
+msgstr ""
+"Bu web sitesinde sizi tanınacaksınız. Gerçek adınızı veya  bir takma ad "
+"kullanın."
+
+#: su_join.inc:45
+msgid "Choose screen name"
+msgstr "Ekran adı seçin"
+
+#: su_join.inc:51
+msgid "An address where you can receive emails."
+msgstr "E-postaları alabileceğiniz bir adres."
+
+#: su_join.inc:52
+msgid "Your email address"
+msgstr "E-posta adresiniz"
+
+#: su_join.inc:63
+msgid "Must be at least %1 characters"
+msgstr "En az %1 karakter olmalı"
+
+#: su_join.inc:64
+msgid "Choose password"
+msgstr "Şifre seçin"
+
+#: su_user.inc:154
+msgid "Want to help more?"
+msgstr "Daha fazla yardım?"
+
+#: su_user.inc:155
+msgid "Tell friends and family about %1."
+msgstr "Arkadaşlarınıza ve ailenize % 1 hakkında bilgi verin."
+
+#: su_user.inc:156
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr ""
+"Diğer bilgi işlem cihazlarınızda (masaüstü bilgisayarları, dizüstü "
+"bilgisayarlar, tabletler, Android telefonlar) BOINC uygulamasını çalıştırın."
+
+#: su_user.inc:157
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
+msgstr "BOINC bu bilgisayarda çalışıyor mu? Değilse, %1İndirin%2."
+
