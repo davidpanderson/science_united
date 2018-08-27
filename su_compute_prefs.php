@@ -74,7 +74,7 @@ function show_prefs($user) {
         $pref=="standard"
     );
     form_radio_buttons(
-        tra("Max computing %1 Use all processors.%2",
+        tra("Maximum computing %1 Use all processors.%2",
             "<br><small>",
             "</small>"
         ),

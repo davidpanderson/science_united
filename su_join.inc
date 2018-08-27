@@ -92,7 +92,7 @@ function global_prefs_form() {
         array(
             array('low_power', "Low power"),
             array('standard', "Standard"),
-            array('max', "Maximum"),
+            array('max', "Maximum computing"),
         ),
         'standard'
     );

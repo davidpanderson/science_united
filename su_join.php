@@ -65,8 +65,8 @@ function handle_submit() {
             )
         );
     }
-    Header("Location: download.php?dev=1");
     send_cookie('auth', $user->authenticator, false);
+    Header("Location: download.php?dev=1");
 }
 
 $action = post_str('action', true);

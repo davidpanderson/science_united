@@ -66,6 +66,11 @@ function intro_panel() {
             echo tra("You help by installing BOINC, a free program that runs scientific jobs in the background and when you're not using the computer.  BOINC is secure and will not affect your normal use of the computer.");
             echo "<p>";
             echo tra(
+                "%1 is operated by the BOINC project at UC Berkeley.",
+                PROJECT
+            );
+            echo " ";
+            echo tra(
                 "%1 and the research projects it supports are non-profit.",
                 PROJECT
             );

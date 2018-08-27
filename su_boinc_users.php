@@ -28,9 +28,8 @@ function main() {
         Science United attaches your computer
         to projects based on your science preferences.
         For example, if you select cancer research,
-        your computer will compute for BOINC projects
-        doing cancer research;
-        if a new cancer project starts up, it will compute for that one too.
+        your computer will compute for BOINC projects doing cancer research.
+        If a new cancer project starts up, it will compute for that one too.
         <p>
         <a href=su_about.php>Read why this helps volunteer computing</a>.
         <p>

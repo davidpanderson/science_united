@@ -4,31 +4,31 @@
 # This file is distributed under the same license as BOINC.
 # 
 # Translators:
-# ilkeryus <ilkeryus@gmail.com>, 2018
+# Alonso Lara (AlonsoLP) <alonso.lara.plana@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
 "POT-Creation-Date: 2018-05-17 08:44 PDT\n"
-"Last-Translator: ilkeryus <ilkeryus@gmail.com>, 2018\n"
-"Language-Team: Turkish (https://www.transifex.com/boinc/teams/35581/tr/)\n"
+"Last-Translator: Alonso Lara (AlonsoLP) <alonso.lara.plana@gmail.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/boinc/teams/35581/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: index.php:44
 msgid "%1 is temporarily shut down for maintenance."
-msgstr "%1 bakım için geçici olarak kapalıdır."
+msgstr "%1 está apagado temporalmente por mantenimiento."
 
 #: index.php:51
 msgid "Recent contribution"
-msgstr "Son katkı"
+msgstr "Contribución reciente"
 
 #: index.php:56
 msgid "Continue to your home page"
-msgstr "Ana sayfanıza devam edin"
+msgstr "Continúa a tu página de inicio"
 
 #: index.php:64
 msgid ""
@@ -37,10 +37,10 @@ msgid ""
 "mathematics, and environmental science; you can pick the areas you want to "
 "support."
 msgstr ""
-"%1, bilimsel araştırma projelerine bilgi işlem gücü vererek yardımcı "
-"olmanızı sağlar. Bu projeler astronomi, fizik, biyomedikal, matematik ve "
-"çevre bilimlerinde araştırma yapar; desteklemek istediğiniz alanları "
-"seçebilirsiniz."
+"%1 te permite ayudar a proyectos de investigación científica dándoles "
+"potencia de cómputo. Estos proyectos investigan en astronomía, física, "
+"biomedicina, matemáticas y ciencias ambientales; puedes elegir las áreas que"
+" deseas apoyar."
 
 #: index.php:66
 msgid ""
@@ -48,522 +48,518 @@ msgid ""
 "the background and when you're not using the computer.  BOINC is secure and "
 "will not affect your normal use of the computer."
 msgstr ""
-"Bilimsel işleri arka planda çalıştıran ve bilgisayarı kullanmadığınız "
-"zamanlarda çalışan ücretsiz bir program olan BOINC'i kurarak yardımcı "
-"olursunuz. BOINC güvenlidir ve normal bilgisayar kullanımınızı etkilemez."
+"Ayudas instalando BOINC, un programa gratuito que ejecuta trabajos "
+"científicos en segundo plano y cuando no estás usando la computadora. BOINC "
+"es seguro y no afectará al uso normal de la computadora."
 
 #: index.php:69
 msgid "%1 and the research projects it supports are non-profit."
-msgstr "% 1 ve desteklediği araştırma projeleri kar amacı gütmemektedir."
+msgstr "%1 y los proyectos de investigación que apoya son sin ánimo de lucro."
 
 #: index.php:73
 msgid "Join %1"
-msgstr "%1 projesine katılın"
+msgstr "Unirse a %1"
 
 #: index.php:76
 msgid "Already joined?"
-msgstr "Zaten katıldınız mı?"
+msgstr "¿Ya se unió?"
 
 #: index.php:77
 msgid "Log in."
-msgstr "Giriş Yapın"
+msgstr "Iniciar sesión."
 
 #: index.php:86
 msgid "Welcome, %1"
-msgstr "Hoşgeldiniz, %1"
+msgstr "Bienvenido, %1"
 
 #: index.php:105
 msgid "News"
-msgstr "Haberler"
+msgstr "Noticias"
 
 #: index.php:118
 msgid "Ebola-Infected VERO E6 Cell"
-msgstr "Ebola bulaşmış VERO E6 Hücresi"
+msgstr "Célula VERO E6 infectada con Ébola"
 
 #: index.php:119
 msgid "Simulation of Higgs boson detection"
-msgstr "Higgs bozonu tespiti simülasyonu"
+msgstr "Simulación de la detección del bosón de Higgs"
 
 #: index.php:120
 msgid "The Earth's interrelated climate systems"
-msgstr "Dünya'nın birbiriyle bağlantılı iklim sistemleri"
+msgstr "Los sistemas climáticos interrelacionados de la Tierra"
 
 #: index.php:121
 msgid "Structure of protein GIF"
-msgstr "Protein GIF yapısı"
+msgstr "Estructura de proteína GIF"
 
 #: index.php:122
 msgid "The Hubble ultra-deep field image"
-msgstr "Hubble ultra derin alan görüntüsü"
+msgstr "La imagen de campo ultra profundo de Hubble"
 
 #: index.php:164
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
 msgstr ""
-"Science United, %1National Science Foundation%2, #1664190 numaralı ödülle "
-"ödenek alıyor ve %3Universite of California, Berkeley%4 kuruluşuna "
-"dayanıyor."
+"Science United está financiado por la %1Fundación de Ciencia Nacional%2, "
+"premio # 1664190, y tiene su sede en la %3Universidad de California, "
+"Berkeley%4."
 
 #: su_about.php:20
 msgid "About"
-msgstr "Hakkında"
+msgstr "Acerca de"
 
 #: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
 #: su_user_projects.php:84 user_hosts.php:26 su.inc:169
 msgid "Name"
-msgstr "Ad"
+msgstr "Nombre"
 
 #: su_account_settings.php:24
 msgid "Email address"
-msgstr "E-posta adresi"
+msgstr "Correo electrónico"
 
 #: su_account_settings.php:25
 msgid "%1 member since"
-msgstr "Şu zamandır %1 üyesi: "
+msgstr "Miembro de %1 desde"
 
 #: su_account_settings.php:26
 msgid "User ID"
-msgstr "Kullanıcı Kimliği"
+msgstr "ID de usuario"
 
 #: su_account_settings.php:26
 msgid "Used in community functions"
-msgstr "Topluluk işlevlerinde kullanılır"
+msgstr "Usado en las funciones de la comunidad"
 
 #: su_account_settings.php:30
 msgid "Account settings"
-msgstr "Hesap Ayarları"
+msgstr "Ajustes de cuenta"
 
 #: su_accounting.php:29
 msgid "Computing history"
-msgstr "Hesaplama Geçmişi"
+msgstr "Historial de computación"
 
 #: su_compute_prefs.php:28
 msgid "Computing settings"
-msgstr "Hesaplama Ayarları"
+msgstr "Ajustes de computación"
 
 #: su_compute_prefs.php:44
 msgid ""
 "You can control how many processors to use (most computers have 4 or 8 "
 "processors) and when to use them."
 msgstr ""
-"Kaç tane işlemcinin kullanılacağını (birçok bilgisayar 4 ila 8 işlemciye "
-"sahiptir) ve bunların ne zaman kullanılacağını belirleyebilirsiniz."
+"Puedes controlar cuántos procesadores usar (la mayoría de las computadoras "
+"tienen 4 u 8 procesadores) y cuándo usarlos."
 
 #: su_compute_prefs.php:50
 msgid "This may affect your electricity costs and your computer's fan speeds."
 msgstr ""
-"Bu, elektrik maliyetlerinizi ve bilgisayarınızın fan hızlarını "
-"etkileyebilir."
+"Esto puede afectar a tus costes de electricidad y la velocidad de los "
+"ventiladores de tu computadora."
 
 #: su_compute_prefs.php:52
 msgid ""
 "Settings affect all your computers.  Changes take effect the next time the "
 "computer synchs with Science United."
 msgstr ""
-"Ayarlar tüm bilgisayarlarınızı etkiler. Değişiklikler, bilgisayarın Science "
-"United ile bir sonraki senkronizasyonunda etkili olur."
+"Los ajustes afectan a todas sus computadoras. Los cambios entran en vigencia"
+" la próxima vez que la computadora se sincronice con Science United."
 
 #: su_compute_prefs.php:54
 msgid ""
 "You can change settings for a particular computer using the BOINC Manager.  "
 "This also gives you more detailed options."
 msgstr ""
-"Belirli bir bilgisayarın ayarlarını BOINC Manager kullanarak "
-"değiştirebilirsiniz. Bu ayrıca size daha ayrıntılı seçenekler sunar."
+"Puede cambiar los ajustes de una computadora en particular usando el "
+"Administrador BOINC. Esto también le da opciones más detalladas."
 
 #: su_compute_prefs.php:56
 msgid "Choose one of:"
-msgstr "Aşağıdakilerden birini seçin:"
+msgstr "Elige uno de:"
 
 #: su_compute_prefs.php:61
 msgid ""
 "Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
 msgstr ""
-"Yeşil %1 İşlemcilerin %25'ini kullanın ve bilgisayar boştayken hesaplamayı "
-"durdurun.%2"
+"Verde %1 Usar el 25% de los procesadores y dejar de computar cuando la "
+"computadora está inactiva.%2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
-msgstr "Standard %1  İşlemcilerin %50'sini kullanın.%2"
+msgstr "Estándar %1 Usa el 50% de los procesadores.%2"
 
 #: su_compute_prefs.php:77
 msgid "Max computing %1 Use all processors.%2"
-msgstr "Azami hesaplama %1 Tüm işlemcileri kullanın. %2"
+msgstr "Máxima computación %1 Usa todos los procesadores.%2"
 
 #: su_compute_prefs.php:86
 msgid "Update"
-msgstr "Güncelle"
+msgstr "Actualizar"
 
 #: su_compute_prefs.php:95
 msgid "Computing settings updated"
-msgstr "Hesaplama ayarları güncellendi"
+msgstr "Ajustes de computación actualizadas"
 
 #: su_compute_prefs.php:96
 msgid ""
 "The new settings will take effect when your computer synchs with Science "
 "United."
 msgstr ""
-"Yeni ayarlar, bilgisayarınız Science United ile senkronize olduğunda etkili "
-"olacaktır."
+"Los nuevos ajustes tendrán efecto cuando su computadora se sincronice con "
+"Science United."
 
 #: su_compute_prefs.php:100
 msgid "Continue to home page"
-msgstr "Ana sayfaya devam et"
+msgstr "Continuar a la página de inicio"
 
 #: su_download.php:28
 msgid "Install software"
-msgstr "Yazılımı kur"
+msgstr "Instalar programa"
 
 #: su_download.php:29
 msgid ""
 "To participate in %1 you must install BOINC and VirtualBox on your computer."
 msgstr ""
-"% 1 programına katılmak için BOINC ve VirtualBox'ı bilgisayarınıza "
-"yüklemelisiniz."
+"Para participar en %1, debes instalar BOINC y VirtualBox en tu computadora."
 
 #: su_email_prefs.php:28
 msgid "Email settings"
-msgstr "E-posta ayarları"
+msgstr "Ajustes de correo electrónico"
 
 #: su_email_prefs.php:30
 msgid "Preferences updated."
-msgstr "Tercihler güncellendi."
+msgstr "Preferencias actualizadas."
 
 #: su_email_prefs.php:35
 msgid "Don't send me any emails"
-msgstr "Bana e-posta göndermeyin"
+msgstr "No me envíe ningún correo electrónico"
 
 #: su_email_prefs.php:42
 msgid ""
 "Status emails %1 These tell you how much work your computer(s) have done "
 "recently %2"
 msgstr ""
-"Durum e-postaları %1 Bunlar, bilgisayar(lar)ınızın yakın zamanda ne kadar iş"
-" tamamladığını size söyler %2"
+"Mensajes de estado %1 Estos te indican cuánto trabajo han hecho tus "
+"computadoras recientemente %2"
 
 #: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
 msgid "Never"
-msgstr "Asla"
+msgstr "Nunca"
 
 #: su_email_prefs.php:49
 msgid "Daily"
-msgstr "Günlük"
+msgstr "Diariamente"
 
 #: su_email_prefs.php:50
 msgid "Weekly"
-msgstr "Haftalık"
+msgstr "Semanalmente"
 
 #: su_email_prefs.php:51
 msgid "Monthly"
-msgstr "Aylık"
+msgstr "Mensualmente"
 
 #: su_email_prefs.php:56
 msgid ""
 "Community emails %1 These tell you about private messages, forum posts, and "
 "friend requests %2"
 msgstr ""
-"Topluluk e-postaları %1 Bunlar size özel mesajlar, forum gönderileri ve "
-"arkadaşlık istekleri hakkında bilgi verir %2"
+"Correos electrónicos de la comunidad %1 Te informan sobre mensajes privados,"
+" publicaciones en el foro y solicitudes de amistad %2"
 
 #: su_email_prefs.php:63
 msgid "Immediately"
-msgstr "Hemen"
+msgstr "Inmediatamente"
 
 #: su_email_prefs.php:64
 msgid "Daily summary"
-msgstr "Günlük özet"
+msgstr "Resumen diario"
 
 #: su_email_prefs.php:68 su_prefs.php:331
 msgid "Save"
-msgstr "Kaydet"
+msgstr "Guardar"
 
 #: su_graph.php:56
 msgid "Successful jobs/day"
-msgstr "Gün başına başarılı iş"
+msgstr "Trabajos exitosos/día"
 
 #: su_graph.php:57
 msgid "Failed jobs/day"
-msgstr "Gün başına başarısız iş"
+msgstr "Trabajos fallidos/día"
 
 #: su_graph.php:64
 msgid "CPU hours/day"
-msgstr "Gün başına CPU saatleri"
+msgstr "Horas de CPU/día"
 
 #: su_graph.php:65
 msgid "GPU hours/day"
-msgstr "Gün başına GPU saatleri"
+msgstr "Horas de GPU/día"
 
 #: su_help.php:3
 msgid "Need help?"
-msgstr "Yardıma ihtiyacınız mı var?"
+msgstr "¿Necesita ayuda?"
 
 #: su_help.php:8
 msgid "Problems installing or running BOINC: %1 get help here%2."
-msgstr ""
-"BOINC yükleme veya çalıştırmayla ilgili sorunlar: %1 buradan yardım alın %2."
+msgstr "Problemas al instalar o ejecutar BOINC: %1 obtén ayuda aquí%2."
 
 #: su_help.php:16
 msgid ""
 "Problems with %1: ask for help on the\n"
 "        %2 %3 message boards.%4"
 msgstr ""
-"%1 ile ilgili sorunlar: buradan yardım isteyin:\n"
-"        %2 %3 mesaj panoları.%4"
+"Problemas con %1: pida ayuda en el\n"
+"        %2 %3 panel de mensajes.%4"
 
 #: su_help.php:27
 msgid ""
 "To report a bug or request a feature in %1, create an issue on %2 the %3 "
 "Github repository%4 (you'll need a free Github account)."
 msgstr ""
-"Bir hatayı bildirmek veya %1'de bir özellik isteğinde bulunmak için, %2 %3 "
-"Github deposu% 4'te bir konu oluşturun (ücretsiz bir Github hesabına "
-"ihtiyacınız olacak)."
+"Para informar sobre un fallo o solicitar una característica en %1, avise del"
+" problema en %2 el %3 repositorio de Github%4 (necesitará una cuenta "
+"gratuita de Github)."
 
 #: su_home.php:25
 msgid "Contribution"
-msgstr "Katkı"
+msgstr "Contribución"
 
 #: su_home.php:28 su_hosts.php:184
 msgid "View"
-msgstr "Görünüm"
+msgstr "Ver"
 
 #: su_home.php:30 su_hosts.php:31 user_hosts.php:40
 msgid "Your computers"
-msgstr "Bilgisayarlarınız"
+msgstr "Tus computadoras"
 
 #: su_home.php:34
 msgid "Computing: graphs"
-msgstr "Hesaplama: grafikler"
+msgstr "Computación: gráficas"
 
 #: su_home.php:35
 msgid "Computing: details"
-msgstr "Hesaplama: ayrıntılar"
+msgstr "Computación: detalles"
 
 #: su_home.php:36
 msgid "Science projects"
-msgstr "Bilimsel Projeler"
+msgstr "Proyectos de ciencia"
 
 #: su_home.php:43 su_home.php:65 project.inc:126
 msgid "Community"
-msgstr "Topluluk"
+msgstr "Comunidad"
 
 #: su_home.php:51
 msgid "Settings"
-msgstr "Ayarlar"
+msgstr "Ajustes"
 
 #: su_home.php:54
 msgid "Edit"
-msgstr "Düzenle"
+msgstr "Editar"
 
 #: su_home.php:56
 msgid "Science areas and locations"
-msgstr "Bilim alanları ve yerleri"
+msgstr "Áreas y ubicaciones de ciencia"
 
 #: su_home.php:56
 msgid "Choose the types of research you want to support"
-msgstr "Desteklemek istediğiniz araştırma türlerini seçin"
+msgstr "Elige los tipos de investigación que desea apoyar"
 
 #: su_home.php:61
 msgid "Computing"
-msgstr "Hesaplama"
+msgstr "Computación"
 
 #: su_home.php:61
 msgid "Choose how to use your computers"
-msgstr "Bilgisayarlarınızı nasıl kullanacağınızı seçin"
+msgstr "Elije cómo usar sus computadoras"
 
 #: su_home.php:65
 msgid "Settings for message boards and private messages"
-msgstr "Mesaj panoları ve özel mesajlar için ayarlar"
+msgstr "Ajustes para los paneles de mensajes y mensajes privados"
 
 #: su_home.php:69
 msgid "Account"
-msgstr "Hesap"
+msgstr "Cuenta"
 
 #: su_home.php:69
 msgid "Name, password, email address"
-msgstr "Ad, şifre, e-posta adresi"
+msgstr "Nombre, contraseña, dirección de correo electrónico"
 
 #: su_home.php:73
 msgid "Email"
-msgstr "E-posta"
+msgstr "Correo electrónico"
 
 #: su_home.php:73
 msgid "When and whether we should email you"
-msgstr ""
-"Size e-posta göndermemiz gerekip gerekmediği ve bunun ne zaman olabileceği"
+msgstr "Cuándo y si debemos enviarle un correo electrónico"
 
 #: su_home.php:99
 msgid "Your home page"
-msgstr "Ana sayfanız"
+msgstr "Tu página de inicio"
 
 #: su_hosts.php:33
 msgid "No computers yet"
-msgstr "Henüz bilgisayar yok"
+msgstr "No hay computadoras todavía"
 
 #: su_hosts.php:39
 msgid "Computer name"
-msgstr "Bilgisayar adı"
+msgstr "Nombre de la computadora"
 
 #: su_hosts.php:39 su_user_projects.php:84
 msgid "Click for details"
-msgstr "Ayrıntılar için tıklayın"
+msgstr "Pulsa para detalles"
 
 #: su_hosts.php:40
 msgid "Operating system"
-msgstr "İşletim sistemi"
+msgstr "Sistema operativo"
 
 #: su_hosts.php:41 su_hosts.php:190
 msgid "Last contact"
-msgstr "Son iletişim"
+msgstr "Último contacto"
 
 #: su_hosts.php:42 su_hosts.php:47
 msgid "Remove"
-msgstr "Kaldır"
+msgstr "Eliminar"
 
 #: su_hosts.php:42
 msgid "... if this is a duplicate or the computer is no longer running BOINC"
-msgstr ""
-"... eğer bu bilgisayar artık BOINC çalıştırmıyorsa veya bir bilgisayarın "
-"tekrar kaydıysa"
+msgstr "... si es un duplicado o la computadora ya no está ejecutando BOINC"
 
 #: su_hosts.php:72
 msgid "How projects are chosen for %1"
-msgstr "%1 için projeler nasıl seçilir?"
+msgstr "Cómo se eligen los proyectos para %1"
 
 #: su_hosts.php:73
 msgid ""
 "To decide which projects this computer should work for, we compute a "
 "\"score\" for each project.  The components of the score are:"
 msgstr ""
-"Bu bilgisayarın hangi projeler için çalışması gerektiğine karar vermek için "
-"her proje için bir \"skor\" hesaplıyoruz. Puanlamanın bileşenleri şunlardır:"
+"Para decidir para qué proyectos debería trabajar esta computadora, "
+"calculamos una \"puntuación\" para cada proyecto. Los componentes de la "
+"puntuación son:"
 
 #: su_hosts.php:80 su_hosts.php:96
 msgid "Keyword score"
-msgstr "Anahtar kelime puanı"
+msgstr "Puntuación de palabra clave"
 
 #: su_hosts.php:81
 msgid "How well your keyword preferences match the project's keywords."
 msgstr ""
-"Anahtar kelime tercihleriniz projenin anahtar kelimelerine ne kadar iyi "
-"uyuyor."
+"Qué tan bien tus preferencias de palabras clave coinciden con las palabras "
+"clave del proyecto."
 
 #: su_hosts.php:82 su_hosts.php:97
 msgid "Platform score"
-msgstr "Platform puanı"
+msgstr "Puntuación de la plataforma"
 
 #: su_hosts.php:83
 msgid ""
 "-1 if the project has no programs that will run on the computer; 0 if it "
 "does; +1 if one of them uses a GPU or VirtuaBox."
 msgstr ""
-"Projenin bilgisayarda çalışacak programları yoksa -1; varsa 0; bunlardan "
-"biri GPU veya VirtuaBox kullanıyorsa +1."
+"-1 si el proyecto no tiene programas que se ejecutarán en la computadora; 0 "
+"si lo hace; +1 si uno de ellos usa una GPU o VirtuaBox."
 
 #: su_hosts.php:84
 msgid "Balance"
-msgstr "Denge"
+msgstr "Balance"
 
 #: su_hosts.php:85
 msgid ""
 "How much work is owed to the project; this changes from one day to the next."
-msgstr "Projeye ne kadar iş borçlanılmış; bu bir günden diğerine değişir."
+msgstr "Cuánto trabajo se debe al proyecto; esto cambia de un día para otro."
 
 #: su_hosts.php:87
 msgid ""
 "We then choose the highest-scoring projects (at least 2) that together can "
 "use all the computer's processors."
 msgstr ""
-"Daha sonra, tüm bilgisayar işlemcilerini birlikte kullanabilecek en yüksek "
-"puan alan projeleri (en az 2) seçiyoruz."
+"Luego elegimos los proyectos de mayor puntuación (al menos 2) que juntos "
+"pueden usar todos los procesadores de la computadora."
 
 #: su_hosts.php:95 su_hosts.php:128 project.inc:124
 msgid "Project"
-msgstr "Proje"
+msgstr "Proyecto"
 
 #: su_hosts.php:98
 msgid "Balance (GFLOPS days)"
-msgstr "Denge (GFLOPS günleri)"
+msgstr "Saldo (GFLOPS días)"
 
 #: su_hosts.php:99
 msgid "Opted out?"
-msgstr "Vazgeçildi mi?"
+msgstr "¿Excluido?"
 
 #: su_hosts.php:100 su_hosts.php:128
 msgid "Score"
-msgstr "Puan"
+msgstr "Puntuación"
 
 #: su_hosts.php:103
 msgid "Can use %1?"
-msgstr "%1 kullanabilir mi?"
+msgstr "¿Puede usar %1?"
 
 #: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
 #: su.inc:121
 msgid "Yes"
-msgstr "Evet"
+msgstr "Sí"
 
 #: su_hosts.php:122
 msgid "Given the above info, this computer would do work for these projects:"
 msgstr ""
-"Yukarıdaki bilgi verildiğinde, bu bilgisayar aşağıdaki projeler için "
-"çalışacaktır:"
+"Dada la información anterior, esta computadora podría funcionar para estos "
+"proyectos:"
 
 #: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
 msgid "No"
-msgstr "Hayır"
+msgstr "No"
 
 #: su_hosts.php:148
 msgid "Computer hardware and software"
-msgstr "Bilgisayar donanım ve yazılımı"
+msgstr "Hardware y software de la computadora"
 
 #: su_hosts.php:156 su_hosts.php:196
 msgid "Projects for which this computer has done work"
-msgstr "Bu bilgisayarın çalıştığı projeler"
+msgstr "Proyectos para los cuales esta computadora ha trabajado"
 
 #: su_hosts.php:161 su.inc:172
 msgid "CPU FLOPS"
-msgstr "CPU FLOPS"
+msgstr "FLOPS CPU"
 
 #: su_hosts.php:162 su_user_projects.php:133 su.inc:171
 msgid "CPU time"
-msgstr "CPU zamanı"
+msgstr "Tiempo de CPU"
 
 #: su_hosts.php:163 su.inc:174
 msgid "GPU FLOPS"
-msgstr "GPU FLOPS"
+msgstr "FLOPS GPU"
 
 #: su_hosts.php:164 su_user_projects.php:136 su.inc:173
 msgid "GPU time"
-msgstr "GPU zamanı"
+msgstr "Tiempo de GPU"
 
 #: su_hosts.php:165 su.inc:175
 msgid "# jobs success"
-msgstr "# başarılı iş"
+msgstr "# trabajos exitosos"
 
 #: su_hosts.php:166
 msgid "#jobs fail"
-msgstr "# başarısız iş"
+msgstr "#trabajos fallidos"
 
 #: su_hosts.php:182 user_host.php:28
 msgid "Computer details"
-msgstr "Bilgisayar ayrıntıları"
+msgstr "Detalles de la computadora"
 
 #: su_hosts.php:187
 msgid "Hardware/software details"
-msgstr "Donanım/yazılım ayrıntıları"
+msgstr "Detalles de hardware/software"
 
 #: su_hosts.php:192
 msgid "How projects are chosen for this computer"
-msgstr "Bu bilgisayar için projeler nasıl seçildi"
+msgstr "Cómo se eligen los proyectos para esta computadora"
 
 #: su_intro.php:25
 msgid "Getting started"
-msgstr "Başlamak"
+msgstr "Empezando"
 
 #: su_intro.php:26
 msgid "Welcome to %1"
-msgstr "% 1'e hoş geldiniz"
+msgstr "Bienvenido a %1"
 
 #: su_intro.php:46
 msgid ""
@@ -571,29 +567,29 @@ msgid ""
 "computer will do run science jobs in the background, supporting research in "
 "the areas you selected."
 msgstr ""
-"Şimdiye dek BOINC'i indirip çalıştırmanız iyi olurdu. Bu tamamsa, bitti! "
-"Bilgisayarınız arka planda bilim işlerini yürütecek, seçtiğiniz alanlarda "
-"araştırmaları destekleyecek."
+"Por ahora deberías haber descargado y ejecutado BOINC. Si es así, ¡ya "
+"terminaste! Tu computadora ejecutará trabajos científicos en segundo plano, "
+"lo que respaldará la investigación en las áreas que seleccionaste."
 
 #: su_intro.php:47
 msgid ""
 "Scientists need all the computing power they can get.  To help further, you "
 "can:"
 msgstr ""
-"Bilim adamlarının alabilecekleri tüm hesaplama gücüne ihtiyaçları var. Daha "
-"fazla yardımcı olmak için şunları yapabilirsiniz:"
+"Los científicos necesitan toda la potencia de cómputo que puedan obtener. "
+"Para ayudar aún más, puedes:"
 
 #: su_intro.php:48
 msgid ""
 "Tell your family, friends, and co-workers about %1, and encourage them to "
 "volunteer."
 msgstr ""
-"Ailenize, arkadaşlarınıza ve iş arkadaşlarınıza %1 hakkında bilgi verin ve "
-"onları gönüllü olmaya teşvik edin."
+"Háblale a tu familia, amigos y compañeros de trabajo acerca de %1 y anímales"
+" a ser voluntarios."
 
 #: su_intro.php:49
 msgid "Run %1 on all your computing devices:"
-msgstr "Tüm bilgisayar cihazlarınızda% 1 uygulamasını çalıştırın:"
+msgstr "Ejecutar %1 en todos tus dispositivos informáticos:"
 
 #: su_intro.php:50
 msgid ""
@@ -601,9 +597,10 @@ msgid ""
 "web site (%1) and log in.  Then select Download from the Project menu, and "
 "install BOINC as you did on this computer."
 msgstr ""
-"Masaüstü ve dizüstü bilgisayarlar (Windows, Linux, Mac OS X): Bu cihazda, bu"
-" web sitesini ziyaret edin (%1) ve giriş yapın. Ardından Proje menüsünden "
-"İndir'i seçin ve bu bilgisayarda yaptığınız gibi BOINC'ı yükleyin."
+"Computadoras de escritorio y portátiles (Windows, Linux, Mac OS X): en ese "
+"dispositivo, visita este sitio web (%1) e inicia sesión. Luego, selecciona "
+"Descargar en el menú Proyecto e instala BOINC como hiciste en esta "
+"computadora."
 
 #: su_intro.php:51
 msgid ""
@@ -611,41 +608,41 @@ msgid ""
 " or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
 " and log in."
 msgstr ""
-"Android telefonlar ve tabletler: BOINC uygulamasını Google Play Store'dan "
-"veya (Fire için) Amazon App Store'dan yükleyin. Hesap Yöneticisini Kullan'ı "
-"seçin, %1'i seçin ve giriş yapın."
+"Teléfonos y tabletas con Android: instala la aplicación BOINC de Google Play"
+" Store o (para Fire) en Amazon App Store. Elige Usar administrador de "
+"cuentas, selecciona %1 e inicia sesión."
 
 #: su_intro.php:52
 msgid "You can %1 Join or create a Team%2."
-msgstr "%1Bir takıma katılabilir veya takım oluşturabilisiniz%2."
+msgstr "Puedes %1 Unirte o crear un equipo%2."
 
 #: su_intro.php:53
 msgid "Computing prefs"
-msgstr "Hesaplama tercihleri"
+msgstr "Ajustes de computación"
 
 #: su_intro.php:54
 msgid "Science prefs"
-msgstr "Bilim tercihleri"
+msgstr "Ajustes de ciencia"
 
 #: su_join.php:77 project.inc:98
 msgid "Join"
-msgstr "Katıl"
+msgstr "Unirse"
 
 #: su_prefs.php:109
 msgid "Prefer"
-msgstr "Tercih Et"
+msgstr "Preferir"
 
 #: su_prefs.php:110
 msgid "As needed"
-msgstr "Gerektikçe"
+msgstr "Según sea necesario"
 
 #: su_prefs.php:308
 msgid "Science and location preferences"
-msgstr "Bilim ve konum tercihleri"
+msgstr "Ajustes de ciencia y ubicación"
 
 #: su_prefs.php:311
 msgid "Preferenced saved."
-msgstr "Tercih kaydedildi."
+msgstr "Ajustes guardados."
 
 #: su_prefs.php:314
 msgid ""
@@ -653,206 +650,206 @@ msgid ""
 "%1; for more detail, %2; for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
-"Desteklemek istediğiniz veya istemediğiniz bilim alanlarını ve konumları "
-"seçin. Daha fazla ayrıntı için %1, daha azı için %2 tıklayın. Bittiğinde, "
-"alttaki Kaydet düğmesine tıklayın."
+"Selecciona las áreas de ciencia y las ubicaciones que deseas o no apoyas. "
+"Pulsa en %1; para más detalles, %2; para menos detalles. Cuando termines, "
+"pulsa el botón Guardar en la parte inferior."
 
 #: su_prefs.php:323
 msgid "Science areas"
-msgstr "Bilim alanları"
+msgstr "Áreas de ciencia"
 
 #: su_prefs.php:327
 msgid "Locations"
-msgstr "Konum"
+msgstr "Ubicaciones"
 
 #: su_user_accounting.php:24 su_user_accounting.php:34
 msgid "Your contribution history"
-msgstr "Katkı geçmişiniz"
+msgstr "Tu historial de contribuciones"
 
 #: su_user_accounting.php:35
 msgid "Computing power"
-msgstr "Hesaplama gücü"
+msgstr "Potencia de cómputo"
 
 #: su_user_accounting.php:37
 msgid "Computing time"
-msgstr "Hesaplama süresi"
+msgstr "Tiempo de computación"
 
 #: su_user_accounting.php:39
 msgid "Completed jobs"
-msgstr "Tamamlanmış işler"
+msgstr "Trabajos terminados"
 
 #: su_user_projects.php:28
 msgid "New"
-msgstr "Yeni"
+msgstr "Nuevo"
 
 #: su_user_projects.php:30 su.inc:154
 msgid "Established"
-msgstr "Kurulmuş"
+msgstr "Establecido"
 
 #: su_user_projects.php:32
 msgid "In progress"
-msgstr "Devam etmekte"
+msgstr "En progreso"
 
 #: su_user_projects.php:34 su.inc:258 su.inc:265
 msgid "Unknown"
-msgstr "Bilinmeyen"
+msgstr "Desconocido"
 
 #: su_user_projects.php:85
 msgid "since"
-msgstr "Şu zamandan beri:"
+msgstr "desde"
 
 #: su_user_projects.php:86
 msgid "CPU hours"
-msgstr "CPU saatleri"
+msgstr "Horas de CPU"
 
 #: su_user_projects.php:87
 msgid "GPU hours"
-msgstr "GPU saatleri"
+msgstr "Horas de GPU"
 
 #: su_user_projects.php:88
 msgid "# successful jobs"
-msgstr "# başarılı iş"
+msgstr "# trabajos exitosos"
 
 #: su_user_projects.php:89
 msgid "# failed jobs"
-msgstr "# başarısız iş"
+msgstr "# trabajos fallidos"
 
 #: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
 msgid "Account status"
-msgstr "Hesap durumu"
+msgstr "Estado de la cuenta"
 
 #: su_user_projects.php:91
 msgid "Allowed by prefs?"
-msgstr "Tercihlerle izin verilmiş?"
+msgstr "¿Permitido por ajustes?"
 
 #: su_user_projects.php:126
 msgid "Web site"
-msgstr "Web sitesi"
+msgstr "Sitio Web"
 
 #: su_user_projects.php:127
 msgid "Science keywords"
-msgstr "Bilim anahtar kelimeleri"
+msgstr "Palabras clave de ciencia"
 
 #: su_user_projects.php:128
 msgid "Location keywords"
-msgstr "Konum anahtar kelimeleri"
+msgstr "Palabras clave de ubicación"
 
 #: su_user_projects.php:132
 msgid "CPU computing"
-msgstr "CPU hesaplama"
+msgstr "Computación CPU"
 
 #: su_user_projects.php:135
 msgid "GPU computing"
-msgstr "GPU hesaplama"
+msgstr "Computación GPU"
 
 #: su_user_projects.php:138
 msgid "# jobs succeeded"
-msgstr "# iş başarıldı"
+msgstr "# trabajos exitosos"
 
 #: su_user_projects.php:139
 msgid "# jobs failed"
-msgstr "# iş başarısız oldu"
+msgstr "# trabajos fallidos"
 
 #: su_user_projects.php:141
 msgid "Include"
-msgstr "Dahil et"
+msgstr "Incluir"
 
 #: su_user_projects.php:143
 msgid "Exclude"
-msgstr "Hariç tut"
+msgstr "Excluir"
 
 #: su_user_projects.php:146
 msgid "Excluded?"
-msgstr "Hariç tutulan?"
+msgstr "¿Excluido?"
 
 #: su_user_projects.php:146
 msgid "Use if this project causes problems on your computer"
-msgstr "Bu projenin bilgisayarınızda sorun çıkarması durumunda kullanın"
+msgstr "Usar si este proyecto causa problemas en su computadora"
 
 #: su_user_projects.php:150
 msgid "None"
-msgstr "Hiçbiri"
+msgstr "Ninguno"
 
 #: su_user_projects.php:152
 msgid "Return to project list"
-msgstr "Proje listesine geri dön"
+msgstr "Volver a la lista de proyectos"
 
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"
-msgstr "Projeler"
+msgstr "Proyectos"
 
 #: user_hosts.php:26
 msgid "click for details"
-msgstr "ayrıntılar için tıklayın"
+msgstr "pulsa para detalles"
 
 #: user_hosts.php:27
 msgid "Last RPC"
-msgstr "Son RPC"
+msgstr "Último RPC"
 
 #: project.inc:92
 msgid "Log out"
-msgstr "Çıkış yap"
+msgstr "Cerrar sesión"
 
 #: project.inc:98
 msgid "Login"
-msgstr "Giriş yap"
+msgstr "Iniciar sesión"
 
 #: project.inc:122
 msgid "About %1"
-msgstr "%1 Hakkında"
+msgstr "Acerca de %1"
 
 #: project.inc:123
 msgid "Help"
-msgstr "Yardım"
+msgstr "Ayuda"
 
 #: project.inc:127
 msgid "Message boards"
-msgstr "Mesaj Panoları"
+msgstr "Panel de mensajes"
 
 #: project.inc:129
 msgid "Teams"
-msgstr "Takımlar"
+msgstr "Equipos"
 
 #: project.inc:129
 msgid "create or join a team"
-msgstr "bir takıma katıl veya takım oluştur"
+msgstr "crear o unirse a un equipo"
 
 #: project.inc:134
 msgid "Site"
-msgstr "Site"
+msgstr "Sitio"
 
 #: project.inc:135
 msgid "Search"
-msgstr "Arama yap"
+msgstr "Buscar"
 
 #: project.inc:136
 msgid "Languages"
-msgstr "Diller"
+msgstr "Idiomas"
 
 #: project.inc:154
 msgid "Do science research on your computer, tablet, or phone"
 msgstr ""
-"Bilgisayarınızda, tabletinizde veya telefonunuzda bilim araştırması yapın"
+"Haga investigaciones científicas en tu computadora, tableta o teléfono"
 
 #: project.inc:174
 msgid "Generated"
-msgstr "Oluşturulan"
+msgstr "Generado"
 
 #: project.inc:205
 msgid "Your personal background."
-msgstr "Kişisel geçmişiniz."
+msgstr "Tu experiencia personal"
 
 #: project.inc:209
 msgid ""
 "Tell us about yourself. You could tell us where you're from, your age, "
 "occupation, hobbies, or anything else about yourself."
 msgstr ""
-"Bize kendinizden bahsedin. Bize yaşadığınız yeri, yaşınızı, mesleğinizi, "
-"hobilerinizi ya da kendiniz hakkında başka bir şeyi söyleyebilirsiniz."
+"Cuéntanos acerca de ti. Podrías decirnos de dónde eres, tu edad, ocupación, "
+"pasatiempos o cualquier otra cosa sobre ti."
 
 #: project.inc:213
 msgid "Your opinions about %1"
-msgstr "%1 ile ilgili görüşleriniz"
+msgstr "Tus opiniones sobre %1"
 
 #: project.inc:217
 msgid ""
@@ -862,111 +859,115 @@ msgid ""
 "    <li>Any suggestions?\n"
 "    </ol>"
 msgstr ""
-"%1 hakkında düşüncelerinizi bize bildirin.<ol>\n"
-"    <li>Neden %1 uygulaması çalıştırıyorsunuz?\n"
-"    <li>Proje hakkındaki görüşleriniz neler?\n"
-"    <li>Öneriniz?\n"
+"Cuéntanos tus pensamientos sobre %1<ol>\n"
+"    <li>¿Por qué ejecutas %1?\n"
+"    <li>¿Cuáles son tus puntos de vista sobre el proyecto?\n"
+"    <li>¿Alguna sugerencia?\n"
 "    </ol>"
 
 #: su.inc:118 su.inc:123
 msgid "Maybe"
-msgstr "Olabilir"
+msgstr "Tal vez"
 
 #: su.inc:126
 msgid "Edit preferences"
-msgstr "Tercihleri düzenle"
+msgstr "Editar los ajustes"
 
 #: su.inc:152
 msgid "Initial"
-msgstr "Baştaki"
+msgstr "Inicial"
 
 #: su.inc:156
 msgid "Transient error"
-msgstr "Geçici hata"
+msgstr "Error transitorio"
 
 #: su.inc:164
 msgid "No accounts yet"
-msgstr "Henüz hesap yok"
+msgstr "Sin cuentas todavía"
 
 #: su.inc:170
 msgid "Status"
-msgstr "Durum"
+msgstr "Estado"
 
 #: su.inc:176
 msgid "# jobs fail"
-msgstr "# iş başarısız"
+msgstr "# trabajos fallan"
 
 #: su.inc:199
 msgid "Domain name"
-msgstr "Alan adı"
+msgstr "Nombre de dominio"
 
 #: su.inc:201
 msgid "Product name"
-msgstr "Ürün adı"
+msgstr "Nombre de producto"
 
 #: su.inc:205
 msgid "Local Standard Time"
-msgstr "Yerel Standart Zaman"
+msgstr "Hora estándar local"
 
 #: su.inc:205
 msgid "UTC %1 hours"
-msgstr "UTC %1 saat"
+msgstr "%1 horas UTC"
 
 #: su.inc:206
 msgid "Created"
-msgstr "Oluşturuldu"
+msgstr "Creado"
 
 #: su.inc:207
 msgid "Number of times client has contacted server"
-msgstr "İstemcinin sunucuyla iletişim kurma sayısı"
+msgstr ""
+"Número de veces que el cliente se ha puesto en contacto con el servidor"
 
 #: su.inc:208
 msgid "Last time contacted server"
-msgstr "Son kez iletişim kurulan sunucu"
+msgstr "La última vez que contactó con el servidor"
 
 #: su.inc:209
 msgid "Fraction of time BOINC is running"
-msgstr "BOINC'in çalıştığı zaman kesiri"
+msgstr "Fracción de tiempo en la que BOINC se está ejecutando"
 
 #: su.inc:211
 msgid ""
 "While BOINC is running, fraction of time computer has an Internet connection"
 msgstr ""
-"BOINC çalışırken, zamanın bir bölümünde bilgisayarın bir internet bağlantısı"
-" vardır."
+"Mientras BOINC se está ejecutando, fracción de tiempo que la computadora "
+"tiene una conexión a Internet"
 
 #: su.inc:213
 msgid "While BOINC is running, fraction of time computing is allowed"
-msgstr "BOINC çalışırken, zamanın bir bölümünde hesaplamaya izin verilir"
+msgstr ""
+"Mientras BOINC se está ejecutando, fracción de tiempo de cómputo que se "
+"permite"
 
 #: su.inc:214
 msgid "While is BOINC running, fraction of time GPU computing is allowed"
 msgstr ""
-"BOINC çalışırken, zamanın bir bölümünde GPU ile hesaplamaya izin verilir"
+"Mientras se ejecuta BOINC, se permite una fracción de tiempo en la "
+"computación GPU"
 
 #: su.inc:219
 msgid "CPU type"
-msgstr "CPU türü"
+msgstr "Tipo de CPU"
 
 #: su.inc:220
 msgid "Number of processors"
-msgstr "İşlemci sayısı"
+msgstr "Número de procesadores"
 
 #: su.inc:222
 msgid "Coprocessors"
-msgstr "Yardımcı işlemciler"
+msgstr "Coprocesadores"
 
 #: su.inc:224
 msgid "Operating System"
-msgstr "İşletim Sistemi"
+msgstr "Sistema operativo"
 
 #: su.inc:227
 msgid "BOINC version"
-msgstr "BOINC sürümü"
+msgstr "Versión de BOINC"
 
 #: su.inc:231
 msgid "Memory"
-msgstr "Bellek"
+msgstr "Memoria"
 
 #: su.inc:231 su.inc:240
 msgid "%1 MB"
@@ -974,7 +975,7 @@ msgstr "%1 MB"
 
 #: su.inc:235
 msgid "Cache"
-msgstr "Önbellek"
+msgstr "Caché"
 
 #: su.inc:235
 msgid "%1 KB"
@@ -982,11 +983,11 @@ msgstr "%1 KB"
 
 #: su.inc:240
 msgid "Swap space"
-msgstr "Takas alanı"
+msgstr "Espacio de intercambio"
 
 #: su.inc:243
 msgid "Total disk space"
-msgstr "Toplam disk alanı"
+msgstr "Espacio total en disco"
 
 #: su.inc:243 su.inc:246
 msgid "%1 GB"
@@ -994,110 +995,109 @@ msgstr "%1 GB"
 
 #: su.inc:246
 msgid "Free Disk Space"
-msgstr "Boş disk alanı"
+msgstr "Espacio libre en disco"
 
 #: su.inc:249
 msgid "Measured floating point speed"
-msgstr "Ölçülen kayar nokta hızı"
+msgstr "Velocidad de punto flotante medida"
 
 #: su.inc:249 su.inc:252
 msgid "%1 million ops/sec"
-msgstr "%1 milyon ops/saniye"
+msgstr "%1 millón de operaciones/seg"
 
 #: su.inc:252
 msgid "Measured integer speed"
-msgstr "Ölçülen tamsayı hızı"
+msgstr "Velocidad de entero medida"
 
 #: su.inc:256 su.inc:258
 msgid "Average upload rate"
-msgstr "Ortalama yükleme hızı"
+msgstr "Tasa promedio de subida"
 
 #: su.inc:256 su.inc:263
 msgid "%1 KB/sec"
-msgstr "%1 KB/saniye"
+msgstr "%1 KB/seg"
 
 #: su.inc:263 su.inc:265
 msgid "Average download rate"
-msgstr "Ortalama indirme hızı"
+msgstr "Tasa promedio de descarga"
 
 #: su.inc:320
 msgid "No accounting records yet"
-msgstr "Henüz muhasebe kaydı yok"
+msgstr "Sin registros contables todavía"
 
 #: su.inc:324 su.inc:333
 msgid "CPU days"
-msgstr "CPU günleri"
+msgstr "Días de CPU"
 
 #: su.inc:325 su.inc:334
 msgid "GPU days"
-msgstr "GPU günleri"
+msgstr "Días de GPU"
 
 #: su.inc:326 su.inc:335
 msgid "Successful jobs"
-msgstr "Başarılı işler"
+msgstr "Trabajos exitosos"
 
 #: su.inc:327 su.inc:336
 msgid "Failed jobs"
-msgstr "Başarısız işler"
+msgstr "Trabajos fallidos"
 
 #: su_graph.inc:31
 msgid "Past month:"
-msgstr "Geçmiş ay:"
+msgstr "Mes pasado:"
 
 #: su_graph.inc:34
 msgid "Not enough data yet"
-msgstr "Henüz yeterli veri yok"
+msgstr "Todavía no hay suficientes datos"
 
 #: su_join.inc:35
 msgid "An invitation code is required to create an account."
-msgstr "Hesap oluşturmak için bir davet kodu gereklidir."
+msgstr "Se requiere un código de invitación para crear una cuenta."
 
 #: su_join.inc:36
 msgid "Invitation code"
-msgstr "Davet kodu"
+msgstr "Código de invitación"
 
 #: su_join.inc:44
 msgid "Identifies you on this web site. Use your real name or a nickname."
-msgstr ""
-"Bu web sitesinde sizi tanınacaksınız. Gerçek adınızı veya  bir takma ad "
-"kullanın."
+msgstr "Identifíquese en este sitio web Use su nombre real o un apodo."
 
 #: su_join.inc:45
 msgid "Choose screen name"
-msgstr "Ekran adı seçin"
+msgstr "Elige el nombre de usuario"
 
 #: su_join.inc:51
 msgid "An address where you can receive emails."
-msgstr "E-postaları alabileceğiniz bir adres."
+msgstr "Una dirección donde recibir los correos."
 
 #: su_join.inc:52
 msgid "Your email address"
-msgstr "E-posta adresiniz"
+msgstr "Su dirección de correo"
 
 #: su_join.inc:63
 msgid "Must be at least %1 characters"
-msgstr "En az %1 karakter olmalı"
+msgstr "Debe tener al menos %1 caracteres"
 
 #: su_join.inc:64
 msgid "Choose password"
-msgstr "Şifre seçin"
+msgstr "Elige una contraseña"
 
 #: su_user.inc:154
 msgid "Want to help more?"
-msgstr "Daha fazla yardım?"
+msgstr "¿Desea ayudar más?"
 
 #: su_user.inc:155
 msgid "Tell friends and family about %1."
-msgstr "Arkadaşlarınıza ve ailenize % 1 hakkında bilgi verin."
+msgstr "Háblale a tus amigos y familiares sobre %1."
 
 #: su_user.inc:156
 msgid ""
 "Run BOINC on your other computing devices (desktops, laptops, tablets, "
 "Android phones)."
 msgstr ""
-"Diğer bilgi işlem cihazlarınızda (masaüstü bilgisayarları, dizüstü "
-"bilgisayarlar, tabletler, Android telefonlar) BOINC uygulamasını çalıştırın."
+"Ejecuta BOINC en tus otros dispositivos (computadoras de escritorio, "
+"portátiles, tabletas, teléfonos Android)."
 
 #: su_user.inc:157
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
-msgstr "BOINC bu bilgisayarda çalışıyor mu? Değilse, %1İndirin%2."
+msgstr "¿Está ejecutando BOINC en esta computadora? Si no, %1Descárgalo%2."
+
