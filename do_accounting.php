@@ -36,6 +36,7 @@ require_once("../inc/su_util.inc");
 
 function log_write($x) {
     echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
+    flush();
 }
 
 // increment balances in proportion to shares

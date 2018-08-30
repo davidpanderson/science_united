@@ -20,8 +20,9 @@ require_once("../inc/util.inc");
 require_once("../inc/user.inc");
 
 function su_user_info_private($user) {
-    row2(tra("Name"), $user->name);
-    row2(tra("Email address"), $user->email_addr);
+    $url_tokens = url_tokens($user->authenticator);
+    row2(tra("Screen name"), $user->name." <a href=edit_user_info_form.php?$url_tokens><img height=20 src=pictures/edit.png></a>");
+    row2(tra("Email address"), $user->email_addr. " <a href=edit_email_form.php><image height=20 src=pictures/edit.png></a>");
     row2(tra("%1 member since", PROJECT), date_str($user->create_time));
     row2(tra("User ID")."<br/><p class=\"small\">".tra("Used in community functions")."</p>", $user->id);
 }
@@ -29,7 +30,7 @@ function su_user_info_private($user) {
 function main($user) {
     page_head(tra("Account settings"));
     start_table();
-    show_user_info_private($user);
+    su_user_info_private($user);
     end_table();
     page_tail();
 }

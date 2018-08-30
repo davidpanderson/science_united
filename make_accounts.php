@@ -32,6 +32,7 @@ require_once("../inc/su_db.inc");
 
 function log_write($x) {
     echo date(DATE_RFC822), ": $x\n";
+    flush();
 }
 
 function do_pass() {

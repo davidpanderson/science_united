@@ -60,6 +60,7 @@ function log_write($x) {
         $log_file = fopen("../../log_isaac/rpc_log.txt", "a");
     }
     fwrite($log_file, sprintf("%s: %s\n", strftime("%c"), $x));
+    fflush($log_file);
 }
 
 // return error
@@ -122,6 +123,13 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
         ."<dynamic/>\n"
     ;
+    echo "<user_name>".htmlentities($user->name)."</user_name>\n";
+    if ($user->teamid) {
+        $team = BoincTeam::lookup($user->teamid);
+        if ($team) {
+            echo "<team_name>".htmlentities($team->name)."</team_name>\n";
+        }
+    }
     $client_ver = version_to_int((string)$req->client_version);
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
