@@ -1,0 +1,13 @@
+Science United is a new way for computer owners to participate in BOINC.
+It lets users choose the science areas they want to support -
+areas like biomedicine, physics, astronomy, and climate study.
+Science United then allocates the user's computing power
+among the BOINC projects doing research in those areas - including new projects.
+
+This solves several problems that have limited the adoption of volunteer computing.
+First, volunteers no longer have to study and evaluate 40 different projects.
+Second, scientists no longer have to publicize their project,
+or even create a web site, in order to attract volunteers.
+Finally, it creates the possibility that a propective project can be guaranteed
+a certain level of computing power ahead of time,
+thus reducing the risk in creating a project.
