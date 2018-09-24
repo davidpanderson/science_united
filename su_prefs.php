@@ -308,7 +308,7 @@ function prefs_edit_form($user, $show_saved) {
     page_head(tra("Science and location preferences"));
 
     if ($show_saved) {
-        echo '<span class="text-success">'.tra("Preferenced saved.").'</span><p><p>';
+        echo '<span class="text-success">'.tra("Preferences saved.").'</span><p><p>';
     }
 
     echo tra("Select science areas and locations you do or don't want to support.  Click %1 for more detail, %2 for less.  When done, click the Save button at the bottom.",

@@ -38,15 +38,15 @@ SU is implemented as an "account manager", like BAM! and GridRepublic.
 When you attach a computer to SU,
 it tells your computer what projects to run,
 based on your preferences and other factors.
-This may change over time, even from day to day.
+These may change over time, even from day to day.
 You may end up running a project that didn't exist when you first signed up.
 You don't have to browse and evaluate projects;
 in effect, SU does that for you.
 
 <p>
 Equally importantly, it means that a new project,
-if vetted by SU, is guaranteed to get a
-(hopefully large) amount of computing power,
+if vetted by SU, can be assured of
+a certain amount of computing power,
 without doing any publicity or even developing a web site.
 The need to do these things, and the risk of investing in BOINC,
 have been major barriers to entry for scientists who might otherwise use BOINC.
@@ -56,13 +56,13 @@ The hope is that SU will lead to the creation of many more projects.
 
 <p>
 In my conversations with "average" computer owners
-(e.g. friends and family) about the BOINC UI/UX,
+(e.g. friends and family) about the BOINC user interface,
 several themes emerge:
 <ul>
 <li> It's too complex.
 <li> It presents too much information, and especially textual information.
-When people are shown too much information they
-assume they should understand it all, and this stresses them.
+When people are shown information they
+assume they need to understand it all.
 <li> It emphasizes competition (e.g. leaderboards).
 Some volunteers are intimidated and put off by this.
 </ul>
@@ -89,7 +89,8 @@ green, standard, and max.
 <li> We show information graphically rather than textually where possible.
 
 <li> We de-emphasize the notion of project.
-Users can see what projects they're contributing to, but only by drilling down a bit.
+Users can see what projects they're contributing to,
+but only by drilling down a bit.
 </ul>
 
 <p>

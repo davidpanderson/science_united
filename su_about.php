@@ -24,20 +24,22 @@ echo sprintf("
     <p>
     <a href=https://boinc.berkeley.edu>BOINC</a> is the preeminent
     platform for volunteer computing (VC).
-    It is used by most VC project, including SETI@home, Einstein@home,
+    It is used by most VC projects, including SETI@home, Einstein@home,
     Climateprediction.net, IBM World Community Grid, and Rosetta@home.
+    <p>
     %s is a new way to particate in BOINC.
     With %s, computer owners volunteer for science areas
     rather than for specific projects.
     %s assigns computers to appropriate projects;
-    these may change over time.
+    these assignments may change over time.
     <p>
     We call this the 'coordinated model' for VC.
     It has the advantage that new projects can get computing power
     without having to do their own publicity and volunteer recruitment.
     The goal is to provide the power of VC to thousands of scientists,
     rather than a few dozen as was previously the case.
-    Read more:
+    <p>
+    Learn more:
     <a href=doc/model.pdf>Coordinated Volunteer Computing</a>
 
     <p>
@@ -45,14 +47,32 @@ echo sprintf("
     a wider audience than the current BOINC user base,
     which is mostly male and tech-savvy.
     For example, %s has no leader boards.
-    Read more:
+    <p>
+    Learn more:
     <a href=doc/ui_goals.pdf>%s: UI/UX goals</a>
 
     <p>
     %s is also intended to serve as a unified 'brand' for VC,
     so that it can be marketed more effectively.
 
-    <h2>Project</h2>
+    <h2>How Science United allocates resources</h2>
+
+    <p>
+    Science United maintains a set of BOINC projects to
+    which it assigns volunteer computers.
+    For now, all <a href=https://boinc.berkeley.edu/projects.php>science projects
+    vetted by BOINC</a> are included in this set,
+    and they have equal allocations.
+    Eventually the selection of science projects,
+    and the allocation of computing power among them,
+    will be determined by a committee of scientists.
+    <p>
+    If you are a scientist considering using BOINC,
+    please <a href=https://boinc.berkeley.edu/anderson/>contact us</a>.
+    It may be possible for us to guarantee inclusion of your project,
+    and to provide an estimate of the computing power it will receive.
+
+    <h2>The Project</h2>
     <p>
     %s is being developed at UC Berkeley under the direction of
     <a href=https://boinc.berkeley.edu/anderson/>David P. Anderson</a>,
@@ -68,21 +88,10 @@ echo sprintf("
     The %s software is distributed under the LGPL v3 license.
     It is hosted on
     <a href=https://github.com/davidpanderson/science_united>Github</a>.
-    Read more: <a href=doc/implementation.pdf>%s: Implementation</a>.
-
-    <h2>Status</h2>
     <p>
-    %s is currently in alpha test.
-    During this period, the system may not work as intended.
-    To participate as a tester, email Dr. Anderson.
+    Learn more: <a href=doc/implementation.pdf>%s: Implementation</a>.
 
-    <p>
-    Eventually the selection of science projects,
-    and the allocation of computing power among them,
-    will be determined by an international committee of scientists.
-    For now, all <a href=https://boinc.berkeley.edu/projects.php>projects
-    vetted by BOINC</a> are included,
-    and they have equal allocations.
+
 
     <h2>Help wanted</h2>
     <p>

@@ -81,6 +81,7 @@ function intro_panel() {
                 tra("Already joined?"),
                 tra("Log in.")
             );
+            echo "<p><p>BOINC user? <a href=intro.php>Read this</a>.\n";
         }
     );
 }
