@@ -1,0 +1,1171 @@
+# PROJECT translation
+# Copyright (C) PROJECT
+# 
+# This file is distributed under the same license as BOINC.
+# 
+# Translators:
+# Emmanuel RABOTTEAU <emmanuel.rabotteau@gmail.com>, 2018
+# Philippe Janocha, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
+"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
+"Last-Translator: Philippe Janocha, 2018\n"
+"Language-Team: French (https://www.transifex.com/boinc/teams/35581/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: index.php:44
+msgid "%1 is temporarily shut down for maintenance."
+msgstr "%1 est temporairement indisponible pour maintenance."
+
+#: index.php:51
+msgid "Recent contribution"
+msgstr "Contribution récente"
+
+#: index.php:56 su_welcome.php:89
+msgid "Continue to your home page"
+msgstr "Continuer sur votre pape d’accueil"
+
+#: index.php:64
+msgid ""
+"%1 lets you help scientific research projects by giving them computing "
+"power.  These projects do research in astronomy, physics, biomedicine, "
+"mathematics, and environmental science; you can pick the areas you want to "
+"support."
+msgstr ""
+"%1 vous permet d'aider des projets de recherche scientifique en leur "
+"accordant de la puissance de calcul. Ces projets font des recherches en "
+"astronomie, en physique, en biomédecine, en mathématique et en science "
+"environnemental. Vous êtes libre de choisir les projets que vous voulez "
+"supporter."
+
+#: index.php:66
+msgid ""
+"You help by installing BOINC, a free program that runs scientific jobs in "
+"the background and when you're not using the computer.  BOINC is secure and "
+"will not affect your normal use of the computer."
+msgstr ""
+"Vous participez en installant BOINC, un logiciel gratuit qui exécute des "
+"tâches scientifique en arrière plan et quand vous n'utilisez pas votre "
+"ordinateur. BOINC est sécurisé et n'affectera l'utilisation normal de votre "
+"ordinateur."
+
+#: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr ""
+
+#: index.php:74
+msgid "%1 and the research projects it supports are non-profit."
+msgstr "%1 et les projets qu'ils supportent sont non lucratif."
+
+#: index.php:78
+msgid "Join %1"
+msgstr "Rejoignez %1"
+
+#: index.php:81
+msgid "Already joined?"
+msgstr "Déjà inscrit ?"
+
+#: index.php:82
+msgid "Log in."
+msgstr "Se connecter."
+
+#: index.php:92
+msgid "Welcome, %1"
+msgstr "Bienvenue, %1"
+
+#: index.php:111
+msgid "News"
+msgstr "Actualités"
+
+#: index.php:124
+msgid "Ebola-Infected VERO E6 Cell"
+msgstr "Cellule VERO E6 infecté par Ebola"
+
+#: index.php:125
+msgid "Simulation of Higgs boson detection"
+msgstr "Simulation de détection de boson de Higgs"
+
+#: index.php:126
+msgid "The Earth's interrelated climate systems"
+msgstr "Les systèmes climatiques interrelié de la Terre"
+
+#: index.php:127
+msgid "Structure of protein GIF"
+msgstr "GIF de la structure d'une protéine"
+
+#: index.php:128
+msgid "The Hubble ultra-deep field image"
+msgstr "Image à grande profondeur de Hubble"
+
+#: index.php:170
+msgid ""
+"Science United is funded by the %1National Science Foundation%2, award "
+"#1664190, and is based at the %3University of California, Berkeley%4."
+msgstr ""
+"Science United est fondée par la %1National Science Foundation%2, récompense"
+" #1664190, et est basée à l'%3Université de Californie, à Berkeley.%4"
+
+#: su_about.php:20
+msgid "About"
+msgstr "À propos"
+
+#: su_account_settings.php:24
+msgid "Screen name"
+msgstr ""
+
+#: su_account_settings.php:25
+msgid "Email address"
+msgstr "Adresse mail"
+
+#: su_account_settings.php:26
+msgid "%1 member since"
+msgstr "%1 membre depuis"
+
+#: su_account_settings.php:27
+msgid "User ID"
+msgstr "ID utilisateur"
+
+#: su_account_settings.php:27
+msgid "Used in community functions"
+msgstr "Utilisé dans les fonctions communautaires"
+
+#: su_account_settings.php:31
+msgid "Account settings"
+msgstr "Paramètres de compte"
+
+#: su_accounting.php:29
+msgid "Computing history"
+msgstr "Historique de calcul"
+
+#: su_compute_prefs.php:28
+msgid "Computing settings"
+msgstr "Paramètres de calcul"
+
+#: su_compute_prefs.php:44
+msgid ""
+"You can control how many processors to use (most computers have 4 or 8 "
+"processors) and when to use them."
+msgstr ""
+"Vous pouvez choisir combien de processeur utiliser (la plupart des "
+"ordinateurs en possèdent 4 ou 8) et quand les utiliser."
+
+#: su_compute_prefs.php:50
+msgid "This may affect your electricity costs and your computer's fan speeds."
+msgstr ""
+"Cela peut accroître votre consommation électrique et la vitesse des "
+"ventilateurs de votre ordinateur."
+
+#: su_compute_prefs.php:52
+msgid ""
+"Settings affect all your computers.  Changes take effect the next time the "
+"computer synchs with Science United."
+msgstr ""
+"Les paramètres s'appliquent à tous vos ordinateurs. Les changements seront "
+"appliqués lors de la prochaine synchronisation avec Science United."
+
+#: su_compute_prefs.php:54
+msgid ""
+"You can change settings for a particular computer using the BOINC Manager.  "
+"This also gives you more detailed options."
+msgstr ""
+"Vous pouvez changer les paramètres d'un ordinateur en particulier en "
+"utilisant les Gestionnaire BOINC. Cela vous donne aussi plus d'options "
+"avancées."
+
+#: su_compute_prefs.php:56
+msgid "Choose one of:"
+msgstr "Choisissez-en une :"
+
+#: su_compute_prefs.php:61
+msgid ""
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
+msgstr ""
+
+#: su_compute_prefs.php:68
+msgid "Standard %1 Use 50% of processors.%2"
+msgstr " Standard %1 Utilise 50% des processeurs. %2"
+
+#: su_compute_prefs.php:77
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr ""
+
+#: su_compute_prefs.php:86
+msgid "Update"
+msgstr "Mise-à-jour"
+
+#: su_compute_prefs.php:95
+msgid "Computing settings updated"
+msgstr "Préférence de calcul mis-à-jour."
+
+#: su_compute_prefs.php:96
+msgid ""
+"The new settings will take effect when your computer synchs with Science "
+"United."
+msgstr ""
+"Les nouveaux réglages prendront effet lors de la prochaine synchronisation "
+"avec Science United."
+
+#: su_compute_prefs.php:100
+msgid "Continue to home page"
+msgstr "Continuer sur votre pape d’accueil"
+
+#: su_download.php:28
+msgid "Install software"
+msgstr "Installer le logiciel"
+
+#: su_download.php:29
+msgid ""
+"To participate in %1 you must install BOINC and VirtualBox on your computer."
+msgstr ""
+"Pour participer à %1, vous devez installer BOINC et VirtualBox sur votre "
+"ordinateur."
+
+#: su_email_prefs.php:28
+msgid "Email settings"
+msgstr "Paramètre d'email"
+
+#: su_email_prefs.php:30
+msgid "Preferences updated."
+msgstr "Préférence mis-à-jour."
+
+#: su_email_prefs.php:35
+msgid "Don't send me any emails"
+msgstr "Ne m'envoyer aucun email."
+
+#: su_email_prefs.php:42
+msgid ""
+"Status emails %1 These tell you how much work your computer(s) have done "
+"recently %2"
+msgstr ""
+"Email de statut %1 Vous informe sur la quantité de travail réalisé par "
+"votre/vos ordinateur(s) récemment. %2"
+
+#: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
+msgid "Never"
+msgstr "Jamais"
+
+#: su_email_prefs.php:49
+msgid "Daily"
+msgstr "Journalier"
+
+#: su_email_prefs.php:50
+msgid "Weekly"
+msgstr "Hebdomadaire"
+
+#: su_email_prefs.php:51
+msgid "Monthly"
+msgstr "Mensuel"
+
+#: su_email_prefs.php:56
+msgid ""
+"Community emails %1 These tell you about private messages, forum posts, and "
+"friend requests %2"
+msgstr ""
+"Email communautaire %1 Vous informe des messages privés reçus, les sujets du"
+" forum et les demandes d'amis. %2"
+
+#: su_email_prefs.php:63
+msgid "Immediately"
+msgstr "Immédiatement"
+
+#: su_email_prefs.php:64
+msgid "Daily summary"
+msgstr "Rapport journalier"
+
+#: su_email_prefs.php:68 su_prefs.php:331
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: su_graph.php:56
+msgid "Successful jobs/day"
+msgstr "Tâches réussis par jour"
+
+#: su_graph.php:57
+msgid "Failed jobs/day"
+msgstr "Tâches échouées par jour"
+
+#: su_graph.php:64
+msgid "CPU hours/day"
+msgstr "Heures/jour du processeur"
+
+#: su_graph.php:65
+msgid "GPU hours/day"
+msgstr "Heures/jour du processeur graphique"
+
+#: su_help.php:3
+msgid "Need help?"
+msgstr "Besoin d'aide ?"
+
+#: su_help.php:8
+msgid "Problems installing or running BOINC: %1 get help here%2."
+msgstr ""
+"Vous rencontrez des problèmes à l'installation ou à l’exécution de BOINC : "
+"%1 demandez de l'aide ici%2."
+
+#: su_help.php:16
+msgid ""
+"Problems with %1: ask for help on the\n"
+"        %2 %3 message boards.%4"
+msgstr ""
+"Des problèmes avec %1 : demandez de l'aide\n"
+"        sur les forums %2 %3. %4"
+
+#: su_help.php:27
+msgid ""
+"To report a bug or request a feature in %1, create an issue on %2 the %3 "
+"Github repository%4 (you'll need a free Github account)."
+msgstr ""
+"Pour signaler un bug ou demander une fonctionnalité dans %1, créez une "
+"requête sur les dépôts GitHub %2 et %3%4 (vous aurez besoin d'un compte "
+"GitHub gratuit)."
+
+#: su_home.php:25
+msgid "Contribution"
+msgstr "Contribution"
+
+#: su_home.php:28 su_hosts.php:184
+msgid "View"
+msgstr "Vue"
+
+#: su_home.php:30 su_hosts.php:31 user_hosts.php:40
+msgid "Your computers"
+msgstr "Vos ordinateurs"
+
+#: su_home.php:34
+msgid "Computing: graphs"
+msgstr "Calcul : graphique"
+
+#: su_home.php:35
+msgid "Computing: details"
+msgstr "Calcul : détails"
+
+#: su_home.php:36
+msgid "Science projects"
+msgstr "Projets de science"
+
+#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
+msgid "Community"
+msgstr "Communauté"
+
+#: su_home.php:51
+msgid "Settings"
+msgstr "Paramètres"
+
+#: su_home.php:54
+msgid "Edit"
+msgstr "Éditer"
+
+#: su_home.php:56
+msgid "Science areas and locations"
+msgstr "Zone géographique de science"
+
+#: su_home.php:56
+msgid "Choose the types of research you want to support"
+msgstr "Choisissez le type de recherche que vous souhaitez supporter."
+
+#: su_home.php:61
+msgid "Computing"
+msgstr "Calcul"
+
+#: su_home.php:61
+msgid "Choose how to use your computers"
+msgstr "Choisissez l'utilisation de vos ordinateurs"
+
+#: su_home.php:65
+msgid "Settings for message boards and private messages"
+msgstr "Paramètres des forums de discussion et des messages privés"
+
+#: su_home.php:69
+msgid "Account"
+msgstr "Compte"
+
+#: su_home.php:69
+msgid "Name, password, email address"
+msgstr "Nom, mot de passe, adresse email"
+
+#: su_home.php:73
+msgid "Email"
+msgstr "Email"
+
+#: su_home.php:73
+msgid "When and whether we should email you"
+msgstr "Quand faut-il vous envoyer un courriel"
+
+#: su_home.php:99
+msgid "Your home page"
+msgstr "Votre page d'accueil"
+
+#: su_hosts.php:33
+msgid "No computers yet"
+msgstr "Pas encore d'ordinateur"
+
+#: su_hosts.php:39
+msgid "Computer name"
+msgstr "Nom de l'ordinateur"
+
+#: su_hosts.php:39 su_user_projects.php:84
+msgid "Click for details"
+msgstr "Cliquez pour plus de détails"
+
+#: su_hosts.php:40
+msgid "Operating system"
+msgstr "Système d'exploitation"
+
+#: su_hosts.php:41 su_hosts.php:190
+msgid "Last contact"
+msgstr "Dernier contact"
+
+#: su_hosts.php:42 su_hosts.php:47
+msgid "Remove"
+msgstr "Supprimer"
+
+#: su_hosts.php:42
+msgid "... if this is a duplicate or the computer is no longer running BOINC"
+msgstr "... s'il s'agit d'un doublon ou si l'ordinateur n'exécute plus BOINC"
+
+#: su_hosts.php:72
+msgid "How projects are chosen for %1"
+msgstr "Comment les projets sont choisis pour %1"
+
+#: su_hosts.php:73
+msgid ""
+"To decide which projects this computer should work for, we compute a "
+"\"score\" for each project.  The components of the score are:"
+msgstr ""
+"Pour décider des projets avec lesquels cet ordinateur doit fonctionner, nous"
+" calculons un \"score\" pour chaque projet. Les composantes de ce score sont"
+" :"
+
+#: su_hosts.php:80 su_hosts.php:96
+msgid "Keyword score"
+msgstr "Score par mot-clé"
+
+#: su_hosts.php:81
+msgid "How well your keyword preferences match the project's keywords."
+msgstr ""
+"Dans quelle mesure vos préférences de mots-clés correspondent aux mots-clés "
+"du projet."
+
+#: su_hosts.php:82 su_hosts.php:97
+msgid "Platform score"
+msgstr "Score de la plate-forme"
+
+#: su_hosts.php:83
+msgid ""
+"-1 if the project has no programs that will run on the computer; 0 if it "
+"does; +1 if one of them uses a GPU or VirtuaBox."
+msgstr ""
+"-1 si le projet n'a pas de programmes s'exécutant sur l'ordinateur ; 0 si "
+"oui ; +1 si l'un d'eux utilise un processeur graphique  ou VirtualBox."
+
+#: su_hosts.php:84
+msgid "Balance"
+msgstr "Répartition"
+
+#: su_hosts.php:85
+msgid ""
+"How much work is owed to the project; this changes from one day to the next."
+msgstr ""
+"Combien de calculs est dû au projet ; cela change d'un jour à l'autre."
+
+#: su_hosts.php:87
+msgid ""
+"We then choose the highest-scoring projects (at least 2) that together can "
+"use all the computer's processors."
+msgstr ""
+"Nous choisissons alors les projets les plus performants (au moins 2) qui, "
+"ensemble, peuvent utiliser tous les processeurs de l'ordinateur."
+
+#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+msgid "Project"
+msgstr "Projets"
+
+#: su_hosts.php:98
+msgid "Balance (GFLOPS days)"
+msgstr "Répartition (GFLOPS jours)"
+
+#: su_hosts.php:99
+msgid "Opted out?"
+msgstr "Se désengager ?"
+
+#: su_hosts.php:100 su_hosts.php:128
+msgid "Score"
+msgstr "Score"
+
+#: su_hosts.php:103
+msgid "Can use %1?"
+msgstr "Utiliser %1 ?"
+
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
+#: su.inc:121
+msgid "Yes"
+msgstr "Oui"
+
+#: su_hosts.php:122
+msgid "Given the above info, this computer would do work for these projects:"
+msgstr ""
+"Compte tenu des informations ci-dessus, cet ordinateur fonctionnerait pour "
+"ces projets :"
+
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+msgid "No"
+msgstr "Non"
+
+#: su_hosts.php:148
+msgid "Computer hardware and software"
+msgstr "Matériel et logiciel informatiques"
+
+#: su_hosts.php:156 su_hosts.php:196
+msgid "Projects for which this computer has done work"
+msgstr "Projets pour lesquels cet ordinateur a calculé"
+
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:169
+msgid "Name"
+msgstr "Nom"
+
+#: su_hosts.php:161 su.inc:172
+msgid "CPU FLOPS"
+msgstr "FLOPS du processeur"
+
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+msgid "CPU time"
+msgstr "Temps processeur"
+
+#: su_hosts.php:163 su.inc:174
+msgid "GPU FLOPS"
+msgstr "FLOPS du processeur graphique"
+
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+msgid "GPU time"
+msgstr "Temps du processeur graphique"
+
+#: su_hosts.php:165 su.inc:175
+msgid "# jobs success"
+msgstr "# tâches accomplies"
+
+#: su_hosts.php:166
+msgid "#jobs fail"
+msgstr "# tâches échouées"
+
+#: su_hosts.php:182 user_host.php:28
+msgid "Computer details"
+msgstr "Détails sur l'ordinateur"
+
+#: su_hosts.php:187
+msgid "Hardware/software details"
+msgstr "Détails matériel et logiciel"
+
+#: su_hosts.php:192
+msgid "How projects are chosen for this computer"
+msgstr "Comment les projets sont choisis pour cet ordinateur"
+
+#: su_intro.php:25
+msgid "Getting started"
+msgstr "Mise en route"
+
+#: su_intro.php:26 su_welcome.php:20
+msgid "Welcome to %1"
+msgstr "Bienvenue à %1"
+
+#: su_intro.php:46
+msgid ""
+"By now you should have downloaded and run BOINC.  If so, you're done!  Your "
+"computer will do run science jobs in the background, supporting research in "
+"the areas you selected."
+msgstr ""
+"Vous devriez avoir maintenant téléchargé et démarré BOINC. Si c'est le cas, "
+"c'est fini ! Votre ordinateur exécutera des travaux scientifiques en "
+"arrière-plan, soutenant la recherche dans les domaines que vous avez "
+"sélectionnés."
+
+#: su_intro.php:47
+msgid ""
+"Scientists need all the computing power they can get.  To help further, you "
+"can:"
+msgstr ""
+"Les scientifiques ont besoin de toute la puissance de calcul possible. Pour "
+"aider à faire davantage, vous pouvez :"
+
+#: su_intro.php:48
+msgid ""
+"Tell your family, friends, and co-workers about %1, and encourage them to "
+"volunteer."
+msgstr ""
+"Parlez de %1 à votre famille, à vos amis et à vos collègues de travail et "
+"encouragez-les à faire du bénévolat."
+
+#: su_intro.php:49
+msgid "Run %1 on all your computing devices:"
+msgstr "Lancer %1 sur tous vos périphériques informatiques :"
+
+#: su_intro.php:50
+msgid ""
+"Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
+"web site (%1) and log in.  Then select Download from the Project menu, and "
+"install BOINC as you did on this computer."
+msgstr ""
+"Ordinateurs de bureau et portables (Windows, Linux, Mac OS X) : Sur ces "
+"machines, visitez ce site Web (%1) et connectez-vous à votre compte. "
+"Ensuite, sélectionnez Télécharger dans le menu Projet et installez BOINC "
+"comme vous l'avez fait sur cet ordinateur."
+
+#: su_intro.php:51
+msgid ""
+"Android phones and tablets: install the BOINC app from the Google Play Store"
+" or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
+" and log in."
+msgstr ""
+"Téléphones et tablettes Android : installez l'application BOINC depuis le "
+"Google Play Store ou (pour Fire) l'Amazon App Store. Sélectionnez \"Utiliser"
+" le gestionnaire de comptes\", sélectionnez %1 et connectez-vous à votre "
+"compte."
+
+#: su_intro.php:52
+msgid "You can %1 Join or create a Team%2."
+msgstr "Vous pouvez %1rejoindre ou créer une équipe%2."
+
+#: su_intro.php:53
+msgid "Computing prefs"
+msgstr "Préférences de calcul"
+
+#: su_intro.php:54
+msgid "Science prefs"
+msgstr "Préférences scientifiques"
+
+#: su_join.php:77 project.inc:98
+msgid "Join"
+msgstr "Rejoindre"
+
+#: su_prefs.php:109
+msgid "Prefer"
+msgstr "Préférer"
+
+#: su_prefs.php:110
+msgid "As needed"
+msgstr "Selon les besoins"
+
+#: su_prefs.php:308
+msgid "Science and location preferences"
+msgstr "Préférences en matière de science et de localisation"
+
+#: su_prefs.php:311
+msgid "Preferences saved."
+msgstr ""
+
+#: su_prefs.php:314
+msgid ""
+"Select science areas and locations you do or don't want to support.  Click "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
+"bottom."
+msgstr ""
+
+#: su_prefs.php:323
+msgid "Science areas"
+msgstr "Domaines scientifiques"
+
+#: su_prefs.php:327
+msgid "Locations"
+msgstr "Localisations"
+
+#: su_user_accounting.php:24 su_user_accounting.php:34
+msgid "Your contribution history"
+msgstr "L'historique de vos contributions"
+
+#: su_user_accounting.php:35
+msgid "Computing power"
+msgstr "Puissance de calcul"
+
+#: su_user_accounting.php:37
+msgid "Computing time"
+msgstr "Temps de calcul"
+
+#: su_user_accounting.php:39
+msgid "Completed jobs"
+msgstr "Tâches accomplies"
+
+#: su_user_projects.php:28
+msgid "New"
+msgstr "Nouveau"
+
+#: su_user_projects.php:30 su.inc:154
+msgid "Established"
+msgstr "Établi"
+
+#: su_user_projects.php:32
+msgid "In progress"
+msgstr "En cours"
+
+#: su_user_projects.php:34 su.inc:258 su.inc:265
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: su_user_projects.php:85
+msgid "since"
+msgstr "depuis"
+
+#: su_user_projects.php:86
+msgid "CPU hours"
+msgstr "heures du processeur"
+
+#: su_user_projects.php:87
+msgid "GPU hours"
+msgstr "heures du processeur graphique"
+
+#: su_user_projects.php:88
+msgid "# successful jobs"
+msgstr "# tâches accomplies"
+
+#: su_user_projects.php:89
+msgid "# failed jobs"
+msgstr "# tâches échouées"
+
+#: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
+msgid "Account status"
+msgstr "Statut du compte"
+
+#: su_user_projects.php:91
+msgid "Allowed by prefs?"
+msgstr "Autorisé par les préférences ?"
+
+#: su_user_projects.php:126
+msgid "Web site"
+msgstr "Site Web"
+
+#: su_user_projects.php:127
+msgid "Science keywords"
+msgstr "Mots-clés scientifiques"
+
+#: su_user_projects.php:128
+msgid "Location keywords"
+msgstr "Mots-clés de localisation"
+
+#: su_user_projects.php:132
+msgid "CPU computing"
+msgstr "Calcul du processeur"
+
+#: su_user_projects.php:135
+msgid "GPU computing"
+msgstr "Calcul du processeur graphique"
+
+#: su_user_projects.php:138
+msgid "# jobs succeeded"
+msgstr "# tâches réussies"
+
+#: su_user_projects.php:139
+msgid "# jobs failed"
+msgstr "# tâches échouées"
+
+#: su_user_projects.php:141
+msgid "Include"
+msgstr "Inclure"
+
+#: su_user_projects.php:143
+msgid "Exclude"
+msgstr "Exclure"
+
+#: su_user_projects.php:146
+msgid "Excluded?"
+msgstr "Exclu ?"
+
+#: su_user_projects.php:146
+msgid "Use if this project causes problems on your computer"
+msgstr "Utiliser si ce projet cause des problèmes sur cet ordinateur"
+
+#: su_user_projects.php:150
+msgid "None"
+msgstr "Aucun"
+
+#: su_user_projects.php:152
+msgid "Return to project list"
+msgstr "Retour à la liste des projets"
+
+#: su_welcome.php:22
+msgid ""
+"\n"
+"    At this point BOINC should be installed and running on your computer;\n"
+"    the system tray should have an icon like this: %1\n"
+"    If not, %2get help here%3.\n"
+"    "
+msgstr ""
+
+#: su_welcome.php:36
+msgid "What happens now?"
+msgstr ""
+
+#: su_welcome.php:37
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+
+#: su_welcome.php:49
+msgid "How to monitor and control BOINC"
+msgstr ""
+
+#: su_welcome.php:50
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+
+#: su_welcome.php:62
+msgid "Computing preferences"
+msgstr ""
+
+#: su_welcome.php:63
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+
+#: su_welcome.php:80
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+
+#: user_host.php:30 user_projects.php:23
+msgid "Projects"
+msgstr "Projets"
+
+#: user_hosts.php:26
+msgid "click for details"
+msgstr "Cliquez pour plus de détails"
+
+#: user_hosts.php:27
+msgid "Last RPC"
+msgstr "Dernier RPC"
+
+#: project.inc:92
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: project.inc:98
+msgid "Login"
+msgstr "Connexion"
+
+#: project.inc:122
+msgid "About %1"
+msgstr "À propos de %1"
+
+#: project.inc:123
+msgid "Help"
+msgstr "Aide"
+
+#: project.inc:127
+msgid "Message boards"
+msgstr "Forums de discussion"
+
+#: project.inc:129
+msgid "Teams"
+msgstr "Équipes"
+
+#: project.inc:129
+msgid "create or join a team"
+msgstr "créer ou rejoindre une équipe"
+
+#: project.inc:134
+msgid "Site"
+msgstr "Site"
+
+#: project.inc:135
+msgid "Search"
+msgstr "Rechercher"
+
+#: project.inc:136
+msgid "Languages"
+msgstr "Langues"
+
+#: project.inc:154
+msgid "Do science research on your computer, tablet, or phone"
+msgstr ""
+"Effectuez des recherches scientifiques sur votre ordinateur, votre tablette "
+"ou votre téléphone."
+
+#: project.inc:174
+msgid "Generated"
+msgstr "Généré"
+
+#: project.inc:205
+msgid "Your personal background."
+msgstr "Votre histoire personnelle."
+
+#: project.inc:209
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr ""
+"Parlez-nous de vous. Vous pourriez nous dire d'où vous venez, votre âge, "
+"votre profession, vos passe-temps ou tout autre chose vous concernant."
+
+#: project.inc:213
+msgid "Your opinions about %1"
+msgstr "Votre avis à propos de %1"
+
+#: project.inc:217
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"Dites-nous notre avis à propos de %1<ol>\n"
+"    <li>Pourquoi choisir %1 ?\n"
+"    <li>Que pensez-vous de ce projet ?\n"
+"    <li>Des suggestions ?\n"
+"    </ol>"
+
+#: su.inc:118 su.inc:123
+msgid "Maybe"
+msgstr "Peut-être"
+
+#: su.inc:126
+msgid "Edit preferences"
+msgstr "Modifier les préférences"
+
+#: su.inc:152
+msgid "Initial"
+msgstr "Initial"
+
+#: su.inc:156
+msgid "Transient error"
+msgstr "Erreur transitoire"
+
+#: su.inc:164
+msgid "No accounts yet"
+msgstr "Pas encore de compte"
+
+#: su.inc:170
+msgid "Status"
+msgstr "Statut"
+
+#: su.inc:176
+msgid "# jobs fail"
+msgstr "# tâches échouées"
+
+#: su.inc:199
+msgid "Domain name"
+msgstr "Nom de domaine"
+
+#: su.inc:201
+msgid "Product name"
+msgstr "Nom du produit"
+
+#: su.inc:205
+msgid "Local Standard Time"
+msgstr "Heure locale standard"
+
+#: su.inc:205
+msgid "UTC %1 hours"
+msgstr "%1 heures UTC"
+
+#: su.inc:206
+msgid "Created"
+msgstr "Créé"
+
+#: su.inc:207
+msgid "Number of times client has contacted server"
+msgstr "Nombre de fois où le client a contacté le serveur"
+
+#: su.inc:208
+msgid "Last time contacted server"
+msgstr "Dernier contact avec le serveur"
+
+#: su.inc:209
+msgid "Fraction of time BOINC is running"
+msgstr "Fraction du temps d'exécution de BOINC"
+
+#: su.inc:211
+msgid ""
+"While BOINC is running, fraction of time computer has an Internet connection"
+msgstr ""
+"Pendant que BOINC est en cours d'exécution, fraction du temps où "
+"l'ordinateur dispose d'une connexion Internet"
+
+#: su.inc:213
+msgid "While BOINC is running, fraction of time computing is allowed"
+msgstr ""
+"Pendant que BOINC est en cours d'exécution, fraction du temps où le calcul "
+"est autorisé."
+
+#: su.inc:214
+msgid "While is BOINC running, fraction of time GPU computing is allowed"
+msgstr ""
+"Pendant que BOINC est en cours d'exécution, fraction du temps où le calcul "
+"avec le processeur graphique est autorisé."
+
+#: su.inc:219
+msgid "CPU type"
+msgstr "Type de processeur"
+
+#: su.inc:220
+msgid "Number of processors"
+msgstr "Nombre de processeurs"
+
+#: su.inc:222
+msgid "Coprocessors"
+msgstr "Coprocesseurs"
+
+#: su.inc:224
+msgid "Operating System"
+msgstr "Système d'exploitation"
+
+#: su.inc:227
+msgid "BOINC version"
+msgstr "Version de BOINC"
+
+#: su.inc:231
+msgid "Memory"
+msgstr "Mémoire"
+
+#: su.inc:231 su.inc:240
+msgid "%1 MB"
+msgstr "%1 Mo"
+
+#: su.inc:235
+msgid "Cache"
+msgstr "Cache"
+
+#: su.inc:235
+msgid "%1 KB"
+msgstr "%1 Ko"
+
+#: su.inc:240
+msgid "Swap space"
+msgstr "Espace de pagination (swap)"
+
+#: su.inc:243
+msgid "Total disk space"
+msgstr "Espace disque total"
+
+#: su.inc:243 su.inc:246
+msgid "%1 GB"
+msgstr "%1 Go"
+
+#: su.inc:246
+msgid "Free Disk Space"
+msgstr "Espace disque libre"
+
+#: su.inc:249
+msgid "Measured floating point speed"
+msgstr "Vitesse mesurée en virgule flottante"
+
+#: su.inc:249 su.inc:252
+msgid "%1 million ops/sec"
+msgstr "%1 million(s) opérations/s"
+
+#: su.inc:252
+msgid "Measured integer speed"
+msgstr "Vitesse mesurée en nombres entiers"
+
+#: su.inc:256 su.inc:258
+msgid "Average upload rate"
+msgstr "Taux de téléversement moyen"
+
+#: su.inc:256 su.inc:263
+msgid "%1 KB/sec"
+msgstr "%1 Ko/s"
+
+#: su.inc:263 su.inc:265
+msgid "Average download rate"
+msgstr "Taux de téléchargement moyen"
+
+#: su.inc:320
+msgid "No accounting records yet"
+msgstr "Pas encore de données de compte"
+
+#: su.inc:324 su.inc:333
+msgid "CPU days"
+msgstr "Jours processeur"
+
+#: su.inc:325 su.inc:334
+msgid "GPU days"
+msgstr "Jours processeur graphique"
+
+#: su.inc:326 su.inc:335
+msgid "Successful jobs"
+msgstr "Tâches réussies"
+
+#: su.inc:327 su.inc:336
+msgid "Failed jobs"
+msgstr "Tâches échouées"
+
+#: su_graph.inc:31
+msgid "Past month:"
+msgstr "Le mois dernier :"
+
+#: su_graph.inc:34
+msgid "Not enough data yet"
+msgstr "Pas encore assez de données"
+
+#: su_join.inc:35
+msgid "An invitation code is required to create an account."
+msgstr "Un code d'invitation est nécessaire pour créer un compte."
+
+#: su_join.inc:36
+msgid "Invitation code"
+msgstr "Code d'invitation"
+
+#: su_join.inc:44
+msgid "Identifies you on this web site. Use your real name or a nickname."
+msgstr "Vous identifie sur ce site Web. Utilisez votre vrai nom ou un surnom."
+
+#: su_join.inc:45
+msgid "Choose screen name"
+msgstr "Choisissez un pseudonyme"
+
+#: su_join.inc:51
+msgid "An address where you can receive emails."
+msgstr "un adresse où recevoir des emails."
+
+#: su_join.inc:52
+msgid "Your email address"
+msgstr "Votre adresse email"
+
+#: su_join.inc:63
+msgid "Must be at least %1 characters"
+msgstr "Doit comporter au moins %1 caractères"
+
+#: su_join.inc:64
+msgid "Choose password"
+msgstr "Choisir un mot de passe"
+
+#: su_user.inc:154
+msgid "Want to help more?"
+msgstr "Vous voulez aider davantage ?"
+
+#: su_user.inc:155
+msgid "Tell friends and family about %1."
+msgstr "Parlez à vos amis et à votre famille de %1."
+
+#: su_user.inc:156
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr ""
+"Exécutez BOINC sur vos autres périphériques informatiques (ordinateurs de "
+"bureau, ordinateurs portables, tablettes, téléphones Android)."
+
+#: su_user.inc:157
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
+msgstr "BOINC fonctionne-t-il sur cet ordinateur ? Sinon, %1téléchargez-le%2."
+
