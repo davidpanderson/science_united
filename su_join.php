@@ -23,7 +23,7 @@ require_once("../inc/user_util.inc");
 require_once("../inc/account.inc");
 require_once("../inc/recaptchalib.php");
 
-require_once("../inc/keywords2.inc");
+require_once("../inc/keywords.inc");
 require_once("../inc/su_join.inc");
 require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");

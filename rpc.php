@@ -106,7 +106,15 @@ function is_in_accounts($url, $accounts) {
 //
 function version_to_int($v) {
     $v = explode(".", $v);
+    if (count($v) < 3) return 0;
     return $v[0]*10000 + $v[1]*100 + $v[2];
+}
+
+function send_error_reply($msg) {
+    echo "<acct_mgr_reply>
+    <error_msg>$msg</error_msg>
+</acct_mgr_reply>
+";
 }
 
 // $accounts is an array of array(project, account)
@@ -130,7 +138,6 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
             echo "<team_name>".htmlentities($team->name)."</team_name>\n";
         }
     }
-    $client_ver = version_to_int((string)$req->client_version);
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
 
@@ -231,7 +238,7 @@ function update_host($req, $host) {
 
     // request message is from client, so don't trust it
     //
-    $boinc_client_version = (string)$req->client_version;
+    $boinc_client_version = BoincDb::escape_string((string)$req->client_version);
     $n_usable_coprocs = (int)$hi->n_usable_coprocs;
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
@@ -264,7 +271,7 @@ function update_host($req, $host) {
 
     $p_ngpus = 0;
     $p_gpu_fpops = 0;
-    foreach ($hi->coprocs->coproc as $c) {
+    foreach ($hi->coprocs->children() as $c) {
         $p_ngpus += (int)$c->count;
         $p_gpu_fpops += (double)$c->peak_flops;
     }
@@ -640,8 +647,16 @@ function main() {
 
     xml_header();   // do this before DB access
 
+    $client_ver = version_to_int((string)$req->client_version);
+    if ($client_ver < 71000) {
+        send_error_reply("Science United requires a newer version of BOINC.  Please install the current version from https://boinc.berkeley.edu/download.php");
+        log_write("client version too low: ".(string)$req->client_version);
+        return;
+    }
+
     list($user, $host) = lookup_records($req);
     log_write("processing request from user $user->id host $host->id");
+
     do_accounting($req, $user, $host);
     list($accounts_to_send, $new_accounts) =
         choose_projects_rpc($user, $host, $req)

@@ -5,12 +5,31 @@ page_head("Intro to Science United for BOINC users");
 
 text_start();
 echo <<<EOT
+<h3>How to use Science United</h3>
+<p>
+If you're already running BOINC on a computer,
+you can use Science United as follows:
+<ul>
+<li> <a href=https://scienceunited.org/su_join.php>Create a Science United account.</a>
+<li> <a href=https://boinc.berkeley.edu/download.php>Upgrade the computer</a> to BOINC version 7.10 or later
+(preferably the current version).
+<li> Go to the BOINC Manager.  If you're using the Simple View,
+go to the View menu and select "Advanced view".
+<li> In the Tools menu, select "Use account manager".
+<li> Select Science United.
+<li> Enter the email address and password of your Science United account.
+</ul>
+That's it.
+Consider detaching from the projects you were previously running.
+
+<h3>What is Science United?</h3>
 <p>
 Science United (SU) is a new way for computer owners
 to participate in BOINC-based volunteer computing.
 SU doesn't replace the old way of doing things,
-where people attach to specific projects;
-rather, it provides an alternative.
+where you people attach to specific projects;
+rather, it provides an alternative where you choose science areas,
+and SU picks the projects for you.
 <p>
 SU is designed for people who are not technical,
 who don't want to spend much time on BOINC
@@ -102,20 +121,9 @@ By default, SU sends users a weekly "status" email
 whose purpose is to make the user feel good about their contribution,
 and to alert them if any of their computers have stopped doing work.
 
-<h3>Testing Science United</h3>
+<h3>Feedback</h3>
 <p>
-You create an SU account with an email and password.
-These are used only for SU.
-Project accounts will be created with anonymous credentials,
-even if you already have accounts there.
-
-<p>
-To test SU, you'll need version 7.9.1 or later of the BOINC client.
-You can get this from the BOINC web site,
-or better yet, download it from SU.
-
-<p>
-Give testing feedback (bugs, questions, feature requests)
+Give feedback (bugs, questions, feature requests)
 on the SU message boards.
 You can also email me (David Anderson) directly.
 Remember that the target audience of SU is not you;

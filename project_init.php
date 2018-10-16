@@ -18,6 +18,7 @@
 
 // initialize or update the project DB table
 // run this from html/ops
+// RUN WHENEVER BOINC PROJECT LIST HAS CHANGED
 //
 // input: html/ops/projects.xml
 // get this from https://boinc.berkeley.edu/project_list.php
@@ -25,7 +26,7 @@
 // IF ANY KEYWORDS OR PLATFORM INFO HAS CHANGED:
 // run project_digest.php as well (to update projects.ser)
 
-require_once("../inc/keywords2.inc");
+require_once("../inc/keywords.inc");
 require_once("../inc/project_ids.inc");
 require_once("../inc/su_db.inc");
 
@@ -63,6 +64,7 @@ function update_project($p) {
 
     $project = SUProject::lookup_id($project_id);
     if ($project) {
+        $project->update("status = ".PROJECT_STATUS_AUTO);
         if ($url_signature != $project->url_signature) {
             echo "updating $project->name URL signature\n";
             $ret = $project->update("url_signature='$url_signature'");
@@ -84,7 +86,7 @@ function update_project($p) {
             if (!$ret) echo "update failed\n";
         }
     } else {
-        SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, 2)");
+        SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, ".PROJECT_STATUS_AUTO.")");
 
         if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
             die("su_accounting_project insert failed\n");
@@ -94,8 +96,14 @@ function update_project($p) {
 }
 
 // create or update projects based on projects.xml
+// If a project is not there, flag as deprecated
+// Skip certain projects.
 //
 function update_projects() {
+    $projs = SUProject::enum();
+    foreach ($projs as $p) {
+        $p->update("status = ".PROJECT_STATUS_HIDE);
+    }
     $x = simplexml_load_file("projects.xml");
     $projects = $x->project;
     foreach ($projects as $p) {

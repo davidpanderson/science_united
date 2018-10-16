@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
+"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
 "Last-Translator: Johan Holmström, 2018\n"
 "Language-Team: Swedish (https://www.transifex.com/boinc/teams/35581/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "%1 är tillfälligt stängt för underhåll."
 msgid "Recent contribution"
 msgstr "nyligt bidrag"
 
-#: index.php:56
+#: index.php:56 su_welcome.php:89
 msgid "Continue to your home page"
 msgstr "Fortsätt till din hemsida"
 
@@ -52,50 +52,54 @@ msgstr ""
 "säkert och påverkar inte din normala användning av datorn."
 
 #: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "%1 drivs av BOINC-projektet vid UC Berkeley."
+
+#: index.php:74
 msgid "%1 and the research projects it supports are non-profit."
 msgstr "%1 och de vetenskapliga projekten som stöds är inte vinstdrivande."
 
-#: index.php:73
+#: index.php:78
 msgid "Join %1"
 msgstr "Gå med i %1"
 
-#: index.php:76
+#: index.php:81
 msgid "Already joined?"
 msgstr "Redan medlem?"
 
-#: index.php:77
+#: index.php:82
 msgid "Log in."
 msgstr "Logga in."
 
-#: index.php:86
+#: index.php:92
 msgid "Welcome, %1"
 msgstr "Välkommen %1"
 
-#: index.php:105
+#: index.php:111
 msgid "News"
 msgstr "Nyheter"
 
-#: index.php:118
+#: index.php:124
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Ebola-infekterad VERO E6 Cell"
 
-#: index.php:119
+#: index.php:125
 msgid "Simulation of Higgs boson detection"
 msgstr "Simulerad detektion av Higgs boson"
 
-#: index.php:120
+#: index.php:126
 msgid "The Earth's interrelated climate systems"
 msgstr "Jordens relaterade klimatsystem"
 
-#: index.php:121
+#: index.php:127
 msgid "Structure of protein GIF"
 msgstr "Struktur hos protein GIF"
 
-#: index.php:122
+#: index.php:128
 msgid "The Hubble ultra-deep field image"
 msgstr "Hubbles ultra djup fält bild"
 
-#: index.php:164
+#: index.php:170
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -107,28 +111,27 @@ msgstr ""
 msgid "About"
 msgstr "Om"
 
-#: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
-#: su_user_projects.php:84 user_hosts.php:26 su.inc:169
-msgid "Name"
-msgstr "Namn"
-
 #: su_account_settings.php:24
+msgid "Screen name"
+msgstr "Alias"
+
+#: su_account_settings.php:25
 msgid "Email address"
 msgstr "E-postadress"
 
-#: su_account_settings.php:25
+#: su_account_settings.php:26
 msgid "%1 member since"
 msgstr "%1 medlem sedan"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "User ID"
 msgstr "Användar ID"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "Used in community functions"
 msgstr "Används i gemenskapsfunktioner"
 
-#: su_account_settings.php:30
+#: su_account_settings.php:31
 msgid "Account settings"
 msgstr "Kontoinställningar"
 
@@ -174,18 +177,19 @@ msgstr "Välj en av:"
 
 #: su_compute_prefs.php:61
 msgid ""
-"Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
 msgstr ""
-"Grön %1 Använd 25% av processorerna och sluta köra beräkningar när datorn "
-"inte används.%2"
+"Låg energi %1 Använd 25% av processorerna och sluta köra beräkningar när "
+"datorn inte används.%2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Standard %1 Använd 50% av processorerna.%2"
 
 #: su_compute_prefs.php:77
-msgid "Max computing %1 Use all processors.%2"
-msgstr "Max beräkning %1 Använd alla processorer.%2"
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr "Maximal beräkning %1 Använd alla processorer.%2"
 
 #: su_compute_prefs.php:86
 msgid "Update"
@@ -337,7 +341,7 @@ msgstr "Beräkningar: detaljer"
 msgid "Science projects"
 msgstr "Vetenskapliga projekt"
 
-#: su_home.php:43 su_home.php:65 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
 msgid "Community"
 msgstr "Gemenskap"
 
@@ -511,6 +515,11 @@ msgstr "Datorhårdvara och mjukvara"
 msgid "Projects for which this computer has done work"
 msgstr "Projekt som denna dator har genomfört arbete för"
 
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:169
+msgid "Name"
+msgstr "Namn"
+
 #: su_hosts.php:161 su.inc:172
 msgid "CPU FLOPS"
 msgstr "CPU FLOPS"
@@ -551,7 +560,7 @@ msgstr "Hur projekt väljs för denna dator"
 msgid "Getting started"
 msgstr "Komma igång"
 
-#: su_intro.php:26
+#: su_intro.php:26 su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Välkommen till %1"
 
@@ -634,13 +643,13 @@ msgid "Science and location preferences"
 msgstr "Forsknings och platsinställningar"
 
 #: su_prefs.php:311
-msgid "Preferenced saved."
+msgid "Preferences saved."
 msgstr "Inställningar sparade."
 
 #: su_prefs.php:314
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
-"%1; for more detail, %2; for less.  When done, click the Save button at the "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
 "Välj forskningsområden och platser som du vill eller inte vill stödja. "
@@ -766,6 +775,80 @@ msgstr "Ingen"
 #: su_user_projects.php:152
 msgid "Return to project list"
 msgstr "Återvänd till listan över projekt"
+
+#: su_welcome.php:22
+msgid ""
+"\n"
+"    At this point BOINC should be installed and running on your computer;\n"
+"    the system tray should have an icon like this: %1\n"
+"    If not, %2get help here%3.\n"
+"    "
+msgstr ""
+"\n"
+"I detta läge borde BOINC vara installerat och igång på din dator;\n"
+"meddelandefältet borde ha en ikon som ser ut så här: %1\n"
+"Om inte, %2gfå hjälp här%3."
+
+#: su_welcome.php:36
+msgid "What happens now?"
+msgstr "Vad händer nu?"
+
+#: su_welcome.php:37
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINC, vilket körs i bakgrunden, kommer att ladda hem arbetsuppgifter,\n"
+"arbeta med dem och ladda upp resultaten.\n"
+"Detta kommer att ske automatiskt, du behöver inte göra något.\n"
+"Dessa beräkningar kan få din dators kylfläkt att aktiveras,\n"
+"och kan öka din elräkning något."
+
+#: su_welcome.php:49
+msgid "How to monitor and control BOINC"
+msgstr "Hur du övervakar och kontrollerar BOINC"
+
+#: su_welcome.php:50
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"Du kan övervaka vad BOINC gör, samt kontrollera det, genom BOINC Manager.\n"
+"Öppna den genom att dubbelklicka på BOINC ikonen.\n"
+"Detaljer finns %1här%2."
+
+#: su_welcome.php:62
+msgid "Computing preferences"
+msgstr "Beräkningsinställningar"
+
+#: su_welcome.php:63
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINC är designat för att inte påverka\n"
+"din dators prestanda för normal användning.\n"
+"Om den ändå gör det kan du minska påverkan genom att t.ex. begränsa mängden minne BOINC kan använda.\n"
+"Du kan göra många inställningar.\n"
+"Undersök det %1här%2."
+
+#: su_welcome.php:80
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"Du kan träffa och kommunicera med andar %1 deltagare\n"
+"på flera olika sätt - utforska Gemenskapsmenyn ovan."
 
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"
@@ -1087,3 +1170,4 @@ msgstr ""
 #: su_user.inc:157
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr "Körs BOINC på din dator? Om inte, %1Ladda ner det%2."
+

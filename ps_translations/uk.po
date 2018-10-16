@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
+"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
 "Last-Translator: makalu makalu <awakenings@outlook.com>, 2018\n"
 "Language-Team: Ukrainian (https://www.transifex.com/boinc/teams/35581/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "%1 тимчасово вимкнений для обслуговуван
 msgid "Recent contribution"
 msgstr "Недавній внесок"
 
-#: index.php:56
+#: index.php:56 su_welcome.php:89
 msgid "Continue to your home page"
 msgstr "Перейти на домашню сторінку"
 
@@ -54,50 +54,55 @@ msgstr ""
 "комп'ютера."
 
 #: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr ""
+"%1 працює за допомогою проекту BOINC в Каліфорнійському Університеті Берклі."
+
+#: index.php:74
 msgid "%1 and the research projects it supports are non-profit."
 msgstr "%1 і підтримувані їм дослідницькі проекти є некомерційними."
 
-#: index.php:73
+#: index.php:78
 msgid "Join %1"
 msgstr "Приєднатися до %1"
 
-#: index.php:76
+#: index.php:81
 msgid "Already joined?"
 msgstr "Вже приєдналися?"
 
-#: index.php:77
+#: index.php:82
 msgid "Log in."
 msgstr "Увійти."
 
-#: index.php:86
+#: index.php:92
 msgid "Welcome, %1"
 msgstr "Ласкаво просимо, %1"
 
-#: index.php:105
+#: index.php:111
 msgid "News"
 msgstr "Новини"
 
-#: index.php:118
+#: index.php:124
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Інфікована вірусом Ебола клітина VERO E6"
 
-#: index.php:119
+#: index.php:125
 msgid "Simulation of Higgs boson detection"
 msgstr "Моделювання виявлення бозона Хіггса"
 
-#: index.php:120
+#: index.php:126
 msgid "The Earth's interrelated climate systems"
 msgstr "Взаємопов'язані кліматичні системи Землі"
 
-#: index.php:121
+#: index.php:127
 msgid "Structure of protein GIF"
 msgstr "Структура білка GIF"
 
-#: index.php:122
+#: index.php:128
 msgid "The Hubble ultra-deep field image"
 msgstr "Ультра-глибоке поле зображень Хаббла"
 
-#: index.php:164
+#: index.php:170
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -109,28 +114,27 @@ msgstr ""
 msgid "About"
 msgstr "Про"
 
-#: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
-#: su_user_projects.php:84 user_hosts.php:26 su.inc:169
-msgid "Name"
-msgstr "Ім'я"
-
 #: su_account_settings.php:24
+msgid "Screen name"
+msgstr "Псевдонім"
+
+#: su_account_settings.php:25
 msgid "Email address"
 msgstr "Адреса електронної пошти"
 
-#: su_account_settings.php:25
+#: su_account_settings.php:26
 msgid "%1 member since"
 msgstr "Учасник %1 з"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "User ID"
 msgstr "ID користувача"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "Used in community functions"
 msgstr "Використовується в функціях співтовариства"
 
-#: su_account_settings.php:30
+#: su_account_settings.php:31
 msgid "Account settings"
 msgstr "Налаштування облікового запису"
 
@@ -178,17 +182,18 @@ msgstr "Виберіть один з:"
 
 #: su_compute_prefs.php:61
 msgid ""
-"Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
 msgstr ""
-"Зелений %1 Використовує 25% процесорів і зупинює обчислення, коли комп'ютер "
-"простоює.%2"
+"Низька потужність %1 Використовує 25% процесорів і зупинює обчислення, коли "
+"комп'ютер простоює.%2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Стандартний %1 Використовує 50% процесорів.%2"
 
 #: su_compute_prefs.php:77
-msgid "Max computing %1 Use all processors.%2"
+msgid "Maximum computing %1 Use all processors.%2"
 msgstr "Максимальний %1 Використовує всі процесори.%2"
 
 #: su_compute_prefs.php:86
@@ -340,7 +345,7 @@ msgstr "Обчислення: деталі"
 msgid "Science projects"
 msgstr "Наукові проекти"
 
-#: su_home.php:43 su_home.php:65 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
 msgid "Community"
 msgstr "Спільнота"
 
@@ -516,6 +521,11 @@ msgstr "Комп'ютерне обладнання і програмне заб�
 msgid "Projects for which this computer has done work"
 msgstr "Проекти, для яких цей комп'ютер зробив роботу"
 
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:169
+msgid "Name"
+msgstr "Ім'я"
+
 #: su_hosts.php:161 su.inc:172
 msgid "CPU FLOPS"
 msgstr "FLOPS ЦП"
@@ -556,7 +566,7 @@ msgstr "Як вибираються проекти для цього комп'ю
 msgid "Getting started"
 msgstr "Початок роботи"
 
-#: su_intro.php:26
+#: su_intro.php:26 su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Ласкаво просимо в %1"
 
@@ -638,18 +648,18 @@ msgid "Science and location preferences"
 msgstr "Налаштування науки і місця розташування"
 
 #: su_prefs.php:311
-msgid "Preferenced saved."
+msgid "Preferences saved."
 msgstr "Налаштування збережені."
 
 #: su_prefs.php:314
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
-"%1; for more detail, %2; for less.  When done, click the Save button at the "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
 "Виберіть галузі науки і розташування, які Ви підтримуєте або не хочете "
-"підтримувати. Натисніть %1; для отримання більш докладної інформації, %2; "
-"щоб приховати її. Коли закінчите, натисніть кнопку Зберегти внизу."
+"підтримувати. Натисніть %1 для отримання більш докладної інформації, %2 щоб "
+"приховати її. Коли закінчите, натисніть кнопку Зберегти внизу."
 
 #: su_prefs.php:323
 msgid "Science areas"
@@ -771,6 +781,84 @@ msgstr "Ні"
 #: su_user_projects.php:152
 msgid "Return to project list"
 msgstr "Повернутися до списку проектів"
+
+#: su_welcome.php:22
+msgid ""
+"\n"
+"    At this point BOINC should be installed and running on your computer;\n"
+"    the system tray should have an icon like this: %1\n"
+"    If not, %2get help here%3.\n"
+"    "
+msgstr ""
+"\n"
+"    На цьому етапі BOINC слід встановити та запустити на вашому комп'ютері;\n"
+"    системний лоток повинен мати подібну піктограму: %1\n"
+"    якщо ні, %2отримайте допомогу тут%3.\n"
+"    "
+
+#: su_welcome.php:36
+msgid "What happens now?"
+msgstr "Що відбувається зараз?"
+
+#: su_welcome.php:37
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINC, що працює у фоновому режимі, завантажить обчислювальні завдання,\n"
+"        обробить їх і відішле назад результати.\n"
+"        Все відбудеться без вашої участі; вам не потрібно нічого робити.\n"
+"        Ці обчислення змусять вентилятор вашого комп'ютера попрацювати,\n"
+"        а споживання енергії збільшиться.\n"
+"    "
+
+#: su_welcome.php:49
+msgid "How to monitor and control BOINC"
+msgstr "Як стежити за BOINC та контролювати його"
+
+#: su_welcome.php:50
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"Ви можете контролювати, що робить BOINC, та керувати ним за допомогою диспетчера BOINC.\n"
+"        Відкрийте його, двічі клацнувши на піктограму BOINC.\n"
+"        Подробиці %1тут%2."
+
+#: su_welcome.php:62
+msgid "Computing preferences"
+msgstr "Налаштування обчислень"
+
+#: su_welcome.php:63
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINC розроблений таким чином, щоб не вплинути на\n"
+"        продуктивність вашого комп'ютера при звичайному використанні.\n"
+"        Якщо це так, ви можете зменшити це навантаження,\n"
+"        наприклад, обмежуючи обсяг використання пам'яті BOINC.\n"
+"        Ви можете керувати всіма налаштуваннями.\n"
+"        Перевірте це %1тут%2."
+
+#: su_welcome.php:80
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"Ви можете зустрітися та спілкуватися з іншими учасниками %1\n"
+"       різними способами — подивіться на Співтовариство\n"
+"       у меню вище."
 
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"

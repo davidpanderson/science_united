@@ -17,9 +17,12 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // Make serialized version of projects list: projects.ser
+// DO THIS WHENEVER THE BOINC PROJECT LIST CHANGES
+// Run this in projects/scienceunited/html/ops
+// Also run project_init.php
 
 // first:
-// wget http://boinc.berkeley.edu/project_list.php
+// wget https://boinc.berkeley.edu/project_list.php
 // and put it in projects.xml
 
 // read projects.xml and, for each project in our DB, make

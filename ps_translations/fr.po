@@ -58,6 +58,8 @@ msgstr ""
 #: index.php:69
 msgid "%1 is operated by the BOINC project at UC Berkeley."
 msgstr ""
+"Le projet BOINC de l'Université de Cafifornie Berkeley assure la  gestion de"
+" %1."
 
 #: index.php:74
 msgid "%1 and the research projects it supports are non-profit."
@@ -117,7 +119,7 @@ msgstr "À propos"
 
 #: su_account_settings.php:24
 msgid "Screen name"
-msgstr ""
+msgstr "Pseudonyme"
 
 #: su_account_settings.php:25
 msgid "Email address"
@@ -187,6 +189,8 @@ msgid ""
 "Low power %1 Use 25% of processors, and stop computing when computer is "
 "idle.%2"
 msgstr ""
+"Faible puissance %1 Utilise 25% des processeurs, et arrête de calculer "
+"lorsque l'ordinateur est utilisé. %2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
@@ -194,7 +198,7 @@ msgstr " Standard %1 Utilise 50% des processeurs. %2"
 
 #: su_compute_prefs.php:77
 msgid "Maximum computing %1 Use all processors.%2"
-msgstr ""
+msgstr "Puissance de calcul maximale %1 Utilise tous les processeurs.%2"
 
 #: su_compute_prefs.php:86
 msgid "Update"
@@ -658,7 +662,7 @@ msgstr "Préférences en matière de science et de localisation"
 
 #: su_prefs.php:311
 msgid "Preferences saved."
-msgstr ""
+msgstr "Préférences enregistrées."
 
 #: su_prefs.php:314
 msgid ""
@@ -666,6 +670,10 @@ msgid ""
 "%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
+"Sélectionnez les domaines scientifiques et les localisations que vous voulez"
+" ou ne voulez pas soutenir. Cliquez sur %1 pour plus de détails, %2 pour "
+"moins de détails. Une fois terminé, cliquez sur le bouton Enregistrer en "
+"bas."
 
 #: su_prefs.php:323
 msgid "Science areas"
@@ -795,10 +803,14 @@ msgid ""
 "    If not, %2get help here%3.\n"
 "    "
 msgstr ""
+"\n"
+"À ce stade, BOINC doit être installé et exécuté sur votre ordinateur ; la barre d'état système doit avoir une icône comme celle-ci : %1\n"
+"Sinon, %2obtenez de l'aide ici%3.\n"
+" "
 
 #: su_welcome.php:36
 msgid "What happens now?"
-msgstr ""
+msgstr "Que se passera-t-il à présent ? "
 
 #: su_welcome.php:37
 msgid ""
@@ -809,10 +821,16 @@ msgid ""
 "        and it may slightly increase your electric bill.\n"
 "    "
 msgstr ""
+"BOINC, tournant en arrière-plan, téléchargera des tâches à calculer,\n"
+"        les traitera, et renverra les résultats.\n"
+"        Tout se fera automatiquement ; vous n'avez rien à faire.\n"
+"        Ces calculs peuvent entraîner le ventilateur de votre ordinateur à fonctionner,\n"
+"        et cela peut augmenter légèrement votre facture d'électricité.\n"
+"    "
 
 #: su_welcome.php:49
 msgid "How to monitor and control BOINC"
-msgstr ""
+msgstr "Comment surveiller et contrôler BOINC"
 
 #: su_welcome.php:50
 msgid ""
@@ -820,10 +838,13 @@ msgid ""
 "        Open this by double-clicking on the BOINC icon.\n"
 "        Details are %1here%2."
 msgstr ""
+"Vous pouvez surveiller ce que fait BOINC et le contrôler en utilisant BOINC Manager.\n"
+"        Ouvrez-le en double-cliquant sur l'icône BOINC.\n"
+"        Les détails sont %1ici%2."
 
 #: su_welcome.php:62
 msgid "Computing preferences"
-msgstr ""
+msgstr "Préférences de calcul"
 
 #: su_welcome.php:63
 msgid ""
@@ -834,6 +855,12 @@ msgid ""
 "        You can control many settings.\n"
 "        Check this out %1here%2."
 msgstr ""
+"BOINC est conçu pour ne pas impacter\n"
+"        les performances de votre ordinateur lors d'une utilisation normale.\n"
+"        Si c'est le cas, vous pouvez réduire cet impact,\n"
+"        par exemple en limitant la quantité de mémoire utilisée par BOINC.\n"
+"        Vous pouvez contrôler de nombreux paramètres.\n"
+"        Consultez-les %1ici%2."
 
 #: su_welcome.php:80
 msgid ""
@@ -841,6 +868,9 @@ msgid ""
 "        in a variety of ways - take a look under the Community\n"
 "        menu above."
 msgstr ""
+"Vous pouvez communiquer avec d'autres participants\n"
+"        de diverses manières - jetez un coup d’œil\n"
+"        au menu Communauté ci-dessus."
 
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"

@@ -21,7 +21,7 @@
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su_util.inc");
-require_once("../inc/keywords2.inc");
+require_once("../inc/keywords.inc");
 
 function admin_only() {
     $user = get_logged_in_user();
@@ -132,14 +132,16 @@ function project_kw_string($project_id, $category) {
     global $project_infos;
 
     $x = "";
-    $pkws = $project_infos[$project_id]->kws;
-    $first = true;
-    foreach ($pkws as $pkw) {
-        $kw = $job_keywords[$pkw->keyword_id];
-        if ($kw->category != $category) continue;
-        if (!$first) $x .= ', ';
-        $first = false;
-        $x .= $kw->name;
+    if (array_key_exists($project_id, $project_infos)) {
+        $pkws = $project_infos[$project_id]->kws;
+        $first = true;
+        foreach ($pkws as $pkw) {
+            $kw = $job_keywords[$pkw->keyword_id];
+            if ($kw->category != $category) continue;
+            if (!$first) $x .= ', ';
+            $first = false;
+            $x .= $kw->name;
+        }
     }
     return $x;
 }
