@@ -53,6 +53,7 @@ function canonical_resource_name($x) {
     case "CPU": return "cpu";
     case "NVIDIA": return "nvidia";
     case "ATI": return "amd";
+    case "intel_gpu": return "intel_gpu";
     }
     log_write("Unknown resource $x");
     return $x;
@@ -471,6 +472,8 @@ function choose_projects_join($user) {
         $n++;
         if ($n == 1) break;     // 1 is enough for now
     }
+    log_write("running make_accounts from join\n");
+    system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
     return $chosen_projects;
 }
 
@@ -524,6 +527,10 @@ function choose_projects_rpc($user, $host, $req) {
             touch("make_accounts_trigger");
             $new_accounts = true;
         }
+    }
+    if ($new_accounts) {
+        log_write("running make_accounts from RPC\n");
+        system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
     }
     return array($accounts_to_send, $new_accounts);
 }

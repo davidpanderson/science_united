@@ -35,13 +35,18 @@ function log_write($x) {
     flush();
 }
 
+// return true if made any DB changes
+//
 function do_pass() {
     $now = time();
+    log_write("doing DB enum");
     $accts = SUAccount::enum(
         sprintf("state=%d or (state=%d and retry_time<%d)",
             ACCT_INIT, ACCT_TRANSIENT_ERROR, $now
         )
     );
+    log_write("got ".count($accts)." results");
+    $did_something = false;
     foreach ($accts as $acct) {
         $user = BoincUser::lookup_id($acct->user_id);
         if (!$user) {
@@ -53,6 +58,12 @@ function do_pass() {
             log_write("missing project $acct->project_id");
             $acct->delete();
         }
+        if ($project->status == PROJECT_STATUS_HIDE) {
+            echo "Project $project->name is deprecated.\n";
+            $acct->delete();
+            continue;
+        }
+
         log_write(sprintf('trying to make account for user %d on %s',
             $user->id,
             $project->name
@@ -60,6 +71,8 @@ function do_pass() {
         $email_addr = "su_".substr(random_string(), 0, 8)."@nonexistent.domain";
         $passwd_hash = random_string();
         $name = "Science United user ".substr(random_string(), 0, 8);
+        log_write("   email addr '$email_addr'");
+        log_write("   name '$name'");
         list($auth, $err, $msg) = create_account(
             $project->web_rpc_url_base,
             $email_addr,
@@ -92,11 +105,23 @@ function do_pass() {
                 echo "su_account update 3 failed\n";
             }
             log_write("create_account success");
+            $did_something = true;
         }
     }
+    return $did_something;
 }
 
-function main() {
+function one_shot($command) {
+    log_write("Starting $command");
+    while (1) {
+        if (!do_pass()) {
+            break;
+        }
+    }
+    log_write("Done");
+}
+
+function daemon() {
     $t = 0;
     log_write("Starting");
     $ppid = posix_getppid();
@@ -122,6 +147,12 @@ function main() {
     }
 }
 
-main();
+$command = "??";
+if ($argc > 1) {
+    $command = $argv[1];
+}
+
+one_shot($command);
+//main();
 
 ?>

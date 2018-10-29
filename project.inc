@@ -110,12 +110,18 @@ function su_navbar(
         // NOTE: if you do this, you must set a global var $fixed_navbar
         // to true at compile time
         // (it needs to be set when page_head() is called).
-    $inverse=false
+    $inverse=false,
         // white on black?
+    $is_main
 ) {
     global $master_url;
 
-    $brand = "<a class=\"navbar-brand\" href=$master_url>".PROJECT."</a>";
+    if ($is_main) {
+        $logo = "Science United";
+    } else {
+        $logo = "<nobr><img style=\"vertical-align:text-bottom;\"src=power.png height=20> Science United</nobr>";
+    }
+    $brand = "<a class=\"navbar-brand\" href=$master_url>$logo</a>";
     navbar_start($brand, $fixed, $inverse);
 
     $x = array();
@@ -156,7 +162,7 @@ function project_banner($title, $prefix, $is_main) {
         ';
         //echo '<center><img class="img-responsive" src="logo.png"></center>';
     }
-    su_navbar(secure_url_base(), get_logged_in_user(false), false);
+    su_navbar(secure_url_base(), get_logged_in_user(false), false, false, $is_main);
     if ($title && !$is_main) {
         echo "<h2>$title</h2>\n";
     }
