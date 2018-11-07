@@ -40,19 +40,6 @@ function ec_to_tflops($ec) {
     return $ec*.12*3600.e6;
 }
 
-function show_num($x) {
-    return number_format($x, 2);
-}
-
-function show_days($dt) {
-    return show_num($dt/86400.);
-}
-
-function show_gflops($ec, $dt) {
-    $x = ec_to_flops($ec);
-    return show_num($x/($dt*1e9));
-}
-
 function new_delta_set() {
     $x = new StdClass;
     $x->cpu_time = 0;

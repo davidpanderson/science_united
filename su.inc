@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// utility functions involving YI
+// SU web utility functions
 
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
@@ -75,6 +75,41 @@ function get_platforms_string($project_id) {
     return $s;
 }
 
+// show percentage as a colored bar
+//
+function show_pct_bar($color, $width, $frac, $ndigits=0) {
+    $w = $width*$frac;
+    $w = $w."px";
+    $num = number_format($frac*100, $ndigits)."%";
+    return "<p style=\"background-color: $color; width: $w\">$num</p>\n";
+}
+
+// show number as a colored bar
+//
+function show_num_bar($color, $width, $num, $max, $ndigits=0) {
+    $frac = $num/$max;
+    $w = $width*$frac;
+    $w = $w."px";
+    if ($ndigits < 0) {
+        $num = sprintf("%.2e", $num);
+    } else {
+        $num = number_format($num, $ndigits);
+    }
+    return "<p style=\"background-color: $color; width: $w\">$num</p>\n";
+}
+
+function show_num($x) {
+    return number_format($x, 2);
+}
+
+function show_days($dt) {
+    return show_num($dt/86400.);
+}
+
+function show_gflops($ec, $dt) {
+    $x = ec_to_flops($ec);
+    return show_num($x/($dt*1e9));
+}
 ////////////// UI INVOLVING KEYWORDS ////////////////
 
 // look up the given keyword ID in the user KW list

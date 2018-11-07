@@ -19,8 +19,7 @@
 // show yes/no stats for keywords
 
 require_once("../inc/util.inc");
-require_once("../inc/su_db.inc");
-require_once("../inc/keywords.inc");
+require_once("../inc/su.inc");
 
 $nusers = 0;
 
@@ -44,8 +43,8 @@ function show_keyword($id) {
     }
     row_array(array(
         $spaces.$k->name,
-        (100*$k->nyes)/$nusers."%",
-        (100*$k->nno)/$nusers."%"
+        show_pct_bar("#00ff00", 200, ((double)$k->nyes)/$nusers, 2),
+        show_pct_bar("#ff0000", 200, ((double)$k->nno)/$nusers, 2)
     ));
     foreach ($k->children as $i) {
         show_keyword($i);
@@ -54,7 +53,7 @@ function show_keyword($id) {
 
 function show_keywords($category) {
     global $job_keywords;
-    row_heading_array(array("Keyword", "Yes", "No"));
+    row_heading_array(array("Keyword", "Yes", "No"), array("width=40%", "width=30%", "width=30%"));
     foreach ($job_keywords as $id=>$k) {
         if ($k->category != $category) continue;
         if ($k->parent) continue;

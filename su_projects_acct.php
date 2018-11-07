@@ -16,11 +16,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// show project accounting
+// show project accounting, either for all projects for for a particular one
 
 require_once("../inc/util.inc");
-require_once("../inc/su_db.inc");
-require_once("../inc/su_util.inc");
+require_once("../inc/su.inc");
 
 function show_projects_acct() {
     $projects = SUProject::enum("");
@@ -35,18 +34,51 @@ function show_projects_acct() {
         "# jobs fail",
         "Balance"
     ));
+    $max_cpu_time_total = 0;
+    $max_gpu_time_total = 0;
+    $max_cpu_ec_total = 0;
+    $max_gpu_ec_total = 0;
+    $max_njobs_success_total = 0;
+    $max_njobs_fail_total = 0;
+    $max_balance = 0;
     foreach ($projects as $p) {
         $ap = SUAccountingProject::last($p->id);
+        $p->acct = $ap;
+        if (!$ap) continue;
+        if ($ap->cpu_time_total > $max_cpu_time_total) {
+            $max_cpu_time_total = $ap->cpu_time_total;
+        }
+        if ($ap->gpu_time_total > $max_gpu_time_total) {
+            $max_gpu_time_total = $ap->gpu_time_total;
+        }
+        if ($ap->cpu_ec_total > $max_cpu_ec_total) {
+            $max_cpu_ec_total = $ap->cpu_ec_total;
+        }
+        if ($ap->gpu_ec_total > $max_gpu_ec_total) {
+            $max_gpu_ec_total = $ap->gpu_ec_total;
+        }
+        if ($ap->njobs_success_total > $max_njobs_success_total) {
+            $max_njobs_success_total = $ap->njobs_success_total;
+        }
+        if ($ap->njobs_fail_total > $max_njobs_fail_total) {
+            $max_njobs_fail_total = $ap->njobs_fail_total;
+        }
+        if ($p->balance > $max_balance) {
+            $max_balance = $p->balance;
+        }
+    }
+    foreach ($projects as $p) {
+        $ap = $p->acct;
         if (!$ap) continue;
         row_array(array(
             '<a href="su_projects_acct.php?project_id='.$p->id.'">'.$p->name.'</a>',
-            show_num($ap->cpu_time_total/3600),
-            show_num(ec_to_gflop_hours($ap->cpu_ec_total)),
-            show_num($ap->gpu_time_total/3600),
-            show_num(ec_to_gflop_hours($ap->gpu_ec_total)),
-            $ap->njobs_success_total,
-            $ap->njobs_fail_total,
-            $p->balance
+            show_num_bar("#00ff00", 100, $ap->cpu_time_total/3600, $max_cpu_time_total/3600),
+            show_num_bar("#00ff00", 100, ec_to_gflop_hours($ap->cpu_ec_total), ec_to_gflop_hours($max_cpu_ec_total)),
+            show_num_bar("#00ff00", 100, $ap->gpu_time_total/3600, $max_gpu_time_total/3600),
+            show_num_bar("#00ff00", 100, ec_to_gflop_hours($ap->gpu_ec_total), ec_to_gflop_hours($max_gpu_ec_total)),
+            show_num_bar("#00ff00", 100, $ap->njobs_success_total, $max_njobs_success_total),
+            show_num_bar("#ff0000", 100, $ap->njobs_fail_total, $max_njobs_fail_total),
+            show_num_bar("#00ff00", 100, $p->balance, $max_balance, -1)
         ));
     }
     end_table();

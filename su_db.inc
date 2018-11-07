@@ -12,10 +12,7 @@
 // user.seti_last_result_time
 //      when to send next status email
 
-$dir = getcwd();
-chdir('/mydisks/a/users/boincadm/projects/scienceunited/html/user');
 require_once("../inc/boinc_db.inc");
-chdir($dir);
 
 // values for keyword.category
 //
