@@ -175,9 +175,11 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         if (is_in_accounts($url, $accounts)) {
             continue;
         }
-        $project = SUProject::lookup("url='$url'");
-        if (!$project) {
-            continue;
+        if (0) {
+            $project = SUProject::lookup("url='$url'");
+            if (!$project) {
+                continue;
+            }
         }
         log_write("sending detach from $url");
         echo "<account>\n"
