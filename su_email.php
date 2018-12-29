@@ -19,8 +19,7 @@
 
 require_once("../inc/boinc_db.inc");
 require_once("../inc/email.inc");
-require_once("../inc/su_util.inc");
-require_once("../inc/su_db.inc");
+require_once("../inc/su.inc");
 
 // send status emails
 //

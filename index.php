@@ -162,19 +162,21 @@ echo "
 <p>
 <table width=100%>
 <tr>
-<td width=50%></td>
+<td width=30%></td>
 <td valign=top>
+    <center>
     <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
-    <br><center><small>
+    <br><small>
 ";
-echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",
+echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.
+        Image credits: CERN and NIAID.",
         "<a href=https://nsf.gov>", "</a>",
         "<a href=https://berkeley.edu>", "</a>"
 );
 echo "
     </small></center>
 </td>
-<td width=50%></td>
+<td width=30%></td>
 </tr></table>
 ";
 

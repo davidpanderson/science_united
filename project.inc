@@ -40,6 +40,16 @@ define("USER_HOME", "su_home.php");
 define("WELCOME_PAGE", "su_welcome.php");
 //define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
+define("HEAD_EXTRA", "
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-130506275-1\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-130506275-1');
+</script>
+");
 
 define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
     // Email addresses separated by pipe ( | ) that will receive user reports

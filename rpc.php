@@ -184,7 +184,6 @@ function send_reply($user, $host, $accounts, $new_accounts, $req) {
         log_write("sending detach from $url");
         echo "<account>\n"
             ."   <url>$url</url>\n"
-            ."   <url_signature>\n$project->url_signature\n</url_signature>\n"
             ."   <dont_request_more_work/>\n"
             ."   <detach_when_done/>\n"
             ."</account>\n"
