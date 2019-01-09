@@ -40,6 +40,7 @@ function main() {
         is not shared with projects.
     ";
     text_end();
+    page_tail();
 }
 
 main();
