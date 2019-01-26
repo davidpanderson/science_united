@@ -130,13 +130,13 @@ function do_users($now) {
 
 function main() {
     log_write("starting");
+    $now = time();
 
     // do this first, before we create a new accounting record
     //
     log_write("doing allocation");
-    do_allocation($now);
+    do_allocation();
 
-    $now = time();
     log_write("doing totals");
     do_total($now);
     log_write("doing projects");

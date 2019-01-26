@@ -40,7 +40,7 @@ define("USER_HOME", "su_home.php");
 define("WELCOME_PAGE", "su_welcome.php");
 //define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
-define("HEAD_EXTRA", "
+define("GLOBAL_HEAD_EXTRA", "
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-130506275-1\"></script>
 <script>
@@ -129,7 +129,7 @@ function su_navbar(
     if ($is_main) {
         $logo = "Science United";
     } else {
-        $logo = "<nobr><img style=\"vertical-align:text-bottom;\"src=power.png height=20> Science United</nobr>";
+        $logo = "<nobr><img style=\"vertical-align:text-bottom;\" src=power.png height=20> Science United</nobr>";
     }
     $brand = "<a class=\"navbar-brand\" href=$master_url>$logo</a>";
     navbar_start($brand, $fixed, $inverse);

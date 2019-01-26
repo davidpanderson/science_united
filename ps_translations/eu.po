@@ -1,0 +1,1199 @@
+# PROJECT translation
+# Copyright (C) PROJECT
+# 
+# This file is distributed under the same license as BOINC.
+# 
+# Translators:
+# Jabier <j.lasa@koniker.coop>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
+"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
+"Last-Translator: Jabier <j.lasa@koniker.coop>, 2019\n"
+"Language-Team: Basque (https://www.transifex.com/boinc/teams/35581/eu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: index.php:44
+msgid "%1 is temporarily shut down for maintenance."
+msgstr "Mantentze lanak tarteko, aldi baterako %1 ez da erabilgarri egongo."
+
+#: index.php:51
+msgid "Recent contribution"
+msgstr "Azkenaldiko ekarpena"
+
+#: index.php:56 su_welcome.php:89
+msgid "Continue to your home page"
+msgstr "Jarraitu zure hasiera-orrira"
+
+#: index.php:64
+msgid ""
+"%1 lets you help scientific research projects by giving them computing "
+"power.  These projects do research in astronomy, physics, biomedicine, "
+"mathematics, and environmental science; you can pick the areas you want to "
+"support."
+msgstr ""
+"%1(r)en bidez ikerketa zientifikoko proiektuei laguntza eman diezaiekezu "
+"konputazio-baliabideak esleituz.  Astronomia, fisika, biomedikuntza, "
+"matematika eta ingurumen zientzietako proiektuak dira; lagundu nahi dituzun "
+"arloak hauta ditzakezu."
+
+#: index.php:66
+msgid ""
+"You help by installing BOINC, a free program that runs scientific jobs in "
+"the background and when you're not using the computer.  BOINC is secure and "
+"will not affect your normal use of the computer."
+msgstr ""
+"BOINC instalatuz lagundu dezakezu. Lan zientifikoak atzeko planoan eta "
+"ordenagailua erabiltzen ari ez zarenean exekutatzen dituen doako programa da"
+" BOINC.  BOINC segurua da eta ez du zure ordenagailuaren ohiko erabileran "
+"inolako eraginik izango."
+
+#: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "UC Berkeley-ko BOINC proiektuak darama %1."
+
+#: index.php:74
+msgid "%1 and the research projects it supports are non-profit."
+msgstr ""
+"%1 eta babesten dituen ikerketa proiektuak irabazteko asmorik gabekoak dira."
+
+#: index.php:78
+msgid "Join %1"
+msgstr "Batu %1(e)ra"
+
+#: index.php:81
+msgid "Already joined?"
+msgstr "Dagoeneko batuta?"
+
+#: index.php:82
+msgid "Log in."
+msgstr "Hasi saioa."
+
+#: index.php:92
+msgid "Welcome, %1"
+msgstr "Ongi etorri, %1"
+
+#: index.php:111
+msgid "News"
+msgstr "Berriak"
+
+#: index.php:124
+msgid "Ebola-Infected VERO E6 Cell"
+msgstr "Ebolak infektatutako VERO E6 zelula"
+
+#: index.php:125
+msgid "Simulation of Higgs boson detection"
+msgstr "Higgs bosoiaren detekzioaren simulazioa"
+
+#: index.php:126
+msgid "The Earth's interrelated climate systems"
+msgstr "Lurraren elkar erlazionatutako sistema klimatikoak"
+
+#: index.php:127
+msgid "Structure of protein GIF"
+msgstr "GIF proteinaren egitura"
+
+#: index.php:128
+msgid "The Hubble ultra-deep field image"
+msgstr "Hubble-ren eremu ultra sakoneko irudia"
+
+#: index.php:170
+msgid ""
+"Science United is funded by the %1National Science Foundation%2, award "
+"#1664190, and is based at the %3University of California, Berkeley%4."
+msgstr ""
+"%1National Science Foundation%2(e)k finantzatzen du Science United, #1664190"
+" esleipena du eta %3Californiako Unibertsitatean, Berkeley-n%4 dago."
+
+#: su_about.php:20
+msgid "About"
+msgstr "Honi buruz"
+
+#: su_account_settings.php:24
+msgid "Screen name"
+msgstr "Erabiltzaile-izena"
+
+#: su_account_settings.php:25
+msgid "Email address"
+msgstr "Helbide elektronikoa"
+
+#: su_account_settings.php:26
+msgid "%1 member since"
+msgstr "%1(e)ko kide ondorengo dataz geroztik"
+
+#: su_account_settings.php:27
+msgid "User ID"
+msgstr "Erabiltzailearen IDa"
+
+#: su_account_settings.php:27
+msgid "Used in community functions"
+msgstr "Komunitate-funtzioetan erabiltzen da"
+
+#: su_account_settings.php:31
+msgid "Account settings"
+msgstr "Kontu-ezarpenak"
+
+#: su_accounting.php:29
+msgid "Computing history"
+msgstr "Konputazioaren historia"
+
+#: su_compute_prefs.php:28
+msgid "Computing settings"
+msgstr "Konputazio-ezarpenak"
+
+#: su_compute_prefs.php:44
+msgid ""
+"You can control how many processors to use (most computers have 4 or 8 "
+"processors) and when to use them."
+msgstr ""
+"Zenbat prozesadore erabiliko diren (ordenagailu gehienek 4 edo 8 izaten "
+"dituzte) eta noiz erabiliko diren kontrola dezakezu."
+
+#: su_compute_prefs.php:50
+msgid "This may affect your electricity costs and your computer's fan speeds."
+msgstr ""
+"Honek agian elektrizitatearen kostuan eta zure ordenagailuko haizagailuaren "
+"abiaduran eragina izan dezake."
+
+#: su_compute_prefs.php:52
+msgid ""
+"Settings affect all your computers.  Changes take effect the next time the "
+"computer synchs with Science United."
+msgstr ""
+"Ezarpenek zure ordenagailu guztietan dute eragina.  Ordenagailua Science "
+"United-ekin sinkronizatzen den hurrengoan gauzatuko dira aldaketak.      "
+
+#: su_compute_prefs.php:54
+msgid ""
+"You can change settings for a particular computer using the BOINC Manager.  "
+"This also gives you more detailed options."
+msgstr ""
+"Ordenagailu jakin baten ezarpenak alda ditzakezu BOINC Manager erabiliz.  "
+"Honek baita, aukera zehatzagoak ematen dizkizu."
+
+#: su_compute_prefs.php:56
+msgid "Choose one of:"
+msgstr "Aukeratu hauetako bat:"
+
+#: su_compute_prefs.php:61
+msgid ""
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
+msgstr ""
+"Kontsumo baxuko konputazioak %1 prozesadorearen ahalmenaren %25a erabiltzen "
+"du eta prozesatzeari uzten dio ordenagailua jarduerarik gabe dagoenean.%2"
+
+#: su_compute_prefs.php:68
+msgid "Standard %1 Use 50% of processors.%2"
+msgstr "Konputazio estandarrak %1 prozesadoreen erdiak erabiltzen ditu.%2"
+
+#: su_compute_prefs.php:77
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr "Konputazio maximoak %1 Prozesadore guztiak erabiltzen ditu.%2"
+
+#: su_compute_prefs.php:86
+msgid "Update"
+msgstr "Eguneratu"
+
+#: su_compute_prefs.php:95
+msgid "Computing settings updated"
+msgstr "Konputazio-ezarpenak eguneratuta"
+
+#: su_compute_prefs.php:96
+msgid ""
+"The new settings will take effect when your computer synchs with Science "
+"United."
+msgstr ""
+"Ordenagailua Science United-ekin sinkronizatzen den hurrengoan gauzatuko "
+"dira ezarpen berriak."
+
+#: su_compute_prefs.php:100
+msgid "Continue to home page"
+msgstr "Jarraitu hasiera-orrira"
+
+#: su_download.php:28
+msgid "Install software"
+msgstr "Instalatu softwarea"
+
+#: su_download.php:29
+msgid ""
+"To participate in %1 you must install BOINC and VirtualBox on your computer."
+msgstr ""
+"%1(e)n parte hartzeko BOINC eta VirtualBox instalatu behar dituzu zure "
+"ordenagailuan."
+
+#: su_email_prefs.php:28
+msgid "Email settings"
+msgstr "Helbide elektronikoaren ezarpenak"
+
+#: su_email_prefs.php:30
+msgid "Preferences updated."
+msgstr "Hobespenak eguneratuta."
+
+#: su_email_prefs.php:35
+msgid "Don't send me any emails"
+msgstr "Ez bidali niri mezu elektronikorik"
+
+#: su_email_prefs.php:42
+msgid ""
+"Status emails %1 These tell you how much work your computer(s) have done "
+"recently %2"
+msgstr ""
+"Egoerari buruzko mezu elektronikoek %1 zure ordenagailuek berriki egin duten"
+" lanaren berri ematen dizute %2"
+
+#: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
+msgid "Never"
+msgstr "Inoiz"
+
+#: su_email_prefs.php:49
+msgid "Daily"
+msgstr "Egunero"
+
+#: su_email_prefs.php:50
+msgid "Weekly"
+msgstr "Astero"
+
+#: su_email_prefs.php:51
+msgid "Monthly"
+msgstr "Hilero"
+
+#: su_email_prefs.php:56
+msgid ""
+"Community emails %1 These tell you about private messages, forum posts, and "
+"friend requests %2"
+msgstr ""
+"Komunitatearen mezu elektronikoek %1 mezu pribatuen, foroetako mezuen eta "
+"lagun izateko eskaeren berri ematen dizute %2"
+
+#: su_email_prefs.php:63
+msgid "Immediately"
+msgstr "Berehala"
+
+#: su_email_prefs.php:64
+msgid "Daily summary"
+msgstr "Eguneko laburpena"
+
+#: su_email_prefs.php:68 su_prefs.php:331
+msgid "Save"
+msgstr "Gorde"
+
+#: su_graph.php:56
+msgid "Successful jobs/day"
+msgstr "Ondo burututako lanak eguneko"
+
+#: su_graph.php:57
+msgid "Failed jobs/day"
+msgstr "Ondo burutu gabeko lanak eguneko"
+
+#: su_graph.php:64
+msgid "CPU hours/day"
+msgstr "PUZ ordu kopurua eguneko"
+
+#: su_graph.php:65
+msgid "GPU hours/day"
+msgstr "GPU ordu kopurua eguneko"
+
+#: su_help.php:3
+msgid "Need help?"
+msgstr "Laguntzarik nahi?"
+
+#: su_help.php:8
+msgid "Problems installing or running BOINC: %1 get help here%2."
+msgstr ""
+"Arazoak BOINC instalatzerakoan edo exekutatzerakoan: %1 lortu laguntza "
+"hemen%2."
+
+#: su_help.php:16
+msgid ""
+"Problems with %1: ask for help on the\n"
+"        %2 %3 message boards.%4"
+msgstr ""
+"Arazoak %1(r)ekin: eskatu laguntza\n"
+"        %2 %3 foroetan.%4"
+
+#: su_help.php:27
+msgid ""
+"To report a bug or request a feature in %1, create an issue on %2 the %3 "
+"Github repository%4 (you'll need a free Github account)."
+msgstr ""
+"%1(e)n programa-errore baten berri emateko edo ezaugarri berri bat "
+"eskatzeko, jakinarazi %2(a)n %3 Github biltegian%4 (Github-en doako kontu "
+"bat izan beharko duzu)."
+
+#: su_home.php:25
+msgid "Contribution"
+msgstr "Ekarpena"
+
+#: su_home.php:28 su_hosts.php:184
+msgid "View"
+msgstr "Ikusi"
+
+#: su_home.php:30 su_hosts.php:31 user_hosts.php:40
+msgid "Your computers"
+msgstr "Zure ordenagailuak"
+
+#: su_home.php:34
+msgid "Computing: graphs"
+msgstr "Konputazioa: grafikoak"
+
+#: su_home.php:35
+msgid "Computing: details"
+msgstr "Konputazioa: xehetasunak"
+
+#: su_home.php:36
+msgid "Science projects"
+msgstr "Proiektu zientifikoak"
+
+#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
+msgid "Community"
+msgstr "Komunitatea"
+
+#: su_home.php:51
+msgid "Settings"
+msgstr "Ezarpenak"
+
+#: su_home.php:54
+msgid "Edit"
+msgstr "Editatu"
+
+#: su_home.php:56
+msgid "Science areas and locations"
+msgstr "Zientzia arloak eta kokapenak"
+
+#: su_home.php:56
+msgid "Choose the types of research you want to support"
+msgstr "Aukeratu lagundu nahi dituzun ikerketa motak"
+
+#: su_home.php:61
+msgid "Computing"
+msgstr "Prozesatzen"
+
+#: su_home.php:61
+msgid "Choose how to use your computers"
+msgstr "Aukeratu zure ordenagailuak nola erabili"
+
+#: su_home.php:65
+msgid "Settings for message boards and private messages"
+msgstr "Foroen eta mezu pribatuen ezarpenak"
+
+#: su_home.php:69
+msgid "Account"
+msgstr "Kontua"
+
+#: su_home.php:69
+msgid "Name, password, email address"
+msgstr "Izena, pasahitza, helbide elektronikoa"
+
+#: su_home.php:73
+msgid "Email"
+msgstr "Mezu elektronikoa"
+
+#: su_home.php:73
+msgid "When and whether we should email you"
+msgstr "Mezu elektronikorik bidali behar dizugun eta noiz"
+
+#: su_home.php:99
+msgid "Your home page"
+msgstr "Zure orri nagusia"
+
+#: su_hosts.php:33
+msgid "No computers yet"
+msgstr "Oraindik ez dago ordenagailurik"
+
+#: su_hosts.php:39
+msgid "Computer name"
+msgstr "Ordenagailuaren izena"
+
+#: su_hosts.php:39 su_user_projects.php:84
+msgid "Click for details"
+msgstr "klik egin xehetasunak ikusteko"
+
+#: su_hosts.php:40
+msgid "Operating system"
+msgstr "Sistema eragilea"
+
+#: su_hosts.php:41 su_hosts.php:190
+msgid "Last contact"
+msgstr "Azken kontaktua"
+
+#: su_hosts.php:42 su_hosts.php:47
+msgid "Remove"
+msgstr "Kendu"
+
+#: su_hosts.php:42
+msgid "... if this is a duplicate or the computer is no longer running BOINC"
+msgstr ""
+"... kopia bat bada edo ordenagailua jada BOINC exekutatzen ari ez bada"
+
+#: su_hosts.php:72
+msgid "How projects are chosen for %1"
+msgstr "Nola aukeratzen dira proiektuak %1(r)entzat"
+
+#: su_hosts.php:73
+msgid ""
+"To decide which projects this computer should work for, we compute a "
+"\"score\" for each project.  The components of the score are:"
+msgstr ""
+"Ordenagailu honek zein proiekturentzako lan egin beharko lukeen erabakitzeko"
+" puntuazio bat kalkulatzen dugu proiektu bakoitzarentzat.  Puntuaziorako "
+"kontuan hartzen diren osagaiak hauek dira:"
+
+#: su_hosts.php:80 su_hosts.php:96
+msgid "Keyword score"
+msgstr "Gako-hitzaren puntuazioa"
+
+#: su_hosts.php:81
+msgid "How well your keyword preferences match the project's keywords."
+msgstr ""
+"Zure gako-hitzen hobespenak proiektuaren gako-hitzekin zenbateraino bat "
+"datozen."
+
+#: su_hosts.php:82 su_hosts.php:97
+msgid "Platform score"
+msgstr "Plataformaren puntuazioa"
+
+#: su_hosts.php:83
+msgid ""
+"-1 if the project has no programs that will run on the computer; 0 if it "
+"does; +1 if one of them uses a GPU or VirtuaBox."
+msgstr ""
+"-1 proiektuak ordenagailuan exekutatuko den programarik ez badu; 0 baldin "
+"badu; +1 programetakoren batek GPUa edo VirtualBox-a erabiltzen badu."
+
+#: su_hosts.php:84
+msgid "Balance"
+msgstr "Balantzea"
+
+#: su_hosts.php:85
+msgid ""
+"How much work is owed to the project; this changes from one day to the next."
+msgstr ""
+"Proiektuari zor zaion lan kopurua; hau egun batetik bestera aldatzen da."
+
+#: su_hosts.php:87
+msgid ""
+"We then choose the highest-scoring projects (at least 2) that together can "
+"use all the computer's processors."
+msgstr ""
+"Puntuazio handiena duten proiektuak aukeratzen ditugu ondoren (2 gutxienez),"
+" elkarrekin ordenagailuaren prozesadore guztiak erabil ditzaketelarik."
+
+#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+msgid "Project"
+msgstr "Proiektua"
+
+#: su_hosts.php:98
+msgid "Balance (GFLOPS days)"
+msgstr "Saldoa (GFLOPS egun)"
+
+#: su_hosts.php:99
+msgid "Opted out?"
+msgstr "Baztertua?"
+
+#: su_hosts.php:100 su_hosts.php:128
+msgid "Score"
+msgstr "Puntuazioa"
+
+#: su_hosts.php:103
+msgid "Can use %1?"
+msgstr "Erabil al daiteke %1?"
+
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
+#: su.inc:121
+msgid "Yes"
+msgstr "Bai"
+
+#: su_hosts.php:122
+msgid "Given the above info, this computer would do work for these projects:"
+msgstr ""
+"Aurreko informazioaren arabera, ordenagailu honek proiektu hauentzat lan "
+"egin lezake:"
+
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+msgid "No"
+msgstr "Ez"
+
+#: su_hosts.php:148
+msgid "Computer hardware and software"
+msgstr "Ordenagailuaren hardwarea eta softwarea"
+
+#: su_hosts.php:156 su_hosts.php:196
+msgid "Projects for which this computer has done work"
+msgstr "Ordenagailu honek landu dituen proiektuak"
+
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:169
+msgid "Name"
+msgstr "Izena"
+
+#: su_hosts.php:161 su.inc:172
+msgid "CPU FLOPS"
+msgstr "PUZ FLOPS"
+
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+msgid "CPU time"
+msgstr "PUZ denbora"
+
+#: su_hosts.php:163 su.inc:174
+msgid "GPU FLOPS"
+msgstr "GPU FLOPS "
+
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+msgid "GPU time"
+msgstr "GPU denbora"
+
+#: su_hosts.php:165 su.inc:175
+msgid "# jobs success"
+msgstr "# lanak ondo burutu dira"
+
+#: su_hosts.php:166
+msgid "#jobs fail"
+msgstr "#lanek huts egin dute"
+
+#: su_hosts.php:182 user_host.php:28
+msgid "Computer details"
+msgstr "Ordenagailuaren xehetasunak"
+
+#: su_hosts.php:187
+msgid "Hardware/software details"
+msgstr "Hardwarearen/softwarearen xehetasunak"
+
+#: su_hosts.php:192
+msgid "How projects are chosen for this computer"
+msgstr "Nola aukeratzen dira proiektuak ordenagailu honentzat"
+
+#: su_intro.php:25
+msgid "Getting started"
+msgstr "Hasten"
+
+#: su_intro.php:26 su_welcome.php:20
+msgid "Welcome to %1"
+msgstr "Ongi etorri %1(e)ra"
+
+#: su_intro.php:46
+msgid ""
+"By now you should have downloaded and run BOINC.  If so, you're done!  Your "
+"computer will do run science jobs in the background, supporting research in "
+"the areas you selected."
+msgstr ""
+"BOINC deskargatuta eta exekutatzen beharko zenuke izan orain.  Hala bada, "
+"amaitu duzu!  Zure ordenagailuak lan zientifikoak prozesatuko ditu atzeko "
+"planoan, zuk aukeratutako ikerketa-arloetan lagunduz."
+
+#: su_intro.php:47
+msgid ""
+"Scientists need all the computing power they can get.  To help further, you "
+"can:"
+msgstr ""
+"Zientzialariek ahal bezainbeste konputazio-baliabide behar dituzte.  Are "
+"gehiago laguntzeko:"
+
+#: su_intro.php:48
+msgid ""
+"Tell your family, friends, and co-workers about %1, and encourage them to "
+"volunteer."
+msgstr ""
+"Ezagutarazi iezaiezu  %1 zure familikoei, lagunei eta lankideei, eta anima "
+"itzazu bolondres izatera."
+
+#: su_intro.php:49
+msgid "Run %1 on all your computing devices:"
+msgstr "Exekutatu %1 zure gailu informatiko guztietan:"
+
+#: su_intro.php:50
+msgid ""
+"Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
+"web site (%1) and log in.  Then select Download from the Project menu, and "
+"install BOINC as you did on this computer."
+msgstr ""
+"mahaigaineko ordenagailuak eta ordenagailu eramangarriak (Windows, Linux, "
+"Mac OS X): gailu horretan joan %1 webgunera eta hasi saioa.  Gero hautatu "
+"\"proiektua\" menuan \"deskargatu\" aukera eta instalatu BOINC ordenagailu "
+"honetan egin zenuen modu berean."
+
+#: su_intro.php:51
+msgid ""
+"Android phones and tablets: install the BOINC app from the Google Play Store"
+" or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
+" and log in."
+msgstr ""
+"Android telefonoak eta tabletak: instalatu BOINC aplikazioa Google Play "
+"Store-tik edo (Fire-rentzat) Amazon App Store-tik.  Hautatu \"Erabili kontu-"
+"administratzailea\", aukeratu %1 eta hasi saioa."
+
+#: su_intro.php:52
+msgid "You can %1 Join or create a Team%2."
+msgstr "%1Taldera batu edo talde bat sortu%2 dezakezu."
+
+#: su_intro.php:53
+msgid "Computing prefs"
+msgstr "Konputazio-hobespenak"
+
+#: su_intro.php:54
+msgid "Science prefs"
+msgstr "Zientzia hobespenak"
+
+#: su_join.php:77 project.inc:98
+msgid "Join"
+msgstr "Batu"
+
+#: su_prefs.php:109
+msgid "Prefer"
+msgstr "Hobetsi"
+
+#: su_prefs.php:110
+msgid "As needed"
+msgstr "Beharrezkoa den heinean"
+
+#: su_prefs.php:308
+msgid "Science and location preferences"
+msgstr "Zientzia- eta kokapen-hobespenak"
+
+#: su_prefs.php:311
+msgid "Preferences saved."
+msgstr "Hobespenak gordeta."
+
+#: su_prefs.php:314
+msgid ""
+"Select science areas and locations you do or don't want to support.  Click "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
+"bottom."
+msgstr ""
+"Aukeratu lagundu nahi dituzun edo lagundu nahi ez dituzun zientzia arloak "
+"eta kokapenak.  Klik egin %1 xehetasun gehiagorako, %2 gutxiagorako.  "
+"Amaitutakoan, klik egin beheko \"Gorde\" botoian."
+
+#: su_prefs.php:323
+msgid "Science areas"
+msgstr "Zientzia arloak"
+
+#: su_prefs.php:327
+msgid "Locations"
+msgstr "Kokalekuak"
+
+#: su_user_accounting.php:24 su_user_accounting.php:34
+msgid "Your contribution history"
+msgstr "Zure ekarpenaren historia"
+
+#: su_user_accounting.php:35
+msgid "Computing power"
+msgstr "Konputazio-ahalmena"
+
+#: su_user_accounting.php:37
+msgid "Computing time"
+msgstr "Konputazio denbora"
+
+#: su_user_accounting.php:39
+msgid "Completed jobs"
+msgstr "Burututako lanak"
+
+#: su_user_projects.php:28
+msgid "New"
+msgstr "Berria"
+
+#: su_user_projects.php:30 su.inc:154
+msgid "Established"
+msgstr "Eratuta"
+
+#: su_user_projects.php:32
+msgid "In progress"
+msgstr "Martxan"
+
+#: su_user_projects.php:34 su.inc:258 su.inc:265
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: su_user_projects.php:85
+msgid "since"
+msgstr "geroztik"
+
+#: su_user_projects.php:86
+msgid "CPU hours"
+msgstr "PUZ ordu kopurua"
+
+#: su_user_projects.php:87
+msgid "GPU hours"
+msgstr "GPU ordu kopurua"
+
+#: su_user_projects.php:88
+msgid "# successful jobs"
+msgstr "# ondo burututako lanak"
+
+#: su_user_projects.php:89
+msgid "# failed jobs"
+msgstr "# ondo burutu gabeko lanak"
+
+#: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
+msgid "Account status"
+msgstr "Kontuaren egoera"
+
+#: su_user_projects.php:91
+msgid "Allowed by prefs?"
+msgstr "Hobespenek baimendua?"
+
+#: su_user_projects.php:126
+msgid "Web site"
+msgstr "WebguneA"
+
+#: su_user_projects.php:127
+msgid "Science keywords"
+msgstr "Gako-hitz zientifikoak"
+
+#: su_user_projects.php:128
+msgid "Location keywords"
+msgstr "Kokalekuaren gako-hitzak"
+
+#: su_user_projects.php:132
+msgid "CPU computing"
+msgstr "PUZ bidezko konputazioa"
+
+#: su_user_projects.php:135
+msgid "GPU computing"
+msgstr "GPU bidezko konputazioa"
+
+#: su_user_projects.php:138
+msgid "# jobs succeeded"
+msgstr "# ondo burututako lanak"
+
+#: su_user_projects.php:139
+msgid "# jobs failed"
+msgstr "# ondo burutu gabeko lanak"
+
+#: su_user_projects.php:141
+msgid "Include"
+msgstr "Sartu"
+
+#: su_user_projects.php:143
+msgid "Exclude"
+msgstr "Baztertu"
+
+#: su_user_projects.php:146
+msgid "Excluded?"
+msgstr "Baztertuta?"
+
+#: su_user_projects.php:146
+msgid "Use if this project causes problems on your computer"
+msgstr "Erabili proiektu honek ordenagailuan arazoak sortzen badizkizu"
+
+#: su_user_projects.php:150
+msgid "None"
+msgstr "Inor ez"
+
+#: su_user_projects.php:152
+msgid "Return to project list"
+msgstr "Itzuli proiektu-zerrendara"
+
+#: su_welcome.php:22
+msgid ""
+"\n"
+"    At this point BOINC should be installed and running on your computer;\n"
+"    the system tray should have an icon like this: %1\n"
+"    If not, %2get help here%3.\n"
+"    "
+msgstr ""
+"\n"
+"    Honezkero zure ordenagailuan BOINC instalatuta eta exekutatzen egon beharko luke;\n"
+"    sistemaren erretiluan honen antzeko ikono bat egon beharko luke: %1\n"
+"    Hala ez bada, %2lortu laguntza hemen%3.\n"
+"    "
+
+#: su_welcome.php:36
+msgid "What happens now?"
+msgstr "Zer gertatzen da orain?"
+
+#: su_welcome.php:37
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"Atzeko planoan exekutatuz, BOINCek konputazio-lanak deskargatuko ditu\n"
+"        eta berauek prozesatu ondoren emaitzak bidaliko ditu.\n"
+"        Automatikoki egiten da; ez duzu ezer egin beharrik.\n"
+"        Konputazio honen ondorioz agian ordenagailuaren haizagailua martxan jarri\n"
+"        eta zure faktura elektrikoa apur bat igo daiteke.\n"
+"    "
+
+#: su_welcome.php:49
+msgid "How to monitor and control BOINC"
+msgstr "Nola monitorizatu eta kontrolatu BOINC"
+
+#: su_welcome.php:50
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"BOINC egiten ari dena monitoriza dezakezu, eta berau kontrolatu, BOINC Manager erabiliz.\n"
+"        Ireki hau BOINC ikonoan klik bikoitza eginez.\n"
+"        Xehetasunak %1hemen%2 daude."
+
+#: su_welcome.php:62
+msgid "Computing preferences"
+msgstr "Konputazio-hobespenak"
+
+#: su_welcome.php:63
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"Zure ordenagailuaren funtzionamendu\n"
+"        normalean eraginik ez izateko diseinatuta dago BOINC.\n"
+"        Eraginik baldin badu, txikiagotu dezakezu\n"
+"        adibidez BOINCek erabiltzen duen memoria mugatuz.\n"
+"        Ezarpen asko kontrola ditzakezu.\n"
+"        Begiratu %1hemen%2."
+
+#: su_welcome.php:80
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"Beste %1 partaideekin elkartu eta komunika zaitezke\n"
+"        hainbat modutan - begiratu goiko\n"
+"        komunitatea menuan."
+
+#: user_host.php:30 user_projects.php:23
+msgid "Projects"
+msgstr "Proiektuak"
+
+#: user_hosts.php:26
+msgid "click for details"
+msgstr "klik egin xehetasunak ikusteko"
+
+#: user_hosts.php:27
+msgid "Last RPC"
+msgstr "Azken RPCa"
+
+#: project.inc:92
+msgid "Log out"
+msgstr "Amaitu saioa"
+
+#: project.inc:98
+msgid "Login"
+msgstr "Hasi saioa"
+
+#: project.inc:122
+msgid "About %1"
+msgstr "%1(r)i buruz"
+
+#: project.inc:123
+msgid "Help"
+msgstr "Laguntza"
+
+#: project.inc:127
+msgid "Message boards"
+msgstr "Foroak"
+
+#: project.inc:129
+msgid "Teams"
+msgstr "TaldeaK"
+
+#: project.inc:129
+msgid "create or join a team"
+msgstr "sortu edo batu talde batera"
+
+#: project.inc:134
+msgid "Site"
+msgstr "Webgunea"
+
+#: project.inc:135
+msgid "Search"
+msgstr "Bilatu"
+
+#: project.inc:136
+msgid "Languages"
+msgstr "Hizkuntzak"
+
+#: project.inc:154
+msgid "Do science research on your computer, tablet, or phone"
+msgstr "Egin ikerketa zientifikoa zure ordenagailuan, tabletan edo telefonoan"
+
+#: project.inc:174
+msgid "Generated"
+msgstr "Sortuta"
+
+#: project.inc:205
+msgid "Your personal background."
+msgstr "Zure ezagutzak."
+
+#: project.inc:209
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr ""
+"Aurkez iezaguzu zeure burua. Kontaiguzu adibidez nongoa zaren, adina, "
+"lanbidea, zaletasunak, edo zuri buruzko beste edozer."
+
+#: project.inc:213
+msgid "Your opinions about %1"
+msgstr "%1(r)i buruzko zure iritziak"
+
+#: project.inc:217
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"Emaiguzu %1(r)i buruz duzun iritzia<ol>\n"
+"    <li>Zergatik parte hartzen duzu %1(e)n?\n"
+"    <li>Zein da proiektuari buruz duzun iritzia?\n"
+"    <li>Iradokizunik?\n"
+"    </ol> "
+
+#: su.inc:118 su.inc:123
+msgid "Maybe"
+msgstr "Agian"
+
+#: su.inc:126
+msgid "Edit preferences"
+msgstr "Editatu hobespenak"
+
+#: su.inc:152
+msgid "Initial"
+msgstr "Hasierakoa"
+
+#: su.inc:156
+msgid "Transient error"
+msgstr "Errore iragankorra"
+
+#: su.inc:164
+msgid "No accounts yet"
+msgstr "Oraindik konturik gabe"
+
+#: su.inc:170
+msgid "Status"
+msgstr "Egoera"
+
+#: su.inc:176
+msgid "# jobs fail"
+msgstr "# lanek huts egin dute"
+
+#: su.inc:199
+msgid "Domain name"
+msgstr "Domeinu-izena"
+
+#: su.inc:201
+msgid "Product name"
+msgstr "Produktuaren izena"
+
+#: su.inc:205
+msgid "Local Standard Time"
+msgstr "Ordu-zona"
+
+#: su.inc:205
+msgid "UTC %1 hours"
+msgstr "UTC %1 ordu"
+
+#: su.inc:206
+msgid "Created"
+msgstr "Sortua"
+
+#: su.inc:207
+msgid "Number of times client has contacted server"
+msgstr "Bezeroa zerbitzariarekin harremanetan jarri den aldi kopurua"
+
+#: su.inc:208
+msgid "Last time contacted server"
+msgstr "Zerbitzariarekin harremanetan jarri den azken aldia"
+
+#: su.inc:209
+msgid "Fraction of time BOINC is running"
+msgstr "BOINCen exekuzio-denbora"
+
+#: su.inc:211
+msgid ""
+"While BOINC is running, fraction of time computer has an Internet connection"
+msgstr ""
+"BOINC exekutatzen ari den bitartean, ordenagailuak Internet konexioa dueneko"
+" denbora-tartea"
+
+#: su.inc:213
+msgid "While BOINC is running, fraction of time computing is allowed"
+msgstr ""
+"BOINC exekutatzen ari den bitartean, konputaziora bideratzen den denbora-"
+"tartea"
+
+#: su.inc:214
+msgid "While is BOINC running, fraction of time GPU computing is allowed"
+msgstr ""
+"BOINC exekutatzen ari den bitartean, GPU bidezko konputaziora bideratzen den"
+" denbora-tartea"
+
+#: su.inc:219
+msgid "CPU type"
+msgstr "PUZ mota"
+
+#: su.inc:220
+msgid "Number of processors"
+msgstr "Prozesadore kopurua"
+
+#: su.inc:222
+msgid "Coprocessors"
+msgstr "Koprozesadoreak"
+
+#: su.inc:224
+msgid "Operating System"
+msgstr "Sistema eragilea"
+
+#: su.inc:227
+msgid "BOINC version"
+msgstr "BOINCen bertsioa"
+
+#: su.inc:231
+msgid "Memory"
+msgstr "Memoria"
+
+#: su.inc:231 su.inc:240
+msgid "%1 MB"
+msgstr "%1 MB "
+
+#: su.inc:235
+msgid "Cache"
+msgstr "Cachea"
+
+#: su.inc:235
+msgid "%1 KB"
+msgstr "%1 KB "
+
+#: su.inc:240
+msgid "Swap space"
+msgstr "Swap lekua"
+
+#: su.inc:243
+msgid "Total disk space"
+msgstr "Diskoaren edukiera"
+
+#: su.inc:243 su.inc:246
+msgid "%1 GB"
+msgstr "%1 GB "
+
+#: su.inc:246
+msgid "Free Disk Space"
+msgstr "Diskoko leku librea"
+
+#: su.inc:249
+msgid "Measured floating point speed"
+msgstr "Koma mugikorreko abiadura kalkulatuta"
+
+#: su.inc:249 su.inc:252
+msgid "%1 million ops/sec"
+msgstr "%1 milioi eragiketa/seg"
+
+#: su.inc:252
+msgid "Measured integer speed"
+msgstr "Zenbaki osoko abiadura kalkulatuta"
+
+#: su.inc:256 su.inc:258
+msgid "Average upload rate"
+msgstr "Batezbesteko igoera abiadura"
+
+#: su.inc:256 su.inc:263
+msgid "%1 KB/sec"
+msgstr "%1 KB/seg"
+
+#: su.inc:263 su.inc:265
+msgid "Average download rate"
+msgstr "Batezbesteko deskarga abiadura"
+
+#: su.inc:320
+msgid "No accounting records yet"
+msgstr "Oraindik kontu-erregistrorik gabe"
+
+#: su.inc:324 su.inc:333
+msgid "CPU days"
+msgstr "PUZ egun kopurua"
+
+#: su.inc:325 su.inc:334
+msgid "GPU days"
+msgstr "GPU egun kopurua"
+
+#: su.inc:326 su.inc:335
+msgid "Successful jobs"
+msgstr "Ondo burututako lanak"
+
+#: su.inc:327 su.inc:336
+msgid "Failed jobs"
+msgstr "Ondo burutu gabeko lanak"
+
+#: su_graph.inc:31
+msgid "Past month:"
+msgstr "Azken hilabetea:"
+
+#: su_graph.inc:34
+msgid "Not enough data yet"
+msgstr "Oraindik ez dago behar adina datu"
+
+#: su_join.inc:35
+msgid "An invitation code is required to create an account."
+msgstr "Gonbidapen-kode bat behar da kontu bat sortzeko"
+
+#: su_join.inc:36
+msgid "Invitation code"
+msgstr "Gonbidapen-kodea"
+
+#: su_join.inc:44
+msgid "Identifies you on this web site. Use your real name or a nickname."
+msgstr ""
+"Webgune honetan identifikatzen zaitu. Erabili zure benetako izena edo "
+"erabiltzaile-izen bat."
+
+#: su_join.inc:45
+msgid "Choose screen name"
+msgstr "Aukeratu erabiltzaile-izena"
+
+#: su_join.inc:51
+msgid "An address where you can receive emails."
+msgstr "Helbide elektroniko bat non mezuak jaso ahal izango dituzun."
+
+#: su_join.inc:52
+msgid "Your email address"
+msgstr "Zure helbide elektronikoa"
+
+#: su_join.inc:63
+msgid "Must be at least %1 characters"
+msgstr "Gutxienez %1 karaktere izan behar ditu"
+
+#: su_join.inc:64
+msgid "Choose password"
+msgstr "Aukeratu pasahitza"
+
+#: su_user.inc:154
+msgid "Want to help more?"
+msgstr "Nahi al duzu gehiago lagundu?"
+
+#: su_user.inc:155
+msgid "Tell friends and family about %1."
+msgstr "Ezagutarazi iezaiezu %1 lagunei eta familikoei."
+
+#: su_user.inc:156
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr ""
+"Exekutatu BOINC zure beste gailu informatikoetan (mahaigaineko "
+"ordenagailuak, ordenagailu eramangarriak, tabletak eta Android telefonoak)."
+
+#: su_user.inc:157
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
+msgstr ""
+"Ordenagailu honetan BOINC instalatuta al dago?  Hala ez bada, "
+"%1Deskargatu%2."
+

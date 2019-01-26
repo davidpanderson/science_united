@@ -382,38 +382,106 @@ function lookup_records($req) {
 }
 
 // sanity-check limits on #s and speed of CPU cores, GPUs
+// QUESTION: if a client-supplied value exceeds a limit, it's probably wacko.
+// Maybe we should replace it with zero, rather than the limit.
 //
 define("MAX_CPU_INST", 256);
-define("MAX_CPU_FLOPS", 100e9);
+define("MAX_CPU_FLOPS", 100e9);     // max 100 GFLOPS per CPU
 define("MAX_GPU_INST", 8);
-define("MAX_GPU_FLOPS", 100e12);
+define("MAX_GPU_FLOPS", 100e12);    // max 100 TFLOPS per GPU
 define("MAX_JOBS_DAY", 10000);
 
-// make sure a time delta (for CPU or GPU time) is legit
-// dt is the wall time delta
-//
-function check_time_delta($dt, $delta, $is_gpu) {
-    if ($delta < 0) return 0;
-    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST;
-    $max_delta = $max_inst*$dt;
-    return min($delta, $max_delta);
+function check_ncpus($host) {
+    if ($host->p_ncpus > MAX_CPU_INST) {
+        log_write("Warning: too many CPUs: $host->p_ncpus.  Capping at 256");
+        return MAX_CPU_INST;
+    }
+    return $host->p_ncpus;
 }
 
-// make sure an EC delta is legit
+function check_ngpus($host) {
+    if ($host->p_ngpus > MAX_GPU_INST) {
+        log_write("Warning: too many GPUs: $host->p_ngpus.  Capping at 8");
+        return MAX_GPU_INST;
+    }
+    return $host->p_ngpus;
+}
+
+function check_cpu_flops($host, $ncpus) {
+    $fpops = $host->p_fpops;
+    if ($fpops > MAX_CPU_FLOPS) {
+        log_write("Warning: p_fpops is too high: $fpops.  Capping");
+        $fpops = MAX_CPU_FLOPS;
+    }
+    return $fpops*$ncpus;
+}
+
+function check_gpu_flops($host, $ngpus) {
+    $fpops = $host->p_gpu_fpops;
+    if ($fpops > MAX_GPU_FLOPS*$ngpus) {
+        log_write("Warning: p_gpu_fpops is too high: $fpops.  Capping");
+        $fpops = MAX_GPU_FLOPS*$ngpus;
+    }
+    return $fpops;
+}
+
+// sanity-check a runtime delta (for CPU or GPU time).
+// dt is the wall time delta
 //
-function check_ec_delta($dt, $delta, $is_gpu) {
-    if ($delta < 0) return 0;
-    $max_inst = $is_gpu?MAX_GPU_INST:MAX_CPU_INST;
-    $max_rate = $is_gpu?MAX_GPU_FLOPS/COBBLESTONE_SCALE:MAX_CPU_FLOPS/COBBLESTONE_SCALE;
-    $max_delta = $max_inst*$max_rate*$dt;
-    return min($delta, $max_delta);
+function check_time_delta($dt, $delta, $ninst) {
+    if ($delta < 0) {
+        log_write("Warning: negative runtime delta: $delta");
+        return 0;
+    }
+    $max_delta = $ninst*$dt;
+    if ($delta > $max_delta) {
+        log_write("Warning: runtime too large: $delta > $ninst * $dt; capping");
+        return $max_delta;
+    }
+    return $delta;
+}
+
+// sanity-check an EC delta.
+//
+function check_ec_delta($dt, $delta, $fpops) {
+    if ($delta < 0) {
+        log_write("Warning: negative EC delta: $delta");
+        return 0;
+    }
+
+    $max_rate = $fpops/COBBLESTONE_SCALE;
+    $max_delta = $max_rate*$dt;
+    if ($delta > $max_delta) {
+        log_write("Warning: EC delta is too high: $delta > $max_rate * $dt");
+        return $max_delta;
+    }
+    return $delta;
 }
 
 // sanity check limit on the # of jobs a host can process in one day.
 //
 function check_njobs($dt, $njobs) {
-    if ($njobs < 0) return 0;
-    return min($njobs, MAX_JOBS_DAY*$dt/86400.);
+    if ($njobs < 0) {
+        log_write("Warning: #jobs is negative: $njobs");
+        return 0;
+    }
+    $max_njobs = MAX_JOBS_DAY*$dt/86400.;
+    if ($njobs > $max_njobs) {
+        log_write("Warning: #jobs is too large: $njobs > $max_njobs");
+        return $max_njobs;
+    }
+    return $njobs;
+}
+
+// lookup a project, mod http/https differences
+//
+function find_project($url) {
+    $project = SUProject::lookup("url='$url'");
+    if ($project) {
+        return $project;
+    }
+    $url = strstr($url, "//");
+    return SUProject::lookup("url like '%$url'");
 }
 
 // - compute accounting deltas based on AM request message
@@ -429,19 +497,30 @@ function do_accounting(
     $user, $host    // user and host records
 ) {
     global $now;
-    $dt = $now = $host->rpc_time;
+    $dt = $now - $host->rpc_time;
     if ($dt < 0) {
+        log_write("Negative dt: now $now last RPC $host->rpc_time");
         return;
     }
+    log_write("time since last RPC: $dt");
 
-    // the client reports totals per project.
-    // the following are sums across all projects
+    // get sanity-checked values for various params
+    //
+    $ncpus = check_ncpus($host);
+    $ngpus = check_ngpus($host);
+    $cpu_flops = check_cpu_flops($host, $ncpus);
+    $gpu_flops = check_gpu_flops($host, $ngpus);
+
+    // The client reports totals per project.
+    // This includes work prior to joining SU, which could be years.
+
+    // sum_delta is the sum across all projects
     //
     $sum_delta = new_delta_set();
 
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
-        $project = SUProject::lookup("url='$url'");
+        $project = find_project($url);
         if (!$project) {
             log_write("can't find project $url");
             continue;
@@ -449,6 +528,7 @@ function do_accounting(
 
         // get host/project record; create if needed
         //
+        $first = false;
         $hp = SUHostProject::lookup(
             "host_id=$host->id and project_id=$project->id"
         );
@@ -459,6 +539,11 @@ function do_accounting(
             $hp = SUHostProject::lookup(
                 "host_id=$host->id and project_id=$project->id"
             );
+            if (!$hp) {
+                log_write("CRITICAL: can't create su_host_project");
+                return;
+            }
+            $first = true;
         }
 
         $rp_cpu_time = (double)$rp->cpu_time;
@@ -472,22 +557,17 @@ function do_accounting(
         //
         $dproj = new_delta_set();
         $d = $rp_cpu_time - $hp->cpu_time;
-        $dproj->cpu_time = check_time_delta($dt, $d, false);
+        $dproj->cpu_time = check_time_delta($dt, $d, $ncpus);
         $d = $rp_cpu_ec - $hp->cpu_ec;
-        $dproj->cpu_ec = check_ec_delta($dt, $d, false);
+        $dproj->cpu_ec = check_ec_delta($dt, $d, $ncpus);
         $d = $rp_gpu_time - $hp->gpu_time;
-        $dproj->gpu_time = check_time_delta($dt, $d, true);
+        $dproj->gpu_time = check_time_delta($dt, $d, $ngpus);
         $d = $rp_gpu_ec - $hp->gpu_ec;
-        $dproj->gpu_ec = check_ec_delta($dt, $d, true);
+        $dproj->gpu_ec = check_ec_delta($dt, $d, $ngpus);
         $d = $rp_njobs_success - $hp->njobs_success;
         $dproj->njobs_success = check_njobs($dt, $d);
         $d = $rp_njobs_fail - $hp->njobs_fail;
         $dproj->njobs_fail = check_njobs($dt, $d);
-
-        if (LOG_DELTAS) {
-            log_write("Deltas for $project->name:");
-            log_write_deltas($dproj);
-        }
 
         // update host/project record (totals)
         //
@@ -505,34 +585,42 @@ function do_accounting(
             su_error(-1, "hp->update failed");
         }
 
+        // if no changes, we're done with this project
+        //
+        if (!delta_set_nonzero($dproj)) {
+            continue;
+        }
+
+
+        if (LOG_DELTAS) {
+            log_write("Deltas for $project->name:");
+            log_write_deltas($dproj);
+        }
+
         // update user/project record (totals)
         //
-        if (delta_set_nonzero($dproj)) {
-            $a = new SUAccount;
-            $a->user_id = $user->id;
-            $a->project_id = $project->id;
-            $ret = $a->update("cpu_time = cpu_time + $dproj->cpu_time,
-                cpu_ec = cpu_ec + $dproj->cpu_ec,
-                gpu_time = gpu_time + $dproj->gpu_time,
-                gpu_ec = gpu_ec + $dproj->gpu_ec,
-                njobs_success = njobs_success + $dproj->njobs_success,
-                njobs_fail = njobs_fail + $dproj->njobs_fail
-            ");
-            if (!$ret) {
-                log_write("account->update failed");
-                su_error(-1, "account->update failed");
-            }
+        $a = new SUAccount;
+        $a->user_id = $user->id;
+        $a->project_id = $project->id;
+        $ret = $a->update("cpu_time = cpu_time + $dproj->cpu_time,
+            cpu_ec = cpu_ec + $dproj->cpu_ec,
+            gpu_time = gpu_time + $dproj->gpu_time,
+            gpu_ec = gpu_ec + $dproj->gpu_ec,
+            njobs_success = njobs_success + $dproj->njobs_success,
+            njobs_fail = njobs_fail + $dproj->njobs_fail
+        ");
+        if (!$ret) {
+            log_write("account->update failed");
+            su_error(-1, "account->update failed");
         }
 
         // add deltas to deltas in project's current accounting record
         //
-        if (delta_set_nonzero($dproj)) {
-            $ap = SUAccountingProject::last($project->id);
-            $ret = $ap->update(delta_update_string($dproj));
-            if (!$ret) {
-                log_write("ap->update failed");
-                su_error(-1, "ap->update failed");
-            }
+        $ap = SUAccountingProject::last($project->id);
+        $ret = $ap->update(delta_update_string($dproj));
+        if (!$ret) {
+            log_write("ap->update failed");
+            su_error(-1, "ap->update failed");
         }
 
         // update project balance

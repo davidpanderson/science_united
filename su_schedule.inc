@@ -32,6 +32,7 @@
 //      select_projects_resource()
 
 require_once("../inc/su_db.inc");
+require_once("../inc/su_util.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/download_util.inc");
 
@@ -395,16 +396,18 @@ function select_projects_resource($host, $projects) {
                 // if it hasn't supplied work for the resource recently
                 //
                 if ($in_rpc) {
-                    if (!$p->nrpc_failures
-                        && !in_array($r, $p->sched_req_no_work)
-                    ) {
+                    if ($p->nrpc_failures) {
+                        if (LOG_PROJECT_SELECT) {
+                            log_write("select: $p->name can't use $r: RPC failures");
+                        }
+                    } else if (in_array($r, $p->sched_req_no_work)) {
+                        if (LOG_PROJECT_SELECT) {
+                            log_write("select: $p->name can't use $r: sched req didn't get work");
+                        }
+                    } else {
                         $used[$r] = true;
                         if (LOG_PROJECT_SELECT) {
                             log_write("select: $p->name can use $r");
-                        }
-                    } else {
-                        if (LOG_PROJECT_SELECT) {
-                            log_write("select: $p->name can't use $r");
                         }
                     }
                 } else {

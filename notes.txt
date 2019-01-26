@@ -1,3 +1,9 @@
+problems
+host 2191
+    first rpc jan 22 2019
+    GPU flops 4e16
+    too-large CPU times?
+        maybe because of existing (pre-SU) totals?
 ====================
 Allocation
 --------------
@@ -71,98 +77,6 @@ gives projects more allocation if they supply computing?
     No.  nanoHub users are going to attach to nanoHub, not SU
 --------------
 ========================================
-Accounting
-goals:
-maintain daily history for
-	total:
-		CPU flops delta and total
-		GPU flops delta and total
-		CPU time delta and total
-		GPU time delta and total
-		# active hosts
-		# active hosts w/ usable GPU
-		# active users
-		# jobs success
-		# jobs fail
-	project:
-		CPU flops delta and total
-		GPU flops delta and total
-		CPU time delta and total
-		GPU time delta and total
-		# jobs success
-		# jobs fail
-	user:
-		CPU flops delta and total
-		GPU flops delta and total
-		CPU time delta and total
-		GPU time delta and total
-		# jobs success
-		# jobs fail
-
-maintain per host (no history)
-	CPU flops total
-	CPU time total
-	GPU flops total
-	GPU time total
-	has usable GPU
-	# jobs success
-	# jobs fail
-	p_vm_extensions_disabled
-		(should add this to standard code)
-
-client changes:
-	maintain
-		per project
-			total CPU and GPU time
-			total CPU and GPU flops
-				(take CPU throttling into account)
-			# jobs success, fail
-	report these in AM RPC
-	report has usable GPU
-
-Note: for convenience, flops is always measured in EC units
-
-AM RPC handler
-	compute deltas (relative to host record)
-	sanity-check deltas
-		time: #instances x dt
-		flops: same, times fastest possible device (100 GFLOPS *256 CPU, 100 TFLOPS*8 GPU)
-	update host record
-	create accounting_user record if none
-	atomically update delta, total fields of most recent account records for total, project, host
-
-daily accounting program
-	create new records for total, project, user
-		new.delta = 0
-		new.total = old.total + old.delta
-	for total:
-		compute # active hosts based on last RPC time
-		group by userid to get # active users
-		update # hosts w/ usable GPU
---------------
-How to avoid accounting pre-SU EC?
-invariant: when a host attaches to a project, totals start at zero
-
-host_project has 2 sets of accounting:
-    client_last_*   last value reported by client
-        this may reset to zero if we detach/reattach the project
-    total_*
-        sum of deltas so far
-
-First RPC:
-    create host_project for all reported projects.
-    set client_last_*; no deltas
-
-All RPCs:
-    if we send a project not currently reported
-        if it has a host_project
-            set client_last_* to zero
-        else
-            create a host_project, all zeros
-    set "requested" for projects we're sending
-    set "active" for these plus projects reported by client
-
-============================
 projects
 tacc
     http://129.114.6.131/tacctest/
