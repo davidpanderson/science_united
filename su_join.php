@@ -58,13 +58,30 @@ function handle_submit() {
     // initiate project account creation
     //
     $projects = choose_projects_join($user);
+    $need_make_accounts = false;
     foreach ($projects as $p) {
-        $ret = SUAccount::insert(
-            sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
-                $p->id, $user->id, time(), ACCT_INIT
-            )
-        );
+        if (strlen($p->authenticator)) {
+            $ret = SUAccount::insert(
+                sprintf(
+                    "(project_id, user_id, create_time, authenticator, state) values (%d, %d, %f, '%s', %d)",
+                    $p->id, $user->id, time(), $p->authenticator, ACCT_SUCCESS
+                )
+            );
+        } else {
+            $ret = SUAccount::insert(
+                sprintf(
+                    "(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
+                    $p->id, $user->id, time(), ACCT_INIT
+                )
+            );
+            $need_make_accounts = true;
+        }
     }
+    if ($need_make_accounts) {
+        log_write("running make_accounts from join\n");
+        system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
+    }
+
     send_cookie('auth', $user->authenticator, false);
     Header("Location: download.php?dev=1");
 }

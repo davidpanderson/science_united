@@ -23,7 +23,7 @@
 // input: html/ops/projects.xml
 // get this from https://boinc.berkeley.edu/project_list.php
 //
-// IF ANY KEYWORDS OR PLATFORM INFO HAS CHANGED:
+// IF ANYTHING HAS CHANGED:
 // run project_digest.php as well (to update projects.ser)
 
 require_once("../inc/keywords.inc");
@@ -107,7 +107,7 @@ function update_projects() {
     $x = simplexml_load_file("projects.xml");
     $projects = $x->project;
     foreach ($projects as $p) {
-        if ((int)$p->id == PROJ_WCG) continue;
+        //if ((int)$p->id == PROJ_WCG) continue;
         if ((int)$p->id == PROJ_QCN) continue;
         if ((int)$p->id == PROJ_RADIOACTIVE) continue;
         if ((int)$p->id == PROJ_LEIDEN) continue;

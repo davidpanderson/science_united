@@ -575,3 +575,18 @@ change account creation
 remove password resolution code
 
 make script for handling existing accounts
+===================
+Group accounts
+
+Projects may stop supporting account-create RPC.
+So instead manually create accounts on each project.
+Name "Science United",
+email "scienceunited.org@gmail.com"
+
+Add to project table
+authenticator
+weak_authenticator
+Populate these for E@h, WCG
+
+When creating account records for these projects,
+create them immediately

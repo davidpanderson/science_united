@@ -466,17 +466,10 @@ function choose_projects_join($user) {
     $chosen_projects = array();
     foreach ($projects as $p) {
         if ($p->score < 0) break;
-        $ret = SUAccount::insert(
-            sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
-                $p->id, $user->id, time(), ACCT_INIT
-            )
-        );
         $chosen_projects[] = $p;
         $n++;
         if ($n == 1) break;     // 1 is enough for now
     }
-    log_write("running make_accounts from join\n");
-    system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
     return $chosen_projects;
 }
 
@@ -516,18 +509,25 @@ function choose_projects_rpc($user, $host, $req) {
                 continue;
             }
         } else {
-            log_write("no account on $p->name; creating one\n");
             // if not, initiate the creation of one
             //
-            $ret = SUAccount::insert(
-                sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
-                    $p->id, $user->id, time(), ACCT_INIT
-                )
-            );
+            log_write("no account on $p->name; creating one\n");
+            if (strlen($p->authenticator)) {
+                $ret = SUAccount::insert(
+                    sprintf("(project_id, user_id, create_time, authenticator, state) values (%d, %d, %f, '%s', %d)",
+                        $p->id, $user->id, time(), $p->authenticator, ACCT_SUCCESS
+                    )
+                );
+            } else {
+                $ret = SUAccount::insert(
+                    sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
+                        $p->id, $user->id, time(), ACCT_INIT
+                    )
+                );
+            }
             if (!$ret) {
                 su_error(-1, "account insert failed");
             }
-            touch("make_accounts_trigger");
             $new_accounts = true;
         }
     }

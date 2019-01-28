@@ -39,7 +39,8 @@ define('REPEAT_DELAY', 86400./2);
     // interval between AM requests
 define('REPEAT_DELAY_INITIAL', 30);
     // delay after initial request - enough time for account creation
-define('COBBLESTONE_SCALE', 200./86400e9);
+define('COBBLESTONE_SCALE', 200.*1.e-9/86400.);
+    // multiply to convert FLOPS to credit/sec
 
 $in_rpc = true;
 
@@ -382,8 +383,12 @@ function lookup_records($req) {
 }
 
 // sanity-check limits on #s and speed of CPU cores, GPUs
+//
 // QUESTION: if a client-supplied value exceeds a limit, it's probably wacko.
-// Maybe we should replace it with zero, rather than the limit.
+// Should we replace it with zero, rather than the limit?
+//
+// QUESTION: these deltas are per-project, yet we check them agains
+// the full capacity of the host.
 //
 define("MAX_CPU_INST", 256);
 define("MAX_CPU_FLOPS", 100e9);     // max 100 GFLOPS per CPU
@@ -428,14 +433,14 @@ function check_gpu_flops($host, $ngpus) {
 // sanity-check a runtime delta (for CPU or GPU time).
 // dt is the wall time delta
 //
-function check_time_delta($dt, $delta, $ninst) {
+function check_time_delta($dt, $delta, $ninst, $project) {
     if ($delta < 0) {
-        log_write("Warning: negative runtime delta: $delta");
+        log_write("Warning: $project->name: negative runtime delta: $delta");
         return 0;
     }
     $max_delta = $ninst*$dt;
     if ($delta > $max_delta) {
-        log_write("Warning: runtime too large: $delta > $ninst * $dt; capping");
+        log_write("Warning: $project->name: runtime too large: $delta > $ninst * $dt; capping");
         return $max_delta;
     }
     return $delta;
@@ -443,13 +448,13 @@ function check_time_delta($dt, $delta, $ninst) {
 
 // sanity-check an EC delta.
 //
-function check_ec_delta($dt, $delta, $fpops) {
+function check_ec_delta($dt, $delta, $flops, $project) {
     if ($delta < 0) {
-        log_write("Warning: negative EC delta: $delta");
+        log_write("Warning: $project->name: negative EC delta: $delta");
         return 0;
     }
 
-    $max_rate = $fpops/COBBLESTONE_SCALE;
+    $max_rate = $flops*COBBLESTONE_SCALE;
     $max_delta = $max_rate*$dt;
     if ($delta > $max_delta) {
         log_write("Warning: EC delta is too high: $delta > $max_rate * $dt");
@@ -458,11 +463,11 @@ function check_ec_delta($dt, $delta, $fpops) {
     return $delta;
 }
 
-// sanity check limit on the # of jobs a host can process in one day.
+// sanity check limit on the # of jobs a host can process in the given time
 //
-function check_njobs($dt, $njobs) {
+function check_njobs_delta($dt, $njobs, $project) {
     if ($njobs < 0) {
-        log_write("Warning: #jobs is negative: $njobs");
+        log_write("Warning: $project->name: #jobs delta is negative: $njobs");
         return 0;
     }
     $max_njobs = MAX_JOBS_DAY*$dt/86400.;
@@ -510,6 +515,13 @@ function do_accounting(
     $ngpus = check_ngpus($host);
     $cpu_flops = check_cpu_flops($host, $ncpus);
     $gpu_flops = check_gpu_flops($host, $ngpus);
+    log_write(sprintf("%d CPUs (%f credit/sec); %d GPUs (%f credit/sec)",
+        $ncpus,
+        $cpu_flops*COBBLESTONE_SCALE,
+        $ngpus,
+        $gpu_flops*COBBLESTONE_SCALE
+    ));
+    log_write("disk free: $host->d_free");
 
     // The client reports totals per project.
     // This includes work prior to joining SU, which could be years.
@@ -553,21 +565,21 @@ function do_accounting(
         $rp_njobs_success = (int)$rp->njobs_success;
         $rp_njobs_fail = (int)$rp->njobs_error;
 
-        // compute deltas for this project
+        // compute and sanity-check deltas for this project
         //
         $dproj = new_delta_set();
         $d = $rp_cpu_time - $hp->cpu_time;
-        $dproj->cpu_time = check_time_delta($dt, $d, $ncpus);
+        $dproj->cpu_time = check_time_delta($dt, $d, $ncpus, $project);
         $d = $rp_cpu_ec - $hp->cpu_ec;
-        $dproj->cpu_ec = check_ec_delta($dt, $d, $ncpus);
+        $dproj->cpu_ec = check_ec_delta($dt, $d, $cpu_flops, $project);
         $d = $rp_gpu_time - $hp->gpu_time;
-        $dproj->gpu_time = check_time_delta($dt, $d, $ngpus);
+        $dproj->gpu_time = check_time_delta($dt, $d, $ngpus, $project);
         $d = $rp_gpu_ec - $hp->gpu_ec;
-        $dproj->gpu_ec = check_ec_delta($dt, $d, $ngpus);
+        $dproj->gpu_ec = check_ec_delta($dt, $d, $gpu_flops, $project);
         $d = $rp_njobs_success - $hp->njobs_success;
-        $dproj->njobs_success = check_njobs($dt, $d);
+        $dproj->njobs_success = check_njobs_delta($dt, $d, $project);
         $d = $rp_njobs_fail - $hp->njobs_fail;
-        $dproj->njobs_fail = check_njobs($dt, $d);
+        $dproj->njobs_fail = check_njobs_delta($dt, $d, $project);
 
         // update host/project record (totals)
         //
@@ -751,6 +763,7 @@ function main() {
         choose_projects_rpc($user, $host, $req)
     ;
     send_reply($user, $host, $accounts_to_send, $new_accounts, $req);
+    log_write("------------------------------");
 }
 
 main();
