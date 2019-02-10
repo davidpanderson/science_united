@@ -168,12 +168,12 @@ echo "
     <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
     <br><small>
 ";
-echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.
-        Image credits: CERN and NIAID.",
+echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",
         "<a href=https://nsf.gov>", "</a>",
         "<a href=https://berkeley.edu>", "</a>"
 );
 echo "
+    Image credits: CERN and NIAID.
     </small></center>
 </td>
 <td width=30%></td>

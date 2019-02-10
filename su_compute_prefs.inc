@@ -73,7 +73,7 @@ define('PREFS_STANDARD',
 <vm_max_used_pct>75</vm_max_used_pct>
 ");
 
-define('PREFS_GREEN',
+define('PREFS_LOW_POWER',
 "<max_ncpus_pct>25</max_ncpus_pct>
 <cpu_usage_limit>100</cpu_usage_limit>
 <run_on_batteries>0</run_on_batteries>
@@ -99,7 +99,7 @@ define('PREFS_GREEN',
 //
 function expand_compute_prefs($prefs) {
     $prefs = str_replace("<preset>standard</preset>", PREFS_STANDARD, $prefs);
-    $prefs = str_replace("<preset>green</preset>", PREFS_GREEN, $prefs);
+    $prefs = str_replace("<preset>low_power</preset>", PREFS_LOW_POWER, $prefs);
     $prefs = str_replace("<preset>max</preset>", PREFS_MAX, $prefs);
     return $prefs;
 }

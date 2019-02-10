@@ -71,7 +71,7 @@ function project_row($p, $ukws, $a) {
 // show all the projects, with the ones user has contributed to at top.
 //
 function show_projects($user) {
-    page_head("Science projects");
+    page_head(tra("Science projects"));
     $accounts = SUAccount::enum("user_id = $user->id", "order by cpu_time desc");
     $project_infos = unserialize(file_get_contents("projects.ser"));
     foreach ($project_infos as $id=>$p) {
