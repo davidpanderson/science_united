@@ -19,11 +19,7 @@
 require_once("../inc/util.inc");
 page_head(tra("Welcome to %1", PROJECT));
 text_start();
-echo tra("
-    At this point BOINC should be installed and running on your computer;
-    the system tray should have an icon like this: %1
-    If not, %2get help here%3.
-    ",
+echo tra("At this point BOINC should be installed and running on your computer; the system tray should have an icon like this: %1 If not, %2get help here%3.",
     "<img src=https://boinc.berkeley.edu/logo/boinc32.bmp>",
     "<a href=https://boinc.berkeley.edu/wiki/BOINC_Help>",
     "</a>"

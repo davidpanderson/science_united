@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT"
 "Report-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
+"POT-Creation-Date: 2019-02-15 23:35 PST\n"
 "Last-Translator: Generated automatically from source files\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Recent contribution"
 msgstr ""
 
-#: index.php:56 su_welcome.php:89
+#: index.php:56 su_welcome.php:85
 msgid "Continue to your home page"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "The Hubble ultra-deep field image"
 msgstr ""
 
-#: index.php:170
+#: index.php:171
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -108,18 +108,22 @@ msgid "Email address"
 msgstr ""
 
 #: su_account_settings.php:26
+msgid "Password"
+msgstr ""
+
+#: su_account_settings.php:27
 msgid "%1 member since"
 msgstr ""
 
-#: su_account_settings.php:27
+#: su_account_settings.php:28
 msgid "User ID"
 msgstr ""
 
-#: su_account_settings.php:27
+#: su_account_settings.php:28
 msgid "Used in community functions"
 msgstr ""
 
-#: su_account_settings.php:31
+#: su_account_settings.php:32
 msgid "Account settings"
 msgstr ""
 
@@ -306,11 +310,11 @@ msgstr ""
 msgid "Computing: details"
 msgstr ""
 
-#: su_home.php:36
+#: su_home.php:36 su_user_projects.php:74
 msgid "Science projects"
 msgstr ""
 
-#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:75 project.inc:142
 msgid "Community"
 msgstr ""
 
@@ -433,7 +437,7 @@ msgid ""
 "use all the computer's processors."
 msgstr ""
 
-#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+#: su_hosts.php:95 su_hosts.php:128 project.inc:140
 msgid "Project"
 msgstr ""
 
@@ -453,8 +457,8 @@ msgstr ""
 msgid "Can use %1?"
 msgstr ""
 
-#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
-#: su.inc:121
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:151
+#: su.inc:156
 msgid "Yes"
 msgstr ""
 
@@ -462,7 +466,7 @@ msgstr ""
 msgid "Given the above info, this computer would do work for these projects:"
 msgstr ""
 
-#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:152 su.inc:157
 msgid "No"
 msgstr ""
 
@@ -475,27 +479,27 @@ msgid "Projects for which this computer has done work"
 msgstr ""
 
 #: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
-#: su.inc:169
+#: su.inc:206
 msgid "Name"
 msgstr ""
 
-#: su_hosts.php:161 su.inc:172
+#: su_hosts.php:161 su.inc:209
 msgid "CPU FLOPS"
 msgstr ""
 
-#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:208
 msgid "CPU time"
 msgstr ""
 
-#: su_hosts.php:163 su.inc:174
+#: su_hosts.php:163 su.inc:211
 msgid "GPU FLOPS"
 msgstr ""
 
-#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:210
 msgid "GPU time"
 msgstr ""
 
-#: su_hosts.php:165 su.inc:175
+#: su_hosts.php:165 su.inc:212
 msgid "# jobs success"
 msgstr ""
 
@@ -572,7 +576,7 @@ msgstr ""
 msgid "Science prefs"
 msgstr ""
 
-#: su_join.php:77 project.inc:98
+#: su_join.php:94 project.inc:108
 msgid "Join"
 msgstr ""
 
@@ -627,7 +631,7 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: su_user_projects.php:30 su.inc:154
+#: su_user_projects.php:30 su.inc:191
 msgid "Established"
 msgstr ""
 
@@ -635,7 +639,7 @@ msgstr ""
 msgid "In progress"
 msgstr ""
 
-#: su_user_projects.php:34 su.inc:258 su.inc:265
+#: su_user_projects.php:34 su.inc:295 su.inc:302
 msgid "Unknown"
 msgstr ""
 
@@ -721,18 +725,15 @@ msgstr ""
 
 #: su_welcome.php:22
 msgid ""
-"\n"
-"    At this point BOINC should be installed and running on your computer;\n"
-"    the system tray should have an icon like this: %1\n"
-"    If not, %2get help here%3.\n"
-"    "
+"At this point BOINC should be installed and running on your computer; the "
+"system tray should have an icon like this: %1 If not, %2get help here%3."
 msgstr ""
 
-#: su_welcome.php:36
+#: su_welcome.php:32
 msgid "What happens now?"
 msgstr ""
 
-#: su_welcome.php:37
+#: su_welcome.php:33
 msgid ""
 "BOINC, running in the background, will download computing jobs,\n"
 "        process them, and upload the results.\n"
@@ -742,11 +743,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: su_welcome.php:49
+#: su_welcome.php:45
 msgid "How to monitor and control BOINC"
 msgstr ""
 
-#: su_welcome.php:50
+#: su_welcome.php:46
 msgid ""
 "You can monitor what BOINC is doing, and control it, using the BOINC "
 "Manager.\n"
@@ -754,11 +755,11 @@ msgid ""
 "        Details are %1here%2."
 msgstr ""
 
-#: su_welcome.php:62
+#: su_welcome.php:58
 msgid "Computing preferences"
 msgstr ""
 
-#: su_welcome.php:63
+#: su_welcome.php:59
 msgid ""
 "BOINC is designed to not impact\n"
 "        the performance of your computer for normal use.\n"
@@ -768,7 +769,7 @@ msgid ""
 "        Check this out %1here%2."
 msgstr ""
 
-#: su_welcome.php:80
+#: su_welcome.php:76
 msgid ""
 "You can meet and communicate with other %1 participants\n"
 "        in a variety of ways - take a look under the Community\n"
@@ -787,69 +788,69 @@ msgstr ""
 msgid "Last RPC"
 msgstr ""
 
-#: project.inc:92
+#: project.inc:102
 msgid "Log out"
 msgstr ""
 
-#: project.inc:98
+#: project.inc:108
 msgid "Login"
 msgstr ""
 
-#: project.inc:122
+#: project.inc:138
 msgid "About %1"
 msgstr ""
 
-#: project.inc:123
+#: project.inc:139
 msgid "Help"
 msgstr ""
 
-#: project.inc:127
+#: project.inc:143
 msgid "Message boards"
 msgstr ""
 
-#: project.inc:129
+#: project.inc:145
 msgid "Teams"
 msgstr ""
 
-#: project.inc:129
+#: project.inc:145
 msgid "create or join a team"
 msgstr ""
 
-#: project.inc:134
+#: project.inc:150
 msgid "Site"
 msgstr ""
 
-#: project.inc:135
+#: project.inc:151
 msgid "Search"
 msgstr ""
 
-#: project.inc:136
+#: project.inc:152
 msgid "Languages"
 msgstr ""
 
-#: project.inc:154
+#: project.inc:170
 msgid "Do science research on your computer, tablet, or phone"
 msgstr ""
 
-#: project.inc:174
+#: project.inc:190
 msgid "Generated"
 msgstr ""
 
-#: project.inc:205
+#: project.inc:221
 msgid "Your personal background."
 msgstr ""
 
-#: project.inc:209
+#: project.inc:225
 msgid ""
 "Tell us about yourself. You could tell us where you're from, your age, "
 "occupation, hobbies, or anything else about yourself."
 msgstr ""
 
-#: project.inc:213
+#: project.inc:229
 msgid "Your opinions about %1"
 msgstr ""
 
-#: project.inc:217
+#: project.inc:233
 msgid ""
 "Tell us your thoughts about %1<ol>\n"
 "    <li>Why do you run %1?\n"
@@ -858,172 +859,172 @@ msgid ""
 "    </ol>"
 msgstr ""
 
-#: su.inc:118 su.inc:123
+#: su.inc:153 su.inc:158
 msgid "Maybe"
 msgstr ""
 
-#: su.inc:126
+#: su.inc:161
 msgid "Edit preferences"
 msgstr ""
 
-#: su.inc:152
+#: su.inc:189
 msgid "Initial"
 msgstr ""
 
-#: su.inc:156
+#: su.inc:193
 msgid "Transient error"
 msgstr ""
 
-#: su.inc:164
+#: su.inc:201
 msgid "No accounts yet"
 msgstr ""
 
-#: su.inc:170
+#: su.inc:207
 msgid "Status"
 msgstr ""
 
-#: su.inc:176
+#: su.inc:213
 msgid "# jobs fail"
 msgstr ""
 
-#: su.inc:199
+#: su.inc:236
 msgid "Domain name"
 msgstr ""
 
-#: su.inc:201
+#: su.inc:238
 msgid "Product name"
 msgstr ""
 
-#: su.inc:205
+#: su.inc:242
 msgid "Local Standard Time"
 msgstr ""
 
-#: su.inc:205
+#: su.inc:242
 msgid "UTC %1 hours"
 msgstr ""
 
-#: su.inc:206
+#: su.inc:243
 msgid "Created"
 msgstr ""
 
-#: su.inc:207
+#: su.inc:244
 msgid "Number of times client has contacted server"
 msgstr ""
 
-#: su.inc:208
+#: su.inc:245
 msgid "Last time contacted server"
 msgstr ""
 
-#: su.inc:209
+#: su.inc:246
 msgid "Fraction of time BOINC is running"
 msgstr ""
 
-#: su.inc:211
+#: su.inc:248
 msgid ""
 "While BOINC is running, fraction of time computer has an Internet connection"
 msgstr ""
 
-#: su.inc:213
+#: su.inc:250
 msgid "While BOINC is running, fraction of time computing is allowed"
 msgstr ""
 
-#: su.inc:214
+#: su.inc:251
 msgid "While is BOINC running, fraction of time GPU computing is allowed"
 msgstr ""
 
-#: su.inc:219
+#: su.inc:256
 msgid "CPU type"
 msgstr ""
 
-#: su.inc:220
+#: su.inc:257
 msgid "Number of processors"
 msgstr ""
 
-#: su.inc:222
+#: su.inc:259
 msgid "Coprocessors"
 msgstr ""
 
-#: su.inc:224
+#: su.inc:261
 msgid "Operating System"
 msgstr ""
 
-#: su.inc:227
+#: su.inc:264
 msgid "BOINC version"
 msgstr ""
 
-#: su.inc:231
+#: su.inc:268
 msgid "Memory"
 msgstr ""
 
-#: su.inc:231 su.inc:240
+#: su.inc:268 su.inc:277
 msgid "%1 MB"
 msgstr ""
 
-#: su.inc:235
+#: su.inc:272
 msgid "Cache"
 msgstr ""
 
-#: su.inc:235
+#: su.inc:272
 msgid "%1 KB"
 msgstr ""
 
-#: su.inc:240
+#: su.inc:277
 msgid "Swap space"
 msgstr ""
 
-#: su.inc:243
+#: su.inc:280
 msgid "Total disk space"
 msgstr ""
 
-#: su.inc:243 su.inc:246
+#: su.inc:280 su.inc:283
 msgid "%1 GB"
 msgstr ""
 
-#: su.inc:246
+#: su.inc:283
 msgid "Free Disk Space"
 msgstr ""
 
-#: su.inc:249
+#: su.inc:286
 msgid "Measured floating point speed"
 msgstr ""
 
-#: su.inc:249 su.inc:252
+#: su.inc:286 su.inc:289
 msgid "%1 million ops/sec"
 msgstr ""
 
-#: su.inc:252
+#: su.inc:289
 msgid "Measured integer speed"
 msgstr ""
 
-#: su.inc:256 su.inc:258
+#: su.inc:293 su.inc:295
 msgid "Average upload rate"
 msgstr ""
 
-#: su.inc:256 su.inc:263
+#: su.inc:293 su.inc:300
 msgid "%1 KB/sec"
 msgstr ""
 
-#: su.inc:263 su.inc:265
+#: su.inc:300 su.inc:302
 msgid "Average download rate"
 msgstr ""
 
-#: su.inc:320
+#: su.inc:357
 msgid "No accounting records yet"
 msgstr ""
 
-#: su.inc:324 su.inc:333
+#: su.inc:361 su.inc:370
 msgid "CPU days"
 msgstr ""
 
-#: su.inc:325 su.inc:334
+#: su.inc:362 su.inc:371
 msgid "GPU days"
 msgstr ""
 
-#: su.inc:326 su.inc:335
+#: su.inc:363 su.inc:372
 msgid "Successful jobs"
 msgstr ""
 
-#: su.inc:327 su.inc:336
+#: su.inc:364 su.inc:373
 msgid "Failed jobs"
 msgstr ""
 
