@@ -100,4 +100,14 @@ function delta_update_string($d) {
     ";
 }
 
+function total_update_string($d) {
+    return "cpu_ec_total = $d->cpu_ec,
+        gpu_ec_total = $d->gpu_ec,
+        cpu_time_total = $d->cpu_time,
+        gpu_time_total = $d->gpu_time,
+        njobs_success_total = $d->njobs_success,
+        njobs_fail_total = $d->njobs_fail
+    ";
+}
+
 ?>

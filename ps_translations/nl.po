@@ -4,16 +4,17 @@
 # This file is distributed under the same license as BOINC.
 # 
 # Translators:
-# Sibe Bleuzé, 2018
 # Jord <elst93@gmail.com>, 2018
+# Sibe Bleuzé, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
-"Last-Translator: Jord <elst93@gmail.com>, 2018\n"
+"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
+"Last-Translator: Sibe Bleuzé, 2019\n"
 "Language-Team: Dutch (https://www.transifex.com/boinc/teams/35581/nl/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -27,7 +28,7 @@ msgstr "%1 is tijdelijk uitgeschakeld voor onderhoud"
 msgid "Recent contribution"
 msgstr "Recente bijdrage"
 
-#: index.php:56
+#: index.php:56 su_welcome.php:89
 msgid "Continue to your home page"
 msgstr "Ga verder naar je startpagina"
 
@@ -55,50 +56,54 @@ msgstr ""
 "niet beïnvloeden."
 
 #: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "%1 wordt bestuurd door het BOINC project aan UC Berkeley."
+
+#: index.php:74
 msgid "%1 and the research projects it supports are non-profit."
 msgstr "%1 en de onderzoeksprojecten die het ondersteunt zijn non-profit."
 
-#: index.php:73
+#: index.php:78
 msgid "Join %1"
 msgstr "Sluit aan bij %1"
 
-#: index.php:76
+#: index.php:81
 msgid "Already joined?"
 msgstr "Al aangesloten?"
 
-#: index.php:77
+#: index.php:82
 msgid "Log in."
 msgstr "Log in."
 
-#: index.php:86
+#: index.php:92
 msgid "Welcome, %1"
 msgstr "Welkom, %1"
 
-#: index.php:105
+#: index.php:111
 msgid "News"
 msgstr "Nieuws"
 
-#: index.php:118
+#: index.php:124
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Ebola-geïnfecteerde VERO E6 cel"
 
-#: index.php:119
+#: index.php:125
 msgid "Simulation of Higgs boson detection"
 msgstr "Simulatie van een higgsbosondetectie"
 
-#: index.php:120
+#: index.php:126
 msgid "The Earth's interrelated climate systems"
 msgstr "De samenhangende klimaatsystemen van de aarde"
 
-#: index.php:121
+#: index.php:127
 msgid "Structure of protein GIF"
 msgstr "Structuur van een proteïne GIF"
 
-#: index.php:122
+#: index.php:128
 msgid "The Hubble ultra-deep field image"
 msgstr "Een ultra-deep field foto van de Hubble"
 
-#: index.php:164
+#: index.php:170
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -111,28 +116,27 @@ msgstr ""
 msgid "About"
 msgstr "Over"
 
-#: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
-#: su_user_projects.php:84 user_hosts.php:26 su.inc:169
-msgid "Name"
-msgstr "Naam"
-
 #: su_account_settings.php:24
+msgid "Screen name"
+msgstr "Schermnaam"
+
+#: su_account_settings.php:25
 msgid "Email address"
 msgstr "E-mailadres"
 
-#: su_account_settings.php:25
+#: su_account_settings.php:26
 msgid "%1 member since"
 msgstr "%1 lid sinds"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "User ID"
 msgstr "Gebruikers ID"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:27
 msgid "Used in community functions"
 msgstr "Gebruikt in gemeenschapsfuncties"
 
-#: su_account_settings.php:30
+#: su_account_settings.php:31
 msgid "Account settings"
 msgstr "Accountinstellingen"
 
@@ -180,18 +184,19 @@ msgstr "Kies er één:"
 
 #: su_compute_prefs.php:61
 msgid ""
-"Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
 msgstr ""
-"Groen%1 Gebruik 25% van de processoren, en stop met verwerken wanneer de "
-"computer niet in gebruik is.%2"
+"Laag verbruik %1 Gebruik 25% van de processors, en stop de berekening als de"
+" computer niet in gebruik is.%2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Standaard %1 Gebruik 50% van de processoren.%2"
 
 #: su_compute_prefs.php:77
-msgid "Max computing %1 Use all processors.%2"
-msgstr "Maximum verwerkingskracht %1 Gebruik alle processoren.%2"
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr "Maximum berekening %1 Gebruik alle processoren.%2"
 
 #: su_compute_prefs.php:86
 msgid "Update"
@@ -346,7 +351,7 @@ msgstr "Verwerking: details"
 msgid "Science projects"
 msgstr "Wetenschapsprojecten"
 
-#: su_home.php:43 su_home.php:65 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
 msgid "Community"
 msgstr "Gemeenschap"
 
@@ -523,6 +528,11 @@ msgstr "Computer hardware en software"
 msgid "Projects for which this computer has done work"
 msgstr "Projecten waarvoor deze computer heeft gewerkt"
 
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:169
+msgid "Name"
+msgstr "Naam"
+
 #: su_hosts.php:161 su.inc:172
 msgid "CPU FLOPS"
 msgstr "CPU FLOPS"
@@ -563,7 +573,7 @@ msgstr "Hoe projecten gekozen worden voor deze computer"
 msgid "Getting started"
 msgstr "Aan de slag"
 
-#: su_intro.php:26
+#: su_intro.php:26 su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Welkom bij %1"
 
@@ -647,18 +657,18 @@ msgid "Science and location preferences"
 msgstr "Wetenschap en locatie voorkeuren"
 
 #: su_prefs.php:311
-msgid "Preferenced saved."
+msgid "Preferences saved."
 msgstr "Voorkeuren opgeslagen."
 
 #: su_prefs.php:314
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
-"%1; for more detail, %2; for less.  When done, click the Save button at the "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
 "Selecteer wetenschapsvelden en locaties die je wel of niet wil ondersteunen."
-" Klik %1; voor meer detail, %2; voor minder. Als je klaar bent, klik dan op "
-"de Opslaan knop onderaan."
+" Klik %1 voor meer detail, %2 voor minder. Als je klaar bent, klik dan op de"
+" Opslaan knop onderaan."
 
 #: su_prefs.php:323
 msgid "Science areas"
@@ -779,6 +789,82 @@ msgstr "Geen"
 #: su_user_projects.php:152
 msgid "Return to project list"
 msgstr "Keer terug naar projectlijst"
+
+#: su_welcome.php:22
+msgid ""
+"\n"
+"    At this point BOINC should be installed and running on your computer;\n"
+"    the system tray should have an icon like this: %1\n"
+"    If not, %2get help here%3.\n"
+"    "
+msgstr ""
+"\n"
+"    Op dit punt zou BOINC geïnstalleerd moeten zijnen werken op je computer;\n"
+"    de taakbalk zou een icoon zoals dit moeten hebben: %1\n"
+"    Als dit niet zo is, 1%2 zoek dan hier help%3.\n"
+"    "
+
+#: su_welcome.php:36
+msgid "What happens now?"
+msgstr "Wat gebeurt er nu?"
+
+#: su_welcome.php:37
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINC, actief op de achtergrond, zal berekeningsjobs downloaden,\n"
+"        verwerken, en de resultaten uploaden.\n"
+"        Dit zal automatisch gebeuren; je moet helemaal niets doen.\n"
+"        Deze berekening kan ervoor zorgen dat de ventilator in je computer begint te draaien,\n"
+"        en het zou je elektriciteitsrekening licht kunnen verhogen.\n"
+"    "
+
+#: su_welcome.php:49
+msgid "How to monitor and control BOINC"
+msgstr "Hoe BOINC monitoren en beheren"
+
+#: su_welcome.php:50
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"Je kan monitoren what BOINC aan het doen is, en dit beheren, door de BOINC Manager te gebruiken.\n"
+"Open deze door te dubbelklikken op het BOINC icoon.\n"
+"Details zijn %1 hier %2 te vinden."
+
+#: su_welcome.php:62
+msgid "Computing preferences"
+msgstr "Berekeningsvoorkeuren"
+
+#: su_welcome.php:63
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINC is ontworpen om geen impact te hebben op de prestaties van je computer"
+" voor normaal gebruik. Als dit wel het geval is, kan je deze impact "
+"reduceren door, bijvoorbeeld, de hoeveelheid geheugen die BOINC gebruikt te "
+"limiteren. Je kan vele instellingen beheren. Bekijk dit %1 hier %2."
+
+#: su_welcome.php:80
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"Je kan andere %1 deelnemers ontmoeten en met hen communiceren op "
+"verschillende manieren - neem een kijkje onder het Gemeenschap menu "
+"hierboven."
 
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"
@@ -1103,3 +1189,4 @@ msgstr ""
 #: su_user.inc:157
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr "Is BOINC actief op deze computer? Zo niet, %1Download het%2."
+

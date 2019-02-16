@@ -384,54 +384,60 @@ function lookup_records($req) {
 
 // sanity-check limits on #s and speed of CPU cores, GPUs
 //
-// QUESTION: if a client-supplied value exceeds a limit, it's probably wacko.
-// Should we replace it with zero, rather than the limit?
-//
-// QUESTION: these deltas are per-project, yet we check them agains
-// the full capacity of the host.
+// TODO: use BOINC code for these values when it gets merged
 //
 define("MAX_CPU_INST", 256);
-define("MAX_CPU_FLOPS", 100e9);     // max 100 GFLOPS per CPU
+define("DEFAULT_CPU_INST", 4);
+define("MAX_CPU_FLOPS", 100.e9);     // max 100 GFLOPS per CPU
+define("DEFAULT_CPU_FLOPS", 1.e9);     // default 1 GFLOPS per CPU
 define("MAX_GPU_INST", 8);
+define("DEFAULT_GPU_INST", 1);
 define("MAX_GPU_FLOPS", 100e12);    // max 100 TFLOPS per GPU
-define("MAX_JOBS_DAY", 10000);
+define("DEFAULT_GPU_FLOPS", 100e9);    // default 100 GFLOPS per GPU
+define("MAX_JOBS_PER_RPC", 5000);
+define("DEFAULT_JOBS_PER_RPC", 10);
 
 function check_ncpus($host) {
     if ($host->p_ncpus > MAX_CPU_INST) {
-        log_write("Warning: too many CPUs: $host->p_ncpus.  Capping at 256");
-        return MAX_CPU_INST;
+        log_write("Warning: too many CPUs: $host->p_ncpus.  Setting to ".DEFAULT_CPU_INST);
+        return DEFAULT_CPU_INST;
     }
     return $host->p_ncpus;
 }
 
 function check_ngpus($host) {
     if ($host->p_ngpus > MAX_GPU_INST) {
-        log_write("Warning: too many GPUs: $host->p_ngpus.  Capping at 8");
-        return MAX_GPU_INST;
+        log_write("Warning: too many GPUs: $host->p_ngpus.  Setting to ".DEFAULT_GPU_INST);
+        return DEFAULT_GPU_INST;
     }
     return $host->p_ngpus;
 }
 
+// check ncpus first
+//
 function check_cpu_flops($host, $ncpus) {
     $fpops = $host->p_fpops;
     if ($fpops > MAX_CPU_FLOPS) {
-        log_write("Warning: p_fpops is too high: $fpops.  Capping");
-        $fpops = MAX_CPU_FLOPS;
+        log_write("Warning: p_fpops is too high: $fpops.  Setting to ".DEFAULT_CPU_FLOPS);
+        $fpops = DEFAULT_CPU_FLOPS;
     }
     return $fpops*$ncpus;
 }
 
+// check ngpus first
+//
 function check_gpu_flops($host, $ngpus) {
     $fpops = $host->p_gpu_fpops;
     if ($fpops > MAX_GPU_FLOPS*$ngpus) {
-        log_write("Warning: p_gpu_fpops is too high: $fpops.  Capping");
-        $fpops = MAX_GPU_FLOPS*$ngpus;
+        log_write("Warning: p_gpu_fpops is too high: $fpops.  Setting to ".DEFAULT_GPU_FLOPS);
+        $fpops = DEFAULT_GPU_FLOPS*$ngpus;
     }
     return $fpops;
 }
 
 // sanity-check a runtime delta (for CPU or GPU time).
 // dt is the wall time delta
+// check ninst first
 //
 function check_time_delta($dt, $delta, $ninst, $project) {
     if ($delta < 0) {
@@ -440,13 +446,14 @@ function check_time_delta($dt, $delta, $ninst, $project) {
     }
     $max_delta = $ninst*$dt;
     if ($delta > $max_delta) {
-        log_write("Warning: $project->name: runtime too large: $delta > $ninst * $dt; capping");
+        log_write("Warning: $project->name: runtime too large: $delta > $ninst * $dt; setting to ".$max_delta);
         return $max_delta;
     }
     return $delta;
 }
 
 // sanity-check an EC delta.
+// check flops first
 //
 function check_ec_delta($dt, $delta, $flops, $project) {
     if ($delta < 0) {
@@ -470,10 +477,9 @@ function check_njobs_delta($dt, $njobs, $project) {
         log_write("Warning: $project->name: #jobs delta is negative: $njobs");
         return 0;
     }
-    $max_njobs = MAX_JOBS_DAY*$dt/86400.;
-    if ($njobs > $max_njobs) {
-        log_write("Warning: #jobs is too large: $njobs > $max_njobs");
-        return $max_njobs;
+    if ($njobs > MAX_JOBS_PER_RPC) {
+        log_write("Warning: #jobs is too large: $njobs > ".MAX_JOBS_PER_RPC);
+        return DEFAULT_JOBS_PER_RPC;
     }
     return $njobs;
 }

@@ -25,9 +25,9 @@ define("LANGUAGE_FILE", "languages.txt");
 define("FORUM_QA_MERGED_MODE", true);
     // Set to true to merge Message boards and Q&A section
 define("COPYRIGHT_HOLDER", "UC Berkeley");
-define("SYS_ADMIN_EMAIL", "admin@$master_url");
+define("SYS_ADMIN_EMAIL", "davea@berkeley.edu");
 define("SHORTCUT_ICON", "power.png");
-define("UOTD_ADMIN_EMAIL", "admin@$master_url");
+define("UOTD_ADMIN_EMAIL", "davea@berkeley.edu");
     // who gets user of the day pool running low e-mails?
 define ("DISABLE_TEAMS", true);
 define ("DISABLE_PROFILES", true);
@@ -51,7 +51,7 @@ define("GLOBAL_HEAD_EXTRA", "
 </script>
 ");
 
-define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
+define("POST_REPORT_EMAILS", "davea@berkeley.edu");
     // Email addresses separated by pipe ( | ) that will receive user reports
     // of offensive forum posts.
 
