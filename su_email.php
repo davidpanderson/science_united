@@ -101,7 +101,6 @@ function main() {
     $now = time();
     $users = BoincUser::enum("send_email > 0 and seti_last_result_time < $now");
     foreach ($users as $user) {
-        if ($user->id != 22203) continue;
         do_user($user);
     }
     log_write("done");

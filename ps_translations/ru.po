@@ -4,16 +4,17 @@
 # This file is distributed under the same license as BOINC.
 # 
 # Translators:
-# Николай Сахаров <saharovna@gmail.com>, 2018
 # Vasya Pupkin <vecherins@gmail.com>, 2018
+# Николай Сахаров <saharovna@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-05-17 08:44 PDT\n"
-"Last-Translator: Vasya Pupkin <vecherins@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-02-15 23:35 PST\n"
+"Last-Translator: Николай Сахаров <saharovna@gmail.com>, 2019\n"
 "Language-Team: Russian (https://www.transifex.com/boinc/teams/35581/ru/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
@@ -27,7 +28,7 @@ msgstr "%1 временно выключен для обслуживания."
 msgid "Recent contribution"
 msgstr "Недавний вклад"
 
-#: index.php:56
+#: index.php:56 su_welcome.php:85
 msgid "Continue to your home page"
 msgstr "Перейти на главную страницу"
 
@@ -54,51 +55,55 @@ msgstr ""
 "безопасен и не повлияет на ваше нормальное использование компьютера."
 
 #: index.php:69
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "%1 управляется проектом BOINC в Калифорнийском университете в Беркли."
+
+#: index.php:74
 msgid "%1 and the research projects it supports are non-profit."
 msgstr ""
 "%1 и поддерживаемые им исследовательские проекты являются некоммерческими."
 
-#: index.php:73
+#: index.php:78
 msgid "Join %1"
 msgstr "Присоединиться к %1"
 
-#: index.php:76
+#: index.php:81
 msgid "Already joined?"
 msgstr "Уже присоединились?"
 
-#: index.php:77
+#: index.php:82
 msgid "Log in."
 msgstr "Войти."
 
-#: index.php:86
+#: index.php:92
 msgid "Welcome, %1"
 msgstr "Добро пожаловать, %1"
 
-#: index.php:105
+#: index.php:111
 msgid "News"
 msgstr "Новости"
 
-#: index.php:118
+#: index.php:124
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Инфицированная вирусом эбола клетка VERO E6"
 
-#: index.php:119
+#: index.php:125
 msgid "Simulation of Higgs boson detection"
 msgstr "Моделирование обнаружения бозона Хиггса"
 
-#: index.php:120
+#: index.php:126
 msgid "The Earth's interrelated climate systems"
 msgstr "Взаимосвязанные климатические системы Земли"
 
-#: index.php:121
+#: index.php:127
 msgid "Structure of protein GIF"
 msgstr "Структура белка GIF"
 
-#: index.php:122
+#: index.php:128
 msgid "The Hubble ultra-deep field image"
 msgstr "Изображение HUDF"
 
-#: index.php:164
+#: index.php:171
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -110,28 +115,31 @@ msgstr ""
 msgid "About"
 msgstr "О"
 
-#: su_account_settings.php:23 su_hosts.php:160 su_hosts.php:185
-#: su_user_projects.php:84 user_hosts.php:26 su.inc:169
-msgid "Name"
-msgstr "Имя"
-
 #: su_account_settings.php:24
+msgid "Screen name"
+msgstr "Экранное имя"
+
+#: su_account_settings.php:25
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: su_account_settings.php:25
+#: su_account_settings.php:26
+msgid "Password"
+msgstr "Пароль"
+
+#: su_account_settings.php:27
 msgid "%1 member since"
 msgstr "Участник %1 с"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:28
 msgid "User ID"
 msgstr "Идентификатор пользователя"
 
-#: su_account_settings.php:26
+#: su_account_settings.php:28
 msgid "Used in community functions"
 msgstr "Используется в функциях сообщества"
 
-#: su_account_settings.php:30
+#: su_account_settings.php:32
 msgid "Account settings"
 msgstr "Настройки учётной записи"
 
@@ -179,17 +187,18 @@ msgstr "Выберите один из:"
 
 #: su_compute_prefs.php:61
 msgid ""
-"Green %1 Use 25% of processors, and stop computing when computer is idle.%2"
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
 msgstr ""
-"Зелёный %1 Использует 25% процессоров и останавливает вычисления при простое"
-" компьютера.%2"
+"Маломощный %1 Использует 25% процессоров и останавливает вычисления при "
+"простое компьютера.%2"
 
 #: su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Стандартный %1 Использует 50% процессоров.%2"
 
 #: su_compute_prefs.php:77
-msgid "Max computing %1 Use all processors.%2"
+msgid "Maximum computing %1 Use all processors.%2"
 msgstr "Максимальный %1 Использует все процессоры.%2"
 
 #: su_compute_prefs.php:86
@@ -337,11 +346,11 @@ msgstr "Вычисления: графики"
 msgid "Computing: details"
 msgstr "Вычисления: подробности"
 
-#: su_home.php:36
+#: su_home.php:36 su_user_projects.php:74
 msgid "Science projects"
 msgstr "Научные проекты"
 
-#: su_home.php:43 su_home.php:65 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:75 project.inc:142
 msgid "Community"
 msgstr "Сообщество"
 
@@ -474,7 +483,7 @@ msgstr ""
 "Затем мы выбираем проекты с наивысшей оценкой (по крайней мере, 2), которые "
 "вместе могут использовать все процессоры компьютера."
 
-#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+#: su_hosts.php:95 su_hosts.php:128 project.inc:140
 msgid "Project"
 msgstr "Проект"
 
@@ -494,8 +503,8 @@ msgstr "Оценка"
 msgid "Can use %1?"
 msgstr "Можно использовать %1?"
 
-#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
-#: su.inc:121
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:151
+#: su.inc:156
 msgid "Yes"
 msgstr "Да"
 
@@ -505,7 +514,7 @@ msgstr ""
 "Учитывая вышеуказанную информацию, этот компьютер будет работать для этих "
 "проектов:"
 
-#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:152 su.inc:157
 msgid "No"
 msgstr "Нет"
 
@@ -517,23 +526,28 @@ msgstr "Компьютерное оборудование и программн�
 msgid "Projects for which this computer has done work"
 msgstr "Проекты, для которых этот компьютер сделал работу"
 
-#: su_hosts.php:161 su.inc:172
+#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
+#: su.inc:206
+msgid "Name"
+msgstr "Имя"
+
+#: su_hosts.php:161 su.inc:209
 msgid "CPU FLOPS"
 msgstr "FLOPS ЦП"
 
-#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:208
 msgid "CPU time"
 msgstr "Время ЦП"
 
-#: su_hosts.php:163 su.inc:174
+#: su_hosts.php:163 su.inc:211
 msgid "GPU FLOPS"
 msgstr "FLOPS ГП"
 
-#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:210
 msgid "GPU time"
 msgstr "Время ГП"
 
-#: su_hosts.php:165 su.inc:175
+#: su_hosts.php:165 su.inc:212
 msgid "# jobs success"
 msgstr "# успешных заданий"
 
@@ -557,7 +571,7 @@ msgstr "Как выбираются проекты для этого компь�
 msgid "Getting started"
 msgstr "Начало работы"
 
-#: su_intro.php:26
+#: su_intro.php:26 su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Добро пожаловать в %1"
 
@@ -623,7 +637,7 @@ msgstr "Настройки вычислений"
 msgid "Science prefs"
 msgstr "Научные настройки"
 
-#: su_join.php:77 project.inc:98
+#: su_join.php:94 project.inc:108
 msgid "Join"
 msgstr "Присоединиться"
 
@@ -640,18 +654,18 @@ msgid "Science and location preferences"
 msgstr "Настройки науки и местоположений"
 
 #: su_prefs.php:311
-msgid "Preferenced saved."
+msgid "Preferences saved."
 msgstr "Настройки сохранены."
 
 #: su_prefs.php:314
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
-"%1; for more detail, %2; for less.  When done, click the Save button at the "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
 "Выберите области науки и местоположения, которые Вы поддерживаете или не "
-"хотите поддерживать. Нажмите %1; для получения более подробной информации, "
-"%2; чтобы скрыть её. Когда закончите, нажмите кнопку Сохранить внизу."
+"хотите поддерживать. Нажмите %1 для получения более подробной информации, %2"
+" чтобы скрыть её. Когда закончите, нажмите внизу кнопку Сохранить."
 
 #: su_prefs.php:323
 msgid "Science areas"
@@ -681,7 +695,7 @@ msgstr "Завершённые задания"
 msgid "New"
 msgstr "Новый"
 
-#: su_user_projects.php:30 su.inc:154
+#: su_user_projects.php:30 su.inc:191
 msgid "Established"
 msgstr "Установлен"
 
@@ -689,7 +703,7 @@ msgstr "Установлен"
 msgid "In progress"
 msgstr "В процессе"
 
-#: su_user_projects.php:34 su.inc:258 su.inc:265
+#: su_user_projects.php:34 su.inc:295 su.inc:302
 msgid "Unknown"
 msgstr "Неизвестно"
 
@@ -773,6 +787,78 @@ msgstr "Нет"
 msgid "Return to project list"
 msgstr "Вернуться к списку проектов"
 
+#: su_welcome.php:22
+msgid ""
+"At this point BOINC should be installed and running on your computer; the "
+"system tray should have an icon like this: %1 If not, %2get help here%3."
+msgstr ""
+"На этом этапе BOINC должен быть установлен и запущен на вашем компьютере; в "
+"системном трее должен быть такой значок: %1 Если его нет, %2получите помощь "
+"здесь%3."
+
+#: su_welcome.php:32
+msgid "What happens now?"
+msgstr "Что происходит сейчас?"
+
+#: su_welcome.php:33
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINC, работающий в фоновом режиме, будет загружать вычислительные задания, \n"
+"обрабатывать их и отправлять результаты. \n"
+"Это будет происходить автоматически, вам не нужно ничего делать. \n"
+"Эти вычисления могут запустить вентилятор компьютера, повысив шум, \n"
+"и это может немного увеличить ваш счёт за электричество."
+
+#: su_welcome.php:45
+msgid "How to monitor and control BOINC"
+msgstr "Как управлять и наблюдать за BOINC"
+
+#: su_welcome.php:46
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"Вы можете отслеживать, что делает BOINC, и управлять им, используя Менеджер BOINC. \n"
+"Откройте его, дважды щёлкнув значок BOINC. \n"
+"Подробности: %1здесь%2."
+
+#: su_welcome.php:58
+msgid "Computing preferences"
+msgstr "Настройки вычислений"
+
+#: su_welcome.php:59
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINC разработан таким образом, чтобы не оказывать влияние\n"
+"на производительность компьютера для нормального использования. \n"
+"Если это не так, Вы можете уменьшить это воздействие, \n"
+"например, ограничив объем используемой BOINC памяти. \n"
+"Вы можете управлять многими настройками. \n"
+"Проверьте %1здесь%2."
+
+#: su_welcome.php:76
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"Вы можете встретиться и пообщаться с другими участниками %1 \n"
+"различными способами - выберите меню Сообщество \n"
+"выше."
+
 #: user_host.php:30 user_projects.php:23
 msgid "Projects"
 msgstr "Проекты"
@@ -785,59 +871,59 @@ msgstr "нажать для деталей"
 msgid "Last RPC"
 msgstr "Последний RPC"
 
-#: project.inc:92
+#: project.inc:102
 msgid "Log out"
 msgstr "Выйти"
 
-#: project.inc:98
+#: project.inc:108
 msgid "Login"
 msgstr "Войти"
 
-#: project.inc:122
+#: project.inc:138
 msgid "About %1"
 msgstr "О %1"
 
-#: project.inc:123
+#: project.inc:139
 msgid "Help"
 msgstr "Помощь"
 
-#: project.inc:127
+#: project.inc:143
 msgid "Message boards"
 msgstr "Доска сообщений"
 
-#: project.inc:129
+#: project.inc:145
 msgid "Teams"
 msgstr "Команды"
 
-#: project.inc:129
+#: project.inc:145
 msgid "create or join a team"
 msgstr "создать или присоединиться к команде"
 
-#: project.inc:134
+#: project.inc:150
 msgid "Site"
 msgstr "Сайт"
 
-#: project.inc:135
+#: project.inc:151
 msgid "Search"
 msgstr "Поиск"
 
-#: project.inc:136
+#: project.inc:152
 msgid "Languages"
 msgstr "Языки"
 
-#: project.inc:154
+#: project.inc:170
 msgid "Do science research on your computer, tablet, or phone"
 msgstr "Проводите научные исследования на компьютере, планшете или телефоне"
 
-#: project.inc:174
+#: project.inc:190
 msgid "Generated"
 msgstr "Сгенерировано"
 
-#: project.inc:205
+#: project.inc:221
 msgid "Your personal background."
 msgstr "Ваша личная информация."
 
-#: project.inc:209
+#: project.inc:225
 msgid ""
 "Tell us about yourself. You could tell us where you're from, your age, "
 "occupation, hobbies, or anything else about yourself."
@@ -845,11 +931,11 @@ msgstr ""
 "Расскажите нам о себе. Вы могли бы рассказать нам, откуда Вы, ваш возраст, "
 "профессия, хобби, или что-нибудь ещё о себе."
 
-#: project.inc:213
+#: project.inc:229
 msgid "Your opinions about %1"
 msgstr "Ваше мнение о %1"
 
-#: project.inc:217
+#: project.inc:233
 msgid ""
 "Tell us your thoughts about %1<ol>\n"
 "    <li>Why do you run %1?\n"
@@ -863,173 +949,173 @@ msgstr ""
 "    <li>Какие-либо предложения?\n"
 "    </ol>"
 
-#: su.inc:118 su.inc:123
+#: su.inc:153 su.inc:158
 msgid "Maybe"
 msgstr "Возможно"
 
-#: su.inc:126
+#: su.inc:161
 msgid "Edit preferences"
 msgstr "Изменить настройки"
 
-#: su.inc:152
+#: su.inc:189
 msgid "Initial"
 msgstr "Начальный"
 
-#: su.inc:156
+#: su.inc:193
 msgid "Transient error"
 msgstr "Нерегулярная ошибка"
 
-#: su.inc:164
+#: su.inc:201
 msgid "No accounts yet"
 msgstr "Учётных записей ещё нет"
 
-#: su.inc:170
+#: su.inc:207
 msgid "Status"
 msgstr "Cтатус"
 
-#: su.inc:176
+#: su.inc:213
 msgid "# jobs fail"
 msgstr "# проваленных заданий"
 
-#: su.inc:199
+#: su.inc:236
 msgid "Domain name"
 msgstr "Доменное имя"
 
-#: su.inc:201
+#: su.inc:238
 msgid "Product name"
 msgstr "Название продукта"
 
-#: su.inc:205
+#: su.inc:242
 msgid "Local Standard Time"
 msgstr "Местное стандартное время"
 
-#: su.inc:205
+#: su.inc:242
 msgid "UTC %1 hours"
 msgstr "UTC %1 часов"
 
-#: su.inc:206
+#: su.inc:243
 msgid "Created"
 msgstr "Создан"
 
-#: su.inc:207
+#: su.inc:244
 msgid "Number of times client has contacted server"
 msgstr "Количество обращений клиента к серверу"
 
-#: su.inc:208
+#: su.inc:245
 msgid "Last time contacted server"
 msgstr "Последний раз связывался с сервером"
 
-#: su.inc:209
+#: su.inc:246
 msgid "Fraction of time BOINC is running"
 msgstr "Часть времени, когда BOINC работает"
 
-#: su.inc:211
+#: su.inc:248
 msgid ""
 "While BOINC is running, fraction of time computer has an Internet connection"
 msgstr ""
 "Доля времени, когда компьютер подключен к Интернету, пока BOINC работает"
 
-#: su.inc:213
+#: su.inc:250
 msgid "While BOINC is running, fraction of time computing is allowed"
 msgstr "Доля времени, когда разрешены вычисления, пока BOINC работает"
 
-#: su.inc:214
+#: su.inc:251
 msgid "While is BOINC running, fraction of time GPU computing is allowed"
 msgstr "Доля времени, когда разрешены вычисления на ГП, пока BOINC работает"
 
-#: su.inc:219
+#: su.inc:256
 msgid "CPU type"
 msgstr "Тип процессора"
 
-#: su.inc:220
+#: su.inc:257
 msgid "Number of processors"
 msgstr "Количество процессоров"
 
-#: su.inc:222
+#: su.inc:259
 msgid "Coprocessors"
 msgstr "Сопроцессоры"
 
-#: su.inc:224
+#: su.inc:261
 msgid "Operating System"
 msgstr "Операционная система"
 
-#: su.inc:227
+#: su.inc:264
 msgid "BOINC version"
 msgstr "Версия BOINC"
 
-#: su.inc:231
+#: su.inc:268
 msgid "Memory"
 msgstr "Память"
 
-#: su.inc:231 su.inc:240
+#: su.inc:268 su.inc:277
 msgid "%1 MB"
 msgstr "%1 Мб"
 
-#: su.inc:235
+#: su.inc:272
 msgid "Cache"
 msgstr "Кэш"
 
-#: su.inc:235
+#: su.inc:272
 msgid "%1 KB"
 msgstr "%1 Кб"
 
-#: su.inc:240
+#: su.inc:277
 msgid "Swap space"
 msgstr "Объём файла подкачки"
 
-#: su.inc:243
+#: su.inc:280
 msgid "Total disk space"
 msgstr "Общее дисковое пространство"
 
-#: su.inc:243 su.inc:246
+#: su.inc:280 su.inc:283
 msgid "%1 GB"
 msgstr "%1 Гб"
 
-#: su.inc:246
+#: su.inc:283
 msgid "Free Disk Space"
 msgstr "Свободное дисковое пространство"
 
-#: su.inc:249
+#: su.inc:286
 msgid "Measured floating point speed"
 msgstr "Измеренная скорость вычислений с плавающей точкой"
 
-#: su.inc:249 su.inc:252
+#: su.inc:286 su.inc:289
 msgid "%1 million ops/sec"
 msgstr "%1 миллионов операций/с"
 
-#: su.inc:252
+#: su.inc:289
 msgid "Measured integer speed"
 msgstr "Измеренная скорость целочисленных вычислений"
 
-#: su.inc:256 su.inc:258
+#: su.inc:293 su.inc:295
 msgid "Average upload rate"
 msgstr "Средняя скорость отправки"
 
-#: su.inc:256 su.inc:263
+#: su.inc:293 su.inc:300
 msgid "%1 KB/sec"
 msgstr "%1 Кб/с"
 
-#: su.inc:263 su.inc:265
+#: su.inc:300 su.inc:302
 msgid "Average download rate"
 msgstr "Средняя скорость загрузки"
 
-#: su.inc:320
+#: su.inc:357
 msgid "No accounting records yet"
 msgstr "Записей ещё нет"
 
-#: su.inc:324 su.inc:333
+#: su.inc:361 su.inc:370
 msgid "CPU days"
 msgstr "Дней ЦП"
 
-#: su.inc:325 su.inc:334
+#: su.inc:362 su.inc:371
 msgid "GPU days"
 msgstr "Дней ГП"
 
-#: su.inc:326 su.inc:335
+#: su.inc:363 su.inc:372
 msgid "Successful jobs"
 msgstr "Успешные задания"
 
-#: su.inc:327 su.inc:336
+#: su.inc:364 su.inc:373
 msgid "Failed jobs"
 msgstr "Проваленные задания"
 
@@ -1094,5 +1180,4 @@ msgstr ""
 #: su_user.inc:157
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr "BOINC работает на этом компьютере? Если нет, %1загрузите его%2."
-
 
