@@ -108,6 +108,10 @@ class SUUserKeyword {
             "user_id=$this->user_id and keyword_id=$this->keyword_id"
         );
     }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_user_keyword', "user_id=$user_id");
+    }
     static function update($clause) {
         $db = BoincDb::get();
         return $db->update_aux('su_user_keyword', $clause);
@@ -141,6 +145,10 @@ class SUAccount {
         return $db->delete_aux('su_account',
             "user_id=$this->user_id and project_id=$this->project_id"
         );
+    }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_account', "user_id=$user_id");
     }
     static function delete_all() {
         $db = BoincDb::get();
@@ -253,6 +261,10 @@ class SUAccountingUser {
     static function count($clause) {
         $db = BoincDb::get();
         return $db->count('su_accounting_user', $clause);
+    }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_accounting_user', "user_id=$user_id");
     }
     static function delete_all() {
         $db = BoincDb::get();

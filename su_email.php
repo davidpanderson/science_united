@@ -30,21 +30,25 @@ function log_write($x) {
 }
 
 function su_send_email($user, $x) {
-    $x .= "\nThanks for participating in Science United.\n\n";
+    $x = '<html><body style=\"font-family:Verdana, Verdana, Geneva, sans-serif; font-size:12px; color:#666666;\">'.$x;
+    $x .= "<p>Thanks for participating in Science United.<p><p>";
+    $unsubscribe_url = opt_out_url($user, "su_unsubscribe.php");
+    $x .= "<small><a href=$unsubscribe_url>Unsubscribe</a> or ";
     $x .= sprintf(
-        "To unsubscribe or change the frequency of these emails, go here:\n%s\n",
+        "<a href=%s>change the frequency of these emails</a>.",
         "https://scienceunited.org/su_email_prefs.php"
     );
-    send_email($user, "Science United status", $x);
+    $x .= "</small></body></html>\n";
+    send_email($user, "Science United status", null, $x);
     log_write("sent email to $user->email_addr");
 }
 
 function do_user($user) {
-    $x = "Dear $user->name:\n\nGreetings from Science United.\n\n";
+    $x = "Dear $user->name:<p><p>Greetings from Science United. ";
 
     $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     if (count($hosts) == 0) {
-        $x .= "We haven't heard from your computer.  Make sure that BOINC is installed and running.  To install BOINC, go here:\nhttps://scienceunited.org/download.php\n";
+        $x .= "We haven't heard from your computer.  Make sure that BOINC is installed and running.  To install BOINC, go <a href=https://scienceunited.org/download.php>here<a>.";
         su_send_email($user, $x);
         return;
     }
@@ -82,13 +86,13 @@ function do_user($user) {
             $ndays_str
         );
     }
-    $x .= "\n\nFor details, visit https://scienceunited.org/\n\n";
+    $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.<p><p>";
     $t0 = time() - 86400.*7;
     foreach ($hosts as $host) {
         $idle_days = (time() - $host->rpc_time)/86400;
         if ($host->rpc_time < $t0) {
             $x .= sprintf(
-                "Your computer %s has been idle for %d days; check that BOINC is running there.\n",
+                "Your computer %s has been idle for %d days; check that BOINC is running there.<p>",
                 $host->domain_name, (int)$idle_days
             );
         }
@@ -106,6 +110,8 @@ function main() {
     log_write("done");
 }
 
-main();
+$user = BoincUser::lookup_id(22203);
+do_user($user);
+//main();
 
 ?>

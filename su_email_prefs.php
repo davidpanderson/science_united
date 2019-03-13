@@ -91,6 +91,10 @@ function su_email_action($user) {
     }
 }
 
+function unsubscribe($user) {
+    $user->update("send_email=0");
+}
+
 $user = get_logged_in_user();
 $action = get_str('action', true);
 if ($action) {
