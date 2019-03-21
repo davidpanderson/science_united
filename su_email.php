@@ -48,7 +48,7 @@ function do_user($user) {
 
     $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     if (count($hosts) == 0) {
-        $x .= "We haven't heard from your computer.  Make sure that BOINC is installed and running.  To install BOINC, go <a href=https://scienceunited.org/download.php>here<a>.";
+        $x .= "We haven't heard from your computer yet.  Please <a href=https://scienceunited.org/su_help.php>make sure that BOINC is installed and running<a>.";
         su_send_email($user, $x);
         return;
     }
@@ -80,22 +80,28 @@ function do_user($user) {
             show_num(($delta->cpu_time+$delta->gpu_time)/3600.),
             $delta->njobs_success+$delta->njobs_fail
         );
+        $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.";
+        $x .= "<p><p>\n";
+
+        $t0 = time() - 86400.*7;
+        foreach ($hosts as $host) {
+            $idle_days = (time() - $host->rpc_time)/86400;
+            if ($host->rpc_time < $t0) {
+                $x .= sprintf(
+                    "Your computer '%s' hasn't contacted us in %d days; please check that BOINC is running there.<p>",
+                    $host->domain_name, (int)$idle_days
+                );
+            }
+        }
     } else {
         $x .= sprintf(
-            "Your computers haven't reported work in the last %s.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
+            "Your computers haven't reported work in the last %s.
+            Please check that BOINC is installed, unsuspended,
+            and attached to Science United.",
             $ndays_str
         );
-    }
-    $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.<p><p>";
-    $t0 = time() - 86400.*7;
-    foreach ($hosts as $host) {
-        $idle_days = (time() - $host->rpc_time)/86400;
-        if ($host->rpc_time < $t0) {
-            $x .= sprintf(
-                "Your computer %s has been idle for %d days; check that BOINC is running there.<p>",
-                $host->domain_name, (int)$idle_days
-            );
-        }
+        $x .= " Get help <a href=https://scienceunited.org/su_help.php>here</a>.";
+        $x .= "<p><p>\n";
     }
     su_send_email($user, $x);
 }
@@ -110,8 +116,8 @@ function main() {
     log_write("done");
 }
 
-$user = BoincUser::lookup_id(22203);
-do_user($user);
-//main();
+//do_user(BoincUser::lookup_id(22203));
+
+main();
 
 ?>
