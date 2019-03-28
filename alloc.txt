@@ -1,0 +1,109 @@
+goals
+
+- be able to guarantee a project (with given keywords and GPU usage)
+an average throughput
+
+- be able to give projects a "share" that determines what they get
+beyond their guarantee
+
+- give priority to bursty projects to minimize batch turnaround
+
+---------------
+The current allocation mechanism (based on linear bounded model)
+doesn't work at all.
+Hard to keep balances from pegging at 0 or 1.
+---------------
+
+Problems
+
+Is a set of guarantees supportable?
+    This could be NP-hard
+    heuristic:
+        order projects by 
+
+given a set of guarantees, and a project P,
+what's the largest guarantee we can make for P?
+
+============================
+New algorithm
+
+AC(P) = avg EC/sec over last week
+
+"share" S(P) (arbitrary scale; bigger means get more computing)
+
+Compute once per day (allocate.php)
+    AC(P) (su_project.ec_per_sec)
+    #projects (su_allocate.nprojects)
+    sum of AC(P)(su_allocate.ec_per_sec_total)
+    sum of S(P)(su_allocate.share_total)
+
+RPC:
+AC1(P) = AC(P) / sum of AC(P)
+    in 0..1
+AC2(P) = AC1(P) * #projects
+    average is 1
+SN(P) = S(P) / average S(P)
+    average is 1.
+
+project score in project selection: subtract AC2(P)/SN(P)
+    average is 1 (more or less)
+
+---
+EC adjustment:
+Other things being equal, the project with best score will
+be assigned to all hosts for 24 hours.
+This will cancel out over the long term,
+but it would be good to smooth things out.
+So when we assign a project P to a host H,
+we'd like to add to AC(P) an estimate of the
+EC per second that H will provide.
+
+Similarly, if removing a previously attached project, subtract the estimate
+
+Currently we have no record of recent EC at the (host, project) level.
+Options:
+1) use an estimate based on
+    - peak FLOPS for devices to be used,
+        divided by # of assigned projects using that device
+    - scaling factor (.2?) for GPUs
+    - avg host availability
+    I don't like this; too many other factors e.g. throttling prefs
+2) maintain exp avg EC per (host, project).
+    but it may not have been attached continuously.
+3) AC(P)/NH(P), where NH(P) is the number of hosts attached to P
+    during previous accounting period.
+    For each project, maintain
+    su_project.nhosts_today: increment in RPC
+    su_project.nhosts_yesterday: copy from today
+
+Let's use 3).  Note: what matters is average per-host contribution,
+not this particular host.
+
+To maintain NH(P):
+add su_accounting_project.nhosts
+On each RPC, for each project P
+    get su_accounting_project SAP
+    if previous RPC time is < SAP.create_time
+        increment SAP.nhosts, update
+
+---
+
+Implementation
+su_allocate
+    nprojects: # active projects
+    avg_ec_total: sum of AC(P)
+    share_total: sum of S(P)
+    
+su_project
+    share
+    avg_ec (AC)
+    avg_ec_adjusted
+
+Remaining problems:
+
+- estimate the throughput a given project will get
+- estimate the turnaround time of a batch
+- how to assign S(P) so that certain projects get certain throughputs
+- given a set of guarantees, what's the largest new guarantee we can make?
+
+Do these by simulation?

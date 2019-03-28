@@ -95,7 +95,7 @@ function su_host_project_select($user, $host) {
         tra("Project"),
         tra("Keyword score"),
         tra("Platform score"),
-        tra("Balance (GFLOPS days)"),
+        //tra("Balance (GFLOPS days)"),
         tra("Opted out?"),
         tra("Score")
     );
@@ -108,7 +108,7 @@ function su_host_project_select($user, $host) {
             "<a href=su_show_project.php?id=$p->id>$p->name</a>",
             $p->keyword_score,
             $p->platform_score,
-            number_format($p->balance/(86400*1e9), 2),
+            //number_format($p->balance/(86400*1e9), 2),
             $p->opt_out?tra("Yes"):"",
             $p->score
         );

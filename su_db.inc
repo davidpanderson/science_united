@@ -288,3 +288,14 @@ class SUAccountingUser {
         return $db->delete_aux('su_accounting_user', 1);
     }
 }
+
+class SUAllocate {
+    static function lookup() {
+        $db = BoincDb::get();
+        return $db->lookup('su_allocate', 'SUAllocate', "true");
+    }
+    static function update($clause) {
+        $db = BoincDb::get();
+        return $db->update_aux('su_allocate', $clause);
+    }
+}

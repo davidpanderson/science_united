@@ -26,6 +26,9 @@ function su_user_info_private($user) {
     row2(tra("Password"), " <a href=edit_passwd_form.php><image height=20 src=pictures/edit.png></a>");
     row2(tra("%1 member since", PROJECT), date_str($user->create_time));
     row2(tra("User ID")."<br/><p class=\"small\">".tra("Used in community functions")."</p>", $user->id);
+    row2(tra("Delete account"),
+        button_text("delete_account_request.php", tra("Instructions"))
+    );
 }
 
 function main($user) {

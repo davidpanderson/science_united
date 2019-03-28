@@ -40,7 +40,7 @@ function su_show_project($project, $user) {
         row2("Status", project_status_string($project->status));
         row2("Allocation share", $project->share);
         row2("", '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit status and share</a>');
-        row2("Allocation balance", $project->projected_balance);
+        row2("Average EC", $project->avg_ec);
     }
     $pks = $project_infos[$project->id]->kws;
     $sci = array();

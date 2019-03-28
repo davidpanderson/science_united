@@ -120,14 +120,14 @@ function send_error_reply($msg) {
 
 // $accounts is an array of array(project, account)
 //
-function send_reply($user, $host, $accounts, $new_accounts, $req) {
+function send_reply($user, $host, $req, $accounts) {
     echo "<acct_mgr_reply>\n"
         ."<name>".PROJECT."</name>\n"
         ."<authenticator>$user->authenticator</authenticator>\n"
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
-    $repeat_sec = $new_accounts?REPEAT_DELAY_INITIAL:REPEAT_DELAY;
+    $repeat_sec = REPEAT_DELAY;
     echo "</signing_key>\n"
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
         ."<dynamic/>\n"
@@ -229,6 +229,9 @@ function make_serialnum($req) {
     return $x;
 }
 
+// update the host DB record
+// Note: we update rpc_time in the DB, but not the object
+//
 function update_host($req, $host) {
     //$_SERVER = array();
     //$_SERVER['REMOTE_ADDR'] = "12.4.2.11";
@@ -361,6 +364,11 @@ function lookup_records($req) {
     if (array_key_exists('opaque', $req)) {
         $host_id = (int)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
+        if ($host) {
+            log_write("Found host $host_id specified by request");
+        } else {
+            log_write("No such host $host_id specified by request");
+        }
     } else {
         // This host might be re-attaching to the AM.
         // See if there's an existing host record that matches this host
@@ -373,11 +381,17 @@ function lookup_records($req) {
                 break;
             }
         }
+        if ($host) {
+            log_write("No host specified in request, but found similar $host->id");
+        } else {
+            log_write("No host specified in request, and no similar host");
+        }
     }
     if ($host) {
         update_host($req, $host);
     } else {
         $host = create_host($req, $user);
+        log_write("Created new host $host->id");
     }
     return array($user, $host);
 }
@@ -508,12 +522,16 @@ function do_accounting(
     $user, $host    // user and host records
 ) {
     global $now;
-    $dt = $now - $host->rpc_time;
-    if ($dt < 0) {
-        log_write("Negative dt: now $now last RPC $host->rpc_time");
-        return;
+    if ($host->rpc_time) {
+        $dt = $now - $host->rpc_time;
+        if ($dt < 0) {
+            log_write("Negative dt: now $now last RPC $host->rpc_time");
+            return;
+        }
+        log_write("time since last RPC: $dt");
+    } else {
+        log_write("First RPC from this host");
     }
-    log_write("time since last RPC: $dt");
 
     // get sanity-checked values for various params
     //
@@ -609,7 +627,6 @@ function do_accounting(
             continue;
         }
 
-
         if (LOG_DELTAS) {
             log_write("Deltas for $project->name:");
             log_write_deltas($dproj);
@@ -635,20 +652,18 @@ function do_accounting(
         // add deltas to deltas in project's current accounting record
         //
         $ap = SUAccountingProject::last($project->id);
-        $ret = $ap->update(delta_update_string($dproj));
+        $update_string = delta_update_string($dproj);
+
+        // increment host count if first RPC of accounting period
+        //
+        if ($host->rpc_time < $ap->create_time) {
+            $update_string .= ", nhosts = nhosts+1";
+        }
+
+        $ret = $ap->update($update_string);
         if (!$ret) {
             log_write("ap->update failed");
             su_error(-1, "ap->update failed");
-        }
-
-        // update project balance
-        //
-        $flops = ec_to_gflops($dproj->cpu_ec + $dproj->gpu_ec);
-        log_write("subtracting $flops from balance of $project->name");
-        $ret = $project->update("balance = greatest(0, balance-$flops)");
-        if (!$ret) {
-            log_write("project->update failed");
-                su_error(-1, "project->update failed");
         }
 
         // add to all-project delta sums
@@ -735,8 +750,10 @@ function req_split($r) {
     );
 }
 
+$su_allocate = null;
+
 function main() {
-    global $now;
+    global $now, $su_allocate;
     if (1) {
         log_write("Got request from ".$_SERVER['HTTP_USER_AGENT']);
         $req = file_get_contents('php://input');
@@ -764,11 +781,11 @@ function main() {
     list($user, $host) = lookup_records($req);
     log_write("processing request from user $user->id host $host->id");
 
+    $su_allocate = SUAllocate::lookup();
+
     do_accounting($req, $user, $host);
-    list($accounts_to_send, $new_accounts) =
-        choose_projects_rpc($user, $host, $req)
-    ;
-    send_reply($user, $host, $accounts_to_send, $new_accounts, $req);
+    $accounts_to_send = choose_projects_rpc($user, $host, $req);
+    send_reply($user, $host, $req, $accounts_to_send);
     log_write("------------------------------");
 }
 
