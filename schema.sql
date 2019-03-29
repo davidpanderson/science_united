@@ -1,3 +1,11 @@
+/*
+ * schema for Science United database.
+ * These tables are added to a standard BOINC database.
+ */
+
+/*
+ * represents a BOINC project
+ */
 create table su_project (
     id                      integer         not null auto_increment,
     create_time             double          not null,
@@ -11,6 +19,7 @@ create table su_project (
     avg_ec_adjusted         double          not null,
     web_url                 varchar(254)    not null,
     authenticator           varchar(254)    not null,
+    nhosts                  integer         not null,
     primary key (id)
 ) engine=InnoDB;
 
@@ -37,7 +46,13 @@ create table su_user_keyword (
 ) engine=InnoDB;
 
 /*
- * a user account on a project, possibly failed or in-progress
+ * a user account on a project.
+ * NOTE: originally SU users had separate project accounts,
+ * which had to be dynamically created by RPCs.
+ * This has been replaced by a "single-account" model where
+ * all SU users share a single project account.
+ * We still have separate su_account records per user,
+ * for accounting purposes; they'll have the same authenticator.
  */
 create table su_account (
     user_id                 integer         not null,

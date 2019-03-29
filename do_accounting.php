@@ -74,6 +74,7 @@ function do_total($now) {
 function do_project($p, $now) {
     $x = SUAccountingProject::last($p->id);
     if ($x) {
+        $p->update("nhosts = $x->nhosts");
         SUAccountingProject::insert("(create_time, project_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $p->id, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     } else {
         SUAccountingProject::insert("(create_time, project_id) values ($now, $p->id)");

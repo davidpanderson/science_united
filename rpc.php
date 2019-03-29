@@ -314,7 +314,8 @@ function update_host($req, $host) {
         n_bwup = $n_bwup,
         n_bwdown = $n_bwdown,
         p_ngpus = $p_ngpus,
-        p_gpu_fpops = $p_gpu_fpops
+        p_gpu_fpops = $p_gpu_fpops,
+        rpc_seqno = rpc_seqno+1
     ";
     $ret = $host->update($query);
     if (!$ret) {
@@ -517,6 +518,8 @@ function find_project($url) {
 // - add deltas (summed over projects) to latest user accounting record
 // - add deltas (summed over projects) to latest global accounting record
 //
+// Return list of projects
+//
 function do_accounting(
     $req,           // AM RPC request as simpleXML object
     $user, $host    // user and host records
@@ -554,6 +557,7 @@ function do_accounting(
     //
     $sum_delta = new_delta_set();
 
+    $projects = array();
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
         $project = find_project($url);
@@ -561,6 +565,7 @@ function do_accounting(
             log_write("can't find project $url");
             continue;
         }
+        $projects[] = $project;
 
         // get host/project record; create if needed
         //
@@ -704,6 +709,7 @@ function do_accounting(
             su_error(-1, "acc->update failed");
         }
     }
+    return $projects;
 }
 
 function am_error_reply($msg) {
@@ -783,9 +789,20 @@ function main() {
 
     $su_allocate = SUAllocate::lookup();
 
-    do_accounting($req, $user, $host);
+    // update accounting for projects the host is currently running
+    //
+    $current_projects = do_accounting($req, $user, $host);
+
+    // pick projects to run
+    //
     $accounts_to_send = choose_projects_rpc($user, $host, $req);
+
+    // adjust avg_ec as needed
+    //
+    adjust_avg_ec($current_projects, $accounts_to_send);
+
     send_reply($user, $host, $req, $accounts_to_send);
+
     log_write("------------------------------");
 }
 

@@ -522,4 +522,44 @@ function choose_projects_rpc($user, $host, $req) {
     return $accounts_to_send;
 }
 
+function adjust($p, $inc) {
+    log_write("adjusting avg_ec of $p->name: $inc");
+    if ($p->nhosts == 0) {
+        log_write("no adjustment; nhosts is 0");
+        return;
+    }
+    $x = $p->avg_ec / $p->nhosts;
+    if (!$inc) $x = -$x;
+    $ret = $p->update("avg_ec_adjusted = avg_ec_adjusted + $x");
+    log_write("$p->name: add $x to avg_ec");
+    if (!$ret) {
+        log_write("project update in avg_ec adjust failed");
+    }
+}
+
+// decrement/increment avg_ec of outgoing/incoming projects
+//
+function adjust_avg_ec($current_projects, $accounts_to_send) {
+    $old_ids = array();
+    $new_ids = array();
+    foreach ($current_projects as $p) {
+        $old_ids[] = $p->id;
+    }
+    foreach ($accounts_to_send as $a) {
+        $p = $a[0];
+        $new_ids[] = $p->id;
+    }
+    foreach ($current_projects as $p) {
+        if (!in_array($p->id, $new_ids)) {
+            adjust($p, false);
+        }
+    }
+    foreach ($accounts_to_send as $a) {
+        $p = $a[0];
+        if (!in_array($p->id, $old_ids)) {
+            adjust($p, true);
+        }
+    }
+}
+
 ?>
