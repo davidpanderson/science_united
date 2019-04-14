@@ -34,6 +34,7 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");
 require_once("../inc/su_util.inc");
+require_once("../inc/log.inc");
 
 define('REPEAT_DELAY', 86400./2);
     // interval between AM requests
@@ -49,20 +50,6 @@ $in_rpc = true;
 define('LOG_DELTAS', true);
 
 $now = 0;
-
-$log_file = null;
-$verbose = true;
-
-function log_write($x) {
-    global $verbose, $log_file;
-
-    if (!$verbose) return;
-    if (!$log_file) {
-        $log_file = fopen("../../log_isaac/rpc_log.txt", "a");
-    }
-    fwrite($log_file, sprintf("%s: %s\n", strftime("%c"), $x));
-    fflush($log_file);
-}
 
 // return error
 //
@@ -756,10 +743,10 @@ function req_split($r) {
     );
 }
 
-$su_allocate = null;
-
 function main() {
-    global $now, $su_allocate;
+    global $now;
+    log_open("../../log_isaac/rpc_log.txt");
+
     if (1) {
         log_write("Got request from ".$_SERVER['HTTP_USER_AGENT']);
         $req = file_get_contents('php://input');
@@ -786,8 +773,6 @@ function main() {
 
     list($user, $host) = lookup_records($req);
     log_write("processing request from user $user->id host $host->id");
-
-    $su_allocate = SUAllocate::lookup();
 
     // update accounting for projects the host is currently running
     //

@@ -32,7 +32,8 @@ require_once("../inc/su_graph.inc");
 
 define('CURRENT_CLIENT_VERSION', '7.6.0');
 
-$stopped = web_stopped();
+//$stopped = web_stopped();
+$stopped = false;
 $user = get_logged_in_user(false);
 
 // shown only when site is down

@@ -20,14 +20,10 @@
 require_once("../inc/boinc_db.inc");
 require_once("../inc/email.inc");
 require_once("../inc/su.inc");
+require_once("../inc/log.inc");
 
 // send status emails
 //
-
-function log_write($x) {
-    echo date(DATE_RFC822), ": $x\n";
-    flush();
-}
 
 function su_send_email($user, $x) {
     $x = '<html><body style=\"font-family:Verdana, Verdana, Geneva, sans-serif; font-size:12px; color:#666666;\">'.$x;
@@ -104,6 +100,11 @@ function do_user($user) {
         $x .= "<p><p>\n";
     }
     su_send_email($user, $x);
+    $x = time() + $user->send_email*86400;
+    $ret = $user->update("seti_last_result_time=$x");
+    if (!$ret) {
+        log_write("user update failed");
+    }
 }
 
 function main() {

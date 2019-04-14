@@ -20,6 +20,7 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
+require_once("../inc/su_schedule.inc");
 
 function show_projects_acct() {
     $projects = SUProject::enum("");
@@ -32,7 +33,10 @@ function show_projects_acct() {
         "GPU GFLOP/hours",
         "# jobs success",
         "# jobs fail",
-        "Balance"
+        "Avg EC",
+        "Avg EC<br>adjusted",
+        "Share",
+        "Alloc score"
     ));
     $max_cpu_time_total = 0;
     $max_gpu_time_total = 0;
@@ -74,6 +78,10 @@ function show_projects_acct() {
             show_num_bar("#00ff00", 100, ec_to_gflop_hours($ap->gpu_ec_total), ec_to_gflop_hours($max_gpu_ec_total)),
             show_num_bar("#00ff00", 100, $ap->njobs_success_total, $max_njobs_success_total),
             show_num_bar("#ff0000", 100, $ap->njobs_fail_total, $max_njobs_fail_total),
+            number_format($p->avg_ec, 2),
+            number_format($p->avg_ec_adjusted, 2),
+            $p->share,
+            number_format(allocation_score($p), 3)
         ));
     }
     end_table();

@@ -78,7 +78,7 @@ function handle_submit() {
         }
     }
     if ($need_make_accounts) {
-        log_write("running make_accounts from join\n");
+        //log_write("running make_accounts from join\n");
         system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
     }
 

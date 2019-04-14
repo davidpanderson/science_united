@@ -60,6 +60,18 @@ function canonical_resource_name($x) {
     return $x;
 }
 
+// canonical to human-readable 
+//
+function human_resource_name($x) {
+    switch ($x) {
+    case "cpu": return "CPU";
+    case "nvidia": return "NVIDIA GPU";
+    case "amd": return "AMD GPU";
+    case "intel_gpu": return "Intel GPU";
+    }
+    return $x;
+}
+
 // return project keyword's contribution to project score.
 // -1 means don't use.
 // TODO: should more specific keywords (e.g. level > 0) get a higher score?
@@ -132,33 +144,42 @@ function keywd_score($pkws, $ukws) {
     return $x;
 }
 
+function allocation_score($project) {
+    $su_allocate = SUAllocate::get();
+    $x = $project->avg_ec_adjusted/$su_allocate->avg_ec_total;
+    $y = $project->share/$su_allocate->share_total;
+    return -$x/$y;
+}
+
 // compute a score for this project, given user prefs.
 // higher = more preferable
 // -1 means don't use
 //
 function project_score($project, $ukws, $host, $req) {
-    global $project_infos, $su_allocate;
+    global $project_infos;
     $pkws = $project_infos[$project->id]->kws;
 
     $project->platform_score = platform_score($project, $host);
     $project->keyword_score = keywd_score($pkws, $ukws);
+    $project->allocation_score = 0;
     if ($project->platform_score < 0 || $project->keyword_score < 0) {
         $project->score = -1;
         return $project;
     }
-    $s = $project->platform_score + $project->keyword_score;
 
     // term for project allocation policy
     //
-    $x = $project->avg_ec_adjusted/$su_allocate->avg_ec_total;
-    $y = $project->share/$su_allocate->share_total;
-    $z = -$x/$y;
-    $s += $z;
+    $project->allocation_score = allocation_score($project);
     if ($req) {
-        log_write("alloc score: ec $x share $y score $z");
+        //log_write("alloc score: ec $x share $y score $project->allocation_score");
     }
 
     // TODO: give an edge to projects the host is already running?
+
+    $s = $project->platform_score
+        + $project->keyword_score
+        + $project->allocation_score
+    ;
 
     $project->score = $s;
     return $project;

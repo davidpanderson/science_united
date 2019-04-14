@@ -298,4 +298,10 @@ class SUAllocate {
         $db = BoincDb::get();
         return $db->update_aux('su_allocate', $clause);
     }
+    static function get() {
+        static $x = null;
+        if ($x) return $x;
+        $x = SUAllocate::lookup();
+        return $x;
+    }
 }
