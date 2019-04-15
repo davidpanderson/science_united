@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2018-09-23 23:39 PDT\n"
+"POT-Creation-Date: 2019-02-15 23:35 PST\n"
 "Last-Translator: Jabier <j.lasa@koniker.coop>, 2019\n"
 "Language-Team: Basque (https://www.transifex.com/boinc/teams/35581/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Mantentze lanak tarteko, aldi baterako %1 ez da erabilgarri egongo."
 msgid "Recent contribution"
 msgstr "Azkenaldiko ekarpena"
 
-#: index.php:56 su_welcome.php:89
+#: index.php:56 su_welcome.php:85
 msgid "Continue to your home page"
 msgstr "Jarraitu zure hasiera-orrira"
 
@@ -103,7 +103,7 @@ msgstr "GIF proteinaren egitura"
 msgid "The Hubble ultra-deep field image"
 msgstr "Hubble-ren eremu ultra sakoneko irudia"
 
-#: index.php:170
+#: index.php:171
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -124,18 +124,22 @@ msgid "Email address"
 msgstr "Helbide elektronikoa"
 
 #: su_account_settings.php:26
+msgid "Password"
+msgstr "Pasahitza"
+
+#: su_account_settings.php:27
 msgid "%1 member since"
 msgstr "%1(e)ko kide ondorengo dataz geroztik"
 
-#: su_account_settings.php:27
+#: su_account_settings.php:28
 msgid "User ID"
 msgstr "Erabiltzailearen IDa"
 
-#: su_account_settings.php:27
+#: su_account_settings.php:28
 msgid "Used in community functions"
 msgstr "Komunitate-funtzioetan erabiltzen da"
 
-#: su_account_settings.php:31
+#: su_account_settings.php:32
 msgid "Account settings"
 msgstr "Kontu-ezarpenak"
 
@@ -347,11 +351,11 @@ msgstr "Konputazioa: grafikoak"
 msgid "Computing: details"
 msgstr "Konputazioa: xehetasunak"
 
-#: su_home.php:36
+#: su_home.php:36 su_user_projects.php:74
 msgid "Science projects"
 msgstr "Proiektu zientifikoak"
 
-#: su_home.php:43 su_home.php:65 su_welcome.php:79 project.inc:126
+#: su_home.php:43 su_home.php:65 su_welcome.php:75 project.inc:142
 msgid "Community"
 msgstr "Komunitatea"
 
@@ -485,7 +489,7 @@ msgstr ""
 "Puntuazio handiena duten proiektuak aukeratzen ditugu ondoren (2 gutxienez),"
 " elkarrekin ordenagailuaren prozesadore guztiak erabil ditzaketelarik."
 
-#: su_hosts.php:95 su_hosts.php:128 project.inc:124
+#: su_hosts.php:95 su_hosts.php:128 project.inc:140
 msgid "Project"
 msgstr "Proiektua"
 
@@ -505,8 +509,8 @@ msgstr "Puntuazioa"
 msgid "Can use %1?"
 msgstr "Erabil al daiteke %1?"
 
-#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:116
-#: su.inc:121
+#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:151
+#: su.inc:156
 msgid "Yes"
 msgstr "Bai"
 
@@ -516,7 +520,7 @@ msgstr ""
 "Aurreko informazioaren arabera, ordenagailu honek proiektu hauentzat lan "
 "egin lezake:"
 
-#: su_hosts.php:139 su_user_projects.php:143 su.inc:117 su.inc:122
+#: su_hosts.php:139 su_user_projects.php:143 su.inc:152 su.inc:157
 msgid "No"
 msgstr "Ez"
 
@@ -529,27 +533,27 @@ msgid "Projects for which this computer has done work"
 msgstr "Ordenagailu honek landu dituen proiektuak"
 
 #: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
-#: su.inc:169
+#: su.inc:206
 msgid "Name"
 msgstr "Izena"
 
-#: su_hosts.php:161 su.inc:172
+#: su_hosts.php:161 su.inc:209
 msgid "CPU FLOPS"
 msgstr "PUZ FLOPS"
 
-#: su_hosts.php:162 su_user_projects.php:133 su.inc:171
+#: su_hosts.php:162 su_user_projects.php:133 su.inc:208
 msgid "CPU time"
 msgstr "PUZ denbora"
 
-#: su_hosts.php:163 su.inc:174
+#: su_hosts.php:163 su.inc:211
 msgid "GPU FLOPS"
 msgstr "GPU FLOPS "
 
-#: su_hosts.php:164 su_user_projects.php:136 su.inc:173
+#: su_hosts.php:164 su_user_projects.php:136 su.inc:210
 msgid "GPU time"
 msgstr "GPU denbora"
 
-#: su_hosts.php:165 su.inc:175
+#: su_hosts.php:165 su.inc:212
 msgid "# jobs success"
 msgstr "# lanak ondo burutu dira"
 
@@ -640,7 +644,7 @@ msgstr "Konputazio-hobespenak"
 msgid "Science prefs"
 msgstr "Zientzia hobespenak"
 
-#: su_join.php:77 project.inc:98
+#: su_join.php:94 project.inc:108
 msgid "Join"
 msgstr "Batu"
 
@@ -698,7 +702,7 @@ msgstr "Burututako lanak"
 msgid "New"
 msgstr "Berria"
 
-#: su_user_projects.php:30 su.inc:154
+#: su_user_projects.php:30 su.inc:191
 msgid "Established"
 msgstr "Eratuta"
 
@@ -706,7 +710,7 @@ msgstr "Eratuta"
 msgid "In progress"
 msgstr "Martxan"
 
-#: su_user_projects.php:34 su.inc:258 su.inc:265
+#: su_user_projects.php:34 su.inc:295 su.inc:302
 msgid "Unknown"
 msgstr "Ezezaguna"
 
@@ -792,23 +796,18 @@ msgstr "Itzuli proiektu-zerrendara"
 
 #: su_welcome.php:22
 msgid ""
-"\n"
-"    At this point BOINC should be installed and running on your computer;\n"
-"    the system tray should have an icon like this: %1\n"
-"    If not, %2get help here%3.\n"
-"    "
+"At this point BOINC should be installed and running on your computer; the "
+"system tray should have an icon like this: %1 If not, %2get help here%3."
 msgstr ""
-"\n"
-"    Honezkero zure ordenagailuan BOINC instalatuta eta exekutatzen egon beharko luke;\n"
-"    sistemaren erretiluan honen antzeko ikono bat egon beharko luke: %1\n"
-"    Hala ez bada, %2lortu laguntza hemen%3.\n"
-"    "
+"Honezkero zure ordenagailuan BOINC instalatuta eta exekutatzen egon beharko "
+"luke; sistemaren erretiluan honen antzeko ikono bat egon beharko luke: %1 "
+"Hala ez bada, %2lortu laguntza hemen%3."
 
-#: su_welcome.php:36
+#: su_welcome.php:32
 msgid "What happens now?"
 msgstr "Zer gertatzen da orain?"
 
-#: su_welcome.php:37
+#: su_welcome.php:33
 msgid ""
 "BOINC, running in the background, will download computing jobs,\n"
 "        process them, and upload the results.\n"
@@ -824,11 +823,11 @@ msgstr ""
 "        eta zure faktura elektrikoa apur bat igo daiteke.\n"
 "    "
 
-#: su_welcome.php:49
+#: su_welcome.php:45
 msgid "How to monitor and control BOINC"
 msgstr "Nola monitorizatu eta kontrolatu BOINC"
 
-#: su_welcome.php:50
+#: su_welcome.php:46
 msgid ""
 "You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
 "        Open this by double-clicking on the BOINC icon.\n"
@@ -838,11 +837,11 @@ msgstr ""
 "        Ireki hau BOINC ikonoan klik bikoitza eginez.\n"
 "        Xehetasunak %1hemen%2 daude."
 
-#: su_welcome.php:62
+#: su_welcome.php:58
 msgid "Computing preferences"
 msgstr "Konputazio-hobespenak"
 
-#: su_welcome.php:63
+#: su_welcome.php:59
 msgid ""
 "BOINC is designed to not impact\n"
 "        the performance of your computer for normal use.\n"
@@ -858,7 +857,7 @@ msgstr ""
 "        Ezarpen asko kontrola ditzakezu.\n"
 "        Begiratu %1hemen%2."
 
-#: su_welcome.php:80
+#: su_welcome.php:76
 msgid ""
 "You can meet and communicate with other %1 participants\n"
 "        in a variety of ways - take a look under the Community\n"
@@ -880,59 +879,59 @@ msgstr "klik egin xehetasunak ikusteko"
 msgid "Last RPC"
 msgstr "Azken RPCa"
 
-#: project.inc:92
+#: project.inc:102
 msgid "Log out"
 msgstr "Amaitu saioa"
 
-#: project.inc:98
+#: project.inc:108
 msgid "Login"
 msgstr "Hasi saioa"
 
-#: project.inc:122
+#: project.inc:138
 msgid "About %1"
 msgstr "%1(r)i buruz"
 
-#: project.inc:123
+#: project.inc:139
 msgid "Help"
 msgstr "Laguntza"
 
-#: project.inc:127
+#: project.inc:143
 msgid "Message boards"
 msgstr "Foroak"
 
-#: project.inc:129
+#: project.inc:145
 msgid "Teams"
 msgstr "TaldeaK"
 
-#: project.inc:129
+#: project.inc:145
 msgid "create or join a team"
 msgstr "sortu edo batu talde batera"
 
-#: project.inc:134
+#: project.inc:150
 msgid "Site"
 msgstr "Webgunea"
 
-#: project.inc:135
+#: project.inc:151
 msgid "Search"
 msgstr "Bilatu"
 
-#: project.inc:136
+#: project.inc:152
 msgid "Languages"
 msgstr "Hizkuntzak"
 
-#: project.inc:154
+#: project.inc:170
 msgid "Do science research on your computer, tablet, or phone"
 msgstr "Egin ikerketa zientifikoa zure ordenagailuan, tabletan edo telefonoan"
 
-#: project.inc:174
+#: project.inc:190
 msgid "Generated"
 msgstr "Sortuta"
 
-#: project.inc:205
+#: project.inc:221
 msgid "Your personal background."
 msgstr "Zure ezagutzak."
 
-#: project.inc:209
+#: project.inc:225
 msgid ""
 "Tell us about yourself. You could tell us where you're from, your age, "
 "occupation, hobbies, or anything else about yourself."
@@ -940,11 +939,11 @@ msgstr ""
 "Aurkez iezaguzu zeure burua. Kontaiguzu adibidez nongoa zaren, adina, "
 "lanbidea, zaletasunak, edo zuri buruzko beste edozer."
 
-#: project.inc:213
+#: project.inc:229
 msgid "Your opinions about %1"
 msgstr "%1(r)i buruzko zure iritziak"
 
-#: project.inc:217
+#: project.inc:233
 msgid ""
 "Tell us your thoughts about %1<ol>\n"
 "    <li>Why do you run %1?\n"
@@ -958,178 +957,178 @@ msgstr ""
 "    <li>Iradokizunik?\n"
 "    </ol> "
 
-#: su.inc:118 su.inc:123
+#: su.inc:153 su.inc:158
 msgid "Maybe"
 msgstr "Agian"
 
-#: su.inc:126
+#: su.inc:161
 msgid "Edit preferences"
 msgstr "Editatu hobespenak"
 
-#: su.inc:152
+#: su.inc:189
 msgid "Initial"
 msgstr "Hasierakoa"
 
-#: su.inc:156
+#: su.inc:193
 msgid "Transient error"
 msgstr "Errore iragankorra"
 
-#: su.inc:164
+#: su.inc:201
 msgid "No accounts yet"
 msgstr "Oraindik konturik gabe"
 
-#: su.inc:170
+#: su.inc:207
 msgid "Status"
 msgstr "Egoera"
 
-#: su.inc:176
+#: su.inc:213
 msgid "# jobs fail"
 msgstr "# lanek huts egin dute"
 
-#: su.inc:199
+#: su.inc:236
 msgid "Domain name"
 msgstr "Domeinu-izena"
 
-#: su.inc:201
+#: su.inc:238
 msgid "Product name"
 msgstr "Produktuaren izena"
 
-#: su.inc:205
+#: su.inc:242
 msgid "Local Standard Time"
 msgstr "Ordu-zona"
 
-#: su.inc:205
+#: su.inc:242
 msgid "UTC %1 hours"
 msgstr "UTC %1 ordu"
 
-#: su.inc:206
+#: su.inc:243
 msgid "Created"
 msgstr "Sortua"
 
-#: su.inc:207
+#: su.inc:244
 msgid "Number of times client has contacted server"
 msgstr "Bezeroa zerbitzariarekin harremanetan jarri den aldi kopurua"
 
-#: su.inc:208
+#: su.inc:245
 msgid "Last time contacted server"
 msgstr "Zerbitzariarekin harremanetan jarri den azken aldia"
 
-#: su.inc:209
+#: su.inc:246
 msgid "Fraction of time BOINC is running"
 msgstr "BOINCen exekuzio-denbora"
 
-#: su.inc:211
+#: su.inc:248
 msgid ""
 "While BOINC is running, fraction of time computer has an Internet connection"
 msgstr ""
 "BOINC exekutatzen ari den bitartean, ordenagailuak Internet konexioa dueneko"
 " denbora-tartea"
 
-#: su.inc:213
+#: su.inc:250
 msgid "While BOINC is running, fraction of time computing is allowed"
 msgstr ""
 "BOINC exekutatzen ari den bitartean, konputaziora bideratzen den denbora-"
 "tartea"
 
-#: su.inc:214
+#: su.inc:251
 msgid "While is BOINC running, fraction of time GPU computing is allowed"
 msgstr ""
 "BOINC exekutatzen ari den bitartean, GPU bidezko konputaziora bideratzen den"
 " denbora-tartea"
 
-#: su.inc:219
+#: su.inc:256
 msgid "CPU type"
 msgstr "PUZ mota"
 
-#: su.inc:220
+#: su.inc:257
 msgid "Number of processors"
 msgstr "Prozesadore kopurua"
 
-#: su.inc:222
+#: su.inc:259
 msgid "Coprocessors"
 msgstr "Koprozesadoreak"
 
-#: su.inc:224
+#: su.inc:261
 msgid "Operating System"
 msgstr "Sistema eragilea"
 
-#: su.inc:227
+#: su.inc:264
 msgid "BOINC version"
 msgstr "BOINCen bertsioa"
 
-#: su.inc:231
+#: su.inc:268
 msgid "Memory"
 msgstr "Memoria"
 
-#: su.inc:231 su.inc:240
+#: su.inc:268 su.inc:277
 msgid "%1 MB"
 msgstr "%1 MB "
 
-#: su.inc:235
+#: su.inc:272
 msgid "Cache"
 msgstr "Cachea"
 
-#: su.inc:235
+#: su.inc:272
 msgid "%1 KB"
 msgstr "%1 KB "
 
-#: su.inc:240
+#: su.inc:277
 msgid "Swap space"
 msgstr "Swap lekua"
 
-#: su.inc:243
+#: su.inc:280
 msgid "Total disk space"
 msgstr "Diskoaren edukiera"
 
-#: su.inc:243 su.inc:246
+#: su.inc:280 su.inc:283
 msgid "%1 GB"
 msgstr "%1 GB "
 
-#: su.inc:246
+#: su.inc:283
 msgid "Free Disk Space"
 msgstr "Diskoko leku librea"
 
-#: su.inc:249
+#: su.inc:286
 msgid "Measured floating point speed"
 msgstr "Koma mugikorreko abiadura kalkulatuta"
 
-#: su.inc:249 su.inc:252
+#: su.inc:286 su.inc:289
 msgid "%1 million ops/sec"
 msgstr "%1 milioi eragiketa/seg"
 
-#: su.inc:252
+#: su.inc:289
 msgid "Measured integer speed"
 msgstr "Zenbaki osoko abiadura kalkulatuta"
 
-#: su.inc:256 su.inc:258
+#: su.inc:293 su.inc:295
 msgid "Average upload rate"
 msgstr "Batezbesteko igoera abiadura"
 
-#: su.inc:256 su.inc:263
+#: su.inc:293 su.inc:300
 msgid "%1 KB/sec"
 msgstr "%1 KB/seg"
 
-#: su.inc:263 su.inc:265
+#: su.inc:300 su.inc:302
 msgid "Average download rate"
 msgstr "Batezbesteko deskarga abiadura"
 
-#: su.inc:320
+#: su.inc:357
 msgid "No accounting records yet"
 msgstr "Oraindik kontu-erregistrorik gabe"
 
-#: su.inc:324 su.inc:333
+#: su.inc:361 su.inc:370
 msgid "CPU days"
 msgstr "PUZ egun kopurua"
 
-#: su.inc:325 su.inc:334
+#: su.inc:362 su.inc:371
 msgid "GPU days"
 msgstr "GPU egun kopurua"
 
-#: su.inc:326 su.inc:335
+#: su.inc:363 su.inc:372
 msgid "Successful jobs"
 msgstr "Ondo burututako lanak"
 
-#: su.inc:327 su.inc:336
+#: su.inc:364 su.inc:373
 msgid "Failed jobs"
 msgstr "Ondo burutu gabeko lanak"
 

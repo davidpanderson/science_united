@@ -18,8 +18,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// Make historical accounting records,
-// and update allocation balances
+// Make historical accounting records.
 // Run this every ~1 day
 //
 // For each of the following:
@@ -37,24 +36,6 @@ require_once("../inc/su_util.inc");
 function log_write($x) {
     echo sprintf("%s: %s\n", date(DATE_RFC822), $x);
     flush();
-}
-
-// increment balances in proportion to shares
-//
-function do_allocation() {
-    $x = SUAccounting::last();
-    $flops = ec_to_gflops($x->cpu_ec_delta + $x->gpu_ec_delta);
-    $projects = SUProject::enum("status=".PROJECT_STATUS_AUTO);
-    $total_share = 0;
-    foreach ($projects as $p) {
-        $total_share += $p->share;
-    }
-    log_write("flops: $flops; total_share: $total_share");
-    foreach ($projects as $p) {
-        $x = $flops*$p->share/$total_share;
-        log_write("adding $x to balance of $p->name");
-        $p->update("balance = balance + $x");
-    }
 }
 
 function nactive_users($ndays) {
@@ -88,9 +69,12 @@ function do_total($now) {
     }
 }
 
+// make a new accounting record whose totals are total + delta of previous
+//
 function do_project($p, $now) {
     $x = SUAccountingProject::last($p->id);
     if ($x) {
+        $p->update("nhosts = $x->nhosts");
         SUAccountingProject::insert("(create_time, project_id, cpu_ec_total, gpu_ec_total, cpu_time_total, gpu_time_total, njobs_success_total, njobs_fail_total) values ($now, $p->id, $x->cpu_ec_total+$x->cpu_ec_delta, $x->gpu_ec_total+$x->gpu_ec_delta, $x->cpu_time_total+$x->cpu_time_delta, $x->gpu_time_total+$x->gpu_time_delta, $x->njobs_success_total+$x->njobs_success_delta, $x->njobs_fail_total+$x->njobs_fail_delta)");
     } else {
         SUAccountingProject::insert("(create_time, project_id) values ($now, $p->id)");
@@ -131,11 +115,6 @@ function do_users($now) {
 function main() {
     log_write("starting");
     $now = time();
-
-    // do this first, before we create a new accounting record
-    //
-    log_write("doing allocation");
-    do_allocation();
 
     log_write("doing totals");
     do_total($now);

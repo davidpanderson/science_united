@@ -1,5 +1,22 @@
 <?php
 
+// This file is part of BOINC.
+// http://boinc.berkeley.edu
+// Copyright (C) 2019 University of California
+//
+// BOINC is free software; you can redistribute it and/or modify it
+// under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation,
+// either version 3 of the License, or (at your option) any later version.
+//
+// BOINC is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public License
+// along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
+
 // SU-specific tables.
 // In addition we use some fields from BOINC tables:
 //
@@ -108,6 +125,10 @@ class SUUserKeyword {
             "user_id=$this->user_id and keyword_id=$this->keyword_id"
         );
     }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_user_keyword', "user_id=$user_id");
+    }
     static function update($clause) {
         $db = BoincDb::get();
         return $db->update_aux('su_user_keyword', $clause);
@@ -141,6 +162,10 @@ class SUAccount {
         return $db->delete_aux('su_account',
             "user_id=$this->user_id and project_id=$this->project_id"
         );
+    }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_account', "user_id=$user_id");
     }
     static function delete_all() {
         $db = BoincDb::get();
@@ -254,8 +279,29 @@ class SUAccountingUser {
         $db = BoincDb::get();
         return $db->count('su_accounting_user', $clause);
     }
+    static function delete_user($user_id) {
+        $db = BoincDb::get();
+        return $db->delete_aux('su_accounting_user', "user_id=$user_id");
+    }
     static function delete_all() {
         $db = BoincDb::get();
         return $db->delete_aux('su_accounting_user', 1);
+    }
+}
+
+class SUAllocate {
+    static function lookup() {
+        $db = BoincDb::get();
+        return $db->lookup('su_allocate', 'SUAllocate', "true");
+    }
+    static function update($clause) {
+        $db = BoincDb::get();
+        return $db->update_aux('su_allocate', $clause);
+    }
+    static function get() {
+        static $x = null;
+        if ($x) return $x;
+        $x = SUAllocate::lookup();
+        return $x;
     }
 }

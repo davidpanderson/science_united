@@ -20,31 +20,31 @@
 require_once("../inc/boinc_db.inc");
 require_once("../inc/email.inc");
 require_once("../inc/su.inc");
+require_once("../inc/log.inc");
 
 // send status emails
 //
 
-function log_write($x) {
-    echo date(DATE_RFC822), ": $x\n";
-    flush();
-}
-
 function su_send_email($user, $x) {
-    $x .= "\nThanks for participating in Science United.\n\n";
+    $x = '<html><body style=\"font-family:Verdana, Verdana, Geneva, sans-serif; font-size:12px; color:#666666;\">'.$x;
+    $x .= "<p>Thanks for participating in Science United.<p><p>";
+    $unsubscribe_url = opt_out_url($user, "su_unsubscribe.php");
+    $x .= "<small><a href=$unsubscribe_url>Unsubscribe</a> or ";
     $x .= sprintf(
-        "To unsubscribe or change the frequency of these emails, go here:\n%s\n",
+        "<a href=%s>change the frequency of these emails</a>.",
         "https://scienceunited.org/su_email_prefs.php"
     );
-    send_email($user, "Science United status", $x);
+    $x .= "</small></body></html>\n";
+    send_email($user, "Science United status", null, $x);
     log_write("sent email to $user->email_addr");
 }
 
 function do_user($user) {
-    $x = "Dear $user->name:\n\nGreetings from Science United.\n\n";
+    $x = "Dear $user->name:<p><p>Greetings from Science United. ";
 
     $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     if (count($hosts) == 0) {
-        $x .= "We haven't heard from your computer.  Make sure that BOINC is installed and running.  To install BOINC, go here:\nhttps://scienceunited.org/download.php\n";
+        $x .= "We haven't heard from your computer yet.  Please <a href=https://scienceunited.org/su_help.php>make sure that BOINC is installed and running<a>.";
         su_send_email($user, $x);
         return;
     }
@@ -76,24 +76,35 @@ function do_user($user) {
             show_num(($delta->cpu_time+$delta->gpu_time)/3600.),
             $delta->njobs_success+$delta->njobs_fail
         );
+        $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.";
+        $x .= "<p><p>\n";
+
+        $t0 = time() - 86400.*7;
+        foreach ($hosts as $host) {
+            $idle_days = (time() - $host->rpc_time)/86400;
+            if ($host->rpc_time < $t0) {
+                $x .= sprintf(
+                    "Your computer '%s' hasn't contacted us in %d days; please check that BOINC is running there.<p>",
+                    $host->domain_name, (int)$idle_days
+                );
+            }
+        }
     } else {
         $x .= sprintf(
-            "Your computers haven't reported work in the last %s.  You may need to reinstall BOINC on them, or unsuspend BOINC.",
+            "Your computers haven't reported work in the last %s.
+            Please check that BOINC is installed, unsuspended,
+            and attached to Science United.",
             $ndays_str
         );
-    }
-    $x .= "\n\nFor details, visit https://scienceunited.org/\n\n";
-    $t0 = time() - 86400.*7;
-    foreach ($hosts as $host) {
-        $idle_days = (time() - $host->rpc_time)/86400;
-        if ($host->rpc_time < $t0) {
-            $x .= sprintf(
-                "Your computer %s has been idle for %d days; check that BOINC is running there.\n",
-                $host->domain_name, (int)$idle_days
-            );
-        }
+        $x .= " Get help <a href=https://scienceunited.org/su_help.php>here</a>.";
+        $x .= "<p><p>\n";
     }
     su_send_email($user, $x);
+    $x = time() + $user->send_email*86400;
+    $ret = $user->update("seti_last_result_time=$x");
+    if (!$ret) {
+        log_write("user update failed");
+    }
 }
 
 function main() {
@@ -101,11 +112,12 @@ function main() {
     $now = time();
     $users = BoincUser::enum("send_email > 0 and seti_last_result_time < $now");
     foreach ($users as $user) {
-        if ($user->id != 22203) continue;
         do_user($user);
     }
     log_write("done");
 }
+
+//do_user(BoincUser::lookup_id(22203));
 
 main();
 

@@ -58,6 +58,15 @@ define("POST_REPORT_EMAILS", "davea@berkeley.edu");
 define("RPC_DEBUG", false);
     // Enables PHP error messages in public Web RPCs
 
+if (0) {
+function make_php_mailer() {
+    $mail = new PHPMailer();
+    $mail->Mailer = 'smtp';
+    $mail->Host = 'clarke.ssl.berkeley.edu';
+    return $mail;
+}
+}
+
 // If you use PHPMailer, uncomment the following
 // and complete the function definition based on your SMTP server
 // (not all fields may be needed)

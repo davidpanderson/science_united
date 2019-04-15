@@ -80,8 +80,8 @@ function su_host_project_select($user, $host) {
         tra("Keyword score"),
         tra("How well your keyword preferences match the project's keywords."),
         tra("Platform score"),
-        tra("-1 if the project has no programs that will run on the computer; 0 if it does; +1 if one of them uses a GPU or VirtuaBox."),
-        tra("Balance"),
+        tra("-1 if the project has no programs that will run on the computer; 0 if it does; +0.1 if one of them uses a GPU or VirtualBox."),
+        tra("Allocation score"),
         tra("How much work is owed to the project; this changes from one day to the next.")
     );
     echo tra("We then choose the highest-scoring projects (at least 2) that together can use all the computer's processors."
@@ -95,26 +95,26 @@ function su_host_project_select($user, $host) {
         tra("Project"),
         tra("Keyword score"),
         tra("Platform score"),
-        tra("Balance (GFLOPS days)"),
-        tra("Opted out?"),
+        tra("Allocation score"),
         tra("Score")
     );
     foreach ($host->resources as $r) {
-        $x[] = tra("Can use %1?", $r);
+        $x[] = tra("Can use %1?", human_resource_name($r));
     }
+    $x[] = tra("Opted out?");
     row_heading_array($x);
     foreach($projects as $p) {
         $x = array(
             "<a href=su_show_project.php?id=$p->id>$p->name</a>",
             $p->keyword_score,
             $p->platform_score,
-            number_format($p->balance/(86400*1e9), 2),
-            $p->opt_out?tra("Yes"):"",
-            $p->score
+            number_format($p->allocation_score, 3),
+            number_format($p->score, 3)
         );
         foreach ($host->resources as $r) {
             $x[] = can_use($p, $host, $r) ? "yes" : "no";
         }
+        $x[] = $p->opt_out?tra("Yes"):"";
         row_array($x);
     }
     end_table();

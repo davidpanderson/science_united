@@ -1,3 +1,11 @@
+/*
+ * schema for Science United database.
+ * These tables are added to a standard BOINC database.
+ */
+
+/*
+ * represents a BOINC project
+ */
 create table su_project (
     id                      integer         not null auto_increment,
     create_time             double          not null,
@@ -7,12 +15,15 @@ create table su_project (
     url_signature           varchar(1024)   not null,
     share                   double          not null,
     status                  tinyint         not null,
-    balance                 double          not null,
-    projected_balance       double          not null,
+    avg_ec                  double          not null,
+    avg_ec_adjusted         double          not null,
     web_url                 varchar(254)    not null,
     authenticator           varchar(254)    not null,
+    nhosts                  integer         not null,
     primary key (id)
 ) engine=InnoDB;
+
+/* an allocation to a project.  Not implemented yet */
 
 create table su_allocation (
     id                      integer         not null auto_increment,
@@ -35,7 +46,13 @@ create table su_user_keyword (
 ) engine=InnoDB;
 
 /*
- * a user account on a project, possibly failed or in-progress
+ * a user account on a project.
+ * NOTE: originally SU users had separate project accounts,
+ * which had to be dynamically created by RPCs.
+ * This has been replaced by a "single-account" model where
+ * all SU users share a single project account.
+ * We still have separate su_account records per user,
+ * for accounting purposes; they'll have the same authenticator.
  */
 create table su_account (
     user_id                 integer         not null,
@@ -118,7 +135,6 @@ create table su_accounting_project (
     create_time             double          not null,
     project_id              integer         not null,
     share                   double          not null,
-    balance                 double          not null,
     cpu_ec_delta            double          not null,
     cpu_ec_total            double          not null,
     gpu_ec_delta            double          not null,
@@ -131,6 +147,7 @@ create table su_accounting_project (
     njobs_success_total     integer         not null,
     njobs_fail_delta        integer         not null,
     njobs_fail_total        integer         not null,
+    nhosts                  integer         not null,
     index (project_id),
     primary key (id)
 ) engine=InnoDB;
@@ -153,4 +170,12 @@ create table su_accounting_user (
     njobs_fail_total        integer         not null,
     index (user_id),
     primary key (id)
+) engine=InnoDB;
+
+/* global allocation info (1 record) */
+
+create table su_allocate (
+    nprojects               integer         not null,
+    avc_ec_total            double          not null,
+    share_total             double          not null
 ) engine=InnoDB;

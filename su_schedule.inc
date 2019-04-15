@@ -60,6 +60,18 @@ function canonical_resource_name($x) {
     return $x;
 }
 
+// canonical to human-readable 
+//
+function human_resource_name($x) {
+    switch ($x) {
+    case "cpu": return "CPU";
+    case "nvidia": return "NVIDIA GPU";
+    case "amd": return "AMD GPU";
+    case "intel_gpu": return "Intel GPU";
+    }
+    return $x;
+}
+
 // return project keyword's contribution to project score.
 // -1 means don't use.
 // TODO: should more specific keywords (e.g. level > 0) get a higher score?
@@ -132,29 +144,44 @@ function keywd_score($pkws, $ukws) {
     return $x;
 }
 
+function allocation_score($project) {
+    $su_allocate = SUAllocate::get();
+    $x = $project->avg_ec_adjusted/$su_allocate->avg_ec_total;
+    $y = $project->share/$su_allocate->share_total;
+    return -$x/$y;
+}
+
 // compute a score for this project, given user prefs.
 // higher = more preferable
 // -1 means don't use
 //
-function project_score($project, $ukws, $host) {
+function project_score($project, $ukws, $host, $req) {
     global $project_infos;
     $pkws = $project_infos[$project->id]->kws;
 
-    $s = platform_score($project, $host);
-
-    $project->platform_score = $s;
-    $project->score = $s;
-
+    $project->platform_score = platform_score($project, $host);
     $project->keyword_score = keywd_score($pkws, $ukws);
-
+    $project->allocation_score = 0;
     if ($project->platform_score < 0 || $project->keyword_score < 0) {
         $project->score = -1;
-    } else {
-        $project->score = $project->platform_score + $project->keyword_score + $project->projected_balance;
+        return $project;
     }
 
-    // TODO: give an edge to projects the host is already running
+    // term for project allocation policy
+    //
+    $project->allocation_score = allocation_score($project);
+    if ($req) {
+        //log_write("alloc score: ec $x share $y score $project->allocation_score");
+    }
 
+    // TODO: give an edge to projects the host is already running?
+
+    $s = $project->platform_score
+        + $project->keyword_score
+        + $project->allocation_score
+    ;
+
+    $project->score = $s;
     return $project;
 }
 
@@ -294,14 +321,14 @@ function rank_projects($user, $host, $req) {
             continue;
         }
 
-        $p = project_score($p, $ukws, $host);
+        $p = project_score($p, $ukws, $host, $req);
         $p->opt_out = false;
         if (array_key_exists($p->id, $opt_out)) {
             $p->score = -1;
             $p->opt_out = true;
         }
         if ($req) {
-            // add small random factor for project variety
+            // for RPCs, add small random factor for project variety
             // TODO: remove this; balance does this
             //
             if ($p->score < 0) continue;
@@ -475,8 +502,7 @@ function choose_projects_join($user) {
 
 // Decide what projects to have this user/host run.
 // Called from AM RPC handler.
-// Return list of accounts that are confirmed,
-// and a flag indicating whether new accounts were requested
+// Return list of accounts.
 //
 function choose_projects_rpc($user, $host, $req) {
     $projects = rank_projects($user, $host, $req);
@@ -487,55 +513,74 @@ function choose_projects_rpc($user, $host, $req) {
 
     $n = 0;
     $accounts_to_send = array();
-    $new_accounts = false;
     foreach ($projects as $p) {
-        // see if user has account on the project
-        //
         $account = SUAccount::lookup(
             "project_id = $p->id and user_id = $user->id"
         );
-        if ($account) {
-            if ($account->state == ACCT_SUCCESS) {
-                $accounts_to_send[] = array($p, $account);
-                $n++;
-                log_write("sending attach to $p->name");
-                $x = "";
-                foreach ($p->use as $r=>$v) {
-                    if ($v) $x .= "$r ";
-                }
-                log_write("   use: $x");
-            } else {
-                log_write("account on $p->name is pending");
-                continue;
-            }
-        } else {
-            // if not, initiate the creation of one
-            //
-            log_write("no account on $p->name; creating one\n");
-            if (strlen($p->authenticator)) {
-                $ret = SUAccount::insert(
-                    sprintf("(project_id, user_id, create_time, authenticator, state) values (%d, %d, %f, '%s', %d)",
-                        $p->id, $user->id, time(), $p->authenticator, ACCT_SUCCESS
-                    )
-                );
-            } else {
-                $ret = SUAccount::insert(
-                    sprintf("(project_id, user_id, create_time, state) values (%d, %d, %f, %d)",
-                        $p->id, $user->id, time(), ACCT_INIT
-                    )
-                );
-            }
-            if (!$ret) {
-                su_error(-1, "account insert failed");
-            }
-            $new_accounts = true;
+        if (!$account) {
+            $ret = SUAccount::insert(
+                sprintf("(project_id, user_id, create_time, authenticator, state) values (%d, %d, %f, '%s', %d)",
+                    $p->id, $user->id, time(), $p->authenticator, ACCT_SUCCESS
+                )
+            );
+            $account = SUAccount::lookup(
+                "project_id = $p->id and user_id = $user->id"
+            );
+        }
+        if (!$account) {
+            log_write("no account");
+            continue;
+        }
+        $accounts_to_send[] = array($p, $account);
+        $n++;
+        log_write("sending attach to $p->name");
+        $x = "";
+        foreach ($p->use as $r=>$v) {
+            if ($v) $x .= "$r ";
+        }
+        log_write("   use: $x");
+    }
+    return $accounts_to_send;
+}
+
+function adjust($p, $inc) {
+    log_write("adjusting avg_ec of $p->name: $inc");
+    if ($p->nhosts == 0) {
+        log_write("no adjustment; nhosts is 0");
+        return;
+    }
+    $x = $p->avg_ec / $p->nhosts;
+    if (!$inc) $x = -$x;
+    $ret = $p->update("avg_ec_adjusted = avg_ec_adjusted + $x");
+    log_write("$p->name: add $x to avg_ec");
+    if (!$ret) {
+        log_write("project update in avg_ec adjust failed");
+    }
+}
+
+// decrement/increment avg_ec of outgoing/incoming projects
+//
+function adjust_avg_ec($current_projects, $accounts_to_send) {
+    $old_ids = array();
+    $new_ids = array();
+    foreach ($current_projects as $p) {
+        $old_ids[] = $p->id;
+    }
+    foreach ($accounts_to_send as $a) {
+        $p = $a[0];
+        $new_ids[] = $p->id;
+    }
+    foreach ($current_projects as $p) {
+        if (!in_array($p->id, $new_ids)) {
+            adjust($p, false);
         }
     }
-    if ($new_accounts) {
-        log_write("running make_accounts from RPC\n");
-        system("../ops/make_accounts.php --rpc >> ../../log_isaac/make_accounts.out");
+    foreach ($accounts_to_send as $a) {
+        $p = $a[0];
+        if (!in_array($p->id, $old_ids)) {
+            adjust($p, true);
+        }
     }
-    return array($accounts_to_send, $new_accounts);
 }
 
 ?>

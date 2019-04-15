@@ -34,6 +34,7 @@ require_once("../inc/su_db.inc");
 require_once("../inc/su_schedule.inc");
 require_once("../inc/su_compute_prefs.inc");
 require_once("../inc/su_util.inc");
+require_once("../inc/log.inc");
 
 define('REPEAT_DELAY', 86400./2);
     // interval between AM requests
@@ -49,20 +50,6 @@ $in_rpc = true;
 define('LOG_DELTAS', true);
 
 $now = 0;
-
-$log_file = null;
-$verbose = true;
-
-function log_write($x) {
-    global $verbose, $log_file;
-
-    if (!$verbose) return;
-    if (!$log_file) {
-        $log_file = fopen("../../log_isaac/rpc_log.txt", "a");
-    }
-    fwrite($log_file, sprintf("%s: %s\n", strftime("%c"), $x));
-    fflush($log_file);
-}
 
 // return error
 //
@@ -120,14 +107,14 @@ function send_error_reply($msg) {
 
 // $accounts is an array of array(project, account)
 //
-function send_reply($user, $host, $accounts, $new_accounts, $req) {
+function send_reply($user, $host, $req, $accounts) {
     echo "<acct_mgr_reply>\n"
         ."<name>".PROJECT."</name>\n"
         ."<authenticator>$user->authenticator</authenticator>\n"
         ."<signing_key>\n"
     ;
     readfile('code_sign_public');
-    $repeat_sec = $new_accounts?REPEAT_DELAY_INITIAL:REPEAT_DELAY;
+    $repeat_sec = REPEAT_DELAY;
     echo "</signing_key>\n"
         ."<repeat_sec>$repeat_sec</repeat_sec>\n"
         ."<dynamic/>\n"
@@ -229,6 +216,9 @@ function make_serialnum($req) {
     return $x;
 }
 
+// update the host DB record
+// Note: we update rpc_time in the DB, but not the object
+//
 function update_host($req, $host) {
     //$_SERVER = array();
     //$_SERVER['REMOTE_ADDR'] = "12.4.2.11";
@@ -311,7 +301,8 @@ function update_host($req, $host) {
         n_bwup = $n_bwup,
         n_bwdown = $n_bwdown,
         p_ngpus = $p_ngpus,
-        p_gpu_fpops = $p_gpu_fpops
+        p_gpu_fpops = $p_gpu_fpops,
+        rpc_seqno = rpc_seqno+1
     ";
     $ret = $host->update($query);
     if (!$ret) {
@@ -361,6 +352,11 @@ function lookup_records($req) {
     if (array_key_exists('opaque', $req)) {
         $host_id = (int)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
+        if ($host) {
+            log_write("Found host $host_id specified by request");
+        } else {
+            log_write("No such host $host_id specified by request");
+        }
     } else {
         // This host might be re-attaching to the AM.
         // See if there's an existing host record that matches this host
@@ -373,11 +369,17 @@ function lookup_records($req) {
                 break;
             }
         }
+        if ($host) {
+            log_write("No host specified in request, but found similar $host->id");
+        } else {
+            log_write("No host specified in request, and no similar host");
+        }
     }
     if ($host) {
         update_host($req, $host);
     } else {
         $host = create_host($req, $user);
+        log_write("Created new host $host->id");
     }
     return array($user, $host);
 }
@@ -503,17 +505,23 @@ function find_project($url) {
 // - add deltas (summed over projects) to latest user accounting record
 // - add deltas (summed over projects) to latest global accounting record
 //
+// Return list of projects
+//
 function do_accounting(
     $req,           // AM RPC request as simpleXML object
     $user, $host    // user and host records
 ) {
     global $now;
-    $dt = $now - $host->rpc_time;
-    if ($dt < 0) {
-        log_write("Negative dt: now $now last RPC $host->rpc_time");
-        return;
+    if ($host->rpc_time) {
+        $dt = $now - $host->rpc_time;
+        if ($dt < 0) {
+            log_write("Negative dt: now $now last RPC $host->rpc_time");
+            return;
+        }
+        log_write("time since last RPC: $dt");
+    } else {
+        log_write("First RPC from this host");
     }
-    log_write("time since last RPC: $dt");
 
     // get sanity-checked values for various params
     //
@@ -536,6 +544,7 @@ function do_accounting(
     //
     $sum_delta = new_delta_set();
 
+    $projects = array();
     foreach ($req->project as $rp) {
         $url = (string)$rp->url;
         $project = find_project($url);
@@ -543,6 +552,7 @@ function do_accounting(
             log_write("can't find project $url");
             continue;
         }
+        $projects[] = $project;
 
         // get host/project record; create if needed
         //
@@ -609,7 +619,6 @@ function do_accounting(
             continue;
         }
 
-
         if (LOG_DELTAS) {
             log_write("Deltas for $project->name:");
             log_write_deltas($dproj);
@@ -635,20 +644,18 @@ function do_accounting(
         // add deltas to deltas in project's current accounting record
         //
         $ap = SUAccountingProject::last($project->id);
-        $ret = $ap->update(delta_update_string($dproj));
+        $update_string = delta_update_string($dproj);
+
+        // increment host count if first RPC of accounting period
+        //
+        if ($host->rpc_time < $ap->create_time) {
+            $update_string .= ", nhosts = nhosts+1";
+        }
+
+        $ret = $ap->update($update_string);
         if (!$ret) {
             log_write("ap->update failed");
             su_error(-1, "ap->update failed");
-        }
-
-        // update project balance
-        //
-        $flops = ec_to_gflops($dproj->cpu_ec + $dproj->gpu_ec);
-        log_write("subtracting $flops from balance of $project->name");
-        $ret = $project->update("balance = greatest(0, balance-$flops)");
-        if (!$ret) {
-            log_write("project->update failed");
-                su_error(-1, "project->update failed");
         }
 
         // add to all-project delta sums
@@ -689,6 +696,7 @@ function do_accounting(
             su_error(-1, "acc->update failed");
         }
     }
+    return $projects;
 }
 
 function am_error_reply($msg) {
@@ -737,6 +745,8 @@ function req_split($r) {
 
 function main() {
     global $now;
+    log_open("../../log_isaac/rpc_log.txt");
+
     if (1) {
         log_write("Got request from ".$_SERVER['HTTP_USER_AGENT']);
         $req = file_get_contents('php://input');
@@ -764,11 +774,20 @@ function main() {
     list($user, $host) = lookup_records($req);
     log_write("processing request from user $user->id host $host->id");
 
-    do_accounting($req, $user, $host);
-    list($accounts_to_send, $new_accounts) =
-        choose_projects_rpc($user, $host, $req)
-    ;
-    send_reply($user, $host, $accounts_to_send, $new_accounts, $req);
+    // update accounting for projects the host is currently running
+    //
+    $current_projects = do_accounting($req, $user, $host);
+
+    // pick projects to run
+    //
+    $accounts_to_send = choose_projects_rpc($user, $host, $req);
+
+    // adjust avg_ec as needed
+    //
+    adjust_avg_ec($current_projects, $accounts_to_send);
+
+    send_reply($user, $host, $req, $accounts_to_send);
+
     log_write("------------------------------");
 }
 

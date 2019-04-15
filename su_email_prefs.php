@@ -81,7 +81,8 @@ function su_email_action($user) {
         $pm_notification = get_int("community");
     }
     if ($status_period != $user->send_email) {
-        $user->update("send_email=$status_period");
+        $x = time() + $status_period*86400;
+        $user->update("send_email=$status_period, seti_last_result_time=$x");
         $user->send_email = $status_period;
     }
     BoincForumPrefs::lookup($user);

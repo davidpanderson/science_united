@@ -21,6 +21,7 @@
 require_once("../inc/host.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su_util.inc");
+require_once("../inc/su_project_infos.inc");
 require_once("../inc/keywords.inc");
 
 function admin_only() {
@@ -62,7 +63,7 @@ function project_keyword_array_to_string($arr) {
 // get a project's platform list, as a string
 //
 function get_platforms_string($project_id) {
-    $project_infos = unserialize(file_get_contents("projects.ser"));
+    global $project_infos;
     $p = $project_infos[$project_id];
     $x = $p->avs;
     $s = "";

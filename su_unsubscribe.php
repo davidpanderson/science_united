@@ -1,7 +1,7 @@
 <?php
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
-// Copyright (C) 2017 University of California
+// Copyright (C) 2014 University of California
 //
 // BOINC is free software; you can redistribute it and/or modify it
 // under the terms of the GNU Lesser General Public License
@@ -16,20 +16,34 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-DEPRECATED
-
 require_once("../inc/util.inc");
-require_once("../inc/su.inc");
+require_once("../inc/user.inc");
+require_once("../inc/boinc_db.inc");
 
-$user = get_logged_in_user();
-$host_id = get_int('host_id');
-$host = BoincHost::lookup_id($host_id);
-if ($host->userid != $user->id) {
-    error_page("not your host");
+check_get_args(array("code", "userid"));
+
+$code = get_str("code");
+$userid = get_int('userid');
+$user = BoincUser::lookup_id($userid);
+if (!$user) {
+    error_page("no such user");
 }
-page_head(tra("Computer details"));
-show_host_detail($host, $user, true);
-echo "<h3>".tra("Projects")."</h3>\n";
-show_host_projects($host);
-page_tail();
+
+if (salted_key($user->authenticator) != $code) {
+    error_page("invalid code");
+}
+
+$result = $user->update("send_email=0");
+
+if ($result) {
+    page_head("Unsubscribed");
+    echo "
+        No further emails will be sent to $user->email_addr.
+        <p><p>
+        You can also
+        <a href=su_email_prefs.php>choose to get emails less often</a>.
+    ";
+    page_tail();
+}
+
 ?>
