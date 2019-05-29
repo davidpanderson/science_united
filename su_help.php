@@ -23,6 +23,8 @@ echo sprintf("%s
     <h3>%s</h3>
     <p>
     %s %s
+    <p>
+    %s
     ",
     tra("If you received a 'no work reported' email from Science United or are having other problems, please do the following:"),
     tra("Make sure BOINC is installed on your computer"),
@@ -31,7 +33,8 @@ echo sprintf("%s
     ),
     tra("If not, %1download and install BOINC%2.",
         "<a href=download.php>", "</a>"
-    )
+    ),
+    tra("Science United requires BOINC version 7.14 or later.")
 );
 echo sprintf("<h3>%s</h3>
     <p>
@@ -40,6 +43,7 @@ echo sprintf("<h3>%s</h3>
     <li> %s
     <li> %s
     </ul>
+    <br><img width=400 src=pictures/su_menu.jpg>
     ",
     tra("Make sure BOINC is attached to Science United"),
     tra("Double-click the BOINC icon to open the BOINC Manager."),

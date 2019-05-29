@@ -333,13 +333,17 @@ function lookup_records($req) {
     $authenticator = (string)$req->authenticator;
     if ($authenticator) {
         $user = BoincUser::lookup_auth($authenticator);
+        if (!$user) {
+            log_write("auth $authenticator not found");
+            su_error(-1, 'no account found');
+        }
     } else {
         $email_addr = (string)$req->name;
         $user = BoincUser::lookup_email_addr($email_addr);
-    }
-    if (!$user) {
-        log_write("account $email_addr not found");
-        su_error(-1, 'no account found');
+        if (!$user) {
+            log_write("account $email_addr not found");
+            su_error(-1, 'no account found');
+        }
     }
 
     if (!$authenticator) {
@@ -521,6 +525,7 @@ function do_accounting(
         log_write("time since last RPC: $dt");
     } else {
         log_write("First RPC from this host");
+        $dt = 0;
     }
 
     // get sanity-checked values for various params

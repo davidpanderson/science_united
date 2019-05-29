@@ -27,6 +27,7 @@
 //      share_total
 
 require_once("../inc/su_db.inc");
+require_once("../inc/log.inc");
 
 define('AVERAGING_PERIOD', 7);
 
@@ -57,6 +58,7 @@ function do_project($p) {
 }
 
 function main() {
+    log_write("start");
     $projects = SUProject::enum();
     $avg_ec_total = 0;
     $share_total = 0;
@@ -71,6 +73,8 @@ function main() {
         $share_total += $p->share;
     }
     SUAllocate::update("nprojects=$nprojects, avg_ec_total=$avg_ec_total, share_total=$share_total");
+    log_write("nprojects $nprojects avg_ec_total $avg_ec_total share_total $share_total");
+    log_write("end");
 }
 
 main();

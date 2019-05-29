@@ -20,8 +20,11 @@
 
 require_once("../inc/su_db.inc");
 require_once("../inc/su_util.inc");
+require_once("../inc/keywords.inc");
 
 function main() {
+    global $job_keywords;
+
     $nactive = 0;
     $active_dur = 0;
     $ninactive = 0;
@@ -30,6 +33,12 @@ function main() {
     $users = BoincUser::enum("");
     $now = time();
     $total_ec = 0;
+
+    $nyes = 0;
+    $nno = 0;
+    $nsci = 0;
+    $ngeog = 0;
+
     foreach ($users as $u) {
         $sah = SUAccountingUser::last($u->id);
         if ($sah) {
@@ -49,6 +58,19 @@ function main() {
         if ($last > $now-7*86400) {
             $nactive++;
             $active_dur += ($now - $u->create_time);
+            $ks = SUUserKeyword::enum("user_id = $u->id");
+            foreach ($ks as $k) {
+                if ($k->yesno > 0) {
+                    $nyes++;
+                } else {
+                    $nno++;
+                }
+                if ($job_keywords[$k->keyword_id]->category == KW_CATEGORY_SCIENCE) {
+                    $nsci++;
+                } else {
+                    $ngeog++;
+                }
+            }
         } else {
             $ninactive++;
             $inactive_dur += ($last - $u->create_time);
@@ -58,8 +80,11 @@ function main() {
     echo "dur: ", ($active_dur/$nactive)/86400, "\n";
     echo "inactive: $ninactive\n";
     echo "dur: ", ($inactive_dur/$ninactive)/86400, "\n";
+    echo "never connected: $nnever\n";
     $flops = ec_to_gflop_hours($total_ec);
     echo "gflop hours: $flops\n";
+    echo "nyes: $nyes  nno: $nno\n";
+    echo "nsci: $nsci  ngeog: $ngeog\n";
 }
 
 main();

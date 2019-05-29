@@ -27,7 +27,7 @@ require_once("../inc/su_compute_prefs.inc");
 function show_prefs($user) {
     page_head(tra("Computing settings"));
     $x = simplexml_load_string($user->global_prefs);
-    $pref = (string)$x->preset;
+    $pref = $x ? (string)$x->preset : null;
 
     // if prefs are missing or don't parse, reset them
     //

@@ -31,6 +31,69 @@
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
 
+// graph last month of FLOPS of top N projects
+//
+function projects_graph($ndays, $gpu) {
+    $t = time() - 86400;
+    // get top projects
+    //
+    if ($gpu) {
+        $projs = SUAccountingProject::enum("create_time>$t order by gpu_ec_total desc limit 10");
+    } else {
+        $projs = SUAccountingProject::enum("create_time>$t order by cpu_ec_total desc limit 10");
+    }
+
+    // make data file per project
+    //
+
+    $t0 = time() - $ndays*86400;
+    foreach ($projs as $p) {
+        $accts = SUAccountingProject::enum("project_id = $p->project_id and create_time>$t0 order by create_time");
+        $f = fopen("tmp/$p->project_id", "w");
+
+        $m = count($accts);
+        for ($i=0; $i<$m-11; $i++) {
+            $s = 0;
+            for ($j=$i; $j<$i+10; $j++) {
+                $a = $accts[$j];
+                $s += $gpu?$a->gpu_ec_delta:$a->cpu_ec_delta;
+            }
+            $x = ec_to_flops($s/10.);
+            $tf = $x/1e12;
+            $tf /= 86400.;
+            fprintf($f, "%d %f\n", $a->create_time, $tf);
+        }
+        fclose($f);
+    }
+    $g = fopen("tmp/gp", 'w');
+    fprintf($g,
+        'set terminal png size %s,%s
+        set xdata time
+        set timefmt "%%s"
+        set format x "%%d %%b"
+        set style fill solid 1.0
+        set boxwidth 70000
+        set yrange [0:]
+        set xtics 604800
+        set ylabel "TeraFLOPS"
+        plot ',
+        600, 400
+    );
+    for ($i=0; $i<10; $i++) {
+        $p = $projs[$i];
+        $proj = SUProject::lookup_id($p->project_id);
+        fprintf($g,
+            '"tmp/%d" using 1:2 with linespoints title "%s"',
+            $p->project_id, $proj->name
+        );
+        if ($i < 9) {
+            fprintf($g, ", ");
+        }
+    }
+    fprintf($g, "\n");
+    fclose($g);
+}
+
 function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     $min_time = time() - $ndays*86400;
     $accts = null;
@@ -154,7 +217,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
     // write gnuplot file
     //
     $gn = tempnam("/tmp", "su_gp");
-    $g = fopen($gn, 'c');
+    $g = fopen($gn, 'w');
     if ($graph_two) {
         $plot = sprintf('
 set style fill noborder
@@ -196,7 +259,11 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
 }
 
 if (1) {
-    $type = get_str('type');
+    $type = get_str('type', true);
+    if (!$type) {
+        projects_graph(80, false);
+        exit;
+    }
     $id = get_int('id', true);
     $what = get_str('what');
     $ndays = get_int('ndays');

@@ -107,3 +107,30 @@ Remaining problems:
 - given a set of guarantees, what's the largest new guarantee we can make?
 
 Do these by simulation?
+
+========================
+paper terminology
+
+share/keyword scheduling
+    assignment algorithm that takes into account
+    shares
+    keywords
+    platforms/GPUs
+
+throughput allocation
+    setting shares so that projects get a particular throughput
+    for some period
+
+how to estimate what projects will get, given shares?
+
+Easy to compute the max they can get if no other projects;
+hard to compute actual w/ other projects
+
+simulator: how would it work?
+    trace-driven
+    implement w/o DB access
+    each host does one RPC/day
+
+Also could say: how much throughput would you get if
+you could use GPU X;
+how much if you didn't require VBox
