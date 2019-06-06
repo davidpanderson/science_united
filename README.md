@@ -7,7 +7,7 @@ rather than for specific projects.
 
 This code may be useful as a starting point for other BOINC account managers,
 especially those based on a similar
-[coordinated model](https://scienceunited.org/doc/model.pdf).
+[coordinated model](https://scienceunited.org/doc/su_overview.pdf).
 
 Science United is developed by the BOINC project at U.C. Berkeley,
 led by David Anderson, and supported by the National Science Foundation.
@@ -39,10 +39,11 @@ See schema.sql.
 
 If you want to make a clone of Science United, the steps are:
 1. Download the BOINC source code.
-1. Use **make_project** to create a project.
+1. Use **make_project --web_only** to create a project.
 1. Run SU's schema.sql to add SU's DB tables.
 1. Copy or link SU's web files to the appropriate subdirectories
    of the project's html/ directory.
    .inc files go in html/inc/;
    maintenance scripts go in html/ops/ (allocate.php, do_accounting.php, su_delete_spammers, su_email.php).
    Other .php files go in html/user/.
+1. Add to the project's config.xml: `<account_manager/>`
