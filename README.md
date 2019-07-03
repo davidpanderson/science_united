@@ -41,16 +41,18 @@ See schema.sql.
 
 If you want to make a clone of SU, the steps are:
 1. Download the BOINC source code.
-1. Use **make_project --web_only** to create a project.
-1. Run SU's schema.sql to add SU's DB tables.
+1. Use **make_project --web_only** to create a project, say 'su_clone'.
+1. Run SU's schema.sql to add SU's DB tables: **mysql su_clone < schema.sql**
 1. Copy or link SU's web files to the appropriate subdirectories
-   of the project's html/ directory.
+   of  projects/su_clone/html/.
    .inc files go in html/inc/;
-   maintenance scripts go in html/ops/ (allocate.php, do_accounting.php, su_delete_spammers, su_email.php).
+   maintenance scripts go in html/ops/.
    Other .php files go in html/user/.
+   You can use 'copy_files' to do this.
 1. Add to the project's config.xml: `<account_manager/>`
-1. Use BOINC'c [crypt_prog](https://boinc.berkeley.edu/trac/wiki/CodeSigning) to generate a key pair, code_sign_private and code_sign_public
+1. Use BOINC'c [crypt_prog](https://boinc.berkeley.edu/trac/wiki/CodeSigning) to generate a key pair, code_sign_private and code_sign_public, in su_clone/keys/.
 1. Get the list of BOINC projects: wget https://boinc.berkeley.edu/project_list.php.  Put the result in html/ops/projects.xml.
+1. In html/inc, wget https://boinc.berkeley.edu/project_ids.inc
 1. In html/ops, run project_init.php.  This will populate the su_project table.
 1. In html/ops, run project_digest.php.  This creates projects.ser, a serialized file of project info.
 
