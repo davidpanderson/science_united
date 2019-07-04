@@ -55,6 +55,7 @@ If you want to make a clone of SU, the steps are:
 1. In html/inc, wget https://boinc.berkeley.edu/project_ids.inc
 1. In html/ops, run project_init.php.  This will populate the su_project table.
 1. In html/ops, run project_digest.php.  This creates projects.ser, a serialized file of project info.
+1. Get download_util.inc from the boinc-site repo and put it in html/inc/.
 
 Create an account for yourself.
 Visit the message boards to create a forum_preferences entry for that user.
