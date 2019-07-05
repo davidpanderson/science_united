@@ -31,7 +31,27 @@ function show_user_graph($user, $what, $ndays) {
         tra("Past month:"), $user->id, $what, $ndays
         );
     } else {
-        echo tra("Not enough data yet");
+        $m = SUAccountingUser::count("user_id=$user->id");
+        if ($m == 0) {
+            // no host activity so far
+            //
+            echo tra("No work reported so far. %1Need help?%2",
+                "<a href=su_help.php>", "</a>"
+            );
+        } else {
+            if ($n == 0) {
+                // last report was > 30 days ago.
+                //
+                echo tra("No work reported in last %1 days. %2Need help?%3",
+                    $ndays,
+                    "<a href=su_help.php>", "</a>"
+                );
+            } else {
+                // one report in last 30 days
+                //
+                echo tra("Not enough data yet");
+            }
+        }
     }
 }
 

@@ -83,7 +83,11 @@ function handle_submit() {
     }
 
     send_cookie('auth', $user->authenticator, false);
-    Header("Location: download.php?dev=1");
+    if (PROJECT == 'BOINC Planet') {
+        Header("Location: bp_claim.php");
+    } else {
+        Header("Location: download_software.php?dev=1");
+    }
 }
 
 $action = post_str('action', true);

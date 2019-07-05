@@ -1,0 +1,21 @@
+#! /bin/sh
+
+# Copy SU files to a project
+# To use this, create symbolic links "user", "inc", and "ops"
+# to the corresponding directories in your project
+
+cp allocate.php ops
+cp db_init.php ops
+cp do_accounting.php ops
+cp language_trim.php ops
+cp make_accounts.php ops
+cp project_digest.php ops
+cp project_init.php ops
+cp rebuild_accounting.php ops
+
+cp index.php user
+cp rpc.php user
+cp su_*.php user
+cp user_*.php user
+
+cp *.inc inc

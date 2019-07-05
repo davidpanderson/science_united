@@ -32,7 +32,7 @@ echo sprintf("%s
         "<img height=24 src=https://boinc.berkeley.edu/logo/boinc32.bmp>"
     ),
     tra("If not, %1download and install BOINC%2.",
-        "<a href=download.php>", "</a>"
+        "<a href=download_software.php>", "</a>"
     ),
     tra("Science United requires BOINC version 7.14 or later.")
 );

@@ -176,6 +176,6 @@ create table su_accounting_user (
 
 create table su_allocate (
     nprojects               integer         not null default 0,
-    avc_ec_total            double          not null default 0,
+    avg_ec_total            double          not null default 0,
     share_total             double          not null default 0
 ) engine=InnoDB;

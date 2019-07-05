@@ -34,6 +34,9 @@ function su_contribution($user) {
             row2(tra("Computing: graphs"), '<a href=su_user_accounting.php?graphs=1 class="btn btn-success">'.$view.'</a>');
             row2(tra("Computing: details"), '<a href=su_user_accounting.php class="btn btn-success">'.$view.'</a>');
             row2(tra("Science projects"), '<a href=su_user_projects.php class="btn btn-success">'.$view.'</a>');
+            if (PROJECT == "BOINC Planet") {
+                row2(tra("Claimed credit"), '<a href=bp_claim.php?display=1 class="btn btn-success">'.$view.'</a>');
+            }
             end_table();
         }
     );
