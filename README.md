@@ -50,6 +50,8 @@ If you want to make a clone of SU, the steps are:
    Other .php files go in html/user/.
    You can use 'copy_files' to do this.
 1. Add to the project's config.xml: `<account_manager/>`
+1. In the project's html/project/project.inc, put `define("NO_COMPUTING", true);`
+
 1. Use BOINC'c [crypt_prog](https://boinc.berkeley.edu/trac/wiki/CodeSigning) to generate a key pair, code_sign_private and code_sign_public, in su_clone/keys/.
 1. Get the list of BOINC projects: wget https://boinc.berkeley.edu/project_list.php.  Put the result in html/ops/projects.xml.
 1. In html/inc, wget https://boinc.berkeley.edu/project_ids.inc
