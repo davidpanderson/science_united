@@ -58,7 +58,7 @@ function show_prefs($user) {
     form_start("su_compute_prefs.php");
     form_input_hidden("action", "update");
     form_radio_buttons(
-        tra("Low power %1 Use 25% of processors, and stop computing when computer is idle.%2",  "<br><small>", "</small>"
+        tra("Low power %1 Use 25% of processors, and start computing when computer is not being used.%2",  "<br><small>", "</small>"
         ),
         "pref",
         array(array("low_power", "")),
