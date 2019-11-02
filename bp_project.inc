@@ -12,7 +12,7 @@ require_once("../inc/util.inc");
 
 //-------------- Project name and owner
 
-define("PROJECT", "BOINC Planet");
+define("PROJECT", "Computing Planet");
 define("COPYRIGHT_HOLDER", "xxx");
 
 //-------------- URLs and directories
