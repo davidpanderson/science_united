@@ -116,6 +116,18 @@ To enable this, include the following in your config.xml:
 >            <output> do_accounting.out </output>
 >        </task>
 
+## Credit claiming
+
+The SU code supports on optional feature (not used in Science United)
+that allows users to "claim" the credit of existing BOINC project accounts.
+To use this, you'll need to add a couple of DB tables:
+
+> mysql su_clone < bp_schema.sql
+
+Copy bp_claim.php to html/user and bp_db.inc to html/inc.
+Use bp_index.php as your index.php.
+Use bp_project.inc as your html/project/project.inc.
+
 ## Custom functionality
 
 The SU code supports the model where users choose keywords,
@@ -123,4 +135,4 @@ and project assignment is based on keywords.
 
 With a certain amount of work, SU could be changed to the
 model where users explicitly choose projects (like BAM! and Gridrepublic).
-You'd need to change a number of files, starting with rpc.php.
+You'd need to change a number of files.
