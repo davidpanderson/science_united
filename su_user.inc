@@ -33,6 +33,7 @@ function latest_rpc_time($hosts) {
 }
 
 define('WARNING', "<font color=red>&#9888;</font> ");
+define('CURRENT_CLIENT_VERSION', '7.14.2');
 
 // suggest download in various situations
 // - if account is > 1 hr old and no host

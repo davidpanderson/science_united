@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// SU home page; also can be used for AMs based on SU source code
+// SU home page
 
 require_once("../inc/db.inc");
 require_once("../inc/util.inc");
@@ -29,6 +29,8 @@ require_once("../project/project.inc");
 require_once("../inc/bootstrap.inc");
 require_once("../inc/su_user.inc");
 require_once("../inc/su_graph.inc");
+
+define('CURRENT_CLIENT_VERSION', '7.6.0');
 
 //$stopped = web_stopped();
 $stopped = false;
@@ -50,9 +52,8 @@ function user_summary($user) {
     echo "<h3>".tra("Recent contribution")."</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
-    echo sprintf('<center><a href=%ssu_home.php class="btn btn-success">%s</a></center>
+    echo sprintf('<center><a href=https://scienceunited.org/su_home.php class="btn btn-success">%s</a></center>
 ',
-        URL_BASE,
         tra('Continue to your home page')
     );
 }
@@ -65,31 +66,23 @@ function intro_panel() {
             echo "<p>";
             echo tra("You help by installing BOINC, a free program that runs scientific jobs in the background and when you're not using the computer.  BOINC is secure and will not affect your normal use of the computer.");
             echo "<p>";
-            if (PROJECT == 'Science United') {
-                echo tra(
-                    "%1 is operated by the BOINC project at UC Berkeley.",
-                    PROJECT
-                );
-                echo " ";
-                echo tra(
-                    "%1 and the research projects it supports are non-profit.",
-                    PROJECT
-                );
-            }
-            echo "<br><br>\n";
-            echo sprintf('<center><a href="%ssu_join.php" class="btn btn-success"><font size=+2>%s</font></a></center>
-                ',
-                URL_BASE,
-                tra('Join %1', PROJECT)
+            echo tra(
+                "%1 is operated by the BOINC project at UC Berkeley.",
+                PROJECT
             );
-            echo sprintf('<br><br>%s <a href=%slogin_form.php>%s</a>',
+            echo " ";
+            echo tra(
+                "%1 and the research projects it supports are non-profit.",
+                PROJECT
+            );
+            echo "<br><br>\n";
+            echo '<center><a href="https://scienceunited.org/su_join.php" class="btn btn-success"><font size=+2>'.tra('Join %1', PROJECT).'</font></a></center>
+            ';
+            echo sprintf('<br><br>%s <a href=https://scienceunited.org/login_form.php>%s</a>',
                 tra("Already joined?"),
-                URL_BASE,
                 tra("Log in.")
             );
-            if (PROJECT == 'Science United') {
-                echo "<p><p>BOINC user? <a href=intro.php>Read this</a>.\n";
-            }
+            echo "<p><p>BOINC user? <a href=intro.php>Read this</a>.\n";
         }
     );
 }
@@ -166,29 +159,27 @@ if ($stopped) {
     }
 }
 
-if (PROJECT == 'Science United') {
-    echo "
-    <p>
-    <table width=100%>
-    <tr>
-    <td width=30%></td>
-    <td valign=top>
-        <center>
-        <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
-        <br><small>
-    ";
-    echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",
-            "<a href=https://nsf.gov>", "</a>",
-            "<a href=https://berkeley.edu>", "</a>"
-    );
-    echo "
-        Image credits: CERN and NIAID.
-        </small></center>
-    </td>
-    <td width=30%></td>
-    </tr></table>
-    ";
-}
+echo "
+<p>
+<table width=100%>
+<tr>
+<td width=30%></td>
+<td valign=top>
+    <center>
+    <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
+    <br><small>
+";
+echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",
+        "<a href=https://nsf.gov>", "</a>",
+        "<a href=https://berkeley.edu>", "</a>"
+);
+echo "
+    Image credits: CERN and NIAID.
+    </small></center>
+</td>
+<td width=30%></td>
+</tr></table>
+";
 
 page_tail(false, "", true);
 

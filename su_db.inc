@@ -290,6 +290,10 @@ class SUAccountingUser {
 }
 
 class SUAllocate {
+    static function insert() {
+        $db = BoincDb::get();
+        return $db->insert('su_allocate', '(nprojects) values (0)');
+    }
     static function lookup() {
         $db = BoincDb::get();
         return $db->lookup('su_allocate', 'SUAllocate', "true");

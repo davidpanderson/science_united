@@ -90,6 +90,7 @@ function main() {
     foreach ($x->project as $p) {
         $x = new StdClass;
         $x->id = (int)$p->id;
+        $x->url = (string)$p->url;
         $sup = SUProject::lookup_id($x->id);
         if (!$sup) continue;
         $x->name = (string)$p->name;

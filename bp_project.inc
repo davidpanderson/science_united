@@ -1,71 +1,91 @@
 <?php
 
-// This is a sample project file.
+// Sample BOINC project web config file.
 // Modify it to suit your project.
 // Put your version in html/project/project.inc
+//
 // add tra() around visible strings to make them translatable
-// see inc/translation.inc and https://boinc.berkeley.edu/trac/wiki/TranslateProject for Details
+// see inc/translation.inc and
+// https://boinc.berkeley.edu/trac/wiki/TranslateProject for details
 
 require_once("../inc/util.inc");
 
+//-------------- Project name and owner
+
+define("PROJECT", "Computing Planet");
+define("COPYRIGHT_HOLDER", "xxx");
+
+//-------------- URLs and directories
+
 $master_url = parse_config(get_config(), "<master_url>");
-//define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
-// other ideas: SciOn, Onsite, Onward
-//define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
-define("PROJECT", "Science United");
 define("URL_BASE", $master_url);
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
 define("PROFILE_URL", "user_profile/");
-define("STYLESHEET", "custom.css");
-define("STYLESHEET2", "su.css");
 define("LANGUAGE_FILE", "languages.txt");
-    // add your own stylesheets (included after bootstrap)
-define("FORUM_QA_MERGED_MODE", true);
-    // Set to true to merge Message boards and Q&A section
-define("COPYRIGHT_HOLDER", "UC Berkeley");
-define("SYS_ADMIN_EMAIL", "davea@berkeley.edu");
-define("SHORTCUT_ICON", "power.png");
-define("UOTD_ADMIN_EMAIL", "davea@berkeley.edu");
-    // who gets user of the day pool running low e-mails?
-define ("DISABLE_TEAMS", true);
-define ("DISABLE_PROFILES", true);
-    // enable profiles only after enabling reCAPTCHA
-    // http://boinc.berkeley.edu/trac/wiki/ProtectionFromSpam
-define("USE_STOPFORUMSPAM", true);
-    // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
 define("USER_HOME", "su_home.php");
-define("WELCOME_PAGE", "su_welcome.php");
-//define("INVITE_CODES", '/foobar/');
-define("PROJECT_ID", 100);
-define("GLOBAL_HEAD_EXTRA", "
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-130506275-1\"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-130506275-1');
-</script>
-");
 
-define("POST_REPORT_EMAILS", "davea@berkeley.edu");
+//-------------- contact info
+
+define("SYS_ADMIN_EMAIL", "admin@$master_url");
+define("UOTD_ADMIN_EMAIL", "admin@$master_url");
+    // who gets emails about user of the day pool running low?
+define("POST_REPORT_EMAILS", "moderator1@$master_url|moderator2@$master_url");
     // Email addresses separated by pipe ( | ) that will receive user reports
     // of offensive forum posts.
 
+//-------------- Delete Account
+//define("DELETE_DELAY", 2);
+    // When deleting an account, invalidate the authenticator and then wait this
+    // many seconds before proceeding with the delete.  This is intended to give the
+    // an existing scheduler request sufficient time to complete.  Some projects
+    // might want to increase this to a longer time.  Simply uncomment and set the
+    // delay to what the project needs.
+    
+//-------------- Caching
+
+//define("MEMCACHE_SERVERS", "127.0.0.1:11211");
+
+//-------------- CSS styling
+
+// add your own stylesheets (included after bootstrap)
+//define("STYLESHEET", "aaa.css");
+//define("STYLESHEET2", "bbb.css");
+
+//-------------- enable/disable web features
+
+define("FORUM_QA_MERGED_MODE", true);
+    // Set to true to merge Message boards and Q&A section
+define ("DISABLE_PROFILES", true);
+    // enable profiles only after enabling reCAPTCHA
+    // https://boinc.berkeley.edu/trac/wiki/ProtectionFromSpam
+define("USE_STOPFORUMSPAM", true);
+    // use http://www.stopforumspam.com to suppress spammer accounts
 define("RPC_DEBUG", false);
     // Enables PHP error messages in public Web RPCs
+define("TERMSOFUSE_FILE", "../../terms_of_use.txt");
+    // Defines the location of the terms of use file. Default location is in the project directory.
 
-if (0) {
-function make_php_mailer() {
-    $mail = new PHPMailer();
-    $mail->Mailer = 'smtp';
-    $mail->Host = 'clarke.ssl.berkeley.edu';
-    return $mail;
-}
-}
+//-------------- Project-specific preferences
+
+define('COLOR_PREFS', false);
+    // user can select screensaver color scheme
+define('GFX_CPU_PREFS', false);
+    // user can limit % CPU used by screensaver
+    // (lower frame rate if exceeded)
+    // This is probably irrelevant if your screensaver uses OpenGL
+define('APP_SELECT_PREFS', false);
+    // user can choose which apps to run
+define('NON_GRAPHICAL_PREF', false);
+    // user can choose to run faster non-graphical app versions if available
+define('MAX_JOBS_PREF', false);
+    // user can choose max # of jobs in progress
+define('MAX_CPUS_PREF', false);
+    // user can choose max # of CPUs to use
+
+//-------------- PHPMailer
 
 // If you use PHPMailer, uncomment the following
 // and complete the function definition based on your SMTP server
@@ -94,78 +114,7 @@ function make_php_mailer() {
 }
 }
 
-function su_navbar_right($user) {
-    global $is_login_page;
-    echo '
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-    ';
-    if (!$is_login_page) {
-        if ($user) {
-            echo sprintf('
-                <li><a href=%ssu_home.php>'.$user->name.'</a></li>
-                ', url_base()
-            );
-            $url_tokens = url_tokens($user->authenticator);
-            echo sprintf('<li><a href="%slogout.php?%s">%s</a></li>',
-                url_base(), $url_tokens, tra("Log out")
-            );
-        } else {
-            echo sprintf('
-                <li><a href="%ssu_join.php">%s</a></li>
-                <li><a href="%slogin_form.php">%s</a></li>
-                ', url_base(), tra("Join"), url_base(), tra("Login")
-            );
-        }
-    }
-}
-function su_navbar(
-    $url_prefix,
-        // prefix for links; needed for pages not in top dir
-    $user,
-        // logged-in user, if any
-    $fixed=false,
-        // if true, navbar is fixed at top of page.
-        // NOTE: if you do this, you must set a global var $fixed_navbar
-        // to true at compile time
-        // (it needs to be set when page_head() is called).
-    $inverse=false,
-        // white on black?
-    $is_main
-) {
-    global $master_url;
-
-    if ($is_main) {
-        $logo = "Science United";
-    } else {
-        $logo = "<nobr><img style=\"vertical-align:text-bottom;\" src=power.png height=20> Science United</nobr>";
-    }
-    $brand = "<a class=\"navbar-brand\" href=$master_url>$logo</a>";
-    navbar_start($brand, $fixed, $inverse);
-
-    $x = array();
-    $x[] = array(tra("About %1", PROJECT), $url_prefix."su_about.php");
-    $x[] = array(tra("Help"), $url_prefix."su_help.php");
-    navbar_menu(tra("Project"), $x);
-
-    navbar_menu(tra("Community"), array(
-        array(tra("Message boards"), $url_prefix."forum_index.php"),
-        //array(tra("Questions and Answers"), $url_prefix."forum_help_desk.php"),
-        //array(tra("Teams"), $url_prefix."team.php", tra("create or join a team")),
-        //array(tra("Profiles"), $url_prefix."profile_menu.php"),
-        //array(tra("User search"), $url_prefix."user_search.php"),
-        //array(tra("User of the day"), $url_prefix."uotd.php"),
-    ));
-    navbar_menu(tra("Site"), array(
-        array(tra("Search"), $url_prefix."site_search.php"),
-        array(tra("Languages"), $url_prefix."language_select.php")
-    ));
-
-    // add your own menu here if you want
-
-    su_navbar_right($user);
-    navbar_end();
-}
+//-------------- Header and footer
 
 // Put your project title and logo here
 // If you include any links, prepend URL with $prefix
@@ -173,16 +122,10 @@ function su_navbar(
 //
 function project_banner($title, $prefix, $is_main) {
     if ($is_main) {
-        echo '<p><center><font size=+6>
-<img style="vertical-align: sub; height:1.2em;" src=power.png>
-            '.PROJECT.'</font>';
-        echo '<br><font size=+1>'.tra('Do science research on your computer, tablet, or phone').'</font></center>
-            <p>
-        ';
-        //echo '<center><img class="img-responsive" src="logo.png"></center>';
+        echo '<img class="img-responsive" style="width:100%" src="img/water.jpg">';
     }
-    su_navbar(secure_url_base(), get_logged_in_user(false), false, false, $is_main);
-    if ($title && !$is_main) {
+    sample_navbar(secure_url_base(), get_logged_in_user(false), false);
+    if ($title) {
         echo "<h2>$title</h2>\n";
     }
 }
@@ -191,14 +134,18 @@ function project_banner($title, $prefix, $is_main) {
 function project_footer($show_return, $show_date, $prefix) {
     // If you include any links, prepend URL with $prefix
     //
-    echo '<br><br>
-        <p class="text-center"> &copy; '.gmdate("Y ").COPYRIGHT_HOLDER.'</p>
+    echo '<br>
+        <a class="brand boinc-logo" href="http://boinc.berkeley.edu/"><img class="img-responsive center-block" src="'.secure_url_base().'img/pb_boinc.gif" alt="Powered by BOINC"></a>
+        <div class="form-group"></div>
+        <p class="text-center"> &copy;'.gmdate("Y ").COPYRIGHT_HOLDER.'</p>
     ';
     if ($show_date) {
         $t = time_str(time());
         echo "<center><small>".tra("Generated")." $t</small><center>\n";
     }
 }
+
+//-------------- Ops access control
 
 // Authorize access to administrative pages.
 // You can check for login, IP address, or whatever you want.
@@ -225,6 +172,8 @@ function auth_ops_example() {
         return;
     }
 }
+
+//-------------- Customizable functions
 
 function show_profile_heading1() {
     return tra("Your personal background.");
@@ -258,6 +207,20 @@ function project_user_page_private($user){
     // shown in the private account page
 }
 
+function project_forum_post_rules() {
+    // additional forum post rules
+    return "";
+}
+
+function project_delete_account($user) {
+    // a project defined function for deleting users if neither
+    // obfuscate_account($user) or wipe_account($user) in 
+    // inc/delete_account.inc meets the need of the project
+    die("This function must be implemented before it can be used");
+}
+
+//-------------- Support for per-app credit
+
 if (0) {
 
 // show project-specific credit on user/team pages
@@ -282,7 +245,6 @@ function show_app_credit_user($user, $app_name, $appids) {
         " ($n tasks)"
     );
 }
-
 function show_app_credit_team($team, $app_name, $appids) {
     $t = 0;
     $a = 0;
@@ -330,10 +292,5 @@ function project_team_credit($team) {
 }
 
 }   // if(0)
-
-function project_forum_post_rules() {
-    // additional forum post rules
-    return "";
-}
 
 ?>

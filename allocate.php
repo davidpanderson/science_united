@@ -72,6 +72,9 @@ function main() {
         $avg_ec_total += $p->avg_ec;
         $share_total += $p->share;
     }
+    if (!SUAllocate::get()) {
+        SUAllocate::insert();
+    }
     SUAllocate::update("nprojects=$nprojects, avg_ec_total=$avg_ec_total, share_total=$share_total");
     log_write("nprojects $nprojects avg_ec_total $avg_ec_total share_total $share_total");
     log_write("end");

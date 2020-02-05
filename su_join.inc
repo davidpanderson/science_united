@@ -105,7 +105,9 @@ function show_join_form() {
     form_input_hidden("action", "join");
     form_general("", "Already using BOINC? <a href=su_boinc_users.php>Read this first.</a>");
     su_join_form(0, "download.php?dev=1");
-    keyword_prefs_form();
+    if (PROJECT == 'Science United') {
+        keyword_prefs_form();
+    }
     global_prefs_form();
     if ($recaptcha_public_key) {
         form_general("", boinc_recaptcha_get_html($recaptcha_public_key));
