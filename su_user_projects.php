@@ -96,12 +96,14 @@ function show_projects($user) {
     // show projects w/ accounts
     //
     foreach ($accounts as $a) {
+        if (!array_key_exists($a->project_id, $project_infos)) continue;
         if ($a->opt_out) continue;
         $p = $project_infos[$a->project_id];
         project_row($p, $ukws, $a);
         $p->done = true;
     }
     foreach ($accounts as $a) {
+        if (!array_key_exists($a->project_id, $project_infos)) continue;
         if (!$a->opt_out) continue;
         $p = $project_infos[$a->project_id];
         project_row($p, $ukws, $a);
@@ -109,6 +111,7 @@ function show_projects($user) {
     }
 
     // show other projects
+    //
     foreach ($project_infos as $id=>$p) {
         if ($p->done) continue;
         project_row($p, $ukws, null);

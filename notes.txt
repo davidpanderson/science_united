@@ -590,3 +590,9 @@ Populate these for E@h, WCG
 
 When creating account records for these projects,
 create them immediately
+====================
+when a project changes from http: to https:
+
+AM RPC:
+if request includes a project w/ http: that is in our DB as https:,
+tell it to detach from that project.

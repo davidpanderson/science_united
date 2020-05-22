@@ -33,11 +33,15 @@ function main() {
         <p>
         <a href=su_about.php>Read why this helps volunteer computing</a>.
         <p>
-        Science United automatically creates project accounts for you.
-        These accounts are 'anonymous' - they have random
-        name, email address, and password.
-        Your Science United account information
-        is not shared with projects.
+        Science United uses a single anonymous account on each project,
+        and attaches your computer to this account.
+        Your Science United account information is not shared with projects.
+        <p>
+        Science United keeps track of how much work your computers
+        have done, but it has no leader boards.
+        If you use Science United, you won't be able to see
+        your BOINC credit totals on project web sites,
+        or on sites like BOINCStats.
     ";
     text_end();
     page_tail();

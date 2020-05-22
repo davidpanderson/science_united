@@ -33,15 +33,15 @@ require_once("../inc/su_db.inc");
 // remove projects and everything that refers to them
 // THINK TWICE BEFORE DOING THIS
 //
-function clean() {
-    die();
-    foreach (SUProject::enum() as $p) {
-        $p->delete();
-    }
-    SUAccount::delete_all();
-    SUHostProject::delete_all();
-    SUAccountingProject::delete_all();
-}
+//function clean() {
+//    die();
+//    foreach (SUProject::enum() as $p) {
+//        $p->delete();
+//    }
+//    SUAccount::delete_all();
+//    SUHostProject::delete_all();
+//    SUAccountingProject::delete_all();
+//}
 
 function update_project($p) {
     $name = (string)$p->name;

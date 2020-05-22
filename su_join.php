@@ -94,12 +94,19 @@ $action = post_str('action', true);
 if ($action == "join") {
     handle_submit();
 } else {
-    page_head(
-        sprintf("%s %s", tra("Join"), PROJECT),
-        null, null, null, boinc_recaptcha_get_head_extra()
-    );
-    show_join_form();
-    page_tail();
+    $user = get_logged_in_user(false);
+    if ($user) {
+        page_head(tra("Already joined"));
+        echo tra("You're already logged in.  If you want to create a new account, please log out first.");
+        page_tail();
+    } else {
+        page_head(
+            sprintf("%s %s", tra("Join"), PROJECT),
+            null, null, null, boinc_recaptcha_get_head_extra()
+        );
+        show_join_form();
+        page_tail();
+    }
 }
 
 ?>

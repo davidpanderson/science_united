@@ -33,7 +33,7 @@ define ("DISABLE_TEAMS", true);
 define ("DISABLE_PROFILES", true);
     // enable profiles only after enabling reCAPTCHA
     // http://boinc.berkeley.edu/trac/wiki/ProtectionFromSpam
-define("USE_STOPFORUMSPAM", true);
+//define("USE_STOPFORUMSPAM", true);
     // use http://www.stopforumspam.com to suppress spammer accounts
 define("NO_COMPUTING", true);
 define("USER_HOME", "su_home.php");

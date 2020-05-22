@@ -29,7 +29,7 @@ If you're already running BOINC on a computer,
 you can use Science United as follows:
 <ul>
 <li> <a href=https://scienceunited.org/su_join.php>Create a Science United account.</a>
-<li> <a href=https://boinc.berkeley.edu/download.php>Upgrade the computer</a> to BOINC version 7.10 or later
+<li> <a href=https://boinc.berkeley.edu/download.php>Upgrade the computer</a> to BOINC version 7.16 or later
 (preferably the current version).
 <li> Go to the BOINC Manager.  If you're using the Simple View,
 go to the View menu and select "Advanced view".

@@ -272,6 +272,6 @@ if (1) {
     graph($type, $id, $what, $ndays, $xsize, $ysize);
 } else {
     //graph('total', 0, 'job', 100, 800, 600);
-    graph('user', 22192, 'ec', 30, 800, 600);
+    graph('user', 22203, 'ec', 30, 800, 600);
 }
 ?>
