@@ -289,6 +289,21 @@ function populate_score_info($host, $req) {
     return $host;
 }
 
+// return true if the request has this project with the wrong prefix
+// (http/https).  We'll skip this project.
+//
+function client_has_old_url($project, $req) {
+    $x = strstr($project->url, "//");
+    foreach ($req->projects as $rp) {
+        $a = (string)$rp->url;
+        $y = strstr($a, "//");
+        if ($y == x) {
+            return $project->url != $a;
+        }
+    }
+    return false;
+}
+
 // return list of projects ordered by descending score
 // Called:
 // - at join time (host, req = null)
@@ -318,6 +333,13 @@ function rank_projects($user, $host, $req) {
         // skip old projects
         //
         if (!array_key_exists($p->id, $project_infos)) {
+            continue;
+        }
+
+        // skip projects for which the client has an old URL
+        //
+        if ($req && client_has_old_url($p, $req)) {
+            log_write("client has old URL for $p->name");
             continue;
         }
 

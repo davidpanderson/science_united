@@ -759,9 +759,9 @@ function main() {
         $req = file_get_contents('req.xml');
     }
     list($a, $b, $c) = req_split($req);
-    $req = @simplexml_load_string($a);
+    $req = @simplexml_load_string(utf8_encode($a));
     if (!$req) {
-        log_write("can't parse request: $req");
+        log_write("can't parse request: $a");
         su_error(-1, "can't parse request");
     }
 

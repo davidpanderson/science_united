@@ -101,7 +101,7 @@ function user_panel(){
         function() use($user) {
             user_summary($user);
         },
-        "panel-info"
+        "panel-primary"
     );
     if (!DISABLE_PROFILES) {
         $profile = get_current_uotd();
@@ -123,7 +123,7 @@ function news_panel() {
                 show_news(0, 5);
             }
         },
-        "panel-info"
+        "panel-primary"
     );
 }
 

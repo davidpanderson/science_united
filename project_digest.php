@@ -99,7 +99,6 @@ function main() {
         $y[$x->id] = $x;
         echo "processed $x->id: $x->name\n";
     }
-    print_r($y); exit;
     file_put_contents("../user/projects.ser", serialize($y));
 }
 

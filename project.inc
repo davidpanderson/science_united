@@ -40,6 +40,7 @@ define("USER_HOME", "su_home.php");
 define("WELCOME_PAGE", "su_welcome.php");
 //define("INVITE_CODES", '/foobar/');
 define("PROJECT_ID", 100);
+define("DARK_MODE", true);
 define("GLOBAL_HEAD_EXTRA", "
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-130506275-1\"></script>
