@@ -1,0 +1,1012 @@
+# PROJECT translation
+# Copyright (C) PROJECT
+# 
+# This file is distributed under the same license as BOINC.
+# 
+# Translators:
+# woclass, 2018
+# Heyang Qin <qysnn1@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
+"POT-Creation-Date: 2020-05-03 15:43 PDT\n"
+"Last-Translator: Heyang Qin <qysnn1@gmail.com>, 2020\n"
+"Language-Team: Chinese (https://www.transifex.com/boinc/teams/35581/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: user/index.php:43
+msgid "%1 is temporarily shut down for maintenance."
+msgstr "%1 临时关闭维护中。"
+
+#: user/index.php:50
+msgid "Recent contribution"
+msgstr "近期贡献"
+
+#: user/index.php:56 user/su_welcome.php:85
+msgid "Continue to your home page"
+msgstr "继续以转跳到您的首页"
+
+#: user/index.php:64
+msgid ""
+"%1 lets you help scientific research projects by giving them computing "
+"power.  These projects do research in astronomy, physics, biomedicine, "
+"mathematics, and environmental science; you can pick the areas you want to "
+"support."
+msgstr "%1 让您贡献计算能力帮助科学研究项目。这些项目的研究领域涉及：天文学、物理学、生物医学、数学和环境科学；您可以选择您想要支持的领域。"
+
+#: user/index.php:66
+msgid ""
+"You help by installing BOINC, a free program that runs scientific jobs in "
+"the background and when you're not using the computer.  BOINC is secure and "
+"will not affect your normal use of the computer."
+msgstr ""
+"您可以通过安装BOINC来提供帮助，BOINC是一个免费程序，可以在您不使用计算机时后台运行科学任务。BOINC是安全的，不会影响您对计算机的正常使用。"
+
+#: user/index.php:70
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "%1 由加州大学伯克利分校的BOINC项目运营。"
+
+#: user/index.php:75
+msgid "%1 and the research projects it supports are non-profit."
+msgstr "%1及其支持的研究项目是非营利性的。"
+
+#: user/index.php:83
+msgid "Join %1"
+msgstr "加入%1"
+
+#: user/index.php:86
+msgid "Already joined?"
+msgstr "已经加入了？"
+
+#: user/index.php:88
+msgid "Log in."
+msgstr "登录。"
+
+#: user/index.php:100
+msgid "Welcome, %1"
+msgstr "欢迎，%1"
+
+#: user/index.php:119
+msgid "News"
+msgstr "新闻"
+
+#: user/index.php:132
+msgid "Ebola-Infected VERO E6 Cell"
+msgstr "埃博拉病毒感染的VERO E6细胞"
+
+#: user/index.php:133
+msgid "Simulation of Higgs boson detection"
+msgstr "希格斯玻色子检测的模拟"
+
+#: user/index.php:134
+msgid "The Earth's interrelated climate systems"
+msgstr "地球相互关联的气候系统"
+
+#: user/index.php:135
+msgid "Structure of protein GIF"
+msgstr "蛋白质GIF的结构"
+
+#: user/index.php:136
+msgid "The Hubble ultra-deep field image"
+msgstr "哈勃超深场图像"
+
+#: user/index.php:180
+msgid ""
+"Science United is funded by the %1National Science Foundation%2, award "
+"#1664190, and is based at the %3University of California, Berkeley%4."
+msgstr ""
+"Science United由%1National Science "
+"Foundation%2，奖项＃1664190资助，并且位于%3加州大学伯克利分校%4。"
+
+#: project/project.inc:111
+msgid "Log out"
+msgstr "注销"
+
+#: project/project.inc:117 user/su_join.php:104
+msgid "Join"
+msgstr "加入"
+
+#: project/project.inc:117
+msgid "Login"
+msgstr "登录"
+
+#: project/project.inc:147
+msgid "About %1"
+msgstr "关于%1"
+
+#: project/project.inc:148 user/su_help.php:20
+msgid "Help"
+msgstr "帮助"
+
+#: project/project.inc:149 user/su_hosts.php:95 user/su_hosts.php:128
+msgid "Project"
+msgstr "项目"
+
+#: project/project.inc:151 user/su_home.php:46 user/su_home.php:68
+#: user/su_welcome.php:75
+msgid "Community"
+msgstr "社区"
+
+#: project/project.inc:152
+msgid "Message boards"
+msgstr "留言板"
+
+#: project/project.inc:159
+msgid "Site"
+msgstr "网站"
+
+#: project/project.inc:160
+msgid "Search"
+msgstr "搜索"
+
+#: project/project.inc:161
+msgid "Languages"
+msgstr "语言"
+
+#: project/project.inc:179
+msgid "Do science research on your computer, tablet, or phone"
+msgstr "在您的计算机，平板电脑或手机上进行科学研究"
+
+#: project/project.inc:199
+msgid "Generated"
+msgstr "生成的"
+
+#: project/project.inc:230
+msgid "Your personal background."
+msgstr "您的个人背景。"
+
+#: project/project.inc:234
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr "向我们介绍你自己。 你可以告诉我们你来自哪里，你的年龄，职业，爱好或其他任何关于你自己的事情。"
+
+#: project/project.inc:238
+msgid "Your opinions about %1"
+msgstr "您对于%1的看法"
+
+#: project/project.inc:242
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"请告诉我们您对%1的想法<ol>\n"
+"    <li>为什么您选择参与%1？\n"
+"    <li>您对这个项目怎么看？\n"
+"    <li>您有任何建议吗？\n"
+"    </ol>"
+
+#: user/su_about.php:20
+msgid "About"
+msgstr "关于"
+
+#: user/su_account_settings.php:24
+msgid "Screen name"
+msgstr "昵称"
+
+#: user/su_account_settings.php:25
+msgid "Email address"
+msgstr "电子邮件地址"
+
+#: user/su_account_settings.php:26
+msgid "Password"
+msgstr "密码"
+
+#: user/su_account_settings.php:27
+msgid "%1 member since"
+msgstr "%1加入日期"
+
+#: user/su_account_settings.php:28
+msgid "User ID"
+msgstr "用户ID"
+
+#: user/su_account_settings.php:28
+msgid "Used in community functions"
+msgstr "用于社区功能"
+
+#: user/su_account_settings.php:29
+msgid "Delete account"
+msgstr "删除帐户"
+
+#: user/su_account_settings.php:30
+msgid "Instructions"
+msgstr "使用说明"
+
+#: user/su_account_settings.php:35
+msgid "Account settings"
+msgstr "账户设置"
+
+#: user/su_accounting.php:29
+msgid "Computing history"
+msgstr "计算历史"
+
+#: user/su_compute_prefs.php:28
+msgid "Computing settings"
+msgstr "计算设置"
+
+#: user/su_compute_prefs.php:44
+msgid ""
+"You can control how many processors to use (most computers have 4 or 8 "
+"processors) and when to use them."
+msgstr "您可以设置要使用的处理器数量（大多数计算机具有4或8个处理器）以及何时使用它们。"
+
+#: user/su_compute_prefs.php:50
+msgid "This may affect your electricity costs and your computer's fan speeds."
+msgstr "这可能会影响您的电费和计算机的风扇速度。"
+
+#: user/su_compute_prefs.php:52
+msgid ""
+"Settings affect all your computers.  Changes take effect the next time the "
+"computer synchs with Science United."
+msgstr "设置会影响所有计算机。 更改将在下次计算机与Science United同步时生效。"
+
+#: user/su_compute_prefs.php:54
+msgid ""
+"You can change settings for a particular computer using the BOINC Manager.  "
+"This also gives you more detailed options."
+msgstr "您可以使用BOINC管理器更改特定计算机的设置。BOINC管理器也为您提供了更详细的选项。"
+
+#: user/su_compute_prefs.php:56
+msgid "Choose one of:"
+msgstr "选择以下之一："
+
+#: user/su_compute_prefs.php:61
+msgid ""
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
+msgstr "低功耗%1使用25％的处理器，并在计算机空闲时停止计算。%2"
+
+#: user/su_compute_prefs.php:68
+msgid "Standard %1 Use 50% of processors.%2"
+msgstr "标准%1使用50％的处理器。%2"
+
+#: user/su_compute_prefs.php:77
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr "最大算力%1使用所有处理器。%2"
+
+#: user/su_compute_prefs.php:86
+msgid "Update"
+msgstr "保存"
+
+#: user/su_compute_prefs.php:95
+msgid "Computing settings updated"
+msgstr "计算设置已保存"
+
+#: user/su_compute_prefs.php:96
+msgid ""
+"The new settings will take effect when your computer synchs with Science "
+"United."
+msgstr "新设置将在您的计算机与Science United同步时生效。"
+
+#: user/su_compute_prefs.php:100
+msgid "Continue to home page"
+msgstr "转到主页"
+
+#: user/su_download.php:28
+msgid "Install software"
+msgstr "安装软件"
+
+#: user/su_download.php:29
+msgid ""
+"To participate in %1 you must install BOINC and VirtualBox on your computer."
+msgstr "要参与%1，您必须在计算机上安装BOINC和VirtualBox。"
+
+#: user/su_email_prefs.php:28
+msgid "Email settings"
+msgstr "电子邮件设置"
+
+#: user/su_email_prefs.php:30
+msgid "Preferences updated."
+msgstr "设置已保存。"
+
+#: user/su_email_prefs.php:35
+msgid "Don't send me any emails"
+msgstr "不要给我发送任何电子邮件"
+
+#: user/su_email_prefs.php:42
+msgid ""
+"Status emails %1 These tell you how much work your computer(s) have done "
+"recently %2"
+msgstr "报告邮件%1向您报告您的计算机最近完成了多少工作%2"
+
+#: user/su_email_prefs.php:48 user/su_email_prefs.php:62 user/su_prefs.php:128
+msgid "Never"
+msgstr "禁止"
+
+#: user/su_email_prefs.php:49
+msgid "Daily"
+msgstr "每日"
+
+#: user/su_email_prefs.php:50
+msgid "Weekly"
+msgstr "每周"
+
+#: user/su_email_prefs.php:51
+msgid "Monthly"
+msgstr "每月"
+
+#: user/su_email_prefs.php:56
+msgid ""
+"Community emails %1 These tell you about private messages, forum posts, and "
+"friend requests %2"
+msgstr "社区邮件%1系统会在您有未读消息，帖子活动和好友请求时通知您%2"
+
+#: user/su_email_prefs.php:63
+msgid "Immediately"
+msgstr "即时"
+
+#: user/su_email_prefs.php:64
+msgid "Daily summary"
+msgstr "每日"
+
+#: user/su_email_prefs.php:68 user/su_prefs.php:348
+msgid "Save"
+msgstr "保存"
+
+#: user/su_graph.php:119
+msgid "Successful jobs/day"
+msgstr "完成的工作/天"
+
+#: user/su_graph.php:120
+msgid "Failed jobs/day"
+msgstr "失败的工作/天"
+
+#: user/su_graph.php:127
+msgid "CPU hours/day"
+msgstr "CPU时间/天"
+
+#: user/su_graph.php:128
+msgid "GPU hours/day"
+msgstr "GPU时间/天"
+
+#: user/su_help.php:29
+msgid ""
+"If you received a 'no work reported' email from Science United or are having"
+" other problems, please do the following:"
+msgstr ""
+"如果您收到来自Science United的“未报告任何工作(no work reported)”电子邮件，或遇到其他问题，请执行以下操作："
+
+#: user/su_help.php:30
+msgid "Make sure BOINC is installed on your computer"
+msgstr "确保您的计算机上已安装BOINC"
+
+#: user/su_help.php:31
+msgid "Do you see the BOINC icon %1 in your system tray or dock?"
+msgstr "您在系统任务栏中看到BOINC图标％1了吗？"
+
+#: user/su_help.php:34
+msgid "If not, %1download and install BOINC%2."
+msgstr "如果没有，请 %1d下载并安装BOINC%2。"
+
+#: user/su_help.php:37
+msgid "Science United requires BOINC version 7.14 or later."
+msgstr "Science United需要BOINC版本7.14或更高版本。"
+
+#: user/su_help.php:48
+msgid "Make sure BOINC is attached to Science United"
+msgstr "确保BOINC已连接到Science United"
+
+#: user/su_help.php:49
+msgid "Double-click the BOINC icon to open the BOINC Manager."
+msgstr "双击BOINC图标以打开BOINC管理器。"
+
+#: user/su_help.php:50
+msgid "Switch to the Advanced View (View / Advanced View)."
+msgstr "切换到高级视图（菜单——视图——高级视图）。"
+
+#: user/su_help.php:51
+msgid ""
+"Click on the Tools menu.  You should see 'Synchronize with Science United'."
+"  If not, select 'Use account manager' and attach BOINC to your Science "
+"United account."
+msgstr ""
+"单击“工具”菜单。 您应该看到“与Science United同步”的选项。 "
+"如果没有，请选择“使用账户管理器”，然后将BOINC连接到您的Science United帐户。"
+
+#: user/su_help.php:62
+msgid "Other sources of help"
+msgstr "其他寻求帮助的方式"
+
+#: user/su_help.php:63
+msgid "Problems installing or running BOINC: %1 get help here%2."
+msgstr "安装或运行BOINC时出现问题：%1点击这里获取帮助%2。"
+
+#: user/su_help.php:67
+msgid ""
+"Problems with Science United: ask for help on the %1Science United message "
+"boards%2."
+msgstr "Science United的问题：在%1Science United论坛%2上寻求帮助。"
+
+#: user/su_help.php:71
+msgid ""
+"To report a bug or request a feature in Science United, create an issue on "
+"the %1Science United Github repository%2 (you'll need a free Github "
+"account)."
+msgstr ""
+"要报告Science United的Bug或请求添加某个功能，请在％1Science United "
+"Github存储库％2上创建一个issue(议题)（您需要一个免费的Github帐户）。"
+
+#: user/su_help.php:75
+msgid "If none of the above work for you, %1email us%2."
+msgstr "如果以上方式均无效，请给我们 %1e发送邮件%2."
+
+#: user/su_home.php:25
+msgid "Contribution"
+msgstr "贡献"
+
+#: user/su_home.php:28 user/su_hosts.php:184
+msgid "View"
+msgstr "查看"
+
+#: user/su_home.php:30 user/su_hosts.php:31
+msgid "Your computers"
+msgstr "你的计算机"
+
+#: user/su_home.php:34
+msgid "Computing: graphs"
+msgstr "计算：图表"
+
+#: user/su_home.php:35
+msgid "Computing: details"
+msgstr "计算：详情"
+
+#: user/su_home.php:36 user/su_user_projects.php:74
+msgid "Science projects"
+msgstr "科学项目"
+
+#: user/su_home.php:38
+msgid "Claimed credit"
+msgstr "获得的积分"
+
+#: user/su_home.php:54
+msgid "Settings"
+msgstr "设置"
+
+#: user/su_home.php:57
+msgid "Edit"
+msgstr "编辑"
+
+#: user/su_home.php:59
+msgid "Science areas and locations"
+msgstr "科学领域和地点"
+
+#: user/su_home.php:59
+msgid "Choose the types of research you want to support"
+msgstr "选择您想要支持的研究类型"
+
+#: user/su_home.php:64
+msgid "Computing"
+msgstr "计算"
+
+#: user/su_home.php:64
+msgid "Choose how to use your computers"
+msgstr "选择如何使用您的计算机"
+
+#: user/su_home.php:68
+msgid "Settings for message boards and private messages"
+msgstr "留言板和私信的设置"
+
+#: user/su_home.php:72
+msgid "Account"
+msgstr "账户"
+
+#: user/su_home.php:72
+msgid "Name, password, email address"
+msgstr "姓名，密码，电子邮件地址"
+
+#: user/su_home.php:76
+msgid "Email"
+msgstr "电子邮件"
+
+#: user/su_home.php:76
+msgid "When and whether we should email you"
+msgstr "我们是否应该给您发送电子邮件以及何时发送"
+
+#: user/su_home.php:102
+msgid "Your home page"
+msgstr "您的主页"
+
+#: user/su_hosts.php:33
+msgid "No computers yet"
+msgstr "还没有计算机"
+
+#: user/su_hosts.php:39
+msgid "Computer name"
+msgstr "计算机名称"
+
+#: user/su_hosts.php:39 user/su_user_projects.php:84
+msgid "Click for details"
+msgstr "点击查看详情"
+
+#: user/su_hosts.php:40
+msgid "Operating system"
+msgstr "操作系统"
+
+#: user/su_hosts.php:41 user/su_hosts.php:190
+msgid "Last contact"
+msgstr "上次通信时间"
+
+#: user/su_hosts.php:42 user/su_hosts.php:47
+msgid "Remove"
+msgstr "移除"
+
+#: user/su_hosts.php:42
+msgid "... if this is a duplicate or the computer is no longer running BOINC"
+msgstr "...如果这是重复的或此计算机不再运行BOINC"
+
+#: user/su_hosts.php:72
+msgid "How projects are chosen for %1"
+msgstr "%1如何选择项目"
+
+#: user/su_hosts.php:73
+msgid ""
+"To decide which projects this computer should work for, we compute a "
+"\"score\" for each project.  The components of the score are:"
+msgstr "要确定此计算机应该用于哪些项目，我们为每个项目计算“得分”。 得分的构成是："
+
+#: user/su_hosts.php:80 user/su_hosts.php:96
+msgid "Keyword score"
+msgstr "关键词得分"
+
+#: user/su_hosts.php:81
+msgid "How well your keyword preferences match the project's keywords."
+msgstr "您的关键词偏好设置与项目关键词的匹配程度。"
+
+#: user/su_hosts.php:82 user/su_hosts.php:97
+msgid "Platform score"
+msgstr "系统得分"
+
+#: user/su_hosts.php:83
+msgid ""
+"-1 if the project has no programs that will run on the computer; 0 if it "
+"does; +0.1 if one of them uses a GPU or VirtualBox."
+msgstr ""
+"如果项目没有可在此计算机上运行的程序则为-1; 如果有可以运行的程序，则为0; 如果可以运行的程序中有使用GPU或VirtualBox的，则为+0.1。"
+
+#: user/su_hosts.php:84 user/su_hosts.php:98
+msgid "Allocation score"
+msgstr "分配分数"
+
+#: user/su_hosts.php:85
+msgid ""
+"How much work is owed to the project; this changes from one day to the next."
+msgstr "该项目正在计算多少工作; 这一数字每日更新。"
+
+#: user/su_hosts.php:87
+msgid ""
+"We then choose the highest-scoring projects (at least 2) that together can "
+"use all the computer's processors."
+msgstr "然后我们选择得分最高的项目（至少2个），以使用所有计算机的处理器。"
+
+#: user/su_hosts.php:99 user/su_hosts.php:128
+msgid "Score"
+msgstr "得分"
+
+#: user/su_hosts.php:102
+msgid "Can use %1?"
+msgstr "可以使用%1？"
+
+#: user/su_hosts.php:104
+msgid "Opted out?"
+msgstr "选择退出？"
+
+#: user/su_hosts.php:117 user/su_hosts.php:139 user/su_user_projects.php:141
+msgid "Yes"
+msgstr "是"
+
+#: user/su_hosts.php:122
+msgid "Given the above info, this computer would do work for these projects:"
+msgstr "鉴于上述信息，这台计算机可以为以下项目工作："
+
+#: user/su_hosts.php:139 user/su_user_projects.php:143
+msgid "No"
+msgstr "不"
+
+#: user/su_hosts.php:148
+msgid "Computer hardware and software"
+msgstr "计算机硬件和软件"
+
+#: user/su_hosts.php:156 user/su_hosts.php:196
+msgid "Projects for which this computer has done work"
+msgstr "此计算机已贡献过的项目"
+
+#: user/su_hosts.php:160 user/su_hosts.php:185 user/su_user_projects.php:84
+msgid "Name"
+msgstr "名称"
+
+#: user/su_hosts.php:161
+msgid "CPU FLOPS"
+msgstr "CPU FLOPS"
+
+#: user/su_hosts.php:162 user/su_user_projects.php:133
+msgid "CPU time"
+msgstr "CPU时间"
+
+#: user/su_hosts.php:163
+msgid "GPU FLOPS"
+msgstr "GPU FLOPS"
+
+#: user/su_hosts.php:164 user/su_user_projects.php:136
+msgid "GPU time"
+msgstr "GPU时间"
+
+#: user/su_hosts.php:165
+msgid "# jobs success"
+msgstr "完成的工作数"
+
+#: user/su_hosts.php:166
+msgid "#jobs fail"
+msgstr "失败的工作数"
+
+#: user/su_hosts.php:182
+msgid "Computer details"
+msgstr "计算机详情"
+
+#: user/su_hosts.php:187
+msgid "Hardware/software details"
+msgstr "硬件/软件详情"
+
+#: user/su_hosts.php:192
+msgid "How projects are chosen for this computer"
+msgstr "此计算机的项目是如何选择的"
+
+#: user/su_intro.php:25
+msgid "Getting started"
+msgstr "入门"
+
+#: user/su_intro.php:26 user/su_welcome.php:20
+msgid "Welcome to %1"
+msgstr "欢迎来到%1"
+
+#: user/su_intro.php:46
+msgid ""
+"By now you should have downloaded and run BOINC.  If so, you're done!  Your "
+"computer will do run science jobs in the background, supporting research in "
+"the areas you selected."
+msgstr ""
+"到目前为止，您应该已经下载并运行了BOINC。 如果是这样，您的工作就完成了！ 您的计算机将在后台运行科学工作，持续支持您选择的领域的研究。"
+
+#: user/su_intro.php:47
+msgid ""
+"Scientists need all the computing power they can get.  To help further, you "
+"can:"
+msgstr "计算能力对科学家们多多益善。若要进一步提供帮助，您可以："
+
+#: user/su_intro.php:48
+msgid ""
+"Tell your family, friends, and co-workers about %1, and encourage them to "
+"volunteer."
+msgstr "把%1告诉您的家人，朋友和同事，并鼓励他们做贡献算力。"
+
+#: user/su_intro.php:49
+msgid "Run %1 on all your computing devices:"
+msgstr "在所有可计算设备上运行%1："
+
+#: user/su_intro.php:50
+msgid ""
+"Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
+"web site (%1) and log in.  Then select Download from the Project menu, and "
+"install BOINC as you did on this computer."
+msgstr ""
+"台式机和笔记本电脑（Windows，Linux，Mac OS "
+"X）：在该设备上，访问此网站（%1）并登录。然后从“项目”菜单中选择“下载”，并像在此计算机上一样安装BOINC。"
+
+#: user/su_intro.php:51
+msgid ""
+"Android phones and tablets: install the BOINC app from the Google Play Store"
+" or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
+" and log in."
+msgstr ""
+"Android手机和平板电脑：从Google Play商店安装BOINC应用程序（对于Fire还可以从Amazon App Store安装）。 "
+"选择“使用帐户管理器”，选择“%1”，然后登录。"
+
+#: user/su_intro.php:52
+msgid "You can %1 Join or create a Team%2."
+msgstr "您可以%1加入或创建团队%2。"
+
+#: user/su_intro.php:53
+msgid "Computing prefs"
+msgstr "计算首选项"
+
+#: user/su_intro.php:54
+msgid "Science prefs"
+msgstr "科学首选项"
+
+#: user/su_join.php:99
+msgid "Already joined"
+msgstr "已经加入了"
+
+#: user/su_join.php:100
+msgid ""
+"You're already logged in.  If you want to create a new account, please log "
+"out first."
+msgstr "您已经登录了。如果要创建一个新帐户，请先注销。"
+
+#: user/su_prefs.php:126
+msgid "Prefer"
+msgstr "首选项"
+
+#: user/su_prefs.php:127
+msgid "As needed"
+msgstr "按需"
+
+#: user/su_prefs.php:325
+msgid "Science and location preferences"
+msgstr "科学和位置偏好"
+
+#: user/su_prefs.php:328
+msgid "Preferences saved."
+msgstr "偏好已保存。"
+
+#: user/su_prefs.php:331
+msgid ""
+"Select science areas and locations you do or don't want to support.  Click "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
+"bottom."
+msgstr "选择您想支持或不想支持的科学区域和位置。 单击%1获取更多详细信息，单击%2减少细节。 完成后，单击底部的“保存”按钮。"
+
+#: user/su_prefs.php:340
+msgid "Science areas"
+msgstr "科学领域"
+
+#: user/su_prefs.php:344
+msgid "Locations"
+msgstr "位置"
+
+#: user/su_user_accounting.php:24 user/su_user_accounting.php:34
+msgid "Your contribution history"
+msgstr "您的贡献历史"
+
+#: user/su_user_accounting.php:35
+msgid "Computing power"
+msgstr "计算能力"
+
+#: user/su_user_accounting.php:37
+msgid "Computing time"
+msgstr "计算时间"
+
+#: user/su_user_accounting.php:39
+msgid "Completed jobs"
+msgstr "已完成的工作"
+
+#: user/su_user_projects.php:28
+msgid "New"
+msgstr "新的"
+
+#: user/su_user_projects.php:30
+msgid "Established"
+msgstr "被认可的"
+
+#: user/su_user_projects.php:32
+msgid "In progress"
+msgstr "正在运行的"
+
+#: user/su_user_projects.php:34
+msgid "Unknown"
+msgstr "未知"
+
+#: user/su_user_projects.php:85
+msgid "since"
+msgstr "自"
+
+#: user/su_user_projects.php:86
+msgid "CPU hours"
+msgstr "CPU时间"
+
+#: user/su_user_projects.php:87
+msgid "GPU hours"
+msgstr "GPU时间"
+
+#: user/su_user_projects.php:88
+msgid "# successful jobs"
+msgstr "完成的工作数"
+
+#: user/su_user_projects.php:89
+msgid "# failed jobs"
+msgstr "失败的工作数"
+
+#: user/su_user_projects.php:90 user/su_user_projects.php:131
+#: user/su_user_projects.php:150
+msgid "Account status"
+msgstr "账户状态"
+
+#: user/su_user_projects.php:91
+msgid "Allowed by prefs?"
+msgstr "首选项允许？"
+
+#: user/su_user_projects.php:126
+msgid "Web site"
+msgstr "网站"
+
+#: user/su_user_projects.php:127
+msgid "Science keywords"
+msgstr "科学关键词"
+
+#: user/su_user_projects.php:128
+msgid "Location keywords"
+msgstr "位置关键词"
+
+#: user/su_user_projects.php:132
+msgid "CPU computing"
+msgstr "CPU计算"
+
+#: user/su_user_projects.php:135
+msgid "GPU computing"
+msgstr "GPU计算"
+
+#: user/su_user_projects.php:138
+msgid "# jobs succeeded"
+msgstr "完成的工作数"
+
+#: user/su_user_projects.php:139
+msgid "# jobs failed"
+msgstr "失败的工作数"
+
+#: user/su_user_projects.php:141
+msgid "Include"
+msgstr "包括"
+
+#: user/su_user_projects.php:143
+msgid "Exclude"
+msgstr "排除"
+
+#: user/su_user_projects.php:146
+msgid "Excluded?"
+msgstr "被排除？"
+
+#: user/su_user_projects.php:146
+msgid "Use if this project causes problems on your computer"
+msgstr "如果此项目在您的计算机上导致问题，请使用此选项"
+
+#: user/su_user_projects.php:150
+msgid "None"
+msgstr "无"
+
+#: user/su_user_projects.php:152
+msgid "Return to project list"
+msgstr "返回项目列表"
+
+#: user/su_welcome.php:22
+msgid ""
+"At this point BOINC should be installed and running on your computer; the "
+"system tray should have an icon like this: %1 If not, %2 get help here %3."
+msgstr "此时BOINC应该已经在您的计算机上安装完毕并正在运行了; 您的系统托盘应该有这样的图标：%1如果没有，请点击%2此处％3获取帮助。"
+
+#: user/su_welcome.php:32
+msgid "What happens now?"
+msgstr "现在发生了什么？"
+
+#: user/su_welcome.php:33
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINC正在后台运行。BOINC会下载运算任务，\n"
+"        计算这些任务并上传计算结果。\n"
+"        这一切都会自动完成；你不需要任何手动操作。\n"
+"        计算也许会使你的计算机风扇运行，\n"
+"        也可能导致你的电费少许增加。\n"
+"    "
+
+#: user/su_welcome.php:45
+msgid "How to monitor and control BOINC"
+msgstr "如何查看并控制BOINC状态"
+
+#: user/su_welcome.php:46
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"你可以使用BOINC管理器查看BOINC的当前工作并控制BOINC。\n"
+"        双击BOINC图标可以打开BOINC管理器。\n"
+"        更多细节请点击%1这里%2。"
+
+#: user/su_welcome.php:58
+msgid "Computing preferences"
+msgstr "计算首选项"
+
+#: user/su_welcome.php:59
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINC被设计为不影响\n"
+"        您计算机的日常使用。\n"
+"        如果BOINC确实影响了您计算机的性能，\n"
+"        您可以修改许多设置来解决这一问题。\n"
+"        例如，您可以限制BOINC使用的内存大小等。\n"
+"        更多细节请点击%1这里%2。"
+
+#: user/su_welcome.php:76
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"您可以通过许多方式\n"
+"        与其他%1参与者进行交流\n"
+"        请查看上方的社区菜单"
+
+#: inc/su_graph.inc:31
+msgid "Past month:"
+msgstr "上个月："
+
+#: inc/su_graph.inc:38
+msgid "No work reported so far. %1Need help?%2"
+msgstr "到目前为止，没有已完成的工作。 ％1需要帮助吗？%2"
+
+#: inc/su_graph.inc:45
+msgid "No work reported in last %1 days. %2Need help?%3"
+msgstr "过去%1天没有已完成的工作。 ％2需要帮助吗？%3"
+
+#: inc/su_graph.inc:52
+msgid "Not enough data yet"
+msgstr "还没有足够的数据"
+
+#: inc/su_join.inc:35
+msgid "An invitation code is required to create an account."
+msgstr "需要邀请码才能创建帐户。"
+
+#: inc/su_join.inc:36
+msgid "Invitation code"
+msgstr "邀请码"
+
+#: inc/su_join.inc:44
+msgid "Identifies you on this web site. Use your real name or a nickname."
+msgstr "此网站上您的昵称。 使用您的真实姓名或昵称。"
+
+#: inc/su_join.inc:45
+msgid "Choose screen name"
+msgstr "选择昵称"
+
+#: inc/su_join.inc:51
+msgid "An address where you can receive emails."
+msgstr "您可以接收电子邮件的地址。"
+
+#: inc/su_join.inc:52
+msgid "Your email address"
+msgstr "您的电子邮件地址"
+
+#: inc/su_join.inc:63
+msgid "Must be at least %1 characters"
+msgstr "必须至少为%1个字符"
+
+#: inc/su_join.inc:64
+msgid "Choose password"
+msgstr "选择密码"
+
+#: inc/su_user.inc:155
+msgid "Want to help more?"
+msgstr "想要提供更多贡献？"
+
+#: inc/su_user.inc:156
+msgid "Tell friends and family about %1."
+msgstr "把%1告诉朋友和家人。"
+
+#: inc/su_user.inc:157
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr "在您的其他计算设备（台式机，笔记本电脑，平板电脑，Android手机）上运行BOINC。"
+
+#: inc/su_user.inc:158
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
+msgstr "BOINC现在正在这台电脑上运行吗？ 如果没有，%1下载BOINC%2。"

@@ -1,0 +1,1013 @@
+# PROJECT translation
+# Copyright (C) PROJECT
+# 
+# This file is distributed under the same license as BOINC.
+# 
+# Translators:
+# TOMA Mitsuru, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
+"POT-Creation-Date: 2020-05-03 15:43 PDT\n"
+"Last-Translator: TOMA Mitsuru, 2020\n"
+"Language-Team: Japanese (https://www.transifex.com/boinc/teams/35581/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: user/index.php:43
+msgid "%1 is temporarily shut down for maintenance."
+msgstr "%1 はメンテナンスの為、一時的に停止しています。 "
+
+#: user/index.php:50
+msgid "Recent contribution"
+msgstr "最近の貢献度"
+
+#: user/index.php:56 user/su_welcome.php:85
+msgid "Continue to your home page"
+msgstr "あなたのホームページに進む"
+
+#: user/index.php:64
+msgid ""
+"%1 lets you help scientific research projects by giving them computing "
+"power.  These projects do research in astronomy, physics, biomedicine, "
+"mathematics, and environmental science; you can pick the areas you want to "
+"support."
+msgstr ""
+"%1 "
+"では、科学研究プロジェクトに演算能力を与えることで、科学研究プロジェクトを支援することができます。これらのプロジェクトは、天文学、物理学、生物医学、数学、環境科学の研究を行っています。"
+
+#: user/index.php:66
+msgid ""
+"You help by installing BOINC, a free program that runs scientific jobs in "
+"the background and when you're not using the computer.  BOINC is secure and "
+"will not affect your normal use of the computer."
+msgstr ""
+"コンピュータを使用していないときにバックグラウンドで科学的なジョブを実行する無料のプログラムであるBOINCをインストールすることで、あなたは支援することができます。"
+" BOINCは安全であり、コンピュータの通常の使用に影響を与えることはありません。"
+
+#: user/index.php:70
+msgid "%1 is operated by the BOINC project at UC Berkeley."
+msgstr "%1 は カリフォルニア大学バークレー校の BOINC プロジェクトによって運営されています。"
+
+#: user/index.php:75
+msgid "%1 and the research projects it supports are non-profit."
+msgstr "%1 とそれが支援する研究プロジェクトは非営利です。"
+
+#: user/index.php:83
+msgid "Join %1"
+msgstr "%1 に参加する"
+
+#: user/index.php:86
+msgid "Already joined?"
+msgstr "すでに参加済みですか?"
+
+#: user/index.php:88
+msgid "Log in."
+msgstr "ログイン"
+
+#: user/index.php:100
+msgid "Welcome, %1"
+msgstr "ようこそ、%1"
+
+#: user/index.php:119
+msgid "News"
+msgstr "ニュース"
+
+#: user/index.php:132
+msgid "Ebola-Infected VERO E6 Cell"
+msgstr "エボラ感染VERO E6細胞"
+
+#: user/index.php:133
+msgid "Simulation of Higgs boson detection"
+msgstr "ヒッグス粒子検出のシミュレーション"
+
+#: user/index.php:134
+msgid "The Earth's interrelated climate systems"
+msgstr "地球の相互に関連する気候システム"
+
+#: user/index.php:135
+msgid "Structure of protein GIF"
+msgstr "タンパク質GIFの構造"
+
+#: user/index.php:136
+msgid "The Hubble ultra-deep field image"
+msgstr "ハッブル超深部フィールドの画像"
+
+#: user/index.php:180
+msgid ""
+"Science United is funded by the %1National Science Foundation%2, award "
+"#1664190, and is based at the %3University of California, Berkeley%4."
+msgstr ""
+"Science Unitedは、%1National Science "
+"Foundation%2、1664190号により資金提供を受けており、%3カリフォルニア大学バークレー校%4に拠点を置いています。"
+
+#: project/project.inc:111
+msgid "Log out"
+msgstr "ログアウト"
+
+#: project/project.inc:117 user/su_join.php:104
+msgid "Join"
+msgstr "参加"
+
+#: project/project.inc:117
+msgid "Login"
+msgstr "ログイン"
+
+#: project/project.inc:147
+msgid "About %1"
+msgstr "%1 について"
+
+#: project/project.inc:148 user/su_help.php:20
+msgid "Help"
+msgstr "ヘルプ"
+
+#: project/project.inc:149 user/su_hosts.php:95 user/su_hosts.php:128
+msgid "Project"
+msgstr "プロジェクト"
+
+#: project/project.inc:151 user/su_home.php:46 user/su_home.php:68
+#: user/su_welcome.php:75
+msgid "Community"
+msgstr "コミュニティ"
+
+#: project/project.inc:152
+msgid "Message boards"
+msgstr "掲示板"
+
+#: project/project.inc:159
+msgid "Site"
+msgstr "サイト"
+
+#: project/project.inc:160
+msgid "Search"
+msgstr "検索"
+
+#: project/project.inc:161
+msgid "Languages"
+msgstr "言語"
+
+#: project/project.inc:179
+msgid "Do science research on your computer, tablet, or phone"
+msgstr "パソコン、タブレット、スマートフォンで科学研究をしましょう"
+
+#: project/project.inc:199
+msgid "Generated"
+msgstr "生成されました"
+
+#: project/project.inc:230
+msgid "Your personal background."
+msgstr "あなたの経歴。"
+
+#: project/project.inc:234
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr "あなたのことを教えてください。出身地、年齢、職業、趣味など、あなたのことを何でもいいので教えてください。"
+
+#: project/project.inc:238
+msgid "Your opinions about %1"
+msgstr "%1 についてのあなたのご意見"
+
+#: project/project.inc:242
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"%1 についてのご意見をお聞かせください。\n"
+"なぜ %1 を実行するのですか?\n"
+"このプロジェクトについての見解を教えてください。\n"
+"何か提案はありますか?"
+
+#: user/su_about.php:20
+msgid "About"
+msgstr "About"
+
+#: user/su_account_settings.php:24
+msgid "Screen name"
+msgstr "スクリーンネーム"
+
+#: user/su_account_settings.php:25
+msgid "Email address"
+msgstr "Eメールアドレス"
+
+#: user/su_account_settings.php:26
+msgid "Password"
+msgstr "パスワード"
+
+#: user/su_account_settings.php:27
+msgid "%1 member since"
+msgstr " %1 への登録日"
+
+#: user/su_account_settings.php:28
+msgid "User ID"
+msgstr "ユーザID"
+
+#: user/su_account_settings.php:28
+msgid "Used in community functions"
+msgstr "コミュニティ機能で使用されます"
+
+#: user/su_account_settings.php:29
+msgid "Delete account"
+msgstr "アカウントを削除する"
+
+#: user/su_account_settings.php:30
+msgid "Instructions"
+msgstr "削除実行"
+
+#: user/su_account_settings.php:35
+msgid "Account settings"
+msgstr "アカウント設定"
+
+#: user/su_accounting.php:29
+msgid "Computing history"
+msgstr "演算履歴"
+
+#: user/su_compute_prefs.php:28
+msgid "Computing settings"
+msgstr "演算設定"
+
+#: user/su_compute_prefs.php:44
+msgid ""
+"You can control how many processors to use (most computers have 4 or 8 "
+"processors) and when to use them."
+msgstr "使用するプロセッサの数（ほとんどのコンピュータは4つまたは8つのプロセッサを持っています）と使用するタイミングを制御することができます。"
+
+#: user/su_compute_prefs.php:50
+msgid "This may affect your electricity costs and your computer's fan speeds."
+msgstr "これは、電気代やパソコンのファンの回転数に影響を与える可能性があります。"
+
+#: user/su_compute_prefs.php:52
+msgid ""
+"Settings affect all your computers.  Changes take effect the next time the "
+"computer synchs with Science United."
+msgstr "設定はすべてのコンピュータに適用されます。 変更は、次回コンピュータがScience Unitedと同期したときに反映されます。"
+
+#: user/su_compute_prefs.php:54
+msgid ""
+"You can change settings for a particular computer using the BOINC Manager.  "
+"This also gives you more detailed options."
+msgstr "特定のコンピュータの設定を、BOINC マネージャを使って変更することができます。 これは、より詳細なオプションも提供します。"
+
+#: user/su_compute_prefs.php:56
+msgid "Choose one of:"
+msgstr "いずれかを選択してください。"
+
+#: user/su_compute_prefs.php:61
+msgid ""
+"Low power %1 Use 25% of processors, and stop computing when computer is "
+"idle.%2"
+msgstr "低消費電力 %1 プロセッサの 25% を使用し、コンピュータがアイドル状態のときに演算を停止します。"
+
+#: user/su_compute_prefs.php:68
+msgid "Standard %1 Use 50% of processors.%2"
+msgstr "標準 %1 プロセッサの 50% を使用します。%2"
+
+#: user/su_compute_prefs.php:77
+msgid "Maximum computing %1 Use all processors.%2"
+msgstr "最大演算 %1 すべてのプロセッサを使用します。%2"
+
+#: user/su_compute_prefs.php:86
+msgid "Update"
+msgstr "更新する"
+
+#: user/su_compute_prefs.php:95
+msgid "Computing settings updated"
+msgstr "演算設定を更新しました"
+
+#: user/su_compute_prefs.php:96
+msgid ""
+"The new settings will take effect when your computer synchs with Science "
+"United."
+msgstr "新しい設定は、お使いのコンピュータがScience Unitedと同期したときに有効になります。"
+
+#: user/su_compute_prefs.php:100
+msgid "Continue to home page"
+msgstr "ホームページに進む"
+
+#: user/su_download.php:28
+msgid "Install software"
+msgstr "ソフトウェアをインストールする"
+
+#: user/su_download.php:29
+msgid ""
+"To participate in %1 you must install BOINC and VirtualBox on your computer."
+msgstr "%1 に参加するには、コンピュータに BOINC と VirtualBox をインストールする必要があります。"
+
+#: user/su_email_prefs.php:28
+msgid "Email settings"
+msgstr "Eメール設定"
+
+#: user/su_email_prefs.php:30
+msgid "Preferences updated."
+msgstr "設定を更新しました。"
+
+#: user/su_email_prefs.php:35
+msgid "Don't send me any emails"
+msgstr "私にメールを送らないでください。"
+
+#: user/su_email_prefs.php:42
+msgid ""
+"Status emails %1 These tell you how much work your computer(s) have done "
+"recently %2"
+msgstr "ステータス・メール %1 あなたのコンピュータが最近どのくらいの作業を行ったかを(まとめて)お知らせします。 %2"
+
+#: user/su_email_prefs.php:48 user/su_email_prefs.php:62 user/su_prefs.php:128
+msgid "Never"
+msgstr "拒否"
+
+#: user/su_email_prefs.php:49
+msgid "Daily"
+msgstr "日毎"
+
+#: user/su_email_prefs.php:50
+msgid "Weekly"
+msgstr "週毎"
+
+#: user/su_email_prefs.php:51
+msgid "Monthly"
+msgstr "月毎"
+
+#: user/su_email_prefs.php:56
+msgid ""
+"Community emails %1 These tell you about private messages, forum posts, and "
+"friend requests %2"
+msgstr "コミュニティ・メール %1 プライベート・メッセージ、フォーラムの投稿、および友達のリクエストについてお知らせします。 %2"
+
+#: user/su_email_prefs.php:63
+msgid "Immediately"
+msgstr "すぐに"
+
+#: user/su_email_prefs.php:64
+msgid "Daily summary"
+msgstr "日ごとのまとめ"
+
+#: user/su_email_prefs.php:68 user/su_prefs.php:348
+msgid "Save"
+msgstr "保存"
+
+#: user/su_graph.php:119
+msgid "Successful jobs/day"
+msgstr "成功したジョブ/日"
+
+#: user/su_graph.php:120
+msgid "Failed jobs/day"
+msgstr "失敗したジョブ/日"
+
+#: user/su_graph.php:127
+msgid "CPU hours/day"
+msgstr "CPU時間/日"
+
+#: user/su_graph.php:128
+msgid "GPU hours/day"
+msgstr "GPU時間/日"
+
+#: user/su_help.php:29
+msgid ""
+"If you received a 'no work reported' email from Science United or are having"
+" other problems, please do the following:"
+msgstr ""
+"Science Unitedから「no work "
+"reported」というメールが届いた場合、またはその他の問題が発生している場合は、以下の手順を実行してください。:"
+
+#: user/su_help.php:30
+msgid "Make sure BOINC is installed on your computer"
+msgstr "お使いのコンピュータにBOINCがインストールされていることを確認してください。"
+
+#: user/su_help.php:31
+msgid "Do you see the BOINC icon %1 in your system tray or dock?"
+msgstr "システム・トレイやドックに BOINC アイコン %1 が表示されていますか？"
+
+#: user/su_help.php:34
+msgid "If not, %1download and install BOINC%2."
+msgstr "そうでない場合は、%1BOINCをダウンロードしてインストール%2してください。"
+
+#: user/su_help.php:37
+msgid "Science United requires BOINC version 7.14 or later."
+msgstr "Science UnitedにはBOINCのバージョン7.14以降が必要です。"
+
+#: user/su_help.php:48
+msgid "Make sure BOINC is attached to Science United"
+msgstr "BOINCがScience Unitedに接続されていることを確認してください。"
+
+#: user/su_help.php:49
+msgid "Double-click the BOINC icon to open the BOINC Manager."
+msgstr "BOINCアイコンをダブルクリックしてBOINCマネージャーを開きます。"
+
+#: user/su_help.php:50
+msgid "Switch to the Advanced View (View / Advanced View)."
+msgstr "詳細ビュー（表示/詳細ビュー）に切り替えます。"
+
+#: user/su_help.php:51
+msgid ""
+"Click on the Tools menu.  You should see 'Synchronize with Science United'."
+"  If not, select 'Use account manager' and attach BOINC to your Science "
+"United account."
+msgstr ""
+"ツールメニューをクリックします。 「Science Unitedとの同期」が表示されているはずです。 "
+"表示されていない場合は、「アカウントマネージャーを使用」を選択して、BOINCをScience Unitedアカウントにアタッチしてください。"
+
+#: user/su_help.php:62
+msgid "Other sources of help"
+msgstr "ヘルプのその他情報源"
+
+#: user/su_help.php:63
+msgid "Problems installing or running BOINC: %1 get help here%2."
+msgstr "BOINC のインストールまたは実行に問題がある場合: %1 ここにヘルプがあります。%2"
+
+#: user/su_help.php:67
+msgid ""
+"Problems with Science United: ask for help on the %1Science United message "
+"boards%2."
+msgstr "Science Unitedに関する問題: %1Science Unitedの掲示板%2に助けを求めてください。"
+
+#: user/su_help.php:71
+msgid ""
+"To report a bug or request a feature in Science United, create an issue on "
+"the %1Science United Github repository%2 (you'll need a free Github "
+"account)."
+msgstr ""
+"Science United のバグを報告したり、機能をリクエストするには、%1Science United Github リポジトリ%2 "
+"に課題を作成してください (無料の Github アカウントが必要です)。"
+
+#: user/su_help.php:75
+msgid "If none of the above work for you, %1email us%2."
+msgstr "上記のどれも当てはまらない場合は、%1 私たちにメールをください%2"
+
+#: user/su_home.php:25
+msgid "Contribution"
+msgstr "貢献度"
+
+#: user/su_home.php:28 user/su_hosts.php:184
+msgid "View"
+msgstr "閲覧"
+
+#: user/su_home.php:30 user/su_hosts.php:31
+msgid "Your computers"
+msgstr "あなたのコンピュータ"
+
+#: user/su_home.php:34
+msgid "Computing: graphs"
+msgstr "演算結果: グラフ"
+
+#: user/su_home.php:35
+msgid "Computing: details"
+msgstr "演算結果: 詳細"
+
+#: user/su_home.php:36 user/su_user_projects.php:74
+msgid "Science projects"
+msgstr "サイエンス プロジェクト"
+
+#: user/su_home.php:38
+msgid "Claimed credit"
+msgstr "要求された功績値"
+
+#: user/su_home.php:54
+msgid "Settings"
+msgstr "設定"
+
+#: user/su_home.php:57
+msgid "Edit"
+msgstr "編集"
+
+#: user/su_home.php:59
+msgid "Science areas and locations"
+msgstr "科学分野と場所"
+
+#: user/su_home.php:59
+msgid "Choose the types of research you want to support"
+msgstr "サポートしたい研究の種類を選択してください"
+
+#: user/su_home.php:64
+msgid "Computing"
+msgstr "演算"
+
+#: user/su_home.php:64
+msgid "Choose how to use your computers"
+msgstr "パソコンの使い方を選択してください"
+
+#: user/su_home.php:68
+msgid "Settings for message boards and private messages"
+msgstr "掲示板やプライベートメッセージの設定 "
+
+#: user/su_home.php:72
+msgid "Account"
+msgstr "アカウント"
+
+#: user/su_home.php:72
+msgid "Name, password, email address"
+msgstr "名前、パスワード、Eメールアドレス"
+
+#: user/su_home.php:76
+msgid "Email"
+msgstr "Eメール"
+
+#: user/su_home.php:76
+msgid "When and whether we should email you"
+msgstr "配信メールの種類と送信タイミング"
+
+#: user/su_home.php:102
+msgid "Your home page"
+msgstr "あなたのホームページ"
+
+#: user/su_hosts.php:33
+msgid "No computers yet"
+msgstr "まだコンピュータはありません。"
+
+#: user/su_hosts.php:39
+msgid "Computer name"
+msgstr "コンピュータ名"
+
+#: user/su_hosts.php:39 user/su_user_projects.php:84
+msgid "Click for details"
+msgstr "詳細はクリックしてください。"
+
+#: user/su_hosts.php:40
+msgid "Operating system"
+msgstr "オペレーティングシステム"
+
+#: user/su_hosts.php:41 user/su_hosts.php:190
+msgid "Last contact"
+msgstr "最終通信日"
+
+#: user/su_hosts.php:42 user/su_hosts.php:47
+msgid "Remove"
+msgstr "削除"
+
+#: user/su_hosts.php:42
+msgid "... if this is a duplicate or the computer is no longer running BOINC"
+msgstr "... もしこれが重複しているか、あるいはこのコンピュータでBOINCを実行していないのであれば"
+
+#: user/su_hosts.php:72
+msgid "How projects are chosen for %1"
+msgstr "%1 でプロジェクトはどのように選ばれるのか。"
+
+#: user/su_hosts.php:73
+msgid ""
+"To decide which projects this computer should work for, we compute a "
+"\"score\" for each project.  The components of the score are:"
+msgstr "このコンピュータがどのプロジェクトで働くべきかを決めるために、各プロジェクトの「スコア」を計算します。 スコアの構成要素は以下の通りです"
+
+#: user/su_hosts.php:80 user/su_hosts.php:96
+msgid "Keyword score"
+msgstr "キーワードスコア"
+
+#: user/su_hosts.php:81
+msgid "How well your keyword preferences match the project's keywords."
+msgstr "あなたのキーワード設定がプロジェクトのキーワードにどれだけマッチしているか。"
+
+#: user/su_hosts.php:82 user/su_hosts.php:97
+msgid "Platform score"
+msgstr "プラットフォームスコア"
+
+#: user/su_hosts.php:83
+msgid ""
+"-1 if the project has no programs that will run on the computer; 0 if it "
+"does; +0.1 if one of them uses a GPU or VirtualBox."
+msgstr ""
+"コンピュータ上で実行されるプログラムがない場合は-1、プログラムがある場合は0、GPUまたはVirtualBoxを使用している場合は+0.1を指定します。"
+
+#: user/su_hosts.php:84 user/su_hosts.php:98
+msgid "Allocation score"
+msgstr "割り当てスコア"
+
+#: user/su_hosts.php:85
+msgid ""
+"How much work is owed to the project; this changes from one day to the next."
+msgstr "プロジェクトにどれだけの処理しているか; これは一日から翌日の間に変化します。"
+
+#: user/su_hosts.php:87
+msgid ""
+"We then choose the highest-scoring projects (at least 2) that together can "
+"use all the computer's processors."
+msgstr "そして、すべてのコンピュータプロセッサを一緒に使用することができる、最高得点のプロジェクト（少なくとも2つ）を選択します。"
+
+#: user/su_hosts.php:99 user/su_hosts.php:128
+msgid "Score"
+msgstr "スコア"
+
+#: user/su_hosts.php:102
+msgid "Can use %1?"
+msgstr "%1 使用可?"
+
+#: user/su_hosts.php:104
+msgid "Opted out?"
+msgstr "除外?"
+
+#: user/su_hosts.php:117 user/su_hosts.php:139 user/su_user_projects.php:141
+msgid "Yes"
+msgstr "はい"
+
+#: user/su_hosts.php:122
+msgid "Given the above info, this computer would do work for these projects:"
+msgstr "上記の情報を考えると、このコンピュータは、これらのプロジェクトのために仕事をすることができます。:"
+
+#: user/su_hosts.php:139 user/su_user_projects.php:143
+msgid "No"
+msgstr "いいえ"
+
+#: user/su_hosts.php:148
+msgid "Computer hardware and software"
+msgstr "コンピュータのハードウェアおよびソフトウェア"
+
+#: user/su_hosts.php:156 user/su_hosts.php:196
+msgid "Projects for which this computer has done work"
+msgstr "このコンピュータで稼働しているプロジェクト"
+
+#: user/su_hosts.php:160 user/su_hosts.php:185 user/su_user_projects.php:84
+msgid "Name"
+msgstr "名前"
+
+#: user/su_hosts.php:161
+msgid "CPU FLOPS"
+msgstr "CPU FLOPS"
+
+#: user/su_hosts.php:162 user/su_user_projects.php:133
+msgid "CPU time"
+msgstr "CPU時間"
+
+#: user/su_hosts.php:163
+msgid "GPU FLOPS"
+msgstr "GPU FLOPS"
+
+#: user/su_hosts.php:164 user/su_user_projects.php:136
+msgid "GPU time"
+msgstr "GPU時間"
+
+#: user/su_hosts.php:165
+msgid "# jobs success"
+msgstr "成功ジョブ数"
+
+#: user/su_hosts.php:166
+msgid "#jobs fail"
+msgstr "失敗ジョブ数"
+
+#: user/su_hosts.php:182
+msgid "Computer details"
+msgstr "コンピュータの詳細"
+
+#: user/su_hosts.php:187
+msgid "Hardware/software details"
+msgstr "ハードウェア/ソフトウェアの詳細"
+
+#: user/su_hosts.php:192
+msgid "How projects are chosen for this computer"
+msgstr "このコンピュータでプロジェクトはどのように選ばれるのか。"
+
+#: user/su_intro.php:25
+msgid "Getting started"
+msgstr "開始する"
+
+#: user/su_intro.php:26 user/su_welcome.php:20
+msgid "Welcome to %1"
+msgstr "%1 にようこそ"
+
+#: user/su_intro.php:46
+msgid ""
+"By now you should have downloaded and run BOINC.  If so, you're done!  Your "
+"computer will do run science jobs in the background, supporting research in "
+"the areas you selected."
+msgstr ""
+"すでにBOINCをダウンロードして実行しているはずです。 そうであれば、これで完了です! "
+"あなたのコンピュータはバックグラウンドで科学の仕事を実行し、選択した分野の研究をサポートします。"
+
+#: user/su_intro.php:47
+msgid ""
+"Scientists need all the computing power they can get.  To help further, you "
+"can:"
+msgstr "科学者たちは、得られるすべての演算能力を必要としています。 さらなる支援をあなたはできます:"
+
+#: user/su_intro.php:48
+msgid ""
+"Tell your family, friends, and co-workers about %1, and encourage them to "
+"volunteer."
+msgstr "家族、友人、同僚に %1 のことを伝え、ボランティアに参加するように勧めてください。"
+
+#: user/su_intro.php:49
+msgid "Run %1 on all your computing devices:"
+msgstr "すべてのコンピューティング・デバイスで %1 を実行してください。"
+
+#: user/su_intro.php:50
+msgid ""
+"Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
+"web site (%1) and log in.  Then select Download from the Project menu, and "
+"install BOINC as you did on this computer."
+msgstr ""
+"デスクトップとラップトップ (Windows、Linux、Mac OS X)。そのデバイスで、このウェブサイト(%1)にアクセスしてログインします。 "
+"そして、プロジェクトメニューからダウンロードを選択し、このコンピュータで行ったようにBOINCをインストールします。"
+
+#: user/su_intro.php:51
+msgid ""
+"Android phones and tablets: install the BOINC app from the Google Play Store"
+" or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
+" and log in."
+msgstr ""
+"Android携帯電話とタブレット：Google "
+"Playストアまたは（Fireの場合）AmazonアプリストアからBOINCアプリをインストールします。 "
+"アカウント・マネージャーの使用を選択し、%1を選択してログインします。"
+
+#: user/su_intro.php:52
+msgid "You can %1 Join or create a Team%2."
+msgstr "あなたは %1 チームに参加、または作成することができます%2。"
+
+#: user/su_intro.php:53
+msgid "Computing prefs"
+msgstr "演算環境"
+
+#: user/su_intro.php:54
+msgid "Science prefs"
+msgstr "科学分野設定"
+
+#: user/su_join.php:99
+msgid "Already joined"
+msgstr "参加済みです"
+
+#: user/su_join.php:100
+msgid ""
+"You're already logged in.  If you want to create a new account, please log "
+"out first."
+msgstr "すでにログインしています。 新規アカウントを作成する場合は、まずログアウトしてください。"
+
+#: user/su_prefs.php:126
+msgid "Prefer"
+msgstr "優先"
+
+#: user/su_prefs.php:127
+msgid "As needed"
+msgstr "必要な場合"
+
+#: user/su_prefs.php:325
+msgid "Science and location preferences"
+msgstr "科学分野と場所の設定"
+
+#: user/su_prefs.php:328
+msgid "Preferences saved."
+msgstr "設定を保存しました。"
+
+#: user/su_prefs.php:331
+msgid ""
+"Select science areas and locations you do or don't want to support.  Click "
+"%1 for more detail, %2 for less.  When done, click the Save button at the "
+"bottom."
+msgstr ""
+"サポートしたい、またはサポートしたくない科学分野と場所を選択してください。 %1をクリックすると詳細が展開され、%2をクリックすると詳細が省略されます。"
+" 完了したら、下部の保存ボタンをクリックしてください。"
+
+#: user/su_prefs.php:340
+msgid "Science areas"
+msgstr "科学分野"
+
+#: user/su_prefs.php:344
+msgid "Locations"
+msgstr "場所"
+
+#: user/su_user_accounting.php:24 user/su_user_accounting.php:34
+msgid "Your contribution history"
+msgstr "あなたの貢献度の履歴"
+
+#: user/su_user_accounting.php:35
+msgid "Computing power"
+msgstr "演算能力"
+
+#: user/su_user_accounting.php:37
+msgid "Computing time"
+msgstr "演算時間"
+
+#: user/su_user_accounting.php:39
+msgid "Completed jobs"
+msgstr "完了ジョブ"
+
+#: user/su_user_projects.php:28
+msgid "New"
+msgstr "New"
+
+#: user/su_user_projects.php:30
+msgid "Established"
+msgstr "確立済み"
+
+#: user/su_user_projects.php:32
+msgid "In progress"
+msgstr "進行中"
+
+#: user/su_user_projects.php:34
+msgid "Unknown"
+msgstr "不明"
+
+#: user/su_user_projects.php:85
+msgid "since"
+msgstr "開始日"
+
+#: user/su_user_projects.php:86
+msgid "CPU hours"
+msgstr "CPU時間"
+
+#: user/su_user_projects.php:87
+msgid "GPU hours"
+msgstr "GPU時間"
+
+#: user/su_user_projects.php:88
+msgid "# successful jobs"
+msgstr "成功ジョブ数"
+
+#: user/su_user_projects.php:89
+msgid "# failed jobs"
+msgstr "失敗ジョブ数"
+
+#: user/su_user_projects.php:90 user/su_user_projects.php:131
+#: user/su_user_projects.php:150
+msgid "Account status"
+msgstr "アカウント状態"
+
+#: user/su_user_projects.php:91
+msgid "Allowed by prefs?"
+msgstr "設定で許可されている?"
+
+#: user/su_user_projects.php:126
+msgid "Web site"
+msgstr "ウェブサイト"
+
+#: user/su_user_projects.php:127
+msgid "Science keywords"
+msgstr "科学分野キーワード"
+
+#: user/su_user_projects.php:128
+msgid "Location keywords"
+msgstr "場所キーワード"
+
+#: user/su_user_projects.php:132
+msgid "CPU computing"
+msgstr "CPU演算能力"
+
+#: user/su_user_projects.php:135
+msgid "GPU computing"
+msgstr "GPU演算能力"
+
+#: user/su_user_projects.php:138
+msgid "# jobs succeeded"
+msgstr "成功ジョブ数"
+
+#: user/su_user_projects.php:139
+msgid "# jobs failed"
+msgstr "失敗ジョブ数"
+
+#: user/su_user_projects.php:141
+msgid "Include"
+msgstr "含む"
+
+#: user/su_user_projects.php:143
+msgid "Exclude"
+msgstr "除外"
+
+#: user/su_user_projects.php:146
+msgid "Excluded?"
+msgstr "除外しますか?"
+
+#: user/su_user_projects.php:146
+msgid "Use if this project causes problems on your computer"
+msgstr "あなたのコンピュータで、このプロジェクトが問題を起こした場合に使用してください。"
+
+#: user/su_user_projects.php:150
+msgid "None"
+msgstr "なし"
+
+#: user/su_user_projects.php:152
+msgid "Return to project list"
+msgstr "プロジェクト一覧に戻る"
+
+#: user/su_welcome.php:22
+msgid ""
+"At this point BOINC should be installed and running on your computer; the "
+"system tray should have an icon like this: %1 If not, %2 get help here %3."
+msgstr ""
+"この時点でBOINCがインストールされ、コンピュータ上で実行されているはずです；システムトレイにはこのようなアイコンがあるはずです。: %1 "
+"ない場合は、%2 ここで助けを得てください %3。"
+
+#: user/su_welcome.php:32
+msgid "What happens now?"
+msgstr "これからどうなるの？"
+
+#: user/su_welcome.php:33
+msgid ""
+"BOINC, running in the background, will download computing jobs,\n"
+"        process them, and upload the results.\n"
+"        This will happen automatically; you don't have to do anything.\n"
+"        This computation may cause your computer's fan to run,\n"
+"        and it may slightly increase your electric bill.\n"
+"    "
+msgstr ""
+"BOINCは、バックグラウンドで実行され、演算ジョブをダウンロードし、計算し、結果をアップロードします。この処理は自動的に行われ、あなたは何もする必要はありません。この計算により、お使いのコンピュータのファンが動作する可能性があります。電気代が少し高くなるかもしれません。"
+
+#: user/su_welcome.php:45
+msgid "How to monitor and control BOINC"
+msgstr "BOINCの監視と制御の方法"
+
+#: user/su_welcome.php:46
+msgid ""
+"You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
+"        Open this by double-clicking on the BOINC icon.\n"
+"        Details are %1here%2."
+msgstr ""
+"BOINCマネージャを使って、BOINCが何をしているかを監視し、制御することができます。\n"
+"  BOINCアイコンをダブルクリックして開きます。\n"
+"  詳細は%1ここ%2にあります。"
+
+#: user/su_welcome.php:58
+msgid "Computing preferences"
+msgstr "演算設定"
+
+#: user/su_welcome.php:59
+msgid ""
+"BOINC is designed to not impact\n"
+"        the performance of your computer for normal use.\n"
+"        If it does, you can reduce this impact by,\n"
+"        for example, limiting the amount of memory BOINC uses.\n"
+"        You can control many settings.\n"
+"        Check this out %1here%2."
+msgstr ""
+"BOINCは、通常の使用ではコンピュータのパフォーマンスに影響を与えないように設計されています。\n"
+"影響がある場合は、以下の方法でこの影響を軽減することができます。\n"
+"例えば、BOINCが使用するメモリの量を制限するなど。\n"
+"多くの設定を制御することができます。\n"
+"%1ここ %2 をチェックしてみてください。"
+
+#: user/su_welcome.php:76
+msgid ""
+"You can meet and communicate with other %1 participants\n"
+"        in a variety of ways - take a look under the Community\n"
+"        menu above."
+msgstr ""
+"他の %1 の参加者と出会い、コミュニケーションをとる様々な方法があります。\n"
+" - 上記のコミュニティメニューを見てみましょう。"
+
+#: inc/su_graph.inc:31
+msgid "Past month:"
+msgstr "経過月数:"
+
+#: inc/su_graph.inc:38
+msgid "No work reported so far. %1Need help?%2"
+msgstr "これまでに報告された仕事はありません。%1ヘルプが必要ですか?%2"
+
+#: inc/su_graph.inc:45
+msgid "No work reported in last %1 days. %2Need help?%3"
+msgstr "過去 %1 日間に仕事が報告されていません。%2ヘルプが必要ですか?%3"
+
+#: inc/su_graph.inc:52
+msgid "Not enough data yet"
+msgstr "まだ十分なデータがありません"
+
+#: inc/su_join.inc:35
+msgid "An invitation code is required to create an account."
+msgstr "アカウントを作成するために、招待コードが必要です。"
+
+#: inc/su_join.inc:36
+msgid "Invitation code"
+msgstr "招待コード"
+
+#: inc/su_join.inc:44
+msgid "Identifies you on this web site. Use your real name or a nickname."
+msgstr "我々のウェブサイト上であなたを識別する名前です。実名でも、ニックネームでも結構です。"
+
+#: inc/su_join.inc:45
+msgid "Choose screen name"
+msgstr "スクリーンネームを選択してください"
+
+#: inc/su_join.inc:51
+msgid "An address where you can receive emails."
+msgstr "あなたが受信可能なEメールアドレス"
+
+#: inc/su_join.inc:52
+msgid "Your email address"
+msgstr "あなたのEメールアドレス"
+
+#: inc/su_join.inc:63
+msgid "Must be at least %1 characters"
+msgstr "最低 %1 文字必要です。"
+
+#: inc/su_join.inc:64
+msgid "Choose password"
+msgstr "パスワードを選択してください"
+
+#: inc/su_user.inc:155
+msgid "Want to help more?"
+msgstr "さらにヘルプが必要ですか?"
+
+#: inc/su_user.inc:156
+msgid "Tell friends and family about %1."
+msgstr "友人や家族に %1 について伝えてください。"
+
+#: inc/su_user.inc:157
+msgid ""
+"Run BOINC on your other computing devices (desktops, laptops, tablets, "
+"Android phones)."
+msgstr "BOINCを他のコンピューティングデバイス（デスクトップ、ラップトップ、タブレット、Android携帯電話）で実行してください。"
+
+#: inc/su_user.inc:158
+msgid "Is BOINC running on this computer?  If not, %1Download it%2."
+msgstr "このコンピュータでBOINCを実行していますか？ そうでない場合は、%1ダウンロードしてください%2."
