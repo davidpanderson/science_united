@@ -15,11 +15,11 @@ create table su_project (
     url_signature           varchar(1024)   not null,
     share                   double          not null,
     status                  tinyint         not null,
-    avg_ec                  double          not null,
-    avg_ec_adjusted         double          not null,
-    web_url                 varchar(254)    not null,
-    authenticator           varchar(254)    not null,
-    nhosts                  integer         not null,
+    avg_ec                  double          not null  default 0,
+    avg_ec_adjusted         double          not null  default 0,
+    web_url                 varchar(254)    not null  default '',
+    authenticator           varchar(254)    not null  default '',
+    nhosts                  integer         not null  default 0,
     primary key (id)
 ) engine=InnoDB;
 
