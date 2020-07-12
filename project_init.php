@@ -113,6 +113,7 @@ function update_projects() {
         if ((int)$p->id == PROJ_LEIDEN) continue;
         if ((int)$p->id == PROJ_MOO) continue;
         if ((int)$p->id == PROJ_YOYO) continue;
+        if ((int)$p->id == PROJ_MINECRAFT) continue;
 
         // the following require invitation code; skip
         //

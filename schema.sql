@@ -16,10 +16,15 @@ create table su_project (
     share                   double          not null,
     status                  tinyint         not null,
     avg_ec                  double          not null,
+        # average EC per second over last week
     avg_ec_adjusted         double          not null,
+        # same, but adjusted for hosts arriving and leaving
+        # reset to avg_ec at start of each accounting period
     web_url                 varchar(254)    not null,
     authenticator           varchar(254)    not null,
     nhosts                  integer         not null,
+        # value at end of last accounting period
+        # rough estimate of how many hosts attached
     primary key (id)
 ) engine=InnoDB;
 
@@ -148,6 +153,8 @@ create table su_accounting_project (
     njobs_fail_delta        integer         not null default 0,
     njobs_fail_total        integer         not null default 0,
     nhosts                  integer         not null default 0,
+        # # of hosts that have reported being attached to this project
+        # during current accounting period.
     index (project_id),
     primary key (id)
 ) engine=InnoDB;

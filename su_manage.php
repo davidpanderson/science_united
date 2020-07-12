@@ -35,9 +35,15 @@ function top() {
 
 function left() {
     echo '
-        <img src="su_graph.php?type=total&what=ec&ndays=30&xsize=500&ysize=300">
-        <img src="su_graph.php?type=total&what=users&ndays=30&xsize=500&ysize=300">
-        <img src="su_graph.php?type=total&what=jobs&ndays=30&xsize=500&ysize=300">
+        <img src="su_graph.php?type=total&what=ec&ndays=400&xsize=600&ysize=400">
+        <br>&nbsp;<br>
+        <img src="su_graph.php?type=total&what=users&ndays=400&xsize=600&ysize=400">
+        <br>&nbsp;<br>
+        <img src="su_graph.php?type=total&what=jobs&ndays=400&xsize=600&ysize=400">
+        <br>&nbsp;<br>
+        <img src="su_graph.php?type=projects&gpu=0&xsize=600&ysize=400">
+        <br>&nbsp;<br>
+        <img src="su_graph.php?type=projects&gpu=1&xsize=600&ysize=400">
     ';
 }
 

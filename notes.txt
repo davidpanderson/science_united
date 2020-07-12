@@ -596,3 +596,13 @@ when a project changes from http: to https:
 AM RPC:
 if request includes a project w/ http: that is in our DB as https:,
 tell it to detach from that project.
+=================
+tables or graphs for progress report:
+per month for last X years:
+    # of active volunteers
+    # of active hosts
+        # CPU cores
+        # GPUs
+    CPU TeraFLOPS
+    GPU TeraFLOPS
+    # jobs

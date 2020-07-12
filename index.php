@@ -174,7 +174,7 @@ if (PROJECT == 'Science United') {
     <td width=30%></td>
     <td valign=top>
         <center>
-        <nobr><img src=nsf1.jpg height=120> <img src=ucbseal.png height=100></nobr>
+        <nobr><img src=pictures/NSF_4-Color_bitmap_Logo.png height=120> &nbsp; &nbsp; &nbsp; <img src=ucbseal.png height=100></nobr>
         <br><small>
     ";
     echo tra("Science United is funded by the %1National Science Foundation%2, award #1664190, and is based at the %3University of California, Berkeley%4.",

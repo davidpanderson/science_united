@@ -33,7 +33,7 @@ require_once("../inc/su.inc");
 
 // graph last month of FLOPS of top N projects
 //
-function projects_graph($ndays, $gpu) {
+function projects_graph($ndays, $gpu, $xsize, $ysize) {
     $t = time() - 86400;
     // get top projects
     //
@@ -49,7 +49,7 @@ function projects_graph($ndays, $gpu) {
     $t0 = time() - $ndays*86400;
     foreach ($projs as $p) {
         $accts = SUAccountingProject::enum("project_id = $p->project_id and create_time>$t0 order by create_time");
-        $f = fopen("tmp/$p->project_id", "w");
+        $f = fopen("tmp/$gpu/$p->project_id", "w");
 
         $m = count($accts);
         for ($i=0; $i<$m-11; $i++) {
@@ -65,26 +65,29 @@ function projects_graph($ndays, $gpu) {
         }
         fclose($f);
     }
-    $g = fopen("tmp/gp", 'w');
+    $g = fopen("tmp/$gpu/gp", 'w');
     fprintf($g,
-        'set terminal png size %s,%s
+        'set terminal pngcairo size %s,%s
         set xdata time
         set timefmt "%%s"
         set format x "%%d %%b"
         set style fill solid 1.0
         set boxwidth 70000
         set yrange [0:]
-        set xtics 604800
-        set ylabel "TeraFLOPS"
+        set xtics %d
+        set xtics rotate
+        set ylabel "%s"
         plot ',
-        600, 400
+        $xsize, $ysize,
+        $ndays*86400./8,
+        $gpu?"GPU TeraFLOPS":"CPU TeraFLOPS"
     );
     for ($i=0; $i<10; $i++) {
         $p = $projs[$i];
         $proj = SUProject::lookup_id($p->project_id);
         fprintf($g,
-            '"tmp/%d" using 1:2 with linespoints title "%s"',
-            $p->project_id, $proj->name
+            '"tmp/%d/%d" using 1:2 with linespoints title "%s"',
+            $gpu, $p->project_id, str_replace("@", "\\\\@", $proj->name)
         );
         if ($i < 9) {
             fprintf($g, ", ");
@@ -92,6 +95,9 @@ function projects_graph($ndays, $gpu) {
     }
     fprintf($g, "\n");
     fclose($g);
+    $cmd = "gnuplot tmp/$gpu/gp";
+    header("Content-Type: image/png");
+    passthru($cmd);
 }
 
 function graph($type, $id, $what, $ndays, $xsize, $ysize) {
@@ -132,8 +138,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
         $graph_type = 'filledcurve x1';
         break;
     case 'ec':
-        $title1 = "CPU GFLOPS";
-        $title2 = "GPU GFLOPS";
+        $title1 = "CPU TFLOPS";
+        $title2 = "GPU TFLOPS";
         $color1 = "khaki";
         $color2 = "orange";
         $graph_two = false;
@@ -196,8 +202,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             $dt /= 3600;
             fprintf($f, "%f %f %f\n",
                 $a->create_time,
-                $c/($dt),
-                ($c+$g)/($dt)
+                $c/($dt*1000),
+                ($c+$g)/($dt*1000)
             );
             if ($a->gpu_ec_delta) {
                 $graph_two = true;
@@ -233,18 +239,20 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
             $fn, $graph_type, $title1, $color1
         );
     }
+    $xtics = 86400.*$ndays/6;
     fprintf($g,
         'set terminal png size %s,%s
         set xdata time
         set timefmt "%%s"
-        set format x "%%d %%b"
+        set format x "%%d %%b %%y"
         set style fill solid 1.0
         set boxwidth 70000
         set yrange [0:]
-        set xtics 604800
+        set xtics %d
+        set xtics rotate
         %s
         ',
-        $xsize, $ysize, $plot
+        $xsize, $ysize, $xtics, $plot
     );
 
     fclose($g);
@@ -259,19 +267,19 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
 }
 
 if (1) {
+    $xsize = get_int('xsize');
+    $ysize = get_int('ysize');
     $type = get_str('type', true);
-    if (!$type) {
-        projects_graph(80, false);
+    if ($type == 'projects') {
+        projects_graph(80, get_int('gpu'), $xsize, $ysize);
         exit;
     }
     $id = get_int('id', true);
     $what = get_str('what');
     $ndays = get_int('ndays');
-    $xsize = get_int('xsize');
-    $ysize = get_int('ysize');
     graph($type, $id, $what, $ndays, $xsize, $ysize);
 } else {
     //graph('total', 0, 'job', 100, 800, 600);
     graph('user', 22203, 'ec', 30, 800, 600);
-}
+}#
 ?>

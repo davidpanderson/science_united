@@ -68,6 +68,7 @@ function show_projects_acct() {
         }
     }
     foreach ($projects as $p) {
+        if ($p->status == PROJECT_STATUS_HIDE) continue;
         $ap = $p->acct;
         if (!$ap) continue;
         row_array(array(

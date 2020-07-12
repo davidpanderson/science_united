@@ -26,7 +26,7 @@ function show_user_graph($user, $what, $ndays) {
             <p>
             %s
             <p>
-            <img class="img-responsive" src="su_graph.php?type=user&id=%d&what=%s&ndays=%d&xsize=450&ysize=250">
+            <img class="img-responsive" src="su_graph.php?type=user&id=%d&what=%s&ndays=%d&xsize=600&ysize=350">
         ',
         tra("Past month:"), $user->id, $what, $ndays
         );

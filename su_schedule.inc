@@ -144,11 +144,26 @@ function keywd_score($pkws, $ukws) {
     return $x;
 }
 
-function allocation_score($project) {
+// return a score reflecting allocation among projects.
+// A project should have a high score if it's been getting
+// less than its share of computing
+//
+function allocation_score($project, $req) {
     $su_allocate = SUAllocate::get();
+
+    // fraction of computing this project has gotten recently
+    //
     $x = $project->avg_ec_adjusted/$su_allocate->avg_ec_total;
+    
+    // fraction it should be getting
+    //
     $y = $project->share/$su_allocate->share_total;
-    return -$x/$y;
+
+    $score = -$x/$y;
+    if ($req) {
+        //log_write("$project->name alloc score: comp frac $x share frac $y score $score");
+    }
+    return $score;
 }
 
 // compute a score for this project, given user prefs.
@@ -169,10 +184,7 @@ function project_score($project, $ukws, $host, $req) {
 
     // term for project allocation policy
     //
-    $project->allocation_score = allocation_score($project);
-    if ($req) {
-        //log_write("alloc score: ec $x share $y score $project->allocation_score");
-    }
+    $project->allocation_score = allocation_score($project, $req);
 
     // TODO: give an edge to projects the host is already running?
 
@@ -565,14 +577,28 @@ function choose_projects_rpc($user, $host, $req) {
     return $accounts_to_send;
 }
 
+// adjust project's avg_ec for adding or removing 1 host
+//
 function adjust($p, $inc) {
     log_write("adjusting avg_ec of $p->name: $inc");
     if ($p->nhosts == 0) {
         log_write("no adjustment; nhosts is 0");
         return;
     }
+
+    // x estimates the average EC contributed by 1 host
+    // This is a crude estimate - e.g. it doesn't reflect
+    // whether the host has a GPU, etc.
+    //
     $x = $p->avg_ec / $p->nhosts;
-    if (!$inc) $x = -$x;
+    if (!$inc) {
+        if ($p->avg_ec_adjusted < $p->avg_ec/2.) {
+            log_write("skipping decrement; $p->avg_ec_adjusted < $p->avg_ec/2 ");
+            return;
+        }
+        $x = -$x;
+    }
+
     $ret = $p->update("avg_ec_adjusted = avg_ec_adjusted + $x");
     log_write("$p->name: add $x to avg_ec");
     if (!$ret) {
