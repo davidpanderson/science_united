@@ -4,13 +4,13 @@
 # This file is distributed under the same license as BOINC.
 # 
 # Translators:
-# Johan Holmström, 2019
+# Johan Holmström, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2019-02-15 23:35 PST\n"
-"Last-Translator: Johan Holmström, 2019\n"
+"POT-Creation-Date: 2020-05-03 15:43 PDT\n"
+"Last-Translator: Johan Holmström, 2020\n"
 "Language-Team: Swedish (https://www.transifex.com/boinc/teams/35581/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: index.php:44
+#: user/index.php:43
 msgid "%1 is temporarily shut down for maintenance."
 msgstr "%1 är tillfälligt stängt för underhåll."
 
-#: index.php:51
+#: user/index.php:50
 msgid "Recent contribution"
 msgstr "nyligt bidrag"
 
-#: index.php:56 su_welcome.php:85
+#: user/index.php:56 user/su_welcome.php:85
 msgid "Continue to your home page"
 msgstr "Fortsätt till din hemsida"
 
-#: index.php:64
+#: user/index.php:64
 msgid ""
 "%1 lets you help scientific research projects by giving them computing "
 "power.  These projects do research in astronomy, physics, biomedicine, "
@@ -42,7 +42,7 @@ msgstr ""
 " projekt utför undersökningar inom astronomi, fysik, biomedicin, matematik "
 "och miljövetenskap; du kan välja vilka områden du vill stödja."
 
-#: index.php:66
+#: user/index.php:66
 msgid ""
 "You help by installing BOINC, a free program that runs scientific jobs in "
 "the background and when you're not using the computer.  BOINC is secure and "
@@ -52,55 +52,55 @@ msgstr ""
 "vetenskapliga program i bakgrunden när du inte använder datorn. BOINC är "
 "säkert och påverkar inte din normala användning av datorn."
 
-#: index.php:69
+#: user/index.php:70
 msgid "%1 is operated by the BOINC project at UC Berkeley."
 msgstr "%1 drivs av BOINC-projektet vid UC Berkeley."
 
-#: index.php:74
+#: user/index.php:75
 msgid "%1 and the research projects it supports are non-profit."
 msgstr "%1 och de vetenskapliga projekten som stöds är inte vinstdrivande."
 
-#: index.php:78
+#: user/index.php:83
 msgid "Join %1"
 msgstr "Gå med i %1"
 
-#: index.php:81
+#: user/index.php:86
 msgid "Already joined?"
 msgstr "Redan medlem?"
 
-#: index.php:82
+#: user/index.php:88
 msgid "Log in."
 msgstr "Logga in."
 
-#: index.php:92
+#: user/index.php:100
 msgid "Welcome, %1"
 msgstr "Välkommen %1"
 
-#: index.php:111
+#: user/index.php:119
 msgid "News"
 msgstr "Nyheter"
 
-#: index.php:124
+#: user/index.php:132
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Ebola-infekterad VERO E6 Cell"
 
-#: index.php:125
+#: user/index.php:133
 msgid "Simulation of Higgs boson detection"
 msgstr "Simulerad detektion av Higgs boson"
 
-#: index.php:126
+#: user/index.php:134
 msgid "The Earth's interrelated climate systems"
 msgstr "Jordens relaterade klimatsystem"
 
-#: index.php:127
+#: user/index.php:135
 msgid "Structure of protein GIF"
 msgstr "Struktur hos protein GIF"
 
-#: index.php:128
+#: user/index.php:136
 msgid "The Hubble ultra-deep field image"
 msgstr "Hubbles ultra djup fält bild"
 
-#: index.php:171
+#: user/index.php:180
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -108,47 +108,138 @@ msgstr ""
 "Science United finansieras av %1National Science Foundation%2, tilldelning "
 "#1664190, och är baserat vid %3Kaliforniens universitet, Berkeley%4"
 
-#: su_about.php:20
+#: project/project.inc:111
+msgid "Log out"
+msgstr "Logga ut"
+
+#: project/project.inc:117 user/su_join.php:104
+msgid "Join"
+msgstr "Gå med"
+
+#: project/project.inc:117
+msgid "Login"
+msgstr "Logga in"
+
+#: project/project.inc:147
+msgid "About %1"
+msgstr "Om %1"
+
+#: project/project.inc:148 user/su_help.php:20
+msgid "Help"
+msgstr "Hjälp"
+
+#: project/project.inc:149 user/su_hosts.php:95 user/su_hosts.php:128
+msgid "Project"
+msgstr "Projekt"
+
+#: project/project.inc:151 user/su_home.php:46 user/su_home.php:68
+#: user/su_welcome.php:75
+msgid "Community"
+msgstr "Gemenskap"
+
+#: project/project.inc:152
+msgid "Message boards"
+msgstr "Gemenskap"
+
+#: project/project.inc:159
+msgid "Site"
+msgstr "Webbplats"
+
+#: project/project.inc:160
+msgid "Search"
+msgstr "Sök"
+
+#: project/project.inc:161
+msgid "Languages"
+msgstr "Språk"
+
+#: project/project.inc:179
+msgid "Do science research on your computer, tablet, or phone"
+msgstr "Gör vetenskaplig forskning på din dator, surfplatta eller telefon."
+
+#: project/project.inc:199
+msgid "Generated"
+msgstr "Genererad"
+
+#: project/project.inc:230
+msgid "Your personal background."
+msgstr "Din personliga bakgrund."
+
+#: project/project.inc:234
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr ""
+"Berätta om dig själv. Du kan berätta var du är från, din ålder, vad du "
+"jobbar med, om du har någon hobby eller vad som helst om dig själv."
+
+#: project/project.inc:238
+msgid "Your opinions about %1"
+msgstr "Dina åsikter om %1"
+
+#: project/project.inc:242
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"Berätta dina tankar om %1<ol>\n"
+"<li>Varför kör du %1?\n"
+"<li>Vad är dina åsikter om projektet?\n"
+"<li>Några förslag?\n"
+"</ol>"
+
+#: user/su_about.php:20
 msgid "About"
 msgstr "Om"
 
-#: su_account_settings.php:24
+#: user/su_account_settings.php:24
 msgid "Screen name"
 msgstr "Alias"
 
-#: su_account_settings.php:25
+#: user/su_account_settings.php:25
 msgid "Email address"
 msgstr "E-postadress"
 
-#: su_account_settings.php:26
+#: user/su_account_settings.php:26
 msgid "Password"
 msgstr "Lösenord"
 
-#: su_account_settings.php:27
+#: user/su_account_settings.php:27
 msgid "%1 member since"
 msgstr "%1 medlem sedan"
 
-#: su_account_settings.php:28
+#: user/su_account_settings.php:28
 msgid "User ID"
 msgstr "Användar ID"
 
-#: su_account_settings.php:28
+#: user/su_account_settings.php:28
 msgid "Used in community functions"
 msgstr "Används i gemenskapsfunktioner"
 
-#: su_account_settings.php:32
+#: user/su_account_settings.php:29
+msgid "Delete account"
+msgstr "Ta bort konto"
+
+#: user/su_account_settings.php:30
+msgid "Instructions"
+msgstr "Instruktioner"
+
+#: user/su_account_settings.php:35
 msgid "Account settings"
 msgstr "Kontoinställningar"
 
-#: su_accounting.php:29
+#: user/su_accounting.php:29
 msgid "Computing history"
 msgstr "Beräkningshistorik"
 
-#: su_compute_prefs.php:28
+#: user/su_compute_prefs.php:28
 msgid "Computing settings"
 msgstr "Beräkningsinställningar"
 
-#: su_compute_prefs.php:44
+#: user/su_compute_prefs.php:44
 msgid ""
 "You can control how many processors to use (most computers have 4 or 8 "
 "processors) and when to use them."
@@ -156,11 +247,11 @@ msgstr ""
 "Du kan styra hur många processorer som används (de flesta datorer har 4 "
 "eller 8 processorer) och när de används."
 
-#: su_compute_prefs.php:50
+#: user/su_compute_prefs.php:50
 msgid "This may affect your electricity costs and your computer's fan speeds."
 msgstr "Detta kan påverka din elräkning och hastigheten på datorns kylfläkt."
 
-#: su_compute_prefs.php:52
+#: user/su_compute_prefs.php:52
 msgid ""
 "Settings affect all your computers.  Changes take effect the next time the "
 "computer synchs with Science United."
@@ -168,7 +259,7 @@ msgstr ""
 "Inställningarna berör alla dina datorer. Ändringar träder ikraft nästa gång "
 "din dator synkar med Science United."
 
-#: su_compute_prefs.php:54
+#: user/su_compute_prefs.php:54
 msgid ""
 "You can change settings for a particular computer using the BOINC Manager.  "
 "This also gives you more detailed options."
@@ -176,11 +267,11 @@ msgstr ""
 "Du kan ändra inställningar för en specifik dator genom BOINC Manager. Detta "
 "ger också mer detaljerade alternativ."
 
-#: su_compute_prefs.php:56
+#: user/su_compute_prefs.php:56
 msgid "Choose one of:"
 msgstr "Välj en av:"
 
-#: su_compute_prefs.php:61
+#: user/su_compute_prefs.php:61
 msgid ""
 "Low power %1 Use 25% of processors, and stop computing when computer is "
 "idle.%2"
@@ -188,23 +279,23 @@ msgstr ""
 "Låg energi %1 Använd 25% av processorerna och sluta köra beräkningar när "
 "datorn inte används.%2"
 
-#: su_compute_prefs.php:68
+#: user/su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Standard %1 Använd 50% av processorerna.%2"
 
-#: su_compute_prefs.php:77
+#: user/su_compute_prefs.php:77
 msgid "Maximum computing %1 Use all processors.%2"
 msgstr "Maximal beräkning %1 Använd alla processorer.%2"
 
-#: su_compute_prefs.php:86
+#: user/su_compute_prefs.php:86
 msgid "Update"
 msgstr "Uppdatera"
 
-#: su_compute_prefs.php:95
+#: user/su_compute_prefs.php:95
 msgid "Computing settings updated"
 msgstr "Datorinställningar uppdaterade"
 
-#: su_compute_prefs.php:96
+#: user/su_compute_prefs.php:96
 msgid ""
 "The new settings will take effect when your computer synchs with Science "
 "United."
@@ -212,33 +303,33 @@ msgstr ""
 "De nya inställningarna kommer att träda ikraft när din dator synkar med "
 "Science United."
 
-#: su_compute_prefs.php:100
+#: user/su_compute_prefs.php:100
 msgid "Continue to home page"
 msgstr "Fortsätt till hemsidan"
 
-#: su_download.php:28
+#: user/su_download.php:28
 msgid "Install software"
 msgstr "Installera programvara"
 
-#: su_download.php:29
+#: user/su_download.php:29
 msgid ""
 "To participate in %1 you must install BOINC and VirtualBox on your computer."
 msgstr ""
 "För att delta i %1 behöver du installera BOINC och VirtualBox på din dator."
 
-#: su_email_prefs.php:28
+#: user/su_email_prefs.php:28
 msgid "Email settings"
 msgstr "E-postinställningar"
 
-#: su_email_prefs.php:30
+#: user/su_email_prefs.php:30
 msgid "Preferences updated."
 msgstr "Inställningar uppdaterade."
 
-#: su_email_prefs.php:35
+#: user/su_email_prefs.php:35
 msgid "Don't send me any emails"
 msgstr "Skicka inte några e-post till mig"
 
-#: su_email_prefs.php:42
+#: user/su_email_prefs.php:42
 msgid ""
 "Status emails %1 These tell you how much work your computer(s) have done "
 "recently %2"
@@ -246,23 +337,23 @@ msgstr ""
 "Status e-post %1 Dessa berättar hur mycket arbete din dator har bidragit med"
 " nyligen %2"
 
-#: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
+#: user/su_email_prefs.php:48 user/su_email_prefs.php:62 user/su_prefs.php:128
 msgid "Never"
 msgstr "Aldrig"
 
-#: su_email_prefs.php:49
+#: user/su_email_prefs.php:49
 msgid "Daily"
 msgstr "Dagligen"
 
-#: su_email_prefs.php:50
+#: user/su_email_prefs.php:50
 msgid "Weekly"
 msgstr "Veckovis"
 
-#: su_email_prefs.php:51
+#: user/su_email_prefs.php:51
 msgid "Monthly"
 msgstr "Månadsvis"
 
-#: su_email_prefs.php:56
+#: user/su_email_prefs.php:56
 msgid ""
 "Community emails %1 These tell you about private messages, forum posts, and "
 "friend requests %2"
@@ -270,167 +361,219 @@ msgstr ""
 "Gemenskaps e-post %1 Dessa informerar dig om privata meddelanden, "
 "foruminlägg och vänskapsförfrågningar %2"
 
-#: su_email_prefs.php:63
+#: user/su_email_prefs.php:63
 msgid "Immediately"
 msgstr "Direkt"
 
-#: su_email_prefs.php:64
+#: user/su_email_prefs.php:64
 msgid "Daily summary"
 msgstr "Daglig sammanställning"
 
-#: su_email_prefs.php:68 su_prefs.php:331
+#: user/su_email_prefs.php:68 user/su_prefs.php:348
 msgid "Save"
 msgstr "Spara"
 
-#: su_graph.php:56
+#: user/su_graph.php:119
 msgid "Successful jobs/day"
 msgstr "Lyckade arbetsuppgifter/dag"
 
-#: su_graph.php:57
+#: user/su_graph.php:120
 msgid "Failed jobs/day"
 msgstr "Misslyckade arbetsuppgifter/dag"
 
-#: su_graph.php:64
+#: user/su_graph.php:127
 msgid "CPU hours/day"
 msgstr "CPU timmar/dag"
 
-#: su_graph.php:65
+#: user/su_graph.php:128
 msgid "GPU hours/day"
 msgstr "GPU timmar/dag"
 
-#: su_help.php:3
-msgid "Need help?"
-msgstr "Behöver du hjälp?"
+#: user/su_help.php:29
+msgid ""
+"If you received a 'no work reported' email from Science United or are having"
+" other problems, please do the following:"
+msgstr ""
+"Om du tar emot ett \"inga jobb rapporterade\" e-post från Science United "
+"eller har andra problem, vänligen gör följande:"
 
-#: su_help.php:8
+#: user/su_help.php:30
+msgid "Make sure BOINC is installed on your computer"
+msgstr "Försäkra dig om att BOINC är installerat på din dator"
+
+#: user/su_help.php:31
+msgid "Do you see the BOINC icon %1 in your system tray or dock?"
+msgstr "Ser du BOINC-ikonen %1 i Meddelandefältet?"
+
+#: user/su_help.php:34
+msgid "If not, %1download and install BOINC%2."
+msgstr "Om inte, %1Ladda ner och installera BOINC%2"
+
+#: user/su_help.php:37
+msgid "Science United requires BOINC version 7.14 or later."
+msgstr "Science United behöver BOINC version 7.14 eller senare."
+
+#: user/su_help.php:48
+msgid "Make sure BOINC is attached to Science United"
+msgstr "Försäkra dig om att BOINC är ansluten till Science United"
+
+#: user/su_help.php:49
+msgid "Double-click the BOINC icon to open the BOINC Manager."
+msgstr "Dubbelklicka på BOINC-ikonen för att öppna BOINC Hanteraren."
+
+#: user/su_help.php:50
+msgid "Switch to the Advanced View (View / Advanced View)."
+msgstr "Byt till avancerad vy (Visa / Avancerad vy)."
+
+#: user/su_help.php:51
+msgid ""
+"Click on the Tools menu.  You should see 'Synchronize with Science United'."
+"  If not, select 'Use account manager' and attach BOINC to your Science "
+"United account."
+msgstr ""
+"Klicka på Verktygs-menyn. Du bör se \"Synkronisera med Science United\". Om "
+"inte, välj \"Använd kontohanterare\" och anslut Boinc till ditt Science "
+"United konto."
+
+#: user/su_help.php:62
+msgid "Other sources of help"
+msgstr "Andra sätt att få hjälp"
+
+#: user/su_help.php:63
 msgid "Problems installing or running BOINC: %1 get help here%2."
 msgstr "Problem att installera eller köra BOINC: %1 få hjälp här%2."
 
-#: su_help.php:16
+#: user/su_help.php:67
 msgid ""
-"Problems with %1: ask for help on the\n"
-"        %2 %3 message boards.%4"
+"Problems with Science United: ask for help on the %1Science United message "
+"boards%2."
 msgstr ""
-"Problem med %1: fråga om hjälp i\n"
-"%2 %3 forumet.%4"
+"Problem med Science United: Fråga efter hjälp i \"%1Science United "
+"forumen%2."
 
-#: su_help.php:27
+#: user/su_help.php:71
 msgid ""
-"To report a bug or request a feature in %1, create an issue on %2 the %3 "
-"Github repository%4 (you'll need a free Github account)."
+"To report a bug or request a feature in Science United, create an issue on "
+"the %1Science United Github repository%2 (you'll need a free Github "
+"account)."
 msgstr ""
-"För att rapportera en bugg eller efterfråga en ny funktion för %1, skapa en "
-"fråga i %2 %3Github%4 (du behöver ett kostnadsfritt Github konto)."
+"För att rapportera ett problem eller efterfråga en funktion för Science "
+"United, skapa en fråga i %1Science United Github repository%2 (du behöver ha"
+" ett gratis Github-konto)."
 
-#: su_home.php:25
+#: user/su_help.php:75
+msgid "If none of the above work for you, %1email us%2."
+msgstr "Om inget av ovanstående fungerade, %1E-posta oss%2."
+
+#: user/su_home.php:25
 msgid "Contribution"
 msgstr "Bidrag"
 
-#: su_home.php:28 su_hosts.php:184
+#: user/su_home.php:28 user/su_hosts.php:184
 msgid "View"
 msgstr "Visa"
 
-#: su_home.php:30 su_hosts.php:31 user_hosts.php:40
+#: user/su_home.php:30 user/su_hosts.php:31
 msgid "Your computers"
 msgstr "Dina datorer"
 
-#: su_home.php:34
+#: user/su_home.php:34
 msgid "Computing: graphs"
 msgstr "Beräkningar: grafer"
 
-#: su_home.php:35
+#: user/su_home.php:35
 msgid "Computing: details"
 msgstr "Beräkningar: detaljer"
 
-#: su_home.php:36 su_user_projects.php:74
+#: user/su_home.php:36 user/su_user_projects.php:74
 msgid "Science projects"
 msgstr "Vetenskapliga projekt"
 
-#: su_home.php:43 su_home.php:65 su_welcome.php:75 project.inc:142
-msgid "Community"
-msgstr "Gemenskap"
+#: user/su_home.php:38
+msgid "Claimed credit"
+msgstr "Yrkad poäng"
 
-#: su_home.php:51
+#: user/su_home.php:54
 msgid "Settings"
 msgstr "Inställningar"
 
-#: su_home.php:54
+#: user/su_home.php:57
 msgid "Edit"
 msgstr "Ändra"
 
-#: su_home.php:56
+#: user/su_home.php:59
 msgid "Science areas and locations"
 msgstr "Vetenskapliga områden och platser"
 
-#: su_home.php:56
+#: user/su_home.php:59
 msgid "Choose the types of research you want to support"
 msgstr "Välj vilka typer av forskning du vill stödja"
 
-#: su_home.php:61
+#: user/su_home.php:64
 msgid "Computing"
 msgstr "Beräkningar"
 
-#: su_home.php:61
+#: user/su_home.php:64
 msgid "Choose how to use your computers"
 msgstr "Välj hur dina datorer ska användas"
 
-#: su_home.php:65
+#: user/su_home.php:68
 msgid "Settings for message boards and private messages"
 msgstr "Inställningar för forumet och privata meddelanden"
 
-#: su_home.php:69
+#: user/su_home.php:72
 msgid "Account"
 msgstr "Konto"
 
-#: su_home.php:69
+#: user/su_home.php:72
 msgid "Name, password, email address"
 msgstr "Namn, lösenord, e-postadress"
 
-#: su_home.php:73
+#: user/su_home.php:76
 msgid "Email"
 msgstr "E-post"
 
-#: su_home.php:73
+#: user/su_home.php:76
 msgid "When and whether we should email you"
 msgstr "När och om vi ska skicka e-post till dig"
 
-#: su_home.php:99
+#: user/su_home.php:102
 msgid "Your home page"
 msgstr "Din hemsida"
 
-#: su_hosts.php:33
+#: user/su_hosts.php:33
 msgid "No computers yet"
 msgstr "Inga datorer än"
 
-#: su_hosts.php:39
+#: user/su_hosts.php:39
 msgid "Computer name"
 msgstr "Datornamn"
 
-#: su_hosts.php:39 su_user_projects.php:84
+#: user/su_hosts.php:39 user/su_user_projects.php:84
 msgid "Click for details"
 msgstr "Klicka för detaljer"
 
-#: su_hosts.php:40
+#: user/su_hosts.php:40
 msgid "Operating system"
 msgstr "Operativsystem"
 
-#: su_hosts.php:41 su_hosts.php:190
+#: user/su_hosts.php:41 user/su_hosts.php:190
 msgid "Last contact"
 msgstr "Senaste kontakt"
 
-#: su_hosts.php:42 su_hosts.php:47
+#: user/su_hosts.php:42 user/su_hosts.php:47
 msgid "Remove"
 msgstr "Ta bort"
 
-#: su_hosts.php:42
+#: user/su_hosts.php:42
 msgid "... if this is a duplicate or the computer is no longer running BOINC"
 msgstr "... om detta är en dubblett eller datorn inte längre kör BOINC"
 
-#: su_hosts.php:72
+#: user/su_hosts.php:72
 msgid "How projects are chosen for %1"
 msgstr "Hur projekt väljs för %1"
 
-#: su_hosts.php:73
+#: user/su_hosts.php:73
 msgid ""
 "To decide which projects this computer should work for, we compute a "
 "\"score\" for each project.  The components of the score are:"
@@ -438,38 +581,38 @@ msgstr ""
 "För att bestämma vilka projekt den här datorn ska arbeta för så beräknar vi "
 "en \"poäng\" för varje projekt. Komponenterna för poängen är:"
 
-#: su_hosts.php:80 su_hosts.php:96
+#: user/su_hosts.php:80 user/su_hosts.php:96
 msgid "Keyword score"
 msgstr "Sökordspoäng"
 
-#: su_hosts.php:81
+#: user/su_hosts.php:81
 msgid "How well your keyword preferences match the project's keywords."
 msgstr "Hur bra dina sökordsinställningar matchar projektets sökord."
 
-#: su_hosts.php:82 su_hosts.php:97
+#: user/su_hosts.php:82 user/su_hosts.php:97
 msgid "Platform score"
 msgstr "Plattformspoäng"
 
-#: su_hosts.php:83
+#: user/su_hosts.php:83
 msgid ""
 "-1 if the project has no programs that will run on the computer; 0 if it "
-"does; +1 if one of them uses a GPU or VirtuaBox."
+"does; +0.1 if one of them uses a GPU or VirtualBox."
 msgstr ""
-"-1 om projektet inta har något program som kan köras på plattformen; 0 om "
-"det har det; +1 om en av dem använder GPU eller VirtualBox."
+"-1 om projektet inte har några applikationer som kan köras på din dator; 0 "
+"om det har det; +0,1 om en av dem använder sig av GPU eller VirtualBox."
 
-#: su_hosts.php:84
-msgid "Balance"
-msgstr "Balans"
+#: user/su_hosts.php:84 user/su_hosts.php:98
+msgid "Allocation score"
+msgstr "Tilldelningspoäng"
 
-#: su_hosts.php:85
+#: user/su_hosts.php:85
 msgid ""
 "How much work is owed to the project; this changes from one day to the next."
 msgstr ""
 "Hur mycket arbete som är skyldigt till projektet, detta ändras från en dag "
 "till nästa."
 
-#: su_hosts.php:87
+#: user/su_hosts.php:87
 msgid ""
 "We then choose the highest-scoring projects (at least 2) that together can "
 "use all the computer's processors."
@@ -477,99 +620,89 @@ msgstr ""
 "Vi väljer sedan de projekt med högst poäng (minst 2) som tillsammans kan "
 "använda datorns alla processorer."
 
-#: su_hosts.php:95 su_hosts.php:128 project.inc:140
-msgid "Project"
-msgstr "Projekt"
-
-#: su_hosts.php:98
-msgid "Balance (GFLOPS days)"
-msgstr "Balans (GFLOPS dagar)"
-
-#: su_hosts.php:99
-msgid "Opted out?"
-msgstr "Valt bort?"
-
-#: su_hosts.php:100 su_hosts.php:128
+#: user/su_hosts.php:99 user/su_hosts.php:128
 msgid "Score"
 msgstr "Poäng"
 
-#: su_hosts.php:103
+#: user/su_hosts.php:102
 msgid "Can use %1?"
 msgstr "Kan använda %1?"
 
-#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:151
-#: su.inc:156
+#: user/su_hosts.php:104
+msgid "Opted out?"
+msgstr "Valt bort?"
+
+#: user/su_hosts.php:117 user/su_hosts.php:139 user/su_user_projects.php:141
 msgid "Yes"
 msgstr "Ja"
 
-#: su_hosts.php:122
+#: user/su_hosts.php:122
 msgid "Given the above info, this computer would do work for these projects:"
 msgstr ""
 "Givet informationen ovan så kommer denna dator att köra arbete för dessa "
 "projekt:"
 
-#: su_hosts.php:139 su_user_projects.php:143 su.inc:152 su.inc:157
+#: user/su_hosts.php:139 user/su_user_projects.php:143
 msgid "No"
 msgstr "Nej"
 
-#: su_hosts.php:148
+#: user/su_hosts.php:148
 msgid "Computer hardware and software"
 msgstr "Datorhårdvara och mjukvara"
 
-#: su_hosts.php:156 su_hosts.php:196
+#: user/su_hosts.php:156 user/su_hosts.php:196
 msgid "Projects for which this computer has done work"
 msgstr "Projekt som denna dator har genomfört arbete för"
 
-#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
-#: su.inc:206
+#: user/su_hosts.php:160 user/su_hosts.php:185 user/su_user_projects.php:84
 msgid "Name"
 msgstr "Namn"
 
-#: su_hosts.php:161 su.inc:209
+#: user/su_hosts.php:161
 msgid "CPU FLOPS"
 msgstr "CPU FLOPS"
 
-#: su_hosts.php:162 su_user_projects.php:133 su.inc:208
+#: user/su_hosts.php:162 user/su_user_projects.php:133
 msgid "CPU time"
 msgstr "CPU tid"
 
-#: su_hosts.php:163 su.inc:211
+#: user/su_hosts.php:163
 msgid "GPU FLOPS"
 msgstr "GPU FLOPS"
 
-#: su_hosts.php:164 su_user_projects.php:136 su.inc:210
+#: user/su_hosts.php:164 user/su_user_projects.php:136
 msgid "GPU time"
 msgstr "GPU tid"
 
-#: su_hosts.php:165 su.inc:212
+#: user/su_hosts.php:165
 msgid "# jobs success"
 msgstr "# arbeten lyckade"
 
-#: su_hosts.php:166
+#: user/su_hosts.php:166
 msgid "#jobs fail"
 msgstr "# arbeten misslyckade"
 
-#: su_hosts.php:182 user_host.php:28
+#: user/su_hosts.php:182
 msgid "Computer details"
 msgstr "Datordetaljer"
 
-#: su_hosts.php:187
+#: user/su_hosts.php:187
 msgid "Hardware/software details"
 msgstr "Hårdvaru/mjukvarudetaljer"
 
-#: su_hosts.php:192
+#: user/su_hosts.php:192
 msgid "How projects are chosen for this computer"
 msgstr "Hur projekt väljs för denna dator"
 
-#: su_intro.php:25
+#: user/su_intro.php:25
 msgid "Getting started"
 msgstr "Komma igång"
 
-#: su_intro.php:26 su_welcome.php:20
+#: user/su_intro.php:26 user/su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Välkommen till %1"
 
-#: su_intro.php:46
+#: user/su_intro.php:46
 msgid ""
 "By now you should have downloaded and run BOINC.  If so, you're done!  Your "
 "computer will do run science jobs in the background, supporting research in "
@@ -579,7 +712,7 @@ msgstr ""
 "dator kommer att köra vetenskapliga arbeten i bakgrunden och stödja "
 "forskning inom de områden du valt."
 
-#: su_intro.php:47
+#: user/su_intro.php:47
 msgid ""
 "Scientists need all the computing power they can get.  To help further, you "
 "can:"
@@ -587,7 +720,7 @@ msgstr ""
 "Forskare behöver all datorkraft de kan få. För att hjälpa ytterligare kan "
 "du:"
 
-#: su_intro.php:48
+#: user/su_intro.php:48
 msgid ""
 "Tell your family, friends, and co-workers about %1, and encourage them to "
 "volunteer."
@@ -595,11 +728,11 @@ msgstr ""
 "Berätta för din familj, vänner och arbetskamrater om %1 och uppmana dem att "
 "gå med."
 
-#: su_intro.php:49
+#: user/su_intro.php:49
 msgid "Run %1 on all your computing devices:"
 msgstr "Köra %1 på alla dina datorenheter:"
 
-#: su_intro.php:50
+#: user/su_intro.php:50
 msgid ""
 "Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
 "web site (%1) and log in.  Then select Download from the Project menu, and "
@@ -609,7 +742,7 @@ msgstr ""
 "webbplatsen (%1) på den enheten och logga in. Välj därefter Ladda ner från "
 "projektmenyn och installera BOINC precis som du gjorde på den här datorn."
 
-#: su_intro.php:51
+#: user/su_intro.php:51
 msgid ""
 "Android phones and tablets: install the BOINC app from the Google Play Store"
 " or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
@@ -619,39 +752,47 @@ msgstr ""
 "butiken eller (för Fire) Amazon App butiken. Välj Använd Kontohanterare, "
 "välj %1 och logga in."
 
-#: su_intro.php:52
+#: user/su_intro.php:52
 msgid "You can %1 Join or create a Team%2."
 msgstr "Du kan %1 Gå med i eller skapa ett Lag%2."
 
-#: su_intro.php:53
+#: user/su_intro.php:53
 msgid "Computing prefs"
 msgstr "Beräkningsinställningar"
 
-#: su_intro.php:54
+#: user/su_intro.php:54
 msgid "Science prefs"
 msgstr "Forskningsinställningar"
 
-#: su_join.php:94 project.inc:108
-msgid "Join"
-msgstr "Gå med"
+#: user/su_join.php:99
+msgid "Already joined"
+msgstr "Redan ansluten"
 
-#: su_prefs.php:109
+#: user/su_join.php:100
+msgid ""
+"You're already logged in.  If you want to create a new account, please log "
+"out first."
+msgstr ""
+"Du är redan inloggad. Om du vill skapa ett nytt konto, vänligen logga ut "
+"först."
+
+#: user/su_prefs.php:126
 msgid "Prefer"
 msgstr "Föredra"
 
-#: su_prefs.php:110
+#: user/su_prefs.php:127
 msgid "As needed"
 msgstr "Efter behov"
 
-#: su_prefs.php:308
+#: user/su_prefs.php:325
 msgid "Science and location preferences"
 msgstr "Forsknings och platsinställningar"
 
-#: su_prefs.php:311
+#: user/su_prefs.php:328
 msgid "Preferences saved."
 msgstr "Inställningar sparade."
 
-#: su_prefs.php:314
+#: user/su_prefs.php:331
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
 "%1 for more detail, %2 for less.  When done, click the Save button at the "
@@ -661,139 +802,140 @@ msgstr ""
 "Klicka %1 för mer information, %2 för mindre. När du är klar, klicka på "
 "Spara knappen längst ner."
 
-#: su_prefs.php:323
+#: user/su_prefs.php:340
 msgid "Science areas"
 msgstr "Forskningsområden"
 
-#: su_prefs.php:327
+#: user/su_prefs.php:344
 msgid "Locations"
 msgstr "Platser"
 
-#: su_user_accounting.php:24 su_user_accounting.php:34
+#: user/su_user_accounting.php:24 user/su_user_accounting.php:34
 msgid "Your contribution history"
 msgstr "Din bidragshistorik"
 
-#: su_user_accounting.php:35
+#: user/su_user_accounting.php:35
 msgid "Computing power"
 msgstr "Beräkningskraft"
 
-#: su_user_accounting.php:37
+#: user/su_user_accounting.php:37
 msgid "Computing time"
 msgstr "Beräkningstid"
 
-#: su_user_accounting.php:39
+#: user/su_user_accounting.php:39
 msgid "Completed jobs"
 msgstr "Slutförda arbetsuppgifter"
 
-#: su_user_projects.php:28
+#: user/su_user_projects.php:28
 msgid "New"
 msgstr "Ny"
 
-#: su_user_projects.php:30 su.inc:191
+#: user/su_user_projects.php:30
 msgid "Established"
 msgstr "Fastställd"
 
-#: su_user_projects.php:32
+#: user/su_user_projects.php:32
 msgid "In progress"
 msgstr "Pågående"
 
-#: su_user_projects.php:34 su.inc:295 su.inc:302
+#: user/su_user_projects.php:34
 msgid "Unknown"
 msgstr "Okänd"
 
-#: su_user_projects.php:85
+#: user/su_user_projects.php:85
 msgid "since"
 msgstr "sedan"
 
-#: su_user_projects.php:86
+#: user/su_user_projects.php:86
 msgid "CPU hours"
 msgstr "CPU timmar"
 
-#: su_user_projects.php:87
+#: user/su_user_projects.php:87
 msgid "GPU hours"
 msgstr "GPU timmar"
 
-#: su_user_projects.php:88
+#: user/su_user_projects.php:88
 msgid "# successful jobs"
 msgstr "# lyckade arbetsuppgifter"
 
-#: su_user_projects.php:89
+#: user/su_user_projects.php:89
 msgid "# failed jobs"
 msgstr "# misslyckade arbetsuppgifter"
 
-#: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
+#: user/su_user_projects.php:90 user/su_user_projects.php:131
+#: user/su_user_projects.php:150
 msgid "Account status"
 msgstr "Kontostatus"
 
-#: su_user_projects.php:91
+#: user/su_user_projects.php:91
 msgid "Allowed by prefs?"
 msgstr "Tillåtet i inställningarna?"
 
-#: su_user_projects.php:126
+#: user/su_user_projects.php:126
 msgid "Web site"
 msgstr "Webbplats"
 
-#: su_user_projects.php:127
+#: user/su_user_projects.php:127
 msgid "Science keywords"
 msgstr "Vetenskapliga sökord"
 
-#: su_user_projects.php:128
+#: user/su_user_projects.php:128
 msgid "Location keywords"
 msgstr "Platssökord"
 
-#: su_user_projects.php:132
+#: user/su_user_projects.php:132
 msgid "CPU computing"
 msgstr "CPU beräkning"
 
-#: su_user_projects.php:135
+#: user/su_user_projects.php:135
 msgid "GPU computing"
 msgstr "GPU beräkning"
 
-#: su_user_projects.php:138
+#: user/su_user_projects.php:138
 msgid "# jobs succeeded"
 msgstr "# arbetsuppgifter som lyckats"
 
-#: su_user_projects.php:139
+#: user/su_user_projects.php:139
 msgid "# jobs failed"
 msgstr "# arbetsuppgifter som misslyckats"
 
-#: su_user_projects.php:141
+#: user/su_user_projects.php:141
 msgid "Include"
 msgstr "Inkludera"
 
-#: su_user_projects.php:143
+#: user/su_user_projects.php:143
 msgid "Exclude"
 msgstr "Exkludera"
 
-#: su_user_projects.php:146
+#: user/su_user_projects.php:146
 msgid "Excluded?"
 msgstr "Exkluderat?"
 
-#: su_user_projects.php:146
+#: user/su_user_projects.php:146
 msgid "Use if this project causes problems on your computer"
 msgstr "Använd om detta projekt skapar problem på din dator"
 
-#: su_user_projects.php:150
+#: user/su_user_projects.php:150
 msgid "None"
 msgstr "Ingen"
 
-#: su_user_projects.php:152
+#: user/su_user_projects.php:152
 msgid "Return to project list"
 msgstr "Återvänd till listan över projekt"
 
-#: su_welcome.php:22
+#: user/su_welcome.php:22
 msgid ""
 "At this point BOINC should be installed and running on your computer; the "
-"system tray should have an icon like this: %1 If not, %2get help here%3."
+"system tray should have an icon like this: %1 If not, %2 get help here %3."
 msgstr ""
-"Nu borde Boinc var installerat och startat på din dator; meddelandefältet "
-"borde ha en ikon som ser ut så här: %1 Om inte, %2Få hjälp här%3."
+"Nu borde BOINC vara installerat och igång på din dator; meddelandefältet ska"
+" ha en ikon som denna: %1 Om inte, %2 Få hjälp här %3."
 
-#: su_welcome.php:32
+#: user/su_welcome.php:32
 msgid "What happens now?"
 msgstr "Vad händer nu?"
 
-#: su_welcome.php:33
+#: user/su_welcome.php:33
 msgid ""
 "BOINC, running in the background, will download computing jobs,\n"
 "        process them, and upload the results.\n"
@@ -808,11 +950,11 @@ msgstr ""
 "Dessa beräkningar kan få din dators kylfläkt att aktiveras,\n"
 "och kan öka din elräkning något."
 
-#: su_welcome.php:45
+#: user/su_welcome.php:45
 msgid "How to monitor and control BOINC"
 msgstr "Hur du övervakar och kontrollerar BOINC"
 
-#: su_welcome.php:46
+#: user/su_welcome.php:46
 msgid ""
 "You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
 "        Open this by double-clicking on the BOINC icon.\n"
@@ -822,11 +964,11 @@ msgstr ""
 "Öppna den genom att dubbelklicka på BOINC ikonen.\n"
 "Detaljer finns %1här%2."
 
-#: su_welcome.php:58
+#: user/su_welcome.php:58
 msgid "Computing preferences"
 msgstr "Beräkningsinställningar"
 
-#: su_welcome.php:59
+#: user/su_welcome.php:59
 msgid ""
 "BOINC is designed to not impact\n"
 "        the performance of your computer for normal use.\n"
@@ -841,7 +983,7 @@ msgstr ""
 "Du kan göra många inställningar.\n"
 "Undersök det %1här%2."
 
-#: su_welcome.php:76
+#: user/su_welcome.php:76
 msgid ""
 "You can meet and communicate with other %1 participants\n"
 "        in a variety of ways - take a look under the Community\n"
@@ -850,316 +992,66 @@ msgstr ""
 "Du kan träffa och kommunicera med andar %1 deltagare\n"
 "på flera olika sätt - utforska Gemenskapsmenyn ovan."
 
-#: user_host.php:30 user_projects.php:23
-msgid "Projects"
-msgstr "Projekt"
-
-#: user_hosts.php:26
-msgid "click for details"
-msgstr "klicka för detaljer"
-
-#: user_hosts.php:27
-msgid "Last RPC"
-msgstr "Senaste fjärrproceduranrop"
-
-#: project.inc:102
-msgid "Log out"
-msgstr "Logga ut"
-
-#: project.inc:108
-msgid "Login"
-msgstr "Logga in"
-
-#: project.inc:138
-msgid "About %1"
-msgstr "Om %1"
-
-#: project.inc:139
-msgid "Help"
-msgstr "Hjälp"
-
-#: project.inc:143
-msgid "Message boards"
-msgstr "Gemenskap"
-
-#: project.inc:145
-msgid "Teams"
-msgstr "Lag"
-
-#: project.inc:145
-msgid "create or join a team"
-msgstr "skapa eller gå med i ett lag"
-
-#: project.inc:150
-msgid "Site"
-msgstr "Webbplats"
-
-#: project.inc:151
-msgid "Search"
-msgstr "Sök"
-
-#: project.inc:152
-msgid "Languages"
-msgstr "Språk"
-
-#: project.inc:170
-msgid "Do science research on your computer, tablet, or phone"
-msgstr "Gör vetenskaplig forskning på din dator, surfplatta eller telefon."
-
-#: project.inc:190
-msgid "Generated"
-msgstr "Genererad"
-
-#: project.inc:221
-msgid "Your personal background."
-msgstr "Din personliga bakgrund."
-
-#: project.inc:225
-msgid ""
-"Tell us about yourself. You could tell us where you're from, your age, "
-"occupation, hobbies, or anything else about yourself."
-msgstr ""
-"Berätta om dig själv. Du kan berätta var du är från, din ålder, vad du "
-"jobbar med, om du har någon hobby eller vad som helst om dig själv."
-
-#: project.inc:229
-msgid "Your opinions about %1"
-msgstr "Dina åsikter om %1"
-
-#: project.inc:233
-msgid ""
-"Tell us your thoughts about %1<ol>\n"
-"    <li>Why do you run %1?\n"
-"    <li>What are your views about the project?\n"
-"    <li>Any suggestions?\n"
-"    </ol>"
-msgstr ""
-"Berätta dina tankar om %1<ol>\n"
-"<li>Varför kör du %1?\n"
-"<li>Vad är dina åsikter om projektet?\n"
-"<li>Några förslag?\n"
-"</ol>"
-
-#: su.inc:153 su.inc:158
-msgid "Maybe"
-msgstr "Kanske"
-
-#: su.inc:161
-msgid "Edit preferences"
-msgstr "Ändra inställningar"
-
-#: su.inc:189
-msgid "Initial"
-msgstr "Initial"
-
-#: su.inc:193
-msgid "Transient error"
-msgstr "Övergående fel"
-
-#: su.inc:201
-msgid "No accounts yet"
-msgstr "Inga konton än"
-
-#: su.inc:207
-msgid "Status"
-msgstr "Status"
-
-#: su.inc:213
-msgid "# jobs fail"
-msgstr "# arbetsuppgifter som misslyckats"
-
-#: su.inc:236
-msgid "Domain name"
-msgstr "Domännamn"
-
-#: su.inc:238
-msgid "Product name"
-msgstr "Produktnamn"
-
-#: su.inc:242
-msgid "Local Standard Time"
-msgstr "Lokal standard tid"
-
-#: su.inc:242
-msgid "UTC %1 hours"
-msgstr "UTC %1 timmar"
-
-#: su.inc:243
-msgid "Created"
-msgstr "Skapad"
-
-#: su.inc:244
-msgid "Number of times client has contacted server"
-msgstr "Antal gånger enheten har kontaktat servern"
-
-#: su.inc:245
-msgid "Last time contacted server"
-msgstr "Tid för senaste serverkontakt"
-
-#: su.inc:246
-msgid "Fraction of time BOINC is running"
-msgstr "Del av tiden som BOINC körs"
-
-#: su.inc:248
-msgid ""
-"While BOINC is running, fraction of time computer has an Internet connection"
-msgstr "När BOINC körs, del av tiden som datorn har internetuppkoppling"
-
-#: su.inc:250
-msgid "While BOINC is running, fraction of time computing is allowed"
-msgstr "När BOINC körs, del av tiden som beräkningar är tillåtet"
-
-#: su.inc:251
-msgid "While is BOINC running, fraction of time GPU computing is allowed"
-msgstr "När BOINC körs, del av tiden som GPU beräkningar tillåts"
-
-#: su.inc:256
-msgid "CPU type"
-msgstr "CPU typ"
-
-#: su.inc:257
-msgid "Number of processors"
-msgstr "Antal processorer"
-
-#: su.inc:259
-msgid "Coprocessors"
-msgstr "Hjälpprocessorer"
-
-#: su.inc:261
-msgid "Operating System"
-msgstr "Operativsystem"
-
-#: su.inc:264
-msgid "BOINC version"
-msgstr "BOINC version"
-
-#: su.inc:268
-msgid "Memory"
-msgstr "Minne"
-
-#: su.inc:268 su.inc:277
-msgid "%1 MB"
-msgstr "%1 MB"
-
-#: su.inc:272
-msgid "Cache"
-msgstr "Cache"
-
-#: su.inc:272
-msgid "%1 KB"
-msgstr "%1 KB"
-
-#: su.inc:277
-msgid "Swap space"
-msgstr "Växlingsutrymme"
-
-#: su.inc:280
-msgid "Total disk space"
-msgstr "Totalt diskutrymme"
-
-#: su.inc:280 su.inc:283
-msgid "%1 GB"
-msgstr "%1 GB"
-
-#: su.inc:283
-msgid "Free Disk Space"
-msgstr "Ledigt diskutrymme"
-
-#: su.inc:286
-msgid "Measured floating point speed"
-msgstr "Uppmätt flyttalshastighet"
-
-#: su.inc:286 su.inc:289
-msgid "%1 million ops/sec"
-msgstr "%1 miljon ops/s"
-
-#: su.inc:289
-msgid "Measured integer speed"
-msgstr "Uppmätt heltalshastighet"
-
-#: su.inc:293 su.inc:295
-msgid "Average upload rate"
-msgstr "Genomsnittlig uppladdningshastighet"
-
-#: su.inc:293 su.inc:300
-msgid "%1 KB/sec"
-msgstr "%1 KB/s"
-
-#: su.inc:300 su.inc:302
-msgid "Average download rate"
-msgstr "Genomsnittlig nerladdningshastighet"
-
-#: su.inc:357
-msgid "No accounting records yet"
-msgstr "Inga redovisningsuppgifter ännu"
-
-#: su.inc:361 su.inc:370
-msgid "CPU days"
-msgstr "CPU dagar"
-
-#: su.inc:362 su.inc:371
-msgid "GPU days"
-msgstr "GPU dagar"
-
-#: su.inc:363 su.inc:372
-msgid "Successful jobs"
-msgstr "Lyckade arbetsuppgifter"
-
-#: su.inc:364 su.inc:373
-msgid "Failed jobs"
-msgstr "Misslyckade arbetsuppgifter"
-
-#: su_graph.inc:31
+#: inc/su_graph.inc:31
 msgid "Past month:"
 msgstr "Senaste månaden:"
 
-#: su_graph.inc:34
+#: inc/su_graph.inc:38
+msgid "No work reported so far. %1Need help?%2"
+msgstr "Inga uppgifter rapporterade än. %1Behöver du hjälp?%2"
+
+#: inc/su_graph.inc:45
+msgid "No work reported in last %1 days. %2Need help?%3"
+msgstr ""
+"Inga uppgifter rapporterade för de senaste %1 dagarna. %2Behöver du hjälp%3"
+
+#: inc/su_graph.inc:52
 msgid "Not enough data yet"
 msgstr "Inte tillräckligt med data ännu"
 
-#: su_join.inc:35
+#: inc/su_join.inc:35
 msgid "An invitation code is required to create an account."
 msgstr "In inbjudningskod behövs för att skapa ett konto."
 
-#: su_join.inc:36
+#: inc/su_join.inc:36
 msgid "Invitation code"
 msgstr "Inbjudningskod"
 
-#: su_join.inc:44
+#: inc/su_join.inc:44
 msgid "Identifies you on this web site. Use your real name or a nickname."
 msgstr ""
 "Identifierar dig på denna webbplats. Använd ditt riktiga namn eller ett "
 "alias."
 
-#: su_join.inc:45
+#: inc/su_join.inc:45
 msgid "Choose screen name"
 msgstr "Välj alias"
 
-#: su_join.inc:51
+#: inc/su_join.inc:51
 msgid "An address where you can receive emails."
 msgstr "En adress där du kan ta emot e-post."
 
-#: su_join.inc:52
+#: inc/su_join.inc:52
 msgid "Your email address"
 msgstr "Din e-postadress"
 
-#: su_join.inc:63
+#: inc/su_join.inc:63
 msgid "Must be at least %1 characters"
 msgstr "Måste vara minst %1 tecken"
 
-#: su_join.inc:64
+#: inc/su_join.inc:64
 msgid "Choose password"
 msgstr "Välj lösenord"
 
-#: su_user.inc:154
+#: inc/su_user.inc:155
 msgid "Want to help more?"
 msgstr "Vill du hjälpa till ytterligare?"
 
-#: su_user.inc:155
+#: inc/su_user.inc:156
 msgid "Tell friends and family about %1."
 msgstr "Berätta för vänner och familj om %1."
 
-#: su_user.inc:156
+#: inc/su_user.inc:157
 msgid ""
 "Run BOINC on your other computing devices (desktops, laptops, tablets, "
 "Android phones)."
@@ -1167,6 +1059,6 @@ msgstr ""
 "Kör BOINC på dina andra enheter (stationära datorer, bärbara datorer, "
 "surfplattor, Android telefoner)."
 
-#: su_user.inc:157
+#: inc/su_user.inc:158
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr "Körs BOINC på din dator? Om inte, %1Ladda ner det%2."

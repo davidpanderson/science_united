@@ -33,11 +33,11 @@ function ec_to_gflop_hours($ec) {
 }
 
 function ec_to_gflops($ec) {
-    return $ec*.12*3600.e9;
+    return ec_to_flops($ec)/1.e9;
 }
 
 function ec_to_tflops($ec) {
-    return $ec*.12*3600.e6;
+    return ec_to_flops($ec)/1.e12;
 }
 
 function new_delta_set() {

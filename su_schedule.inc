@@ -42,6 +42,7 @@ define('MIN_PROJECTS', 2);
     // min # of projects to have a client run (if possible).
     // this is for appearance's sake,
     // to emphasize that there are multiple projects
+
 define('MAX_PROJECTS', 10);
     // max # of projects.
     // this could happen if lots of project aren't supplying work to the host
@@ -159,9 +160,9 @@ function allocation_score($project, $req) {
     //
     $y = $project->share/$su_allocate->share_total;
 
-    $score = -$x/$y;
+    $score = 1000. -$x/$y;
     if ($req) {
-        //log_write("$project->name alloc score: comp frac $x share frac $y score $score");
+        log_write("$project->name alloc score: comp frac $x share frac $y score $score");
     }
     return $score;
 }

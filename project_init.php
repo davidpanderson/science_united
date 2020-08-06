@@ -85,13 +85,16 @@ function update_project($p) {
             $ret = $project->update("web_rpc_url_base='$web_rpc_url_base'");
             if (!$ret) echo "update failed\n";
         }
+        if (!$project->authenticator) {
+            echo "Project $project->name has no authenticator: create an account\n";
+        }
     } else {
         SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, ".PROJECT_STATUS_AUTO.")");
 
         if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
             die("su_accounting_project insert failed\n");
         }
-        echo "Added project $name\n";
+        echo "Added project $name; give it an authenticator\n";
     }
 }
 
@@ -107,7 +110,6 @@ function update_projects() {
     $x = simplexml_load_file("projects.xml");
     $projects = $x->project;
     foreach ($projects as $p) {
-        //if ((int)$p->id == PROJ_WCG) continue;
         if ((int)$p->id == PROJ_QCN) continue;
         if ((int)$p->id == PROJ_RADIOACTIVE) continue;
         if ((int)$p->id == PROJ_LEIDEN) continue;

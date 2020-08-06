@@ -27,10 +27,10 @@ function show_projects_acct() {
     start_table('table-striped');
     row_heading_array(array(
         "Name<br>click for details",
-        "CPU hours",
-        "CPU GFLOP/hours",
-        "GPU hours",
-        "GPU GFLOP/hours",
+        "CPU days",
+        "CPU GFLOP/days",
+        "GPU days",
+        "GPU GFLOP/days",
         "# jobs success",
         "# jobs fail",
         "Avg EC",
@@ -73,16 +73,33 @@ function show_projects_acct() {
         if (!$ap) continue;
         row_array(array(
             '<a href="su_projects_acct.php?project_id='.$p->id.'">'.$p->name.'</a>',
-            show_num_bar("#00ff00", 100, $ap->cpu_time_total/3600, $max_cpu_time_total/3600),
-            show_num_bar("#00ff00", 100, ec_to_gflop_hours($ap->cpu_ec_total), ec_to_gflop_hours($max_cpu_ec_total)),
-            show_num_bar("#00ff00", 100, $ap->gpu_time_total/3600, $max_gpu_time_total/3600),
-            show_num_bar("#00ff00", 100, ec_to_gflop_hours($ap->gpu_ec_total), ec_to_gflop_hours($max_gpu_ec_total)),
-            show_num_bar("#00ff00", 100, $ap->njobs_success_total, $max_njobs_success_total),
-            show_num_bar("#ff0000", 100, $ap->njobs_fail_total, $max_njobs_fail_total),
+            show_num_bar(
+                "#008800", 100, $ap->cpu_time_total/86400,
+                $max_cpu_time_total/86400
+            ),
+            show_num_bar(
+                "#008800", 100, ec_to_gflop_hours($ap->cpu_ec_total)/24,
+                ec_to_gflop_hours($max_cpu_ec_total)/24
+            ),
+            show_num_bar(
+                "#008800", 100, $ap->gpu_time_total/86400,
+                $max_gpu_time_total/86400
+            ),
+            show_num_bar(
+                "#008800", 100, ec_to_gflop_hours($ap->gpu_ec_total)/24,
+                ec_to_gflop_hours($max_gpu_ec_total)/24
+            ),
+            show_num_bar(
+                "#008800", 100, $ap->njobs_success_total,
+                $max_njobs_success_total
+            ),
+            show_num_bar(
+                "#880000", 100, $ap->njobs_fail_total, $max_njobs_fail_total
+            ),
             number_format($p->avg_ec, 2),
             number_format($p->avg_ec_adjusted, 2),
             $p->share,
-            number_format(allocation_score($p), 3)
+            number_format(allocation_score($p, null), 3)
         ));
     }
     end_table();
@@ -94,9 +111,10 @@ function show_project_acct($p) {
     $first = true;
     row_heading_array(array(
         "When",
-        "CPU time",
+        "#hosts",
+        "CPU days",
         "CPU FLOPS",
-        "GPU time",
+        "GPU days",
         "GPU FLOPS",
         "# jobs success",
         "# jobs fail",
@@ -106,9 +124,10 @@ function show_project_acct($p) {
             $first = false;
             row_array(array(
                 "Totals",
-                $ap->cpu_time_total,
+                "---",
+                show_days($ap->cpu_time_total),
                 $ap->cpu_ec_total,
-                $ap->gpu_time_total,
+                show_days($ap->gpu_time_total),
                 $ap->gpu_ec_total,
                 $ap->njobs_success_total,
                 $ap->njobs_fail_total,
@@ -116,9 +135,10 @@ function show_project_acct($p) {
         }
         row_array(array(
             date_str($ap->create_time),
-            $ap->cpu_time_delta,
+            $ap->nhosts,
+            show_days($ap->cpu_time_delta),
             $ap->cpu_ec_delta,
-            $ap->gpu_time_delta,
+            show_days($ap->gpu_time_delta),
             $ap->gpu_ec_delta,
             $ap->njobs_success_delta,
             $ap->njobs_fail_delta,

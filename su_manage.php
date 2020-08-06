@@ -41,9 +41,9 @@ function left() {
         <br>&nbsp;<br>
         <img src="su_graph.php?type=total&what=jobs&ndays=400&xsize=600&ysize=400">
         <br>&nbsp;<br>
-        <img src="su_graph.php?type=projects&gpu=0&xsize=600&ysize=400">
+        <img src="su_graph.php?type=projects&ndays=40&gpu=0&xsize=600&ysize=400">
         <br>&nbsp;<br>
-        <img src="su_graph.php?type=projects&gpu=1&xsize=600&ysize=400">
+        <img src="su_graph.php?type=projects&ndays=40&gpu=1&xsize=600&ysize=400">
     ';
 }
 

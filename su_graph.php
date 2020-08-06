@@ -269,14 +269,14 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
 if (1) {
     $xsize = get_int('xsize');
     $ysize = get_int('ysize');
+    $ndays = get_int('ndays');
     $type = get_str('type', true);
     if ($type == 'projects') {
-        projects_graph(80, get_int('gpu'), $xsize, $ysize);
+        projects_graph($ndays, get_int('gpu'), $xsize, $ysize);
         exit;
     }
     $id = get_int('id', true);
     $what = get_str('what');
-    $ndays = get_int('ndays');
     graph($type, $id, $what, $ndays, $xsize, $ysize);
 } else {
     //graph('total', 0, 'job', 100, 800, 600);
