@@ -16,19 +16,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// Make serialized version of projects list: projects.ser
+// read projects.xml and, for each project in our DB, make
+// - a list of (keyword_id, frac)
+// - a list of (platform, GPU type, is_vbox)
+// and write these, serialized, to projects.ser
+
 // DO THIS WHENEVER THE BOINC PROJECT LIST CHANGES
+//
+// Should also do it whenever a project releases an app for
+// a new GPU type or vbox; i.e. should do it periodically
+//
 // Run this in projects/scienceunited/html/ops
 // Also run project_init.php
 
 // first:
 // wget https://boinc.berkeley.edu/project_list.php
 // and put it in projects.xml
-
-// read projects.xml and, for each project in our DB, make
-// - a list of (keyword_id, frac)
-// - a list of (platform, GPU type, is_vbox)
-// and write these, serialized, to projects.ser
 
 require_once("../inc/su_db.inc");
 

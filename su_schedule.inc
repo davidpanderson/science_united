@@ -581,7 +581,7 @@ function choose_projects_rpc($user, $host, $req) {
 // adjust project's avg_ec for adding or removing 1 host
 //
 function adjust($p, $inc) {
-    log_write("adjusting avg_ec of $p->name: $inc");
+    log_write(sprintf("%s avg_ec of $p->name", $inc?"Incrementing":"Decrementing"));
     if ($p->nhosts == 0) {
         log_write("no adjustment; nhosts is 0");
         return;
@@ -592,6 +592,7 @@ function adjust($p, $inc) {
     // whether the host has a GPU, etc.
     //
     $x = $p->avg_ec / $p->nhosts;
+    log_write("avg_ec: $p->avg_ec avg_ec_adjusted: $p->avg_ec_adjusted nhosts: $p->nhosts");
     if (!$inc) {
         if ($p->avg_ec_adjusted < $p->avg_ec/2.) {
             log_write("skipping decrement; $p->avg_ec_adjusted < $p->avg_ec/2 ");
