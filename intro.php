@@ -155,8 +155,8 @@ Would you follow through to the end?
 <p>
 Two more detailed documents are available:
 <p>
-<a href=doc/model.pdf>Coordinated Volunteer Computing</a>
-describes why Science United is needed.
+<a href=doc/pearc_20.pdf>Coordinating Volunteer Computing</a>
+describes the goals and motivations of Science United.
 <p>
 <a href=doc/implementation.pdf>Science United: Implementation</a>
 explains how things work under the hood.

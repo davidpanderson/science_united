@@ -610,7 +610,8 @@ function do_accounting(
             gpu_time = $rp_gpu_time,
             gpu_ec = $rp_gpu_ec,
             njobs_success = $rp_njobs_success,
-            njobs_fail = $rp_njobs_fail
+            njobs_fail = $rp_njobs_fail,
+            project_host_id = $rp->hostid
             where host_id = $host->id and project_id = $project->id
         ");
         if (!$ret) {
@@ -773,6 +774,12 @@ function main() {
     if ($client_ver < 71000) {
         send_error_reply("Science United requires a newer version of BOINC.  Please install the current version from https://boinc.berkeley.edu/download.php");
         log_write("client version too low: ".(string)$req->client_version);
+        return;
+    }
+
+    if (file_exists("stop_sched")) {
+        log_write("down for maintenance");
+        send_error_reply("Science United is down for maintenance");
         return;
     }
 

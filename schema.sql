@@ -99,7 +99,9 @@ create table su_host_project (
     gpu_time                double          not null default 0,
     njobs_success           integer         not null default 0,
     njobs_fail              integer         not null default 0,
-    unique(host_id, project_id)
+    project_host_id         integer         not null default 0,
+    unique(host_id, project_id),
+    index project_host (project_id, project_host_id)
 ) engine=InnoDB;
 
 /*
