@@ -32,9 +32,28 @@ function main() {
         xml_error("no such user");
     }
     $hosts = BoincHost::enum("userid=$user->id");
-    echo "<project_hosts>\n";
+    echo "<hosts>\n";
     foreach ($hosts as $host) {
         $hps = SUHostProject::enum("host_id=$host->id");
+        $found = false;
+        foreach ($hps as $hp) {
+            if ($hp->project_host_id) {
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            continue;
+        }
+        echo "   <host>
+      <create_time>$host->create_time</create_time>
+      <rpc_time>$host->rpc_time</rpc_time>
+      <rpc_seqno>$host->rpc_seqno</rpc_seqno>
+      <on_frac>$host->on_frac</on_frac>
+      <active_frac>$host->active_frac</active_frac>
+      <su_host_id>$host->id</su_host_id>
+";
+        echo "      <projects>\n";
         foreach ($hps as $hp) {
             if (!$hp->project_host_id) {
                 continue;
@@ -43,15 +62,16 @@ function main() {
                 continue;
             }
             $p = $project_infos[$hp->project_id];
-            echo "   <project_host>
-      <url>$p->url</url>
-      <project_host_id>$hp->project_host_id</project_host_id>
-      <su_host_id>$host->id</su_host_id>
-   </project_host>
+            echo "         <project>
+            <url>$p->url</url>
+            <host_id>$hp->project_host_id</host_id>
+         </project>
 ";
         }
+        echo "      </projects>\n";
+        echo "   </host>\n";
     }
-    echo "</project_hosts>\n";
+    echo "</hosts>\n";
 }
 
 main();

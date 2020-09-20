@@ -38,7 +38,7 @@ function projects_graph($ndays, $gpu, $xsize, $ysize) {
     // get top projects
     //
     if ($gpu) {
-        $projs = SUAccountingProject::enum("create_time>$t order by gpu_ec_total desc limit 10");
+        $projs = SUAccountingProject::enum("gpu_ec_delta>0 and create_time>$t order by gpu_ec_total desc limit 10");
     } else {
         $projs = SUAccountingProject::enum("create_time>$t order by cpu_ec_total desc limit 10");
     }
@@ -47,7 +47,14 @@ function projects_graph($ndays, $gpu, $xsize, $ysize) {
     //
 
     $t0 = time() - $ndays*86400;
+    $projs2 = Array();
     foreach ($projs as $p) {
+        $proj = SUProject::lookup_id($p->project_id);
+        if ($proj->status != PROJECT_STATUS_AUTO) {
+            continue;
+        }
+        $p->name = $proj->name;
+        $projs2[] = $p;
         $accts = SUAccountingProject::enum("project_id = $p->project_id and create_time>$t0 order by create_time");
         $f = fopen("tmp/$gpu/$p->project_id", "w");
 
@@ -82,14 +89,13 @@ function projects_graph($ndays, $gpu, $xsize, $ysize) {
         $ndays*86400./8,
         $gpu?"GPU TeraFLOPS":"CPU TeraFLOPS"
     );
-    for ($i=0; $i<10; $i++) {
-        $p = $projs[$i];
-        $proj = SUProject::lookup_id($p->project_id);
+    $plast = end($projs2);
+    foreach ($projs2 as $p) {
         fprintf($g,
             '"tmp/%d/%d" using 1:2 with linespoints title "%s"',
-            $gpu, $p->project_id, str_replace("@", "\\\\@", $proj->name)
+            $gpu, $p->project_id, str_replace("@", "\\\\@", $p->name)
         );
-        if ($i < 9) {
+        if ($p != $plast) {
             fprintf($g, ", ");
         }
     }

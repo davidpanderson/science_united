@@ -22,20 +22,8 @@ require_once("../inc/util.inc");
 require_once("../inc/su.inc");
 require_once("../inc/su_schedule.inc");
 
-function account_state_str($state) {
-    switch ($state) {
-    case ACCT_INIT:
-        return tra("New");
-    case ACCT_SUCCESS:
-        return tra("Established");
-    case ACCT_TRANSIENT_ERROR:
-        return tra("In progress");
-    }
-    return tra("Unknown");
-}
 function project_row($p, $ukws, $a) {
     if ($a) {
-        $x = account_state_str($a->state);
         $checked = $a->opt_out?"checked":"";
         $d = date_str($a->create_time);
         $c = $a->cpu_time/3600.;
@@ -50,7 +38,6 @@ function project_row($p, $ukws, $a) {
         $g = 0;
         $njs = 0;
         $njf = 0;
-        $x = "---";
         $excluded = "";
     }
     row_array(array(
@@ -63,7 +50,6 @@ function project_row($p, $ukws, $a) {
         show_num($g),
         $njs,
         $njf,
-        $x,
         (keywd_score($p->kws, $ukws)<0)?"no":"yes".$excluded
     ));
 }
@@ -87,7 +73,6 @@ function show_projects($user) {
         tra("GPU hours"),
         tra("# successful jobs"),
         tra("# failed jobs"),
-        tra("Account status"),
         tra("Allowed by prefs?"),
     ));
 
@@ -131,7 +116,6 @@ function su_show_project($user, $project_id) {
     row2(tra("Location keywords"), project_kw_string($project->id, LOCATION));
     if ($acct) {
         //row2(tra("First contribution"), date_str($acct->create_time));
-        row2(tra("Account status"), account_status_string($acct->state));
         row2(tra("CPU computing"), $acct->cpu_ec);
         row2(tra("CPU time"), $acct->cpu_time);
         if ($acct->gpu_ec) {
@@ -149,8 +133,6 @@ function su_show_project($user, $project_id) {
             tra("Excluded?")."<br><small>".tra("Use if this project causes problems on your computer")."</small>",
             $x
         );
-    } else {
-        row2(tra("Account status"), tra("None"));
     }
     row2("", "<a href=su_user_projects.php>".tra("Return to project list")."</a>");
     end_table();

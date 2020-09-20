@@ -49,7 +49,7 @@ function show_prefs($user) {
     ";
     echo tra("This may affect your electricity costs and your computer's fan speeds.");
     echo "<li>";
-    echo tra("Settings affect all your computers.  Changes take effect the next time the computer synchs with Science United.");
+    echo tra("Settings affect all your computers.  Changes take effect the next time the computer syncs with Science United.");
     echo "<li>";
     echo tra("You can change settings for a particular computer using the BOINC Manager.  This also gives you more detailed options.");
     echo "</ul>";
@@ -93,7 +93,7 @@ function update_prefs($user) {
     $x = compute_prefs_xml($pref);
     $user->update("global_prefs='$x'");
     page_head(tra("Computing settings updated"));
-    echo tra("The new settings will take effect when your computer synchs with Science United.");
+    echo tra("The new settings will take effect when your computer syncs with Science United.");
     echo '<p><p>
         <a href=su_home.php class="btn btn-success">
     ';

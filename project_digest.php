@@ -97,6 +97,7 @@ function main() {
         $sup = SUProject::lookup_id($x->id);
         if (!$sup) continue;
         $x->name = (string)$p->name;
+        $x->description = (string)$p->description;
         $x->avs = get_avs($p);
         $x->kws = get_kws($p);
         $y[$x->id] = $x;
