@@ -85,6 +85,9 @@ function show_prefs($user) {
 
     form_submit(tra("Update"));
     form_end();
+    echo tra("Or %1customize your preferences%2.",
+        "<a href=prefs.php?subset=global>", "</a>"
+    );
     page_tail();
 }
 

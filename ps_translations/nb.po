@@ -4,33 +4,32 @@
 # This file is distributed under the same license as BOINC.
 # 
 # Translators:
-# Sibe Bleuzé, 2019
-# Jord <elst93@gmail.com>, 2020
+# Jan Sherdahl, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
 "POT-Creation-Date: 2020-05-03 15:43 PDT\n"
-"Last-Translator: Jord <elst93@gmail.com>, 2020\n"
-"Language-Team: Dutch (https://www.transifex.com/boinc/teams/35581/nl/)\n"
+"Last-Translator: Jan Sherdahl, 2020\n"
+"Language-Team: Norwegian (https://www.transifex.com/boinc/teams/35581/no/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
+"Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: user/index.php:43
 msgid "%1 is temporarily shut down for maintenance."
-msgstr "%1 is tijdelijk uitgeschakeld voor onderhoud"
+msgstr "%1 blir midlertidig stengt for vedlikehold."
 
 #: user/index.php:50
 msgid "Recent contribution"
-msgstr "Recente bijdrage"
+msgstr "Nylige bidrag"
 
 #: user/index.php:56 user/su_welcome.php:85
 msgid "Continue to your home page"
-msgstr "Ga verder naar je startpagina"
+msgstr "Fortsett til din hjemmeside"
 
 #: user/index.php:64
 msgid ""
@@ -39,10 +38,9 @@ msgid ""
 "mathematics, and environmental science; you can pick the areas you want to "
 "support."
 msgstr ""
-"%1 laat je bijdragen tot wetenschappelijke onderzoeksprojecten door deze "
-"rekenkracht te geven. Deze projecten doen onderzoek in astronomie, fysica, "
-"medische biologie, wiskunde en milieuwetenschap; je kan de velden uitkiezen "
-"die je wil steunen."
+"%1 lar deg hjelpe vitenskapelige forskningsprosjekter ved å gi dem "
+"datakraft. Disse prosjektene forsker innen astronomi, fysikk, biomedisin, "
+"matematikk og miljøvitenskap; du kan velge områdene du vil støtte."
 
 #: user/index.php:66
 msgid ""
@@ -50,136 +48,135 @@ msgid ""
 "the background and when you're not using the computer.  BOINC is secure and "
 "will not affect your normal use of the computer."
 msgstr ""
-"Je helpt door BOINC te installeren, een gratis programma dat "
-"wetenschappelijke taken uitvoert in de achtergrond en wanneer je de computer"
-" niet gebruikt. BOINC is veilig en zal je normale gebruik van de computer "
-"niet beïnvloeden."
+"Du hjelper ved å installere BOINC, et gratis program som kjører "
+"vitenskapelige jobber i bakgrunnen, og når du ikke bruker datamaskinen. "
+"BOINC er sikkert og vil ikke påvirke din normale bruk av datamaskinen."
 
 #: user/index.php:70
 msgid "%1 is operated by the BOINC project at UC Berkeley."
-msgstr "%1 wordt bestuurd door het BOINC project aan UC Berkeley."
+msgstr "%1 driftes av BOINC-prosjektet ved UC Berkeley."
 
 #: user/index.php:75
 msgid "%1 and the research projects it supports are non-profit."
-msgstr "%1 en de onderzoeksprojecten die het ondersteunt zijn non-profit."
+msgstr "%1 og forskningsprosjektene den støtter er ideelle."
 
 #: user/index.php:83
 msgid "Join %1"
-msgstr "Sluit aan bij %1"
+msgstr "Bli med %1"
 
 #: user/index.php:86
 msgid "Already joined?"
-msgstr "Al aangesloten?"
+msgstr "Har du allerede blitt med?"
 
 #: user/index.php:88
 msgid "Log in."
-msgstr "Log in."
+msgstr "Logg inn."
 
 #: user/index.php:100
 msgid "Welcome, %1"
-msgstr "Welkom, %1"
+msgstr "Velkommen, %1"
 
 #: user/index.php:119
 msgid "News"
-msgstr "Nieuws"
+msgstr "Nyheter"
 
 #: user/index.php:132
 msgid "Ebola-Infected VERO E6 Cell"
-msgstr "Ebola-geïnfecteerde VERO E6 cel"
+msgstr "Ebola-infisert VERO E6-celle"
 
 #: user/index.php:133
 msgid "Simulation of Higgs boson detection"
-msgstr "Simulatie van een higgsbosondetectie"
+msgstr "Simulering av Higgs boson-deteksjon"
 
 #: user/index.php:134
 msgid "The Earth's interrelated climate systems"
-msgstr "De samenhangende klimaatsystemen van de aarde"
+msgstr "Jordens sammenhengende klimasystemer"
 
 #: user/index.php:135
 msgid "Structure of protein GIF"
-msgstr "Structuur van een proteïne GIF"
+msgstr "Struktur av protein GIF"
 
 #: user/index.php:136
 msgid "The Hubble ultra-deep field image"
-msgstr "Een ultra-deep field foto van de Hubble"
+msgstr "Hubble ultra-dype feltbilde"
 
 #: user/index.php:180
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
 msgstr ""
-"Science United is gefinancierd door de %1National Science Foundation%2, "
-"prijs #1664190, en is gevestigd aan de %3University of California, "
-"Berkeley%4."
+"Science United er finansiert av%1National Science Foundation%2, utmerkelse "
+"#1664190, og er basert på %3University of California, Berkeley%4."
 
 #: project/project.inc:111
 msgid "Log out"
-msgstr "Log uit"
+msgstr "Logg ut"
 
 #: project/project.inc:117 user/su_join.php:104
 msgid "Join"
-msgstr "Aansluiten"
+msgstr "Bli med"
 
 #: project/project.inc:117
 msgid "Login"
-msgstr "Log in"
+msgstr "Logg inn"
 
 #: project/project.inc:147
 msgid "About %1"
-msgstr "Over %1"
+msgstr "Om %1"
 
 #: project/project.inc:148 user/su_help.php:20
 msgid "Help"
-msgstr "Help"
+msgstr "Hjelp"
 
 #: project/project.inc:149 user/su_hosts.php:95 user/su_hosts.php:128
 msgid "Project"
-msgstr "Project"
+msgstr "Prosjekt"
 
 #: project/project.inc:151 user/su_home.php:46 user/su_home.php:68
 #: user/su_welcome.php:75
 msgid "Community"
-msgstr "Gemeenschap"
+msgstr "Fellesskap"
 
 #: project/project.inc:152
 msgid "Message boards"
-msgstr "Fora"
+msgstr "Oppslagstavler"
 
 #: project/project.inc:159
 msgid "Site"
-msgstr "Site"
+msgstr "Nettsted"
 
 #: project/project.inc:160
 msgid "Search"
-msgstr "Zoek"
+msgstr "Søk"
 
 #: project/project.inc:161
 msgid "Languages"
-msgstr "Talen"
+msgstr "Språk"
 
 #: project/project.inc:179
 msgid "Do science research on your computer, tablet, or phone"
-msgstr "Doe wetenschappelijk onderzoek op je computer, tablet of telefoon"
+msgstr ""
+"Gjør vitenskapelig forskning på datamaskinen, nettbrettet eller telefonen"
 
 #: project/project.inc:199
 msgid "Generated"
-msgstr "Gegenereerd"
+msgstr "Generert"
 
 #: project/project.inc:230
 msgid "Your personal background."
-msgstr "Jouw persoonlijke achtergrond."
+msgstr "Din personlige bakgrunn."
 
 #: project/project.inc:234
 msgid ""
 "Tell us about yourself. You could tell us where you're from, your age, "
 "occupation, hobbies, or anything else about yourself."
 msgstr ""
-"Vertel ons over jezelf. Je kan ons vertellen vanwaar je komt, je leeftijd, "
-"job, hobby's of iets anders over jezelf."
+"Fortell oss om deg selv. Du kan fortelle oss hvor du er fra, alder, yrke, "
+"hobbyer eller noe annet om deg selv."
 
 #: project/project.inc:238
 msgid "Your opinions about %1"
-msgstr "Je mening over %1"
+msgstr "Dine meninger om %1"
 
 #: project/project.inc:242
 msgid ""
@@ -189,250 +186,245 @@ msgid ""
 "    <li>Any suggestions?\n"
 "    </ol>"
 msgstr ""
-"Vertel ons je gedachten over %1<ol>\n"
-"<li>Waarom voer je %1 uit?\n"
-"<li>Wat zijn je visies over het project?\n"
-"<li>Enige suggesties?\n"
+"Fortell oss tankene dine om %1<ol>\n"
+"<li>Hvorfor kjører du %1?\n"
+"<li>Hva er dine synspunkter om prosjektet?\n"
+"<li>Noen forslag?\n"
 "</ol>"
 
 #: user/su_about.php:20
 msgid "About"
-msgstr "Over"
+msgstr "Om"
 
 #: user/su_account_settings.php:24
 msgid "Screen name"
-msgstr "Schermnaam"
+msgstr "Visningsnavn"
 
 #: user/su_account_settings.php:25
 msgid "Email address"
-msgstr "E-mailadres"
+msgstr "Epost adresse"
 
 #: user/su_account_settings.php:26
 msgid "Password"
-msgstr "Wachtwoord"
+msgstr "Passord"
 
 #: user/su_account_settings.php:27
 msgid "%1 member since"
-msgstr "%1 lid sinds"
+msgstr "%1 medlem siden"
 
 #: user/su_account_settings.php:28
 msgid "User ID"
-msgstr "Gebruikers ID"
+msgstr "Bruker id"
 
 #: user/su_account_settings.php:28
 msgid "Used in community functions"
-msgstr "Gebruikt in gemeenschapsfuncties"
+msgstr "Brukes i fellesskapsfunksjoner"
 
 #: user/su_account_settings.php:29
 msgid "Delete account"
-msgstr "Verwijder account"
+msgstr "Slett konto"
 
 #: user/su_account_settings.php:30
 msgid "Instructions"
-msgstr "Instructies"
+msgstr "Instruksjoner"
 
 #: user/su_account_settings.php:35
 msgid "Account settings"
-msgstr "Accountinstellingen"
+msgstr "Konto innstillinger"
 
 #: user/su_accounting.php:29
 msgid "Computing history"
-msgstr "Gegevensverwerkingsgeschiedenis"
+msgstr "Kalkuleringshistorikk"
 
 #: user/su_compute_prefs.php:28
 msgid "Computing settings"
-msgstr "Gegevensverwerkingsinstellingen"
+msgstr "Kalkuleringsinnstillinger"
 
 #: user/su_compute_prefs.php:44
 msgid ""
 "You can control how many processors to use (most computers have 4 or 8 "
 "processors) and when to use them."
 msgstr ""
-"Je kan beheren hoeveel processoren er gebruikt worden (de meeste computers "
-"hebben 4 of 8 processoren) en wanneer ze gebruikt worden."
+"Du kan kontrollere hvor mange prosessorer du skal bruke (de fleste "
+"datamaskiner har 4 eller 8 prosessorer) og når du skal bruke dem."
 
 #: user/su_compute_prefs.php:50
 msgid "This may affect your electricity costs and your computer's fan speeds."
-msgstr ""
-"Dit zou je elektriciteitskosten en de ventilatorsnelheid van je computer "
-"kunnen beïnvloeden."
+msgstr "Dette kan påvirke strømkostnadene og datamaskinens viftehastigheter."
 
 #: user/su_compute_prefs.php:52
 msgid ""
 "Settings affect all your computers.  Changes take effect the next time the "
 "computer synchs with Science United."
 msgstr ""
-"Instellingen hebben invloed op al je computers. Veranderingen worden van "
-"kracht de volgende keer dat je computer synchroniseert met Science United."
+"Innstillinger påvirker alle datamaskinene dine. Endringene trer i kraft "
+"neste gang datamaskinen synkroniseres med Science United."
 
 #: user/su_compute_prefs.php:54
 msgid ""
 "You can change settings for a particular computer using the BOINC Manager.  "
 "This also gives you more detailed options."
 msgstr ""
-"Je kan de instellingen voor een bepaalde computer veranderen door gebruik te"
-" maken van de BOINC Manager. Dit geeft je ook meer gedetailleerde opties."
+"Du kan endre innstillinger for en bestemt datamaskin ved hjelp av BOINC "
+"Manager. Dette gir deg også mer detaljerte alternativer."
 
 #: user/su_compute_prefs.php:56
 msgid "Choose one of:"
-msgstr "Kies er één:"
+msgstr "Velg en av:"
 
 #: user/su_compute_prefs.php:61
 msgid ""
 "Low power %1 Use 25% of processors, and stop computing when computer is "
 "idle.%2"
 msgstr ""
-"Laag verbruik %1 Gebruik 25% van de processors, en stop de berekening als de"
-" computer niet in gebruik is.%2"
+"Lav effekt %1 Bruk 25% av prosessorene, og stopp databehandling når "
+"datamaskinen er inaktiv.%2"
 
 #: user/su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
-msgstr "Standaard %1 Gebruik 50% van de processoren.%2"
+msgstr "Standard %1 Bruk 50% av prosessorer.%2"
 
 #: user/su_compute_prefs.php:77
 msgid "Maximum computing %1 Use all processors.%2"
-msgstr "Maximum berekening %1 Gebruik alle processoren.%2"
+msgstr "Maksimal databehandling %1 Bruk alle prosessorer.%2"
 
 #: user/su_compute_prefs.php:86
 msgid "Update"
-msgstr "Update"
+msgstr "Oppdater"
 
 #: user/su_compute_prefs.php:95
 msgid "Computing settings updated"
-msgstr "Verwerkingsinstellingen geüpdatet"
+msgstr "Kalkuleringsinnstillinger oppdatert"
 
 #: user/su_compute_prefs.php:96
 msgid ""
 "The new settings will take effect when your computer synchs with Science "
 "United."
 msgstr ""
-"De nieuwe instellingen zullen van kracht worden wanneer je computer "
-"synchroniseert met Science United."
+"De nye innstillingene trer i kraft når datamaskinen din synkroniseres med "
+"Science United."
 
 #: user/su_compute_prefs.php:100
 msgid "Continue to home page"
-msgstr "Ga verder naar de startpagina"
+msgstr "Fortsett til hjemmesiden"
 
 #: user/su_download.php:28
 msgid "Install software"
-msgstr "Installeer de software"
+msgstr "Installer programvare"
 
 #: user/su_download.php:29
 msgid ""
 "To participate in %1 you must install BOINC and VirtualBox on your computer."
 msgstr ""
-"Om deel te nemen aan %1 moet je BOINC en VirtualBox installeren op je "
-"computer."
+"For å delta i %1 må du installere BOINC og VirtualBox på din datamaskin."
 
 #: user/su_email_prefs.php:28
 msgid "Email settings"
-msgstr "E-mailinstellingen"
+msgstr "Epost innstillinger"
 
 #: user/su_email_prefs.php:30
 msgid "Preferences updated."
-msgstr "Voorkeuren opgeslagen."
+msgstr "Innstillinger oppdatert."
 
 #: user/su_email_prefs.php:35
 msgid "Don't send me any emails"
-msgstr "Stuur me geen e-mails"
+msgstr "Ikke send meg noen e-post"
 
 #: user/su_email_prefs.php:42
 msgid ""
 "Status emails %1 These tell you how much work your computer(s) have done "
 "recently %2"
 msgstr ""
-"Status e-mails %1 Deze vertellen je hoeveel werk je computer(s) recent "
-"gedaan heeft (hebben) %2"
+"Status-eposter %1 Disse forteller deg hvor mye arbeid datamaskinen(e) dine "
+"har utført nylig %2"
 
 #: user/su_email_prefs.php:48 user/su_email_prefs.php:62 user/su_prefs.php:128
 msgid "Never"
-msgstr "Nooit"
+msgstr "Aldri"
 
 #: user/su_email_prefs.php:49
 msgid "Daily"
-msgstr "Dagelijks"
+msgstr "Daglig"
 
 #: user/su_email_prefs.php:50
 msgid "Weekly"
-msgstr "Wekelijks"
+msgstr "Ukentlig"
 
 #: user/su_email_prefs.php:51
 msgid "Monthly"
-msgstr "Maandelijks"
+msgstr "Månedlig"
 
 #: user/su_email_prefs.php:56
 msgid ""
 "Community emails %1 These tell you about private messages, forum posts, and "
 "friend requests %2"
 msgstr ""
-"Gemeenschapse-mails %1 Deze veertellen je over privéberichten, "
-"forumberichten en vrienschapsverzoeken %2"
+"Fellesskap eposter %1 Disse forteller deg om private meldinger, foruminnlegg"
+" og venneforespørsler %2"
 
 #: user/su_email_prefs.php:63
 msgid "Immediately"
-msgstr "Onmiddelijk"
+msgstr "Umiddelbart"
 
 #: user/su_email_prefs.php:64
 msgid "Daily summary"
-msgstr "Dagelijks overzicht"
+msgstr "Daglig oppsummering"
 
 #: user/su_email_prefs.php:68 user/su_prefs.php:348
 msgid "Save"
-msgstr "Opslaan"
+msgstr "Lagre"
 
 #: user/su_graph.php:119
 msgid "Successful jobs/day"
-msgstr "Succesvolle taken/dag"
+msgstr "Vellykkede jobber/dag"
 
 #: user/su_graph.php:120
 msgid "Failed jobs/day"
-msgstr "Mislukte taken/dag"
+msgstr "Mislykkede jobber/dag"
 
 #: user/su_graph.php:127
 msgid "CPU hours/day"
-msgstr "CPU uren/dag"
+msgstr "CPU timer/dag"
 
 #: user/su_graph.php:128
 msgid "GPU hours/day"
-msgstr "GPU uren/dag"
+msgstr "GPU timer/dag"
 
 #: user/su_help.php:29
 msgid ""
 "If you received a 'no work reported' email from Science United or are having"
 " other problems, please do the following:"
 msgstr ""
-"Doe het volgende wanneer je een \"geen werk geraporteerd\" e-mail van "
-"Science United hebt ontvangen, of andere problemen hebt:"
+"Hvis du mottok en e-post fra Science United eller ikke har noe arbeid, eller"
+"  har andre problemer, gjør du følgende:"
 
 #: user/su_help.php:30
 msgid "Make sure BOINC is installed on your computer"
-msgstr "Zorg ervoor dat BOINC op jouw computer is geïnstalleerd"
+msgstr "Sørg for at BOINC er installert på din datamaskin"
 
 #: user/su_help.php:31
 msgid "Do you see the BOINC icon %1 in your system tray or dock?"
-msgstr "Zie je het BOINC-pictogram %1 in je systeemvak of dock?"
+msgstr "Ser du BOINC-ikonet % 1 i systemstatusfeltet eller dokken?"
 
 #: user/su_help.php:34
 msgid "If not, %1download and install BOINC%2."
-msgstr "Als niet, %1download en installeer BOINC%2."
+msgstr "Hvis ikke, %1dlast ned og installer BOINC%2."
 
 #: user/su_help.php:37
 msgid "Science United requires BOINC version 7.14 or later."
-msgstr "Science United heeft BOINC versie 7.14 of later nodig."
+msgstr "Science United krever BOINC versjon 7.14 eller nyere."
 
 #: user/su_help.php:48
 msgid "Make sure BOINC is attached to Science United"
-msgstr "Zorg ervoor dat BOINC is gekoppeld aan Science United"
+msgstr "Forsikre deg om at BOINC er tilknyttet Science United"
 
 #: user/su_help.php:49
 msgid "Double-click the BOINC icon to open the BOINC Manager."
-msgstr "Dubbelklik op het BOINC-pictogram om de BOINC Manager te openen."
+msgstr "Dobbeltklikk på BOINC-ikonet for å åpne BOINC Manager."
 
 #: user/su_help.php:50
 msgid "Switch to the Advanced View (View / Advanced View)."
-msgstr ""
-"Schakel over naar de geavanceerde weergave (weergave / geavanceerde "
-"weergave)."
+msgstr "Bytt til avansert visning (visning / avansert visning)."
 
 #: user/su_help.php:51
 msgid ""
@@ -440,26 +432,25 @@ msgid ""
 "  If not, select 'Use account manager' and attach BOINC to your Science "
 "United account."
 msgstr ""
-"Klik op het menu Projectbeheer. U zou 'Synchronizeer met Science United' "
-"moeten zien. Als dat niet het geval is, selecteer dan 'Accountmanager "
-"gebruiken' en voeg BOINC toe aan je Science United-account."
+"Klikk på Verktøy-menyen. Du bør se \"Synkroniser med Science United\". Hvis "
+"ikke, velg 'Bruk kontoadministrator' og tilknytt BOINC til Science United-"
+"kontoen din."
 
 #: user/su_help.php:62
 msgid "Other sources of help"
-msgstr "Andere bronnen voor hulp"
+msgstr "Andre kilder til hjelp"
 
 #: user/su_help.php:63
 msgid "Problems installing or running BOINC: %1 get help here%2."
-msgstr ""
-"Problemen bij het installeren of uitvoeren van BOINC: %1 krijg hier hulp%2."
+msgstr "Problemer med å installere eller kjøre BOINC: %1 få hjelp her%2."
 
 #: user/su_help.php:67
 msgid ""
 "Problems with Science United: ask for help on the %1Science United message "
 "boards%2."
 msgstr ""
-"Problemen met Science United: vraag om hulp op de %1Science United-"
-"prikborden%2."
+"Problemer med Science United: Be om hjelp på %1Science United-"
+"oppslagstavlene%2."
 
 #: user/su_help.php:71
 msgid ""
@@ -467,184 +458,182 @@ msgid ""
 "the %1Science United Github repository%2 (you'll need a free Github "
 "account)."
 msgstr ""
-"Om een bug te rapporteren of een functie in Science United aan te vragen, "
-"moet je een probleem aanmaken in de %1Science United Github-repository%2 (je"
-" hebt een gratis Github-account nodig)."
+"For å rapportere en feil eller be om en funksjon i Science United, opprett "
+"et problem i %1Science United Github-arkivet%2 (du trenger en gratis Github-"
+"konto)."
 
 #: user/su_help.php:75
 msgid "If none of the above work for you, %1email us%2."
-msgstr "Als niets van het bovenstaande voor je werkt, %1email ons dan%2."
+msgstr "Hvis ingen av de ovennevnte fungerer for deg, %1esend oss%2."
 
 #: user/su_home.php:25
 msgid "Contribution"
-msgstr "Bijdrage"
+msgstr "Bidrag"
 
 #: user/su_home.php:28 user/su_hosts.php:184
 msgid "View"
-msgstr "Kijk"
+msgstr "Vis"
 
 #: user/su_home.php:30 user/su_hosts.php:31
 msgid "Your computers"
-msgstr "Je computers"
+msgstr "Dine datamaskiner"
 
 #: user/su_home.php:34
 msgid "Computing: graphs"
-msgstr "Verwerking: grafieken"
+msgstr "Kalkulering: grafer"
 
 #: user/su_home.php:35
 msgid "Computing: details"
-msgstr "Verwerking: details"
+msgstr "Kalkulering: detaljer"
 
 #: user/su_home.php:36 user/su_user_projects.php:74
 msgid "Science projects"
-msgstr "Wetenschapsprojecten"
+msgstr "Vitenskapelige prosjekter"
 
 #: user/su_home.php:38
 msgid "Claimed credit"
-msgstr "Geclaimde punten"
+msgstr "Etterspurt kreditt"
 
 #: user/su_home.php:54
 msgid "Settings"
-msgstr "Instellingen"
+msgstr "Innstillinger"
 
 #: user/su_home.php:57
 msgid "Edit"
-msgstr "Bewerk"
+msgstr "Rediger"
 
 #: user/su_home.php:59
 msgid "Science areas and locations"
-msgstr "Wetenschappelijke velden en locaties"
+msgstr "Vitenskapsområder og lokasjoner"
 
 #: user/su_home.php:59
 msgid "Choose the types of research you want to support"
-msgstr "Kies het type onderzoek dat je wil steunen"
+msgstr "Velg hvilke typer forskning du ønsker å støtte"
 
 #: user/su_home.php:64
 msgid "Computing"
-msgstr "Verwerking"
+msgstr "Kalkulering"
 
 #: user/su_home.php:64
 msgid "Choose how to use your computers"
-msgstr "Kies hoe je computers gebruikt worden"
+msgstr "Velg hvordan dine datamaskiner skal benyttes"
 
 #: user/su_home.php:68
 msgid "Settings for message boards and private messages"
-msgstr "Instellingen voor het forum en privéberichten"
+msgstr "Innstillinger for oppslagstavler og private meldinger"
 
 #: user/su_home.php:72
 msgid "Account"
-msgstr "Account"
+msgstr "Konto"
 
 #: user/su_home.php:72
 msgid "Name, password, email address"
-msgstr "Naam, wachtwoord, e-mailadres"
+msgstr "Navn, passord, epostadresse"
 
 #: user/su_home.php:76
 msgid "Email"
-msgstr "E-mail"
+msgstr "Epost"
 
 #: user/su_home.php:76
 msgid "When and whether we should email you"
-msgstr "Wanneer en of we je moeten e-mailen"
+msgstr "Når og om vi skal sende deg en e-post"
 
 #: user/su_home.php:102
 msgid "Your home page"
-msgstr "Jouw startpagina"
+msgstr "Din hjemmeside"
 
 #: user/su_hosts.php:33
 msgid "No computers yet"
-msgstr "Nog geen computers"
+msgstr "Ingen datamaskiner foreløpig"
 
 #: user/su_hosts.php:39
 msgid "Computer name"
-msgstr "Naam van de computer"
+msgstr "Navn datamaskin"
 
 #: user/su_hosts.php:39 user/su_user_projects.php:84
 msgid "Click for details"
-msgstr "Klik voor details"
+msgstr "Klikk for detaljer"
 
 #: user/su_hosts.php:40
 msgid "Operating system"
-msgstr "Besturingssysteem"
+msgstr "Operativsystem"
 
 #: user/su_hosts.php:41 user/su_hosts.php:190
 msgid "Last contact"
-msgstr "Laatste contact"
+msgstr "Siste kontakt"
 
 #: user/su_hosts.php:42 user/su_hosts.php:47
 msgid "Remove"
-msgstr "Verwijder"
+msgstr "Slett"
 
 #: user/su_hosts.php:42
 msgid "... if this is a duplicate or the computer is no longer running BOINC"
 msgstr ""
-"... als dit een duplicaat is of als de computer niet langer voor BOINC werkt"
+"... hvis dette er et duplikat eller datamaskinen ikke lenger kjører BOINC"
 
 #: user/su_hosts.php:72
 msgid "How projects are chosen for %1"
-msgstr "Hoe projecten gekozen worden voor %1"
+msgstr "Hvordan prosjekter selekteres for %1"
 
 #: user/su_hosts.php:73
 msgid ""
 "To decide which projects this computer should work for, we compute a "
 "\"score\" for each project.  The components of the score are:"
 msgstr ""
-"Om te beslissen voor welke projecten deze computer moet werken, berekenen we"
-" een \"score\" voor elk project. De componenten van de score zijn:"
+"For å bestemme hvilke prosjekter denne datamaskinen skal fungere for, "
+"beregner vi en \"score\" for hvert prosjekt. Komponentene i poengsummen er:"
 
 #: user/su_hosts.php:80 user/su_hosts.php:96
 msgid "Keyword score"
-msgstr "Trefwoord score"
+msgstr "Nøkkelord poeng"
 
 #: user/su_hosts.php:81
 msgid "How well your keyword preferences match the project's keywords."
 msgstr ""
-"Hoe goed je trefwoord voorkeuren aansluiten bij de trefwoorden van het "
-"project."
+"Hvor godt dine stikkordpreferanser samsvarer med prosjektets stikkord."
 
 #: user/su_hosts.php:82 user/su_hosts.php:97
 msgid "Platform score"
-msgstr "Platform score"
+msgstr "Plattform poeng"
 
 #: user/su_hosts.php:83
 msgid ""
 "-1 if the project has no programs that will run on the computer; 0 if it "
 "does; +0.1 if one of them uses a GPU or VirtualBox."
 msgstr ""
-"-1 als het project geen programma's heeft die op de computer kunnen worden "
-"uitgevoerd; 0 als dat zo is; +0,1 als een van hen een GPU of VirtualBox "
-"gebruikt."
+"-1 hvis prosjektet ikke har noen programmer som kan kjøres på datamaskinen; "
+"0 hvis den gjør det; +0.1 hvis en av dem bruker en GPU eller VirtualBox."
 
 #: user/su_hosts.php:84 user/su_hosts.php:98
 msgid "Allocation score"
-msgstr "Toewijzingsscore"
+msgstr "Tildelingspoeng"
 
 #: user/su_hosts.php:85
 msgid ""
 "How much work is owed to the project; this changes from one day to the next."
 msgstr ""
-"Hoeveel werk nodig is voor het project; dit veranderd van de ene dag tot de "
-"andere."
+"Hvor mye arbeid som skyldes prosjektet; dette endres fra en dag til den "
+"neste."
 
 #: user/su_hosts.php:87
 msgid ""
 "We then choose the highest-scoring projects (at least 2) that together can "
 "use all the computer's processors."
 msgstr ""
-"Daarna kiezen we de hoogst scorende projecten (minstens 2) die samen alle "
-"processors van de computer kan gebruiken."
+"Vi velger deretter de høyest scorende prosjektene (minst 2) som sammen kan "
+"bruke alle datamaskinens prosessorer."
 
 #: user/su_hosts.php:99 user/su_hosts.php:128
 msgid "Score"
-msgstr "Score"
+msgstr "Poeng"
 
 #: user/su_hosts.php:102
 msgid "Can use %1?"
-msgstr "Kan %1 gebruiken?"
+msgstr "Kan bruke %1?"
 
 #: user/su_hosts.php:104
 msgid "Opted out?"
-msgstr "Geannuleerd?"
+msgstr "Har du valgt bort?"
 
 #: user/su_hosts.php:117 user/su_hosts.php:139 user/su_user_projects.php:141
 msgid "Yes"
@@ -653,23 +642,24 @@ msgstr "Ja"
 #: user/su_hosts.php:122
 msgid "Given the above info, this computer would do work for these projects:"
 msgstr ""
-"Gegeven de bovenstaande info zal de computer werken voor deze projecten:"
+"Gitt informasjonen ovenfor, vil denne datamaskinen fungere for disse "
+"prosjektene:"
 
 #: user/su_hosts.php:139 user/su_user_projects.php:143
 msgid "No"
-msgstr "Nee"
+msgstr "Nei"
 
 #: user/su_hosts.php:148
 msgid "Computer hardware and software"
-msgstr "Computer hardware en software"
+msgstr "Datamaskin maskinvare og programvare"
 
 #: user/su_hosts.php:156 user/su_hosts.php:196
 msgid "Projects for which this computer has done work"
-msgstr "Projecten waarvoor deze computer heeft gewerkt"
+msgstr "Prosjekter som denne datamaskinen har arbeidet med"
 
 #: user/su_hosts.php:160 user/su_hosts.php:185 user/su_user_projects.php:84
 msgid "Name"
-msgstr "Naam"
+msgstr "Navn"
 
 #: user/su_hosts.php:161
 msgid "CPU FLOPS"
@@ -677,7 +667,7 @@ msgstr "CPU FLOPS"
 
 #: user/su_hosts.php:162 user/su_user_projects.php:133
 msgid "CPU time"
-msgstr "CPU tijd"
+msgstr "CPU varighet"
 
 #: user/su_hosts.php:163
 msgid "GPU FLOPS"
@@ -685,35 +675,35 @@ msgstr "GPU FLOPS"
 
 #: user/su_hosts.php:164 user/su_user_projects.php:136
 msgid "GPU time"
-msgstr "GPU tijd"
+msgstr "GPU varighet"
 
 #: user/su_hosts.php:165
 msgid "# jobs success"
-msgstr "# taken succesvol"
+msgstr "# vellykkede jobber"
 
 #: user/su_hosts.php:166
 msgid "#jobs fail"
-msgstr "# taken mislukt"
+msgstr "#mislykkede jobber"
 
 #: user/su_hosts.php:182
 msgid "Computer details"
-msgstr "Computer details"
+msgstr "Datamaskindetaljer"
 
 #: user/su_hosts.php:187
 msgid "Hardware/software details"
-msgstr "Hardware/software details"
+msgstr "Maskin-/programvare detaljer"
 
 #: user/su_hosts.php:192
 msgid "How projects are chosen for this computer"
-msgstr "Hoe projecten gekozen worden voor deze computer"
+msgstr "Hvordan prosjekter selekteres for denne datamaskinen"
 
 #: user/su_intro.php:25
 msgid "Getting started"
-msgstr "Aan de slag"
+msgstr "Komme i gang"
 
 #: user/su_intro.php:26 user/su_welcome.php:20
 msgid "Welcome to %1"
-msgstr "Welkom bij %1"
+msgstr "Velkommen til %1"
 
 #: user/su_intro.php:46
 msgid ""
@@ -721,30 +711,28 @@ msgid ""
 "computer will do run science jobs in the background, supporting research in "
 "the areas you selected."
 msgstr ""
-"Ondertussen zou je BOINC gedownload en uitgevoerd moeten zijn. Als dat zo "
-"is, ben je klaar! Je computer zal wetenschappelijke taken verwerken in de "
-"achtergrond, ter ondersteuning van het onderzoek in de velden die je "
-"geselecteerd hebt."
+"Innen nå skulle du ha lastet ned og kjører BOINC. I så fall er du ferdig! "
+"Datamaskinen din kjører vitenskapsjobber i bakgrunnen, og støtter forskning "
+"i områdene du valgte."
 
 #: user/su_intro.php:47
 msgid ""
 "Scientists need all the computing power they can get.  To help further, you "
 "can:"
 msgstr ""
-"Wetenschappers hebben alle verwerkingskracht nodig die ze kunnen krijgen. Om"
-" verder te helpen, kan je:"
+"Forskere behøver all datakraften de kan få. For å hjelpe videre kan du:"
 
 #: user/su_intro.php:48
 msgid ""
 "Tell your family, friends, and co-workers about %1, and encourage them to "
 "volunteer."
 msgstr ""
-"Vertel je familie, vrienden en collega's over %1 en moedig hen aan om "
-"vrijwilliger te worden."
+"Fortell familie, venner og kolleger om %1, og oppmuntre dem til å melde seg "
+"frivillig."
 
 #: user/su_intro.php:49
 msgid "Run %1 on all your computing devices:"
-msgstr "Voer %1 uit op al je verwerkingsapparaten:"
+msgstr "Kjør %1 på alle dataenhetene dine:"
 
 #: user/su_intro.php:50
 msgid ""
@@ -752,9 +740,9 @@ msgid ""
 "web site (%1) and log in.  Then select Download from the Project menu, and "
 "install BOINC as you did on this computer."
 msgstr ""
-"Desktops en laptops (Windows, Linux, Mac OS X): Bezoek op dit apparaat deze "
-"website (%1) en log in. Selecteer dan Download van het Project menu en "
-"installeer BOINC zoals je dat deed op deze computer."
+"Stasjonære og bærbare datamaskiner (Windows, Linux, Mac OS X): På denne "
+"enheten, besøk dette nettstedet (% 1) og logg inn. Velg deretter Last ned "
+"fra Project-menyen, og installer BOINC som du gjorde på denne datamaskinen."
 
 #: user/su_intro.php:51
 msgid ""
@@ -762,49 +750,49 @@ msgid ""
 " or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
 " and log in."
 msgstr ""
-"Android telefoon en tablets: installeer de BOINC app vanuit de Google Play "
-"Store of (voor Fire) de Amazon App Store. Kies Gebruik Account Manager, "
-"selecteer %1, en log in."
+"Android-telefoner og nettbrett: Installer BOINC-appen fra Google Play Store "
+"eller (for Fire) Amazon App Store. Velg Bruk kontoadministrator, velg %1 og "
+"logg på."
 
 #: user/su_intro.php:52
 msgid "You can %1 Join or create a Team%2."
-msgstr "Je kan je aansluiten bij %1 of creëer een Team%2."
+msgstr "Du kan %1 bli med i eller opprette et team %2."
 
 #: user/su_intro.php:53
 msgid "Computing prefs"
-msgstr "Verwerkingsvoorkeuren"
+msgstr "Kalkuleringsinnstillinger"
 
 #: user/su_intro.php:54
 msgid "Science prefs"
-msgstr "Wetenschapsvoorkeuren"
+msgstr "Vitenskapinnstillinger"
 
 #: user/su_join.php:99
 msgid "Already joined"
-msgstr "Al toegevoegd"
+msgstr "Allerede med i"
 
 #: user/su_join.php:100
 msgid ""
 "You're already logged in.  If you want to create a new account, please log "
 "out first."
 msgstr ""
-"Je bent al ingelogd. Als je een nieuwe account wilt toevoegen, log dan "
-"alsjeblieft eerst uit. "
+"Du er allerede logget inn. Hvis du vil opprette en ny konto, må du logge ut "
+"først."
 
 #: user/su_prefs.php:126
 msgid "Prefer"
-msgstr "Verkiezen"
+msgstr "Foretrekke"
 
 #: user/su_prefs.php:127
 msgid "As needed"
-msgstr "Zoals nodig"
+msgstr "Etter behov"
 
 #: user/su_prefs.php:325
 msgid "Science and location preferences"
-msgstr "Wetenschap en locatie voorkeuren"
+msgstr "Vitenskap- og lokasjoninnstillinger"
 
 #: user/su_prefs.php:328
 msgid "Preferences saved."
-msgstr "Voorkeuren opgeslagen."
+msgstr "Innstillinger lagret."
 
 #: user/su_prefs.php:331
 msgid ""
@@ -812,143 +800,143 @@ msgid ""
 "%1 for more detail, %2 for less.  When done, click the Save button at the "
 "bottom."
 msgstr ""
-"Selecteer wetenschapsvelden en locaties die je wel of niet wil ondersteunen."
-" Klik %1 voor meer detail, %2 voor minder. Als je klaar bent, klik dan op de"
-" Opslaan knop onderaan."
+"Velg vitenskapsområder og lokasjoner du ønsker, eller ikke ønsker å støtte. "
+"Klikk på %1 for flere detaljer, %2 for færre. Når du er ferdig, klikker du "
+"Lagre-knappen nederst."
 
 #: user/su_prefs.php:340
 msgid "Science areas"
-msgstr "Wetenschapsvelden"
+msgstr "Vitenskapelige områder"
 
 #: user/su_prefs.php:344
 msgid "Locations"
-msgstr "Locaties"
+msgstr "Lokasjoner"
 
 #: user/su_user_accounting.php:24 user/su_user_accounting.php:34
 msgid "Your contribution history"
-msgstr "Jouw bijdrage geschiedenis"
+msgstr "Bidragshistorikken din"
 
 #: user/su_user_accounting.php:35
 msgid "Computing power"
-msgstr "Verwerkingskracht"
+msgstr "Kalkuleringskraft"
 
 #: user/su_user_accounting.php:37
 msgid "Computing time"
-msgstr "Verwerkingstijd"
+msgstr "Kalkuleringstid"
 
 #: user/su_user_accounting.php:39
 msgid "Completed jobs"
-msgstr "Voltooide taken"
+msgstr "Fullført arbeid"
 
 #: user/su_user_projects.php:28
 msgid "New"
-msgstr "Nieuw"
+msgstr "Ny"
 
 #: user/su_user_projects.php:30
 msgid "Established"
-msgstr "Gevestigd"
+msgstr "Etablert"
 
 #: user/su_user_projects.php:32
 msgid "In progress"
-msgstr "Bezig"
+msgstr "I fremdrift"
 
 #: user/su_user_projects.php:34
 msgid "Unknown"
-msgstr "Onbekend"
+msgstr "Ukjent"
 
 #: user/su_user_projects.php:85
 msgid "since"
-msgstr "sinds"
+msgstr "siden"
 
 #: user/su_user_projects.php:86
 msgid "CPU hours"
-msgstr "CPU uren"
+msgstr "CPU timer"
 
 #: user/su_user_projects.php:87
 msgid "GPU hours"
-msgstr "GPU uren"
+msgstr "GPU timer"
 
 #: user/su_user_projects.php:88
 msgid "# successful jobs"
-msgstr "# succesvolle taken"
+msgstr "# vellykkede jobber"
 
 #: user/su_user_projects.php:89
 msgid "# failed jobs"
-msgstr "# mislukte taken"
+msgstr "# mislykkede jobber"
 
 #: user/su_user_projects.php:90 user/su_user_projects.php:131
 #: user/su_user_projects.php:150
 msgid "Account status"
-msgstr "account status"
+msgstr "Kontostatus"
 
 #: user/su_user_projects.php:91
 msgid "Allowed by prefs?"
-msgstr "Toegestaan door voorkeuren?"
+msgstr "Tillat i instillinger?"
 
 #: user/su_user_projects.php:126
 msgid "Web site"
-msgstr "Website"
+msgstr "Nettsted"
 
 #: user/su_user_projects.php:127
 msgid "Science keywords"
-msgstr "Wetenschappelijke trefwoorden"
+msgstr "Vitenskap nøkkelord"
 
 #: user/su_user_projects.php:128
 msgid "Location keywords"
-msgstr "Locatie trefwoorden"
+msgstr "Stedsnøkkelord"
 
 #: user/su_user_projects.php:132
 msgid "CPU computing"
-msgstr "CPU verwerking"
+msgstr "CPU kalkulering"
 
 #: user/su_user_projects.php:135
 msgid "GPU computing"
-msgstr "GPU verwerking"
+msgstr "GPU kalkulering"
 
 #: user/su_user_projects.php:138
 msgid "# jobs succeeded"
-msgstr "# taken gelukt"
+msgstr "# jobber lyktes"
 
 #: user/su_user_projects.php:139
 msgid "# jobs failed"
-msgstr "# taken mislukt"
+msgstr "# mislykkede jobber"
 
 #: user/su_user_projects.php:141
 msgid "Include"
-msgstr "Sluit in"
+msgstr "Inkluder"
 
 #: user/su_user_projects.php:143
 msgid "Exclude"
-msgstr "Sluit uit"
+msgstr "Eksluder"
 
 #: user/su_user_projects.php:146
 msgid "Excluded?"
-msgstr "Uitgesloten?"
+msgstr "Eksludert?"
 
 #: user/su_user_projects.php:146
 msgid "Use if this project causes problems on your computer"
-msgstr "Gebruik als dit project problemen veroorzaakt op je computer"
+msgstr "Bruk hvis dette prosjektet gir problemer på datamaskinen din"
 
 #: user/su_user_projects.php:150
 msgid "None"
-msgstr "Geen"
+msgstr "Ingen"
 
 #: user/su_user_projects.php:152
 msgid "Return to project list"
-msgstr "Keer terug naar projectlijst"
+msgstr "Gå tilbake til prosjektlisten"
 
 #: user/su_welcome.php:22
 msgid ""
 "At this point BOINC should be installed and running on your computer; the "
 "system tray should have an icon like this: %1 If not, %2 get help here %3."
 msgstr ""
-"Op dit punt zou BOINC op uw computer geïnstalleerd moeten zijn; het "
-"systeemvak zou een pictogram als dit moeten hebben: %1 Zo niet, dan krijg je"
-" %2 hier hulp %3."
+"På dette tidspunktet bør BOINC være installert og kjøre på datamaskinen din;"
+" Systemstatusfeltet skal ha et ikon som dette: %1 Hvis ikke, få %2 hjelp her"
+" %3."
 
 #: user/su_welcome.php:32
 msgid "What happens now?"
-msgstr "Wat gebeurt er nu?"
+msgstr "Hva skjer nå?"
 
 #: user/su_welcome.php:33
 msgid ""
@@ -959,16 +947,15 @@ msgid ""
 "        and it may slightly increase your electric bill.\n"
 "    "
 msgstr ""
-"BOINC, actief op de achtergrond, zal berekeningstaken downloaden,\n"
-"        verwerken, en de resultaten uploaden.\n"
-"        Dit zal automatisch gebeuren; je moet helemaal niets doen.\n"
-"        Deze berekening kan ervoor zorgen dat de ventilator in je computer begint te draaien,\n"
-"        en het zou je elektriciteitsrekening licht kunnen verhogen.\n"
-"    "
+"BOINC, som kjører i bakgrunnen, vil laste ned datamaskinjobber,\n"
+"behandle dem, og last opp resultatene.\n"
+"Dette vil skje automatisk; du trenger ikke å gjøre noe.\n"
+"Denne beregningen kan føre til at datamaskinens vifte kjører,\n"
+"og det kan øke strømregningen litt."
 
 #: user/su_welcome.php:45
 msgid "How to monitor and control BOINC"
-msgstr "Hoe BOINC monitoren en beheren"
+msgstr "Hvordan overvåke og kontrollere BOINC"
 
 #: user/su_welcome.php:46
 msgid ""
@@ -976,13 +963,13 @@ msgid ""
 "        Open this by double-clicking on the BOINC icon.\n"
 "        Details are %1here%2."
 msgstr ""
-"Je kan monitoren what BOINC aan het doen is, en dit beheren, door de BOINC Manager te gebruiken.\n"
-"Open deze door te dubbelklikken op het BOINC icoon.\n"
-"Details zijn %1 hier %2 te vinden."
+"Du kan overvåke hva BOINC gjør, og kontrollere det, ved hjelp av BOINC Manager.\n"
+"Åpne dette ved å dobbeltklikke på BOINC-ikonet.\n"
+"Detaljer er %1her%2."
 
 #: user/su_welcome.php:58
 msgid "Computing preferences"
-msgstr "Berekeningsvoorkeuren"
+msgstr "Kalkuleringsinnstillinger"
 
 #: user/su_welcome.php:59
 msgid ""
@@ -993,10 +980,12 @@ msgid ""
 "        You can control many settings.\n"
 "        Check this out %1here%2."
 msgstr ""
-"BOINC is ontworpen om geen impact te hebben op de prestaties van je computer"
-" voor normaal gebruik. Als dit wel het geval is, kan je deze impact "
-"reduceren door, bijvoorbeeld, de hoeveelheid geheugen die BOINC gebruikt te "
-"limiteren. Je kan vele instellingen beheren. Bekijk dit %1 hier %2."
+"BOINC er designet for ikke å påvirke\n"
+"ytelsen til datamaskinen din for normal bruk.\n"
+"Hvis det gjør det, kan du redusere denne effekten ved å\n"
+"for eksempel å begrense mengden minne BOINC bruker.\n"
+"Du kan kontrollere mange innstillinger.\n"
+"Sjekk dette ut %1her%2."
 
 #: user/su_welcome.php:76
 msgid ""
@@ -1004,75 +993,76 @@ msgid ""
 "        in a variety of ways - take a look under the Community\n"
 "        menu above."
 msgstr ""
-"Je kan andere %1 deelnemers ontmoeten en met hen communiceren op "
-"verschillende manieren - neem een kijkje onder het Gemeenschap menu "
-"hierboven."
+"Du kan møte og kommunisere med andre %1 deltakere\n"
+"på en rekke måter - ta en titt under fellesskap\n"
+"menyen ovenfor."
 
 #: inc/su_graph.inc:31
 msgid "Past month:"
-msgstr "Laatste maand:"
+msgstr "Siste måned:"
 
 #: inc/su_graph.inc:38
 msgid "No work reported so far. %1Need help?%2"
-msgstr "Tot nu toe geen werk gerapporteerd. %1Hulp nodig?%2"
+msgstr "Inget rapportert arbeid så langt. %1Behøver du hjelp?%2"
 
 #: inc/su_graph.inc:45
 msgid "No work reported in last %1 days. %2Need help?%3"
-msgstr "Geen werk gerapporteerd in de afgelopen %1 dagen. %2Hulp nodig?%3"
+msgstr "Inget rapportert arbeid de siste %1 dagene. %2Behøver du hjelp? %3"
 
 #: inc/su_graph.inc:52
 msgid "Not enough data yet"
-msgstr "Nog niet genoeg data"
+msgstr "Foreløpig ikke nok data"
 
 #: inc/su_join.inc:35
 msgid "An invitation code is required to create an account."
-msgstr "Een uitnodigingscode is vereist om een account te creëren."
+msgstr "Det kreves en invitasjonskode for å opprette en konto."
 
 #: inc/su_join.inc:36
 msgid "Invitation code"
-msgstr "Uitnodigingscode"
+msgstr "Invitasjonskode"
 
 #: inc/su_join.inc:44
 msgid "Identifies you on this web site. Use your real name or a nickname."
 msgstr ""
-"Identificeer je op deze website. Gebruik je echte naam of een bijnaam."
+"Identifiserer deg på dette nettstedet. Bruk ditt virkelige navn eller et "
+"kallenavn."
 
 #: inc/su_join.inc:45
 msgid "Choose screen name"
-msgstr "Kies schermnaam"
+msgstr "Velg visningsnavn"
 
 #: inc/su_join.inc:51
 msgid "An address where you can receive emails."
-msgstr "Een adres waar je e-mails kan aankrijgen."
+msgstr "En adresse der du kan motta e-post."
 
 #: inc/su_join.inc:52
 msgid "Your email address"
-msgstr "Je e-mailadres"
+msgstr "Din epostadresse"
 
 #: inc/su_join.inc:63
 msgid "Must be at least %1 characters"
-msgstr "Moet minstens %1 karakters bevatten"
+msgstr "Må være minst %1 tegn"
 
 #: inc/su_join.inc:64
 msgid "Choose password"
-msgstr "Kies wachtwoord"
+msgstr "Velg passord"
 
 #: inc/su_user.inc:155
 msgid "Want to help more?"
-msgstr "Wil je meer helpen? "
+msgstr "Vil du hjelpe mer?"
 
 #: inc/su_user.inc:156
 msgid "Tell friends and family about %1."
-msgstr "Vertel je familie en vrienden over %1."
+msgstr "Fortell venner og familie om %1."
 
 #: inc/su_user.inc:157
 msgid ""
 "Run BOINC on your other computing devices (desktops, laptops, tablets, "
 "Android phones)."
 msgstr ""
-"Voer BOINC uit op je andere computerapparaten (desktops, laptops, tablets, "
-"Android-telefoons)."
+"Kjør BOINC på andre dataenheter (stasjonære, bærbare datamaskiner, "
+"nettbrett, Android-telefoner)."
 
 #: inc/su_user.inc:158
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
-msgstr "Is BOINC actief op deze computer? Zo niet, %1Download het%2."
+msgstr "Kjører BOINC på denne datamaskinen? Hvis ikke, %1Last det ned%2."

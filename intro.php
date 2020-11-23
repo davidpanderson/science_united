@@ -80,9 +80,9 @@ You may end up running a project that didn't exist when you first signed up.
 You don't have to browse and evaluate projects;
 in effect, SU does that for you.
 
+<h3>Encourage new projects</h3>
 <p>
-Equally importantly, it means that a new project,
-if vetted by SU, can be assured of
+This means that a new project, if vetted by SU, can be assured of
 a certain amount of computing power,
 without doing any publicity or even developing a web site.
 The need to do these things, and the risk of investing in BOINC,

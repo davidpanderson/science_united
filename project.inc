@@ -14,6 +14,7 @@ $master_url = parse_config(get_config(), "<master_url>");
 //define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
 define("PROJECT", "Science United");
 define("URL_BASE", $master_url);
+define("INVITE_CODES_RPC", "/8gnk48bxl/");
 define("IMAGE_PATH", "../user_profile/images/");
 define("IMAGE_URL", "user_profile/images/");
 define("PROFILE_PATH", "../user_profile/");
