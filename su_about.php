@@ -74,18 +74,16 @@ echo sprintf("
 
     <h2>The Project</h2>
     <p>
-    %s is being developed at UC Berkeley under the direction of
+    Science United is operated at UC Berkeley under the direction of
     <a href=https://boinc.berkeley.edu/anderson/>David P. Anderson</a>,
     the founder of BOINC.
-    The project is funded by the
+    The project was funded by the
     <a href=https://nsf.gov>National Science Foundation</a>
     under awards 1550601 and 1664190.
-    Once these awards are completed,
-    we plan to move %s to a community-based model.
 
     <h2>Software</h2>
     <p>
-    The %s software is distributed under the LGPL v3 license.
+    The Science United software is distributed under the LGPL v3 license.
     It is hosted on
     <a href=https://github.com/davidpanderson/science_united>Github</a>.
     <p>
@@ -110,7 +108,7 @@ echo sprintf("
     These translations are done within the
     <a href=https://boinc.berkeley.edu/translate.php>BOINC translation system</a>
     </ul>
-    ", PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT,
+    ", PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT,
     PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT, PROJECT
 );
 text_end();

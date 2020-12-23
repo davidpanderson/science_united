@@ -148,6 +148,7 @@ function su_navbar(
     $x = array();
     $x[] = array(tra("About %1", PROJECT), $url_prefix."su_about.php");
     $x[] = array(tra("Science"), $url_prefix."su_science.php");
+    $x[] = array(tra("Privacy policy"), $url_prefix."su_privacy.php");
     $x[] = array(tra("Help"), $url_prefix."su_help.php");
     navbar_menu(tra("Project"), $x);
 

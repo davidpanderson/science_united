@@ -104,6 +104,7 @@ function show_join_form() {
     form_start("su_join.php", "post");
     form_input_hidden("action", "join");
     form_general("", "Already using BOINC? <a href=su_boinc_users.php>Read this first.</a>");
+    form_general("", "Read our <a href=su_privacy.php>privacy policy.</a>");
     su_join_form(0, "download.php?dev=1");
     if (PROJECT == 'Science United') {
         keyword_prefs_form();

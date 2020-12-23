@@ -21,9 +21,11 @@ require_once("../inc/user.inc");
 
 function su_user_info_private($user) {
     $url_tokens = url_tokens($user->authenticator);
-    row2(tra("Screen name"), $user->name." <a href=edit_user_info_form.php?$url_tokens><img height=20 src=pictures/edit.png></a>");
-    row2(tra("Email address"), $user->email_addr. " <a href=edit_email_form.php><image height=20 src=pictures/edit.png></a>");
-    row2(tra("Password"), " <a href=edit_passwd_form.php><image height=20 src=pictures/edit.png></a>");
+    $edit = "<font size=-2>".tra("Edit")."</font>";
+    row2(tra("Screen name"),
+        $user->name." <a href=edit_user_info_form.php?$url_tokens>$edit</a>");
+    row2(tra("Email address"), $user->email_addr. " <a href=edit_email_form.php>$edit</a>");
+    row2(tra("Password"), " <a href=edit_passwd_form.php>$edit</a>");
     row2(tra("%1 member since", PROJECT), date_str($user->create_time));
     row2(tra("User ID")."<br/><p class=\"small\">".tra("Used in community functions")."</p>", $user->id);
     row2(tra("Delete account"),
