@@ -119,7 +119,6 @@ function edit_project_form() {
     form_radio_buttons('Status', 'status',
         array(
             array('0', 'hidden'),
-            array('1', 'on demand'),
             array('2', 'normal')
         ),
         $p->status

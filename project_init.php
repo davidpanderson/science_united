@@ -64,7 +64,9 @@ function update_project($p) {
 
     $project = SUProject::lookup_id($project_id);
     if ($project) {
-        $project->update("status = ".PROJECT_STATUS_AUTO);
+        if ($project->status != PROJECT_STATUS_AUTO) {
+            echo "Project $project->name was not enabled\n";
+        }
         if ($url_signature != $project->url_signature) {
             echo "updating $project->name URL signature\n";
             $ret = $project->update("url_signature='$url_signature'");
@@ -89,12 +91,12 @@ function update_project($p) {
             echo "Project $project->name has no authenticator: create an account\n";
         }
     } else {
-        SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, ".PROJECT_STATUS_AUTO.")");
+        SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, ".PROJECT_STATUS_HIDE.")");
 
         if (!SUAccountingProject::insert("(project_id, create_time) values ($project_id, $now)")) {
             die("su_accounting_project insert failed\n");
         }
-        echo "Added project $name; give it an authenticator\n";
+        echo "Added project $name; give it a (weak) authenticator, then set status to 2 (AUTO)\n";
     }
 }
 
