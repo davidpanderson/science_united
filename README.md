@@ -3,7 +3,7 @@ This repo is the source code for Science United (https://scienceunited.org),
 an interface to BOINC-based volunteer computing.
 Volunteers who use SU sign up for science areas (biomed, astronomy, etc.)
 and/or geographical areas,
-rather than for specific projects.
+rather than for specific BOINC projects.
 
 This code may be useful as a starting point for other BOINC account managers,
 especially those based on a similar
@@ -25,13 +25,13 @@ To get started:
 ## Implementation notes
 
 SU is implemented as a BOINC [account manager](https://boinc.berkeley.edu/trac/wiki/AccountManagement).
-The SU code consists of 3 main parts:
+The SU code is in PHP, and consists of 3 main parts:
 1. The handler for RPCs from clients (rpc.php).
 1. Web page scripts.
 1. Scripts for periodic back-end maintenance tasks.
 
 SU piggy-backs on the BOINC web code.
-It uses BOINC's code for account creation, login, message boards, and web utility functions.
+It uses this for account creation, login, message boards, and web utility functions.
 
 SU uses a MySQL database which is an extension of the BOINC database;
 it adds tables for projects, accounts, and computational book-keeping info.
@@ -39,12 +39,12 @@ See schema.sql.
 
 ## Cloning Science United
 
-If you want to make a clone of SU, the steps are:
+If you want to make a "clone" of SU, the steps are:
 1. Download the BOINC source code.
 1. Use **make_project --web_only** to create a project, say 'su_clone'.
 1. Run SU's schema.sql to add SU's DB tables: **mysql su_clone < schema.sql**
 1. Copy or link SU's web files to the appropriate subdirectories
-   of  projects/su_clone/html/.
+   of projects/su_clone/html/.
    .inc files go in html/inc/;
    maintenance scripts go in html/ops/.
    Other .php files go in html/user/.
