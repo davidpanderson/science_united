@@ -2,6 +2,8 @@
 
 <?php
 
+DO NOT RUN THIS!!!
+
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
 // Copyright (C) 2018 University of California
@@ -266,6 +268,7 @@ if ($argc > 1) {
         die("unknown option $argv[1]);
     }
 } else {
+    exit;
     clean();
     make_users();
     make_accounts();

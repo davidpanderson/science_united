@@ -1,5 +1,7 @@
 <?php
 
+echo "Deprecated; use download_software.php instead."; exit;
+
 require_once("../inc/xml.inc");
 require_once("../inc/account.inc");
 

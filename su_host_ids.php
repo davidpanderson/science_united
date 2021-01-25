@@ -29,7 +29,7 @@ function main() {
     xml_header();
     $user = BoincUser::lookup_auth(get_str("auth"));
     if (!$user) {
-        xml_error("no such user");
+        xml_error(-1, "no such user");
     }
     $hosts = BoincHost::enum("userid=$user->id");
     echo "<hosts>\n";

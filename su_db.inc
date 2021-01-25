@@ -133,10 +133,10 @@ class SUUserKeyword {
         $db = BoincDb::get();
         return $db->update_aux('su_user_keyword', $clause);
     }
-    static function delete_all() {
-        $db = BoincDb::get();
-        return $db->delete_aux('su_user_keyword', 1);
-    }
+    //static function delete_all() {
+    //    $db = BoincDb::get();
+    //    return $db->delete_aux('su_user_keyword', 1);
+    //}
 }
 
 class SUAccount {
