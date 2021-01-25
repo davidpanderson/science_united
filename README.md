@@ -7,11 +7,16 @@ rather than for specific BOINC projects.
 Science United is developed by the BOINC project at U.C. Berkeley,
 led by David Anderson, and supported by the National Science Foundation.
 
-* This code may be useful as a starting point for other BOINC account managers,
+This code may be useful as a starting point for other BOINC account managers,
 especially those based on a similar
 [coordinated model](https://scienceunited.org/doc/su_overview.pdf).
 See [how to clone SU](docs/clone.md).
+
+Science United can be used as a "back end" for systems that provide
+other interfaces to BOINC-based computing.
+Technical details:
 * [RPC interfaces to Science United](doc/rpcs.md)
+* [One-click "auto-attach" software download](doc/auto_attach.md)
 * [Getting computing info for Science United users](doc/computing_info.md)
 
 ## Contribute
