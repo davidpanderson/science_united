@@ -158,21 +158,21 @@ function su_host_project_accounting($host) {
     start_table("table-striped");
     row_heading_array(array(
         tra("Name"),
-        tra("CPU FLOPS"),
-        tra("CPU time"),
-        tra("GPU FLOPS"),
-        tra("GPU time"),
+        tra("CPU days"),
+        tra("GPU days"),
         tra("# jobs success"),
         tra("#jobs fail")
     ));
     foreach ($ps as $p) {
         $project = SUProject::lookup_id($p->project_id);
-        row_array(array(
-            $project->name,
-            $p->cpu_time, $p->cpu_ec,
-            $p->gpu_time, $p->gpu_ec,
-            $p->njobs_success, $p->njobs_fail
-        ));
+        if ($p->cpu_time || $p->gpu_time || $p->njobs_success || $p->njobs_fail) {
+            row_array(array(
+                $project->name,
+                show_days($p->cpu_time),
+                show_days($p->gpu_time),
+                $p->njobs_success, $p->njobs_fail
+            ));
+        }
     }
     end_table();
     page_tail();

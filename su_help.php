@@ -31,7 +31,7 @@ echo sprintf("%s
     tra("Do you see the BOINC icon %1 in your system tray or dock?",
         "<img height=24 src=https://boinc.berkeley.edu/logo/boinc32.bmp>"
     ),
-    tra("If not, %1download and install BOINC%2.",
+    tra("If not, %1 download and install BOINC%2.",
         "<a href=download_software.php>", "</a>"
     ),
     tra("Science United requires BOINC version 7.14 or later.")
@@ -72,7 +72,7 @@ echo sprintf("<h3>%s</h3>
         "<a href=https://github.com/davidpanderson/science_united>",
         "</a>"
     ),
-    tra("If none of the above work for you, %1email us%2.",
+    tra("If none of the above work for you, %1 email us%2.",
         "<a href=https://boinc.berkeley.edu/anderson/>", "</a>"
     )
 );

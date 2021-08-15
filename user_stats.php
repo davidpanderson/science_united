@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
-// print usage/accounting info
+// show various usage/accounting/keyword info (for papers)
 
 require_once("../inc/su_db.inc");
 require_once("../inc/su_util.inc");
@@ -39,6 +39,10 @@ function main() {
     $nsci = 0;
     $ngeog = 0;
 
+    foreach ($job_keywords as $jk) {
+        $jk->nyes = 0;
+        $jk->nno = 0;
+    }
     foreach ($users as $u) {
         $sah = SUAccountingUser::last($u->id);
         if ($sah) {
@@ -62,8 +66,10 @@ function main() {
             foreach ($ks as $k) {
                 if ($k->yesno > 0) {
                     $nyes++;
+                    $job_keywords[$k->keyword_id]->nyes += 1;
                 } else {
                     $nno++;
+                    $job_keywords[$k->keyword_id]->nno += 1;
                 }
                 if ($job_keywords[$k->keyword_id]->category == KW_CATEGORY_SCIENCE) {
                     $nsci++;
@@ -85,6 +91,12 @@ function main() {
     echo "gflop hours: $flops\n";
     echo "nyes: $nyes  nno: $nno\n";
     echo "nsci: $nsci  ngeog: $ngeog\n";
+
+    foreach ($job_keywords as $jk) {
+        $fyes = 100*$jk->nyes/$nactive;
+        $fno = 100*$jk->nno/$nactive;
+        echo "$jk->name ($jk->level): $fyes ys, $fno no\n";
+    }
 }
 
 main();
