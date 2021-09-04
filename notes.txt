@@ -606,3 +606,59 @@ per month for last X years:
     CPU TeraFLOPS
     GPU TeraFLOPS
     # jobs
+-----------------------
+Summary of AM RPC
+
+do_accounting(): update account for projects currently running
+choose_projects_rpc()
+    rank_projects(): make list of projects ordered by desc score
+        omit opted-out projects
+        populate_score_info()
+            get info about host:
+                platforms
+                processing resources (cpu, nvidia, amd, intel_gpu)
+                Vbox
+        for each project
+            project_score()
+                platform_score()
+                    -1 (don't use) if no common "extended platform"
+                        (platform/gpu/vbox)
+                    1 if have a common extended platform that uses GPU or VM
+                    else 0
+                keywd_score()
+                     -1 if NO keywd
+                     +1 for each YES keywd
+                allocation_score()
+                     -(x/y)
+                     x is frac of recent total computing for this project 
+                     y is frac it should get (share/total share)
+            get # of RPC failures
+            get list of resources for which project didn't return work
+        sort project list
+    select_projects_resource()
+        (select list of projects that use all resources;
+        for each project, set array of resources it should use.
+        E.g. suppose the highest-prio project P1 can only use the CPU.
+        We need to send a lower-prio project P2 to use the GPU,
+        but we don't want p2 to use the CPU)
+
+        used[]: array of flags for resources, whether used so far
+        for each project P (desc priority)
+            for each resource R not used so far
+                if P can use R (based on app versions)
+                found = true
+                p->use[R] = true
+                if last RPC to P succeeded and last req for R return work
+                    used[R] = true
+                NOTE: we'll include P in reply on the chance that
+                it might supply work at some point,
+                but we won't assume it will
+
+            if found (proj can use some resource):
+                add to list
+            if all resources used
+                break
+
+        if # projects < 2
+            scan list until find project that can use some resource.
+            tell it to use all resources that it can
