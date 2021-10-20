@@ -31,7 +31,7 @@ function su_show_project($project, $user) {
     page_head($project->name);
     start_table("table-striped");
     row2("Name", $project->name);
-    row2("URL", $project->url);
+    row2("URL", "<a href=$project->url>$project->url</a>");
     if ($project->url != $project->web_url) {
         row2("Web URL", $project->web_url);
     }
