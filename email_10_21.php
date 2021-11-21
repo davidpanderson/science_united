@@ -10,18 +10,15 @@ function send($user) {
 If you are running BOINC on a Windows computer,
 please install a new version (7.16.20) of the software.
 The previous version stopped working recently because of an expired SSL file
-that prevented it from communicating with several BOINC projects,
-with the BOINC server, and with Science United.
+that prevented it from communicating with this project.
 
 You can download the new version here:
 https://boinc.berkeley.edu/download.php
 
 Sorry for the inconvenience.
 
-David Anderson
-Director, Science United
 ";
-    send_email($user, "Science United: please install new BOINC version", $x);
+    send_email($user, PROJECT.": please install new BOINC version", $x);
 }
 
 function main() {

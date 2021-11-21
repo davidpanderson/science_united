@@ -44,7 +44,7 @@ function do_user($user) {
 
     $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     if (count($hosts) == 0) {
-        $x .= "We haven't heard from your computer yet.  Please <a href=https://scienceunited.org/su_help.php>make sure that BOINC is installed and running<a>.";
+        $x .= "We haven't heard from your computer yet.  Please <a href=https://scienceunited.org/su_help.php>make sure that the latest version of BOINC is installed and running<a>.";
         su_send_email($user, $x);
         return;
     }
@@ -84,7 +84,7 @@ function do_user($user) {
             $idle_days = (time() - $host->rpc_time)/86400;
             if ($host->rpc_time < $t0) {
                 $x .= sprintf(
-                    "Your computer '%s' hasn't contacted us in %d days; please check that BOINC is running there.<p>",
+                    "Your computer '%s' hasn't contacted us in %d days; please check that the latest version of BOINC is running there.<p>",
                     $host->domain_name, (int)$idle_days
                 );
             }
@@ -92,7 +92,7 @@ function do_user($user) {
     } else {
         $x .= sprintf(
             "Your computers haven't reported work in the last %s.
-            Please check that BOINC is installed, unsuspended,
+            Please check that the latest version of BOINC is installed, unsuspended,
             and attached to Science United.",
             $ndays_str
         );

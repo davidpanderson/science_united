@@ -435,6 +435,7 @@ function select_projects_resource($host, $projects) {
 
     $used = array();
     foreach ($host->resources as $r) {
+        log_write("resource: $r");
         $used[$r] = false;
     }
     foreach ($projects as $p) {
@@ -475,6 +476,8 @@ function select_projects_resource($host, $projects) {
                 } else {
                     $used[$r] = true;
                 }
+            } else {
+                log_write("$p->name can't use $r");
             }
         }
         if ($found) {
