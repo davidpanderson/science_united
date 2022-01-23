@@ -187,7 +187,6 @@ function su_host_summary($host) {
         tra("Hardware/software details"),
         "<a href=su_hosts.php?action=detail&host_id=$host->id>$view</a>"
     );
-    row2(tra("Last contact"), time_str($host->rpc_time));
     row2(
         tra("How projects are chosen for this computer"),
         "<a href=su_hosts.php?action=project_select&host_id=$host->id>$view</a>"
@@ -210,19 +209,23 @@ case "del":
     break;
 case "summary":
     $host = BoincHost::lookup_id(get_int("host_id"));
+    if ($host->userid != $user->id) error_page('not your host');
     su_host_summary($host);
     break;
 case "detail":
     $host = BoincHost::lookup_id(get_int("host_id"));
+    if ($host->userid != $user->id) error_page('not your host');
     su_host_detail($host);
     break;
 case "project_select":
     $host = BoincHost::lookup_id(get_int("host_id"));
+    if ($host->userid != $user->id) error_page('not your host');
     $host = populate_score_info($host, null);
     su_host_project_select($user, $host);
     break;
 case "project_accounting":
     $host = BoincHost::lookup_id(get_int("host_id"));
+    if ($host->userid != $user->id) error_page('not your host');
     su_host_project_accounting($host);
     break;
 default:
