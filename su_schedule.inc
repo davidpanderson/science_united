@@ -435,7 +435,9 @@ function select_projects_resource($host, $projects) {
 
     $used = array();
     foreach ($host->resources as $r) {
-        log_write("resource: $r");
+        if (LOG_PROJECT_SELECT && $in_rpc) {
+            log_write("resource: $r");
+        }
         $used[$r] = false;
     }
     foreach ($projects as $p) {
@@ -460,16 +462,16 @@ function select_projects_resource($host, $projects) {
                 //
                 if ($in_rpc) {
                     if ($p->nrpc_failures) {
-                        if (LOG_PROJECT_SELECT) {
+                        if (LOG_PROJECT_SELECT && $in_rpc) {
                             log_write("select: $p->name can't use $r: RPC failures");
                         }
                     } else if (in_array($r, $p->sched_req_no_work)) {
-                        if (LOG_PROJECT_SELECT) {
+                        if (LOG_PROJECT_SELECT && $in_rpc) {
                             log_write("select: $p->name can't use $r: sched req didn't get work");
                         }
                     } else {
                         $used[$r] = true;
-                        if (LOG_PROJECT_SELECT) {
+                        if (LOG_PROJECT_SELECT && $in_rpc) {
                             log_write("select: $p->name can use $r");
                         }
                     }
@@ -477,7 +479,9 @@ function select_projects_resource($host, $projects) {
                     $used[$r] = true;
                 }
             } else {
-                log_write("$p->name can't use $r");
+                if (LOG_PROJECT_SELECT && $in_rpc) {
+                    log_write("$p->name can't use $r");
+                }
             }
         }
         if ($found) {

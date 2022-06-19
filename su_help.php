@@ -34,7 +34,7 @@ echo sprintf("%s
     tra("If not, %1 download and install BOINC%2.",
         "<a href=download_software.php>", "</a>"
     ),
-    tra("Science United requires BOINC version 7.14 or later.")
+    tra("Science United requires BOINC version 7.16 or later.")
 );
 echo sprintf("<h3>%s</h3>
     <p>

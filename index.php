@@ -154,7 +154,11 @@ function slide_show() {
     ';
 }
 
-page_head(PROJECT, null, true);
+page_head(PROJECT, null, true, '',
+    '<meta name=description content="Science United lets you supply computing power to science research projects in a wide range of areas">
+    <meta name=keywords content="distributed scientific computing grid BOINC volunteer computing">
+    '
+);
 
 if ($stopped) {
     grid('closed_panel', function(){}, function(){});

@@ -6,12 +6,15 @@
 # Translators:
 # Vasya Pupkin <vecherins@gmail.com>, 2018
 # Николай Сахаров <saharovna@gmail.com>, 2019
+# Павел Алексеев <pavlik3312@gmail.com>, 2021
+# Kirill Drobotya <kirill.drobotya@gmail.com>, 2021
+# Igor Vornovskii, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECTReport-Msgid-Bugs-To: BOINC translation team <boinc_loc@ssl.berkeley.edu>\n"
-"POT-Creation-Date: 2019-02-15 23:35 PST\n"
-"Last-Translator: Николай Сахаров <saharovna@gmail.com>, 2019\n"
+"POT-Creation-Date: 2020-05-03 15:43 PDT\n"
+"Last-Translator: Igor Vornovskii, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/boinc/teams/35581/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,19 +23,19 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: index.php:44
+#: user/index.php:43
 msgid "%1 is temporarily shut down for maintenance."
 msgstr "%1 временно выключен для обслуживания."
 
-#: index.php:51
+#: user/index.php:50
 msgid "Recent contribution"
 msgstr "Недавний вклад"
 
-#: index.php:56 su_welcome.php:85
+#: user/index.php:56 user/su_welcome.php:85
 msgid "Continue to your home page"
 msgstr "Перейти на главную страницу"
 
-#: index.php:64
+#: user/index.php:64
 msgid ""
 "%1 lets you help scientific research projects by giving them computing "
 "power.  These projects do research in astronomy, physics, biomedicine, "
@@ -44,7 +47,7 @@ msgstr ""
 "астрономии, физики, биомедицины, математики и экологии; Вы можете выбрать "
 "области, которые Вы хотите поддержать."
 
-#: index.php:66
+#: user/index.php:66
 msgid ""
 "You help by installing BOINC, a free program that runs scientific jobs in "
 "the background and when you're not using the computer.  BOINC is secure and "
@@ -54,56 +57,56 @@ msgstr ""
 "научные задания в фоновом режиме и когда Вы не используете компьютер. BOINC "
 "безопасен и не повлияет на ваше нормальное использование компьютера."
 
-#: index.php:69
+#: user/index.php:70
 msgid "%1 is operated by the BOINC project at UC Berkeley."
 msgstr "%1 управляется проектом BOINC в Калифорнийском университете в Беркли."
 
-#: index.php:74
+#: user/index.php:75
 msgid "%1 and the research projects it supports are non-profit."
 msgstr ""
 "%1 и поддерживаемые им исследовательские проекты являются некоммерческими."
 
-#: index.php:78
+#: user/index.php:83
 msgid "Join %1"
 msgstr "Присоединиться к %1"
 
-#: index.php:81
+#: user/index.php:86
 msgid "Already joined?"
 msgstr "Уже присоединились?"
 
-#: index.php:82
+#: user/index.php:88
 msgid "Log in."
 msgstr "Войти."
 
-#: index.php:92
+#: user/index.php:100
 msgid "Welcome, %1"
 msgstr "Добро пожаловать, %1"
 
-#: index.php:111
+#: user/index.php:119
 msgid "News"
 msgstr "Новости"
 
-#: index.php:124
+#: user/index.php:132
 msgid "Ebola-Infected VERO E6 Cell"
 msgstr "Инфицированная вирусом эбола клетка VERO E6"
 
-#: index.php:125
+#: user/index.php:133
 msgid "Simulation of Higgs boson detection"
 msgstr "Моделирование обнаружения бозона Хиггса"
 
-#: index.php:126
+#: user/index.php:134
 msgid "The Earth's interrelated climate systems"
 msgstr "Взаимосвязанные климатические системы Земли"
 
-#: index.php:127
+#: user/index.php:135
 msgid "Structure of protein GIF"
 msgstr "Структура белка GIF"
 
-#: index.php:128
+#: user/index.php:136
 msgid "The Hubble ultra-deep field image"
 msgstr "Изображение HUDF"
 
-#: index.php:171
+#: user/index.php:180
 msgid ""
 "Science United is funded by the %1National Science Foundation%2, award "
 "#1664190, and is based at the %3University of California, Berkeley%4."
@@ -111,47 +114,138 @@ msgstr ""
 "Science United финансируется фондом %1National Science Foundation%2, премия "
 "#1664190, и базируется в %3Университете Калифорнии, Беркли%4."
 
-#: su_about.php:20
+#: project/project.inc:111
+msgid "Log out"
+msgstr "Выйти"
+
+#: project/project.inc:117 user/su_join.php:104
+msgid "Join"
+msgstr "Присоединиться"
+
+#: project/project.inc:117
+msgid "Login"
+msgstr "Войти"
+
+#: project/project.inc:147
+msgid "About %1"
+msgstr "О %1"
+
+#: project/project.inc:148 user/su_help.php:20
+msgid "Help"
+msgstr "Помощь"
+
+#: project/project.inc:149 user/su_hosts.php:95 user/su_hosts.php:128
+msgid "Project"
+msgstr "Проект"
+
+#: project/project.inc:151 user/su_home.php:46 user/su_home.php:68
+#: user/su_welcome.php:75
+msgid "Community"
+msgstr "Сообщество"
+
+#: project/project.inc:152
+msgid "Message boards"
+msgstr "Доска сообщений"
+
+#: project/project.inc:159
+msgid "Site"
+msgstr "Сайт"
+
+#: project/project.inc:160
+msgid "Search"
+msgstr "Поиск"
+
+#: project/project.inc:161
+msgid "Languages"
+msgstr "Языки"
+
+#: project/project.inc:179
+msgid "Do science research on your computer, tablet, or phone"
+msgstr "Проводите научные исследования на компьютере, планшете или телефоне"
+
+#: project/project.inc:199
+msgid "Generated"
+msgstr "Сгенерировано"
+
+#: project/project.inc:230
+msgid "Your personal background."
+msgstr "Ваша личная информация."
+
+#: project/project.inc:234
+msgid ""
+"Tell us about yourself. You could tell us where you're from, your age, "
+"occupation, hobbies, or anything else about yourself."
+msgstr ""
+"Расскажите нам о себе. Вы могли бы рассказать нам, откуда Вы, ваш возраст, "
+"профессия, хобби, или что-нибудь ещё о себе."
+
+#: project/project.inc:238
+msgid "Your opinions about %1"
+msgstr "Ваше мнение о %1"
+
+#: project/project.inc:242
+msgid ""
+"Tell us your thoughts about %1<ol>\n"
+"    <li>Why do you run %1?\n"
+"    <li>What are your views about the project?\n"
+"    <li>Any suggestions?\n"
+"    </ol>"
+msgstr ""
+"Расскажите нам, что Вы думаете о %1<ol>\n"
+"    <li>Почему Вы участвуете в %1?\n"
+"    <li>Каковы ваши взгляды на проект?\n"
+"    <li>Какие-либо предложения?\n"
+"    </ol>"
+
+#: user/su_about.php:20
 msgid "About"
 msgstr "О"
 
-#: su_account_settings.php:24
+#: user/su_account_settings.php:24
 msgid "Screen name"
 msgstr "Экранное имя"
 
-#: su_account_settings.php:25
+#: user/su_account_settings.php:25
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: su_account_settings.php:26
+#: user/su_account_settings.php:26
 msgid "Password"
 msgstr "Пароль"
 
-#: su_account_settings.php:27
+#: user/su_account_settings.php:27
 msgid "%1 member since"
 msgstr "Участник %1 с"
 
-#: su_account_settings.php:28
+#: user/su_account_settings.php:28
 msgid "User ID"
 msgstr "Идентификатор пользователя"
 
-#: su_account_settings.php:28
+#: user/su_account_settings.php:28
 msgid "Used in community functions"
 msgstr "Используется в функциях сообщества"
 
-#: su_account_settings.php:32
+#: user/su_account_settings.php:29
+msgid "Delete account"
+msgstr "Удалить аккаунт"
+
+#: user/su_account_settings.php:30
+msgid "Instructions"
+msgstr "Инструкции"
+
+#: user/su_account_settings.php:35
 msgid "Account settings"
 msgstr "Настройки учётной записи"
 
-#: su_accounting.php:29
+#: user/su_accounting.php:29
 msgid "Computing history"
 msgstr "История вычислений"
 
-#: su_compute_prefs.php:28
+#: user/su_compute_prefs.php:28
 msgid "Computing settings"
 msgstr "Настройки вычислений"
 
-#: su_compute_prefs.php:44
+#: user/su_compute_prefs.php:44
 msgid ""
 "You can control how many processors to use (most computers have 4 or 8 "
 "processors) and when to use them."
@@ -159,13 +253,13 @@ msgstr ""
 "Вы можете контролировать количество процессоров (большинство компьютеров "
 "имеют 4 или 8 процессоров) и когда их использовать."
 
-#: su_compute_prefs.php:50
+#: user/su_compute_prefs.php:50
 msgid "This may affect your electricity costs and your computer's fan speeds."
 msgstr ""
 "Это может повлиять на ваши затраты за электроэнергию и на скорость вращения "
 "вентилятора вашего компьютера."
 
-#: su_compute_prefs.php:52
+#: user/su_compute_prefs.php:52
 msgid ""
 "Settings affect all your computers.  Changes take effect the next time the "
 "computer synchs with Science United."
@@ -173,7 +267,7 @@ msgstr ""
 "Настройки влияют на все ваши компьютеры. Изменения вступят в силу в "
 "следующий раз, когда компьютер синхронизируется с Science United."
 
-#: su_compute_prefs.php:54
+#: user/su_compute_prefs.php:54
 msgid ""
 "You can change settings for a particular computer using the BOINC Manager.  "
 "This also gives you more detailed options."
@@ -181,11 +275,11 @@ msgstr ""
 "Вы можете изменить настройки для конкретного компьютера с помощью Менеджера "
 "BOINC. Это также даёт вам более подробные варианты."
 
-#: su_compute_prefs.php:56
+#: user/su_compute_prefs.php:56
 msgid "Choose one of:"
 msgstr "Выберите один из:"
 
-#: su_compute_prefs.php:61
+#: user/su_compute_prefs.php:61
 msgid ""
 "Low power %1 Use 25% of processors, and stop computing when computer is "
 "idle.%2"
@@ -193,23 +287,23 @@ msgstr ""
 "Маломощный %1 Использует 25% процессоров и останавливает вычисления при "
 "простое компьютера.%2"
 
-#: su_compute_prefs.php:68
+#: user/su_compute_prefs.php:68
 msgid "Standard %1 Use 50% of processors.%2"
 msgstr "Стандартный %1 Использует 50% процессоров.%2"
 
-#: su_compute_prefs.php:77
+#: user/su_compute_prefs.php:77
 msgid "Maximum computing %1 Use all processors.%2"
 msgstr "Максимальный %1 Использует все процессоры.%2"
 
-#: su_compute_prefs.php:86
+#: user/su_compute_prefs.php:86
 msgid "Update"
 msgstr "Обновить"
 
-#: su_compute_prefs.php:95
+#: user/su_compute_prefs.php:95
 msgid "Computing settings updated"
 msgstr "Настройки вычислений обновлены"
 
-#: su_compute_prefs.php:96
+#: user/su_compute_prefs.php:96
 msgid ""
 "The new settings will take effect when your computer synchs with Science "
 "United."
@@ -217,33 +311,33 @@ msgstr ""
 "Новые настройки вступят в силу, когда ваш компьютер синхронизируется с "
 "Science United."
 
-#: su_compute_prefs.php:100
+#: user/su_compute_prefs.php:100
 msgid "Continue to home page"
 msgstr "Перейти на главную страницу"
 
-#: su_download.php:28
+#: user/su_download.php:28
 msgid "Install software"
 msgstr "Установить программное обеспечение"
 
-#: su_download.php:29
+#: user/su_download.php:29
 msgid ""
 "To participate in %1 you must install BOINC and VirtualBox on your computer."
 msgstr ""
 "Для участия в %1 необходимо установить BOINC и VirtualBox на компьютер."
 
-#: su_email_prefs.php:28
+#: user/su_email_prefs.php:28
 msgid "Email settings"
 msgstr "Настройки электронной почты"
 
-#: su_email_prefs.php:30
+#: user/su_email_prefs.php:30
 msgid "Preferences updated."
 msgstr "Настройки обновлены."
 
-#: su_email_prefs.php:35
+#: user/su_email_prefs.php:35
 msgid "Don't send me any emails"
 msgstr "Не присылать мне никаких писем"
 
-#: su_email_prefs.php:42
+#: user/su_email_prefs.php:42
 msgid ""
 "Status emails %1 These tell you how much work your computer(s) have done "
 "recently %2"
@@ -251,23 +345,23 @@ msgstr ""
 "Письма о состоянии %1 Они сообщают Вам, сколько работы ваш(и) компьютер(ы) "
 "сделали за последнее время %2"
 
-#: su_email_prefs.php:48 su_email_prefs.php:62 su_prefs.php:111
+#: user/su_email_prefs.php:48 user/su_email_prefs.php:62 user/su_prefs.php:128
 msgid "Never"
 msgstr "Никогда"
 
-#: su_email_prefs.php:49
+#: user/su_email_prefs.php:49
 msgid "Daily"
 msgstr "Ежедневно"
 
-#: su_email_prefs.php:50
+#: user/su_email_prefs.php:50
 msgid "Weekly"
 msgstr "Еженедельно"
 
-#: su_email_prefs.php:51
+#: user/su_email_prefs.php:51
 msgid "Monthly"
 msgstr "Ежемесячно"
 
-#: su_email_prefs.php:56
+#: user/su_email_prefs.php:56
 msgid ""
 "Community emails %1 These tell you about private messages, forum posts, and "
 "friend requests %2"
@@ -275,166 +369,220 @@ msgstr ""
 "Письма сообщества %1 Они сообщают Вам о личных сообщениях, сообщениях на "
 "форуме и запросах на добавление в друзья %2"
 
-#: su_email_prefs.php:63
+#: user/su_email_prefs.php:63
 msgid "Immediately"
 msgstr "Немедленно"
 
-#: su_email_prefs.php:64
+#: user/su_email_prefs.php:64
 msgid "Daily summary"
 msgstr "Ежедневная сводка"
 
-#: su_email_prefs.php:68 su_prefs.php:331
+#: user/su_email_prefs.php:68 user/su_prefs.php:348
 msgid "Save"
 msgstr "Сохранить"
 
-#: su_graph.php:56
+#: user/su_graph.php:119
 msgid "Successful jobs/day"
 msgstr "Успешных заданий/день"
 
-#: su_graph.php:57
+#: user/su_graph.php:120
 msgid "Failed jobs/day"
 msgstr "Проваленных заданий/день"
 
-#: su_graph.php:64
+#: user/su_graph.php:127
 msgid "CPU hours/day"
 msgstr "Часов ЦП/день"
 
-#: su_graph.php:65
+#: user/su_graph.php:128
 msgid "GPU hours/day"
 msgstr "Часов ГП/день"
 
-#: su_help.php:3
-msgid "Need help?"
-msgstr "Нужна помощь?"
+#: user/su_help.php:29
+msgid ""
+"If you received a 'no work reported' email from Science United or are having"
+" other problems, please do the following:"
+msgstr ""
+"Если вы получили электронное письмо от Science United с сообщением об "
+"отсутствии работы или у вас возникли другие проблемы, выполните следующие "
+"действия:"
 
-#: su_help.php:8
+#: user/su_help.php:30
+msgid "Make sure BOINC is installed on your computer"
+msgstr "Убедитесь, что BOINC установлен на вашем комьютере"
+
+#: user/su_help.php:31
+msgid "Do you see the BOINC icon %1 in your system tray or dock?"
+msgstr "Вы видите иконку BOINC %1 в вашем системном трее или панели?"
+
+#: user/su_help.php:34
+msgid "If not, %1download and install BOINC%2."
+msgstr "Если нет, %1dскачайте и установите BOINC%2."
+
+#: user/su_help.php:37
+msgid "Science United requires BOINC version 7.14 or later."
+msgstr "Для Science United требуется версия BOINC 7.14 или более поздняя."
+
+#: user/su_help.php:48
+msgid "Make sure BOINC is attached to Science United"
+msgstr "Убедитесь, что BOINC подключен к Science United."
+
+#: user/su_help.php:49
+msgid "Double-click the BOINC icon to open the BOINC Manager."
+msgstr "Дважды щелкните значок BOINC, чтобы открыть диспетчер BOINC."
+
+#: user/su_help.php:50
+msgid "Switch to the Advanced View (View / Advanced View)."
+msgstr "Переключить в Расширенный Просмотр (Просмотр / Расширенный Просмотр)."
+
+#: user/su_help.php:51
+msgid ""
+"Click on the Tools menu.  You should see 'Synchronize with Science United'."
+"  If not, select 'Use account manager' and attach BOINC to your Science "
+"United account."
+msgstr ""
+"Нажмите на меню Инструменты. Вы должны увидеть \"Синхронизировать с Science "
+"United\". Если нет, выберите \"Использовать менеджер учетных записей\" и "
+"подключите BOINC к своей учетной записи Science United."
+
+#: user/su_help.php:62
+msgid "Other sources of help"
+msgstr "Прочие источники помощи"
+
+#: user/su_help.php:63
 msgid "Problems installing or running BOINC: %1 get help here%2."
 msgstr "Проблемы при установке или запуске BOINC: %1 получите помощь здесь%2."
 
-#: su_help.php:16
+#: user/su_help.php:67
 msgid ""
-"Problems with %1: ask for help on the\n"
-"        %2 %3 message boards.%4"
-msgstr "Проблемы с %1: обратитесь за помощью на %3 доске сообщений %2 %4."
-
-#: su_help.php:27
-msgid ""
-"To report a bug or request a feature in %1, create an issue on %2 the %3 "
-"Github repository%4 (you'll need a free Github account)."
+"Problems with Science United: ask for help on the %1Science United message "
+"boards%2."
 msgstr ""
-"Чтобы сообщить об ошибке или запросить функцию в %1, создайте проблему в %2 "
-"репозитории %3 на Github%4 (Вам понадобится бесплатная учётная запись "
-"Github)."
+"Проблемы с Science United: обратитесь за помощью на %1 форуме Science United"
+" %2."
 
-#: su_home.php:25
+#: user/su_help.php:71
+msgid ""
+"To report a bug or request a feature in Science United, create an issue on "
+"the %1Science United Github repository%2 (you'll need a free Github "
+"account)."
+msgstr ""
+"Чтобы сообщить об ошибке или запросить функцию в Science United, создайте "
+"задачу в Github репозитории %1 Science United %2 (вам потребуется бесплатная"
+" учетная запись Github)."
+
+#: user/su_help.php:75
+msgid "If none of the above work for you, %1email us%2."
+msgstr "Если ничего из вышеперечисленного вам не подходит, %1eнапишите нам%2."
+
+#: user/su_home.php:25
 msgid "Contribution"
 msgstr "Вклад"
 
-#: su_home.php:28 su_hosts.php:184
+#: user/su_home.php:28 user/su_hosts.php:184
 msgid "View"
 msgstr "Смотреть"
 
-#: su_home.php:30 su_hosts.php:31 user_hosts.php:40
+#: user/su_home.php:30 user/su_hosts.php:31
 msgid "Your computers"
 msgstr "Ваши компьютеры"
 
-#: su_home.php:34
+#: user/su_home.php:34
 msgid "Computing: graphs"
 msgstr "Вычисления: графики"
 
-#: su_home.php:35
+#: user/su_home.php:35
 msgid "Computing: details"
 msgstr "Вычисления: подробности"
 
-#: su_home.php:36 su_user_projects.php:74
+#: user/su_home.php:36 user/su_user_projects.php:74
 msgid "Science projects"
 msgstr "Научные проекты"
 
-#: su_home.php:43 su_home.php:65 su_welcome.php:75 project.inc:142
-msgid "Community"
-msgstr "Сообщество"
+#: user/su_home.php:38
+msgid "Claimed credit"
+msgstr "Заявленный кредит"
 
-#: su_home.php:51
+#: user/su_home.php:54
 msgid "Settings"
 msgstr "Настройки"
 
-#: su_home.php:54
+#: user/su_home.php:57
 msgid "Edit"
 msgstr "Редактировать"
 
-#: su_home.php:56
+#: user/su_home.php:59
 msgid "Science areas and locations"
 msgstr "Научные области и местоположения"
 
-#: su_home.php:56
+#: user/su_home.php:59
 msgid "Choose the types of research you want to support"
 msgstr "Выберите типы исследований, которые Вы хотите поддержать"
 
-#: su_home.php:61
+#: user/su_home.php:64
 msgid "Computing"
 msgstr "Вычисления"
 
-#: su_home.php:61
+#: user/su_home.php:64
 msgid "Choose how to use your computers"
 msgstr "Выберите способ использования компьютеров"
 
-#: su_home.php:65
+#: user/su_home.php:68
 msgid "Settings for message boards and private messages"
 msgstr "Настройки для доски сообщений и личных сообщений"
 
-#: su_home.php:69
+#: user/su_home.php:72
 msgid "Account"
 msgstr "Учётная запись"
 
-#: su_home.php:69
+#: user/su_home.php:72
 msgid "Name, password, email address"
 msgstr "Имя, пароль, адрес электронной почты"
 
-#: su_home.php:73
+#: user/su_home.php:76
 msgid "Email"
 msgstr "Электронная почта"
 
-#: su_home.php:73
+#: user/su_home.php:76
 msgid "When and whether we should email you"
 msgstr "Должны ли мы отправить вам письма и когда"
 
-#: su_home.php:99
+#: user/su_home.php:102
 msgid "Your home page"
 msgstr "Ваша главная страница"
 
-#: su_hosts.php:33
+#: user/su_hosts.php:33
 msgid "No computers yet"
 msgstr "Компьютеров ещё нет"
 
-#: su_hosts.php:39
+#: user/su_hosts.php:39
 msgid "Computer name"
 msgstr "Имя компьютера"
 
-#: su_hosts.php:39 su_user_projects.php:84
+#: user/su_hosts.php:39 user/su_user_projects.php:84
 msgid "Click for details"
 msgstr "Нажать для деталей"
 
-#: su_hosts.php:40
+#: user/su_hosts.php:40
 msgid "Operating system"
 msgstr "Операционная система"
 
-#: su_hosts.php:41 su_hosts.php:190
+#: user/su_hosts.php:41 user/su_hosts.php:190
 msgid "Last contact"
 msgstr "Последний контакт"
 
-#: su_hosts.php:42 su_hosts.php:47
+#: user/su_hosts.php:42 user/su_hosts.php:47
 msgid "Remove"
 msgstr "Удалить"
 
-#: su_hosts.php:42
+#: user/su_hosts.php:42
 msgid "... if this is a duplicate or the computer is no longer running BOINC"
 msgstr "... если это дубликат или на компьютере BOINC больше не работает"
 
-#: su_hosts.php:72
+#: user/su_hosts.php:72
 msgid "How projects are chosen for %1"
 msgstr "Как выбираются проекты для %1"
 
-#: su_hosts.php:73
+#: user/su_hosts.php:73
 msgid ""
 "To decide which projects this computer should work for, we compute a "
 "\"score\" for each project.  The components of the score are:"
@@ -442,40 +590,40 @@ msgstr ""
 "Чтобы решить, для каких проектов должен работать этот компьютер, мы "
 "вычисляем \"оценку\" для каждого проекта. Компоненты оценки:"
 
-#: su_hosts.php:80 su_hosts.php:96
+#: user/su_hosts.php:80 user/su_hosts.php:96
 msgid "Keyword score"
 msgstr "Оценка ключевых слов"
 
-#: su_hosts.php:81
+#: user/su_hosts.php:81
 msgid "How well your keyword preferences match the project's keywords."
 msgstr ""
 "Насколько хорошо ваши настройки ключевых слов соответствуют ключевым словам "
 "проекта."
 
-#: su_hosts.php:82 su_hosts.php:97
+#: user/su_hosts.php:82 user/su_hosts.php:97
 msgid "Platform score"
 msgstr "Оценка платформы"
 
-#: su_hosts.php:83
+#: user/su_hosts.php:83
 msgid ""
 "-1 if the project has no programs that will run on the computer; 0 if it "
-"does; +1 if one of them uses a GPU or VirtuaBox."
+"does; +0.1 if one of them uses a GPU or VirtualBox."
 msgstr ""
-"-1, если в проекте нет программ, которые будут работать на компьютере; 0, "
-"Если есть; +1, если одна из них использует ГП или VirtuaBox."
+"-1, если в проекте нет программ, которые будут запускаться на компьютере; 0,"
+" если это так; +0,1, если один из них использует GPU или VirtualBox."
 
-#: su_hosts.php:84
-msgid "Balance"
-msgstr "Баланс"
+#: user/su_hosts.php:84 user/su_hosts.php:98
+msgid "Allocation score"
+msgstr "Распределение очков"
 
-#: su_hosts.php:85
+#: user/su_hosts.php:85
 msgid ""
 "How much work is owed to the project; this changes from one day to the next."
 msgstr ""
 "Сколько работы нужно проекту; этот параметр меняется от одного дня к "
 "другому."
 
-#: su_hosts.php:87
+#: user/su_hosts.php:87
 msgid ""
 "We then choose the highest-scoring projects (at least 2) that together can "
 "use all the computer's processors."
@@ -483,99 +631,89 @@ msgstr ""
 "Затем мы выбираем проекты с наивысшей оценкой (по крайней мере, 2), которые "
 "вместе могут использовать все процессоры компьютера."
 
-#: su_hosts.php:95 su_hosts.php:128 project.inc:140
-msgid "Project"
-msgstr "Проект"
-
-#: su_hosts.php:98
-msgid "Balance (GFLOPS days)"
-msgstr "Баланс (дни GFLOPS)"
-
-#: su_hosts.php:99
-msgid "Opted out?"
-msgstr "Отказаться?"
-
-#: su_hosts.php:100 su_hosts.php:128
+#: user/su_hosts.php:99 user/su_hosts.php:128
 msgid "Score"
 msgstr "Оценка"
 
-#: su_hosts.php:103
+#: user/su_hosts.php:102
 msgid "Can use %1?"
 msgstr "Можно использовать %1?"
 
-#: su_hosts.php:112 su_hosts.php:139 su_user_projects.php:141 su.inc:151
-#: su.inc:156
+#: user/su_hosts.php:104
+msgid "Opted out?"
+msgstr "Отказаться?"
+
+#: user/su_hosts.php:117 user/su_hosts.php:139 user/su_user_projects.php:141
 msgid "Yes"
 msgstr "Да"
 
-#: su_hosts.php:122
+#: user/su_hosts.php:122
 msgid "Given the above info, this computer would do work for these projects:"
 msgstr ""
 "Учитывая вышеуказанную информацию, этот компьютер будет работать для этих "
 "проектов:"
 
-#: su_hosts.php:139 su_user_projects.php:143 su.inc:152 su.inc:157
+#: user/su_hosts.php:139 user/su_user_projects.php:143
 msgid "No"
 msgstr "Нет"
 
-#: su_hosts.php:148
+#: user/su_hosts.php:148
 msgid "Computer hardware and software"
 msgstr "Компьютерное оборудование и программное обеспечение"
 
-#: su_hosts.php:156 su_hosts.php:196
+#: user/su_hosts.php:156 user/su_hosts.php:196
 msgid "Projects for which this computer has done work"
 msgstr "Проекты, для которых этот компьютер сделал работу"
 
-#: su_hosts.php:160 su_hosts.php:185 su_user_projects.php:84 user_hosts.php:26
-#: su.inc:206
+#: user/su_hosts.php:160 user/su_hosts.php:185 user/su_user_projects.php:84
 msgid "Name"
 msgstr "Имя"
 
-#: su_hosts.php:161 su.inc:209
+#: user/su_hosts.php:161
 msgid "CPU FLOPS"
 msgstr "FLOPS ЦП"
 
-#: su_hosts.php:162 su_user_projects.php:133 su.inc:208
+#: user/su_hosts.php:162 user/su_user_projects.php:133
 msgid "CPU time"
 msgstr "Время ЦП"
 
-#: su_hosts.php:163 su.inc:211
+#: user/su_hosts.php:163
 msgid "GPU FLOPS"
 msgstr "FLOPS ГП"
 
-#: su_hosts.php:164 su_user_projects.php:136 su.inc:210
+#: user/su_hosts.php:164 user/su_user_projects.php:136
 msgid "GPU time"
 msgstr "Время ГП"
 
-#: su_hosts.php:165 su.inc:212
+#: user/su_hosts.php:165
 msgid "# jobs success"
 msgstr "# успешных заданий"
 
-#: su_hosts.php:166
+#: user/su_hosts.php:166
 msgid "#jobs fail"
 msgstr "# проваленных заданий"
 
-#: su_hosts.php:182 user_host.php:28
+#: user/su_hosts.php:182
 msgid "Computer details"
 msgstr "Подробнее о компьютере"
 
-#: su_hosts.php:187
+#: user/su_hosts.php:187
 msgid "Hardware/software details"
 msgstr "Подробнее об оборудовании/ программном обеспечении"
 
-#: su_hosts.php:192
+#: user/su_hosts.php:192
 msgid "How projects are chosen for this computer"
 msgstr "Как выбираются проекты для этого компьютера"
 
-#: su_intro.php:25
+#: user/su_intro.php:25
 msgid "Getting started"
 msgstr "Начало работы"
 
-#: su_intro.php:26 su_welcome.php:20
+#: user/su_intro.php:26 user/su_welcome.php:20
 msgid "Welcome to %1"
 msgstr "Добро пожаловать в %1"
 
-#: su_intro.php:46
+#: user/su_intro.php:46
 msgid ""
 "By now you should have downloaded and run BOINC.  If so, you're done!  Your "
 "computer will do run science jobs in the background, supporting research in "
@@ -585,7 +723,7 @@ msgstr ""
 "то Вы всё сделали! Ваш компьютер будет выполнять научные задания в фоновом "
 "режиме, поддерживая исследования в выбранных областях."
 
-#: su_intro.php:47
+#: user/su_intro.php:47
 msgid ""
 "Scientists need all the computing power they can get.  To help further, you "
 "can:"
@@ -593,7 +731,7 @@ msgstr ""
 "Ученым нужна вся вычислительная мощность, которую они могут получить. Чтобы "
 "помочь дальше, вы можете:"
 
-#: su_intro.php:48
+#: user/su_intro.php:48
 msgid ""
 "Tell your family, friends, and co-workers about %1, and encourage them to "
 "volunteer."
@@ -601,11 +739,11 @@ msgstr ""
 "Расскажите семье, друзьям и коллегам о %1 и пригласите их стать "
 "добровольцами."
 
-#: su_intro.php:49
+#: user/su_intro.php:49
 msgid "Run %1 on all your computing devices:"
 msgstr "Запустите % 1 на всех ваших вычислительных устройствах:"
 
-#: su_intro.php:50
+#: user/su_intro.php:50
 msgid ""
 "Desktops and laptops (Windows, Linux, Mac OS X): On that device, visit this "
 "web site (%1) and log in.  Then select Download from the Project menu, and "
@@ -615,7 +753,7 @@ msgstr ""
 "устройстве посетите этот веб-сайт (%1) и авторизуйтесь. Затем выберите "
 "команду Загрузить в меню Проект и установите BOINC, как на этом компьютере."
 
-#: su_intro.php:51
+#: user/su_intro.php:51
 msgid ""
 "Android phones and tablets: install the BOINC app from the Google Play Store"
 " or (for Fire) the Amazon App Store.  Choose Use Account Manager, select %1,"
@@ -625,39 +763,47 @@ msgstr ""
 "Store или (для Fire) из Amazon App Store. Выберите Использовать менеджер "
 "проектов, выберите %1, и авторизуйтесь."
 
-#: su_intro.php:52
+#: user/su_intro.php:52
 msgid "You can %1 Join or create a Team%2."
 msgstr "Вы можете %1 Присоединиться или создать команду%2."
 
-#: su_intro.php:53
+#: user/su_intro.php:53
 msgid "Computing prefs"
 msgstr "Настройки вычислений"
 
-#: su_intro.php:54
+#: user/su_intro.php:54
 msgid "Science prefs"
 msgstr "Научные настройки"
 
-#: su_join.php:94 project.inc:108
-msgid "Join"
-msgstr "Присоединиться"
+#: user/su_join.php:99
+msgid "Already joined"
+msgstr "Уже подключен"
 
-#: su_prefs.php:109
+#: user/su_join.php:100
+msgid ""
+"You're already logged in.  If you want to create a new account, please log "
+"out first."
+msgstr ""
+"Вы уже вошли в аккаунт. Если вы хотите создать новый аккаунт, пожалуйста "
+"сначала выйдите."
+
+#: user/su_prefs.php:126
 msgid "Prefer"
 msgstr "Предпочтительно"
 
-#: su_prefs.php:110
+#: user/su_prefs.php:127
 msgid "As needed"
 msgstr "По мере необходимости"
 
-#: su_prefs.php:308
+#: user/su_prefs.php:325
 msgid "Science and location preferences"
 msgstr "Настройки науки и местоположений"
 
-#: su_prefs.php:311
+#: user/su_prefs.php:328
 msgid "Preferences saved."
 msgstr "Настройки сохранены."
 
-#: su_prefs.php:314
+#: user/su_prefs.php:331
 msgid ""
 "Select science areas and locations you do or don't want to support.  Click "
 "%1 for more detail, %2 for less.  When done, click the Save button at the "
@@ -667,140 +813,141 @@ msgstr ""
 "хотите поддерживать. Нажмите %1 для получения более подробной информации, %2"
 " чтобы скрыть её. Когда закончите, нажмите внизу кнопку Сохранить."
 
-#: su_prefs.php:323
+#: user/su_prefs.php:340
 msgid "Science areas"
 msgstr "Области науки"
 
-#: su_prefs.php:327
+#: user/su_prefs.php:344
 msgid "Locations"
 msgstr "Местоположения"
 
-#: su_user_accounting.php:24 su_user_accounting.php:34
+#: user/su_user_accounting.php:24 user/su_user_accounting.php:34
 msgid "Your contribution history"
 msgstr "История вашего вклада"
 
-#: su_user_accounting.php:35
+#: user/su_user_accounting.php:35
 msgid "Computing power"
 msgstr "Вычислительная мощность"
 
-#: su_user_accounting.php:37
+#: user/su_user_accounting.php:37
 msgid "Computing time"
 msgstr "Вычислительное время"
 
-#: su_user_accounting.php:39
+#: user/su_user_accounting.php:39
 msgid "Completed jobs"
 msgstr "Завершённые задания"
 
-#: su_user_projects.php:28
+#: user/su_user_projects.php:28
 msgid "New"
 msgstr "Новый"
 
-#: su_user_projects.php:30 su.inc:191
+#: user/su_user_projects.php:30
 msgid "Established"
 msgstr "Установлен"
 
-#: su_user_projects.php:32
+#: user/su_user_projects.php:32
 msgid "In progress"
 msgstr "В процессе"
 
-#: su_user_projects.php:34 su.inc:295 su.inc:302
+#: user/su_user_projects.php:34
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: su_user_projects.php:85
+#: user/su_user_projects.php:85
 msgid "since"
 msgstr "Участие с"
 
-#: su_user_projects.php:86
+#: user/su_user_projects.php:86
 msgid "CPU hours"
 msgstr "Часов ЦП"
 
-#: su_user_projects.php:87
+#: user/su_user_projects.php:87
 msgid "GPU hours"
 msgstr "Часов ГП"
 
-#: su_user_projects.php:88
+#: user/su_user_projects.php:88
 msgid "# successful jobs"
 msgstr "# успешных заданий"
 
-#: su_user_projects.php:89
+#: user/su_user_projects.php:89
 msgid "# failed jobs"
 msgstr "# проваленных заданий"
 
-#: su_user_projects.php:90 su_user_projects.php:131 su_user_projects.php:150
+#: user/su_user_projects.php:90 user/su_user_projects.php:131
+#: user/su_user_projects.php:150
 msgid "Account status"
 msgstr "Статус учётной записи"
 
-#: su_user_projects.php:91
+#: user/su_user_projects.php:91
 msgid "Allowed by prefs?"
 msgstr "Разрешено настройками?"
 
-#: su_user_projects.php:126
+#: user/su_user_projects.php:126
 msgid "Web site"
 msgstr "Веб-сайт"
 
-#: su_user_projects.php:127
+#: user/su_user_projects.php:127
 msgid "Science keywords"
 msgstr "Научные ключевые слова"
 
-#: su_user_projects.php:128
+#: user/su_user_projects.php:128
 msgid "Location keywords"
 msgstr "Ключевые слова местоположений"
 
-#: su_user_projects.php:132
+#: user/su_user_projects.php:132
 msgid "CPU computing"
 msgstr "Вычисления на ЦП"
 
-#: su_user_projects.php:135
+#: user/su_user_projects.php:135
 msgid "GPU computing"
 msgstr "Вычисления на ГП"
 
-#: su_user_projects.php:138
+#: user/su_user_projects.php:138
 msgid "# jobs succeeded"
 msgstr "# успешных заданий"
 
-#: su_user_projects.php:139
+#: user/su_user_projects.php:139
 msgid "# jobs failed"
 msgstr "# проваленных заданий"
 
-#: su_user_projects.php:141
+#: user/su_user_projects.php:141
 msgid "Include"
 msgstr "Включить"
 
-#: su_user_projects.php:143
+#: user/su_user_projects.php:143
 msgid "Exclude"
 msgstr "Исключить"
 
-#: su_user_projects.php:146
+#: user/su_user_projects.php:146
 msgid "Excluded?"
 msgstr "Исключён?"
 
-#: su_user_projects.php:146
+#: user/su_user_projects.php:146
 msgid "Use if this project causes problems on your computer"
 msgstr "Использовать, если этот проект вызывает проблемы на вашем компьютере"
 
-#: su_user_projects.php:150
+#: user/su_user_projects.php:150
 msgid "None"
 msgstr "Нет"
 
-#: su_user_projects.php:152
+#: user/su_user_projects.php:152
 msgid "Return to project list"
 msgstr "Вернуться к списку проектов"
 
-#: su_welcome.php:22
+#: user/su_welcome.php:22
 msgid ""
 "At this point BOINC should be installed and running on your computer; the "
-"system tray should have an icon like this: %1 If not, %2get help here%3."
+"system tray should have an icon like this: %1 If not, %2 get help here %3."
 msgstr ""
-"На этом этапе BOINC должен быть установлен и запущен на вашем компьютере; в "
-"системном трее должен быть такой значок: %1 Если его нет, %2получите помощь "
-"здесь%3."
+"На этом этапе BOINC должен быть установлен и запущен на вашем компьютере; на"
+" панели задач должен быть такой значок: %1 Если нет, %2 обратитесь за "
+"помощью сюда %3."
 
-#: su_welcome.php:32
+#: user/su_welcome.php:32
 msgid "What happens now?"
 msgstr "Что происходит сейчас?"
 
-#: su_welcome.php:33
+#: user/su_welcome.php:33
 msgid ""
 "BOINC, running in the background, will download computing jobs,\n"
 "        process them, and upload the results.\n"
@@ -815,11 +962,11 @@ msgstr ""
 "Эти вычисления могут запустить вентилятор компьютера, повысив шум, \n"
 "и это может немного увеличить ваш счёт за электричество."
 
-#: su_welcome.php:45
+#: user/su_welcome.php:45
 msgid "How to monitor and control BOINC"
 msgstr "Как управлять и наблюдать за BOINC"
 
-#: su_welcome.php:46
+#: user/su_welcome.php:46
 msgid ""
 "You can monitor what BOINC is doing, and control it, using the BOINC Manager.\n"
 "        Open this by double-clicking on the BOINC icon.\n"
@@ -829,11 +976,11 @@ msgstr ""
 "Откройте его, дважды щёлкнув значок BOINC. \n"
 "Подробности: %1здесь%2."
 
-#: su_welcome.php:58
+#: user/su_welcome.php:58
 msgid "Computing preferences"
 msgstr "Настройки вычислений"
 
-#: su_welcome.php:59
+#: user/su_welcome.php:59
 msgid ""
 "BOINC is designed to not impact\n"
 "        the performance of your computer for normal use.\n"
@@ -849,7 +996,7 @@ msgstr ""
 "Вы можете управлять многими настройками. \n"
 "Проверьте %1здесь%2."
 
-#: su_welcome.php:76
+#: user/su_welcome.php:76
 msgid ""
 "You can meet and communicate with other %1 participants\n"
 "        in a variety of ways - take a look under the Community\n"
@@ -859,317 +1006,65 @@ msgstr ""
 "различными способами - выберите меню Сообщество \n"
 "выше."
 
-#: user_host.php:30 user_projects.php:23
-msgid "Projects"
-msgstr "Проекты"
-
-#: user_hosts.php:26
-msgid "click for details"
-msgstr "нажать для деталей"
-
-#: user_hosts.php:27
-msgid "Last RPC"
-msgstr "Последний RPC"
-
-#: project.inc:102
-msgid "Log out"
-msgstr "Выйти"
-
-#: project.inc:108
-msgid "Login"
-msgstr "Войти"
-
-#: project.inc:138
-msgid "About %1"
-msgstr "О %1"
-
-#: project.inc:139
-msgid "Help"
-msgstr "Помощь"
-
-#: project.inc:143
-msgid "Message boards"
-msgstr "Доска сообщений"
-
-#: project.inc:145
-msgid "Teams"
-msgstr "Команды"
-
-#: project.inc:145
-msgid "create or join a team"
-msgstr "создать или присоединиться к команде"
-
-#: project.inc:150
-msgid "Site"
-msgstr "Сайт"
-
-#: project.inc:151
-msgid "Search"
-msgstr "Поиск"
-
-#: project.inc:152
-msgid "Languages"
-msgstr "Языки"
-
-#: project.inc:170
-msgid "Do science research on your computer, tablet, or phone"
-msgstr "Проводите научные исследования на компьютере, планшете или телефоне"
-
-#: project.inc:190
-msgid "Generated"
-msgstr "Сгенерировано"
-
-#: project.inc:221
-msgid "Your personal background."
-msgstr "Ваша личная информация."
-
-#: project.inc:225
-msgid ""
-"Tell us about yourself. You could tell us where you're from, your age, "
-"occupation, hobbies, or anything else about yourself."
-msgstr ""
-"Расскажите нам о себе. Вы могли бы рассказать нам, откуда Вы, ваш возраст, "
-"профессия, хобби, или что-нибудь ещё о себе."
-
-#: project.inc:229
-msgid "Your opinions about %1"
-msgstr "Ваше мнение о %1"
-
-#: project.inc:233
-msgid ""
-"Tell us your thoughts about %1<ol>\n"
-"    <li>Why do you run %1?\n"
-"    <li>What are your views about the project?\n"
-"    <li>Any suggestions?\n"
-"    </ol>"
-msgstr ""
-"Расскажите нам, что Вы думаете о %1<ol>\n"
-"    <li>Почему Вы участвуете в %1?\n"
-"    <li>Каковы ваши взгляды на проект?\n"
-"    <li>Какие-либо предложения?\n"
-"    </ol>"
-
-#: su.inc:153 su.inc:158
-msgid "Maybe"
-msgstr "Возможно"
-
-#: su.inc:161
-msgid "Edit preferences"
-msgstr "Изменить настройки"
-
-#: su.inc:189
-msgid "Initial"
-msgstr "Начальный"
-
-#: su.inc:193
-msgid "Transient error"
-msgstr "Нерегулярная ошибка"
-
-#: su.inc:201
-msgid "No accounts yet"
-msgstr "Учётных записей ещё нет"
-
-#: su.inc:207
-msgid "Status"
-msgstr "Cтатус"
-
-#: su.inc:213
-msgid "# jobs fail"
-msgstr "# проваленных заданий"
-
-#: su.inc:236
-msgid "Domain name"
-msgstr "Доменное имя"
-
-#: su.inc:238
-msgid "Product name"
-msgstr "Название продукта"
-
-#: su.inc:242
-msgid "Local Standard Time"
-msgstr "Местное стандартное время"
-
-#: su.inc:242
-msgid "UTC %1 hours"
-msgstr "UTC %1 часов"
-
-#: su.inc:243
-msgid "Created"
-msgstr "Создан"
-
-#: su.inc:244
-msgid "Number of times client has contacted server"
-msgstr "Количество обращений клиента к серверу"
-
-#: su.inc:245
-msgid "Last time contacted server"
-msgstr "Последний раз связывался с сервером"
-
-#: su.inc:246
-msgid "Fraction of time BOINC is running"
-msgstr "Часть времени, когда BOINC работает"
-
-#: su.inc:248
-msgid ""
-"While BOINC is running, fraction of time computer has an Internet connection"
-msgstr ""
-"Доля времени, когда компьютер подключен к Интернету, пока BOINC работает"
-
-#: su.inc:250
-msgid "While BOINC is running, fraction of time computing is allowed"
-msgstr "Доля времени, когда разрешены вычисления, пока BOINC работает"
-
-#: su.inc:251
-msgid "While is BOINC running, fraction of time GPU computing is allowed"
-msgstr "Доля времени, когда разрешены вычисления на ГП, пока BOINC работает"
-
-#: su.inc:256
-msgid "CPU type"
-msgstr "Тип процессора"
-
-#: su.inc:257
-msgid "Number of processors"
-msgstr "Количество процессоров"
-
-#: su.inc:259
-msgid "Coprocessors"
-msgstr "Сопроцессоры"
-
-#: su.inc:261
-msgid "Operating System"
-msgstr "Операционная система"
-
-#: su.inc:264
-msgid "BOINC version"
-msgstr "Версия BOINC"
-
-#: su.inc:268
-msgid "Memory"
-msgstr "Память"
-
-#: su.inc:268 su.inc:277
-msgid "%1 MB"
-msgstr "%1 Мб"
-
-#: su.inc:272
-msgid "Cache"
-msgstr "Кэш"
-
-#: su.inc:272
-msgid "%1 KB"
-msgstr "%1 Кб"
-
-#: su.inc:277
-msgid "Swap space"
-msgstr "Объём файла подкачки"
-
-#: su.inc:280
-msgid "Total disk space"
-msgstr "Общее дисковое пространство"
-
-#: su.inc:280 su.inc:283
-msgid "%1 GB"
-msgstr "%1 Гб"
-
-#: su.inc:283
-msgid "Free Disk Space"
-msgstr "Свободное дисковое пространство"
-
-#: su.inc:286
-msgid "Measured floating point speed"
-msgstr "Измеренная скорость вычислений с плавающей точкой"
-
-#: su.inc:286 su.inc:289
-msgid "%1 million ops/sec"
-msgstr "%1 миллионов операций/с"
-
-#: su.inc:289
-msgid "Measured integer speed"
-msgstr "Измеренная скорость целочисленных вычислений"
-
-#: su.inc:293 su.inc:295
-msgid "Average upload rate"
-msgstr "Средняя скорость отправки"
-
-#: su.inc:293 su.inc:300
-msgid "%1 KB/sec"
-msgstr "%1 Кб/с"
-
-#: su.inc:300 su.inc:302
-msgid "Average download rate"
-msgstr "Средняя скорость загрузки"
-
-#: su.inc:357
-msgid "No accounting records yet"
-msgstr "Записей ещё нет"
-
-#: su.inc:361 su.inc:370
-msgid "CPU days"
-msgstr "Дней ЦП"
-
-#: su.inc:362 su.inc:371
-msgid "GPU days"
-msgstr "Дней ГП"
-
-#: su.inc:363 su.inc:372
-msgid "Successful jobs"
-msgstr "Успешные задания"
-
-#: su.inc:364 su.inc:373
-msgid "Failed jobs"
-msgstr "Проваленные задания"
-
-#: su_graph.inc:31
+#: inc/su_graph.inc:31
 msgid "Past month:"
 msgstr "Прошлый месяц:"
 
-#: su_graph.inc:34
+#: inc/su_graph.inc:38
+msgid "No work reported so far. %1Need help?%2"
+msgstr "О работах пока не сообщается. %1Нужна помощь?%2"
+
+#: inc/su_graph.inc:45
+msgid "No work reported in last %1 days. %2Need help?%3"
+msgstr "За последние %1 дней не сообщалось о работе. %2Нужна помощь?%3"
+
+#: inc/su_graph.inc:52
 msgid "Not enough data yet"
 msgstr "Данных ещё недостаточно"
 
-#: su_join.inc:35
+#: inc/su_join.inc:35
 msgid "An invitation code is required to create an account."
 msgstr "Для создания учётной записи требуется код приглашения."
 
-#: su_join.inc:36
+#: inc/su_join.inc:36
 msgid "Invitation code"
 msgstr "Код приглашения"
 
-#: su_join.inc:44
+#: inc/su_join.inc:44
 msgid "Identifies you on this web site. Use your real name or a nickname."
 msgstr ""
 "Идентифицирует вас на этом веб-сайте. Используйте своё настоящее имя или "
 "псевдоним."
 
-#: su_join.inc:45
+#: inc/su_join.inc:45
 msgid "Choose screen name"
 msgstr "Выберите экранное имя"
 
-#: su_join.inc:51
+#: inc/su_join.inc:51
 msgid "An address where you can receive emails."
 msgstr "Адрес, по которому можно получать электронные письма."
 
-#: su_join.inc:52
+#: inc/su_join.inc:52
 msgid "Your email address"
 msgstr "Ваш адрес электронной почты"
 
-#: su_join.inc:63
+#: inc/su_join.inc:63
 msgid "Must be at least %1 characters"
 msgstr "Должно быть не менее %1 символов"
 
-#: su_join.inc:64
+#: inc/su_join.inc:64
 msgid "Choose password"
 msgstr "Выберите пароль"
 
-#: su_user.inc:154
+#: inc/su_user.inc:155
 msgid "Want to help more?"
 msgstr "Хотите помочь больше?"
 
-#: su_user.inc:155
+#: inc/su_user.inc:156
 msgid "Tell friends and family about %1."
 msgstr "Расскажите друзьям и родственникам о %1."
 
-#: su_user.inc:156
+#: inc/su_user.inc:157
 msgid ""
 "Run BOINC on your other computing devices (desktops, laptops, tablets, "
 "Android phones)."
@@ -1177,7 +1072,6 @@ msgstr ""
 "Запуск BOINC на других вычислительных устройствах (настольные компьютеры, "
 "ноутбуки, планшеты, телефоны Android)."
 
-#: su_user.inc:157
+#: inc/su_user.inc:158
 msgid "Is BOINC running on this computer?  If not, %1Download it%2."
 msgstr "BOINC работает на этом компьютере? Если нет, %1загрузите его%2."
-

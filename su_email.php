@@ -44,6 +44,10 @@ function do_user($user) {
 
     $hosts = BoincHost::enum("userid = $user->id and total_credit>=0");
     if (count($hosts) == 0) {
+        if ($user->create_time < time() - 7*86400) {
+            // give up after a week
+            return;
+        }
         $x .= "We haven't heard from your computer yet.  Please <a href=https://scienceunited.org/su_help.php>make sure that the latest version of BOINC is installed and running<a>.";
         su_send_email($user, $x);
         return;
