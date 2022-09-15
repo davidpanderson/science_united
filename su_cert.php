@@ -52,6 +52,12 @@ function get_project_totals($user) {
             }
         }
     }
+    $s = 0;
+    foreach ($project_totals as $id=>$x) {
+        echo "$x->cpu_time\n";
+        $s += $x->cpu_time;
+    }
+    echo $s;
     return $project_totals;
 }
 

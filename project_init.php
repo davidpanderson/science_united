@@ -70,26 +70,41 @@ function update_project($p) {
         if ($url_signature != $project->url_signature) {
             echo "updating $project->name URL signature\n";
             $ret = $project->update("url_signature='$url_signature'");
-            if (!$ret) echo "update failed\n";
+            if (!$ret) {
+                echo "update failed\n";
+                return;
+            }
         }
         if ($url != $project->url) {
             echo "updating $project->name URL\n";
             $ret = $project->update("url='$url'");
-            if (!$ret) echo "update failed\n";
+            if (!$ret) {
+                echo "update failed\n";
+                return;
+            }
         }
         if ($web_url != $project->web_url) {
             echo "updating $project->name web URL\n";
             $ret = $project->update("web_url='$web_url'");
-            if (!$ret) echo "update failed\n";
+            if (!$ret) {
+                echo "update failed\n";
+                return;
+            }
         }
         if ($web_rpc_url_base != $project->web_rpc_url_base) {
             echo "updating $project->name RPC URL base\n";
             $ret = $project->update("web_rpc_url_base='$web_rpc_url_base'");
-            if (!$ret) echo "update failed\n";
+            if (!$ret) {
+                echo "update failed\n";
+                return;
+            }
         }
         if (!$project->authenticator) {
             echo "Project $project->name has no authenticator: create an account\n";
+            return;
         }
+        echo "Marking $project->name as working\n";
+        $project->update("status = ".PROJECT_STATUS_AUTO);
     } else {
         SUProject::insert("(id, create_time, name, url, web_rpc_url_base, url_signature, share, status) values ($project_id, $now, '$name', '$url', '$web_rpc_url_base', '$url_signature', 10, ".PROJECT_STATUS_HIDE.")");
 

@@ -749,17 +749,26 @@ function req_split($r) {
     );
 }
 
+function log_request($req_xml, $host) {
+    $dir = "host_log/$host->id";
+    if (!is_dir($dir)) {
+        mkdir($dir);
+    }
+    $date = date(DATE_RFC822);
+    file_put_contents("$dir/$date", $req_xml);
+}
+
 function main() {
     global $now;
     log_open("../../log_isaac/rpc_log.txt");
 
     if (1) {
         log_write("Got request from ".$_SERVER['HTTP_USER_AGENT']);
-        $req = file_get_contents('php://input');
+        $req_xml = file_get_contents('php://input');
     } else {
-        $req = file_get_contents('req.xml');
+        $req_xml = file_get_contents('req.xml');
     }
-    list($a, $b, $c) = req_split($req);
+    list($a, $b, $c) = req_split($req_xml);
     $req = @simplexml_load_string(utf8_encode($a));
     if (!$req) {
         log_write("can't parse request: $a");
@@ -789,6 +798,8 @@ function main() {
     // update accounting for projects the host is currently running
     //
     $current_projects = do_accounting($req, $user, $host);
+
+    log_request($req_xml, $host);
 
     // pick projects to run
     //
