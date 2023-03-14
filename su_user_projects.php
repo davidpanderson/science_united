@@ -68,7 +68,7 @@ function show_projects($user) {
     start_table();
     row_heading_array(array(
         tra("Name")."<br><small>".tra("Click for details")."</small>",
-        tra("since"),
+        tra("You've contributed since"),
         tra("CPU hours"),
         tra("GPU hours"),
         tra("# successful jobs"),

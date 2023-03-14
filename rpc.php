@@ -209,6 +209,16 @@ function make_serialnum($req) {
         );
     }
 
+    // other OpenCL GPUs
+    foreach ($req->host_info->coprocs->coproc as $y) {
+        if (empty($y->coproc_opencl)) continue;
+        $co = $y->coproc_opencl;
+        $x .= sprintf("[%s|%s|1|%dMB]",
+            $co->vendor, $co->name,
+            (int)$co->global_mem_size/MEGA
+        );
+    }
+
     $v = (string)$req->host_info->virtualbox_version;
     if ($v) {
         $x .= sprintf("[vbox|%s]", $v);
@@ -799,7 +809,7 @@ function main() {
     //
     $current_projects = do_accounting($req, $user, $host);
 
-    log_request($req_xml, $host);
+    //log_request($req_xml, $host);
 
     // pick projects to run
     //

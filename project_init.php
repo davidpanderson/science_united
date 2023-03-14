@@ -23,6 +23,9 @@
 // input: html/ops/projects.xml
 // get this from https://boinc.berkeley.edu/project_list.php
 //
+// If there are new projects:
+// set su_project.authenticator and state using mysql
+//
 // IF ANYTHING HAS CHANGED:
 // run project_digest.php as well (to update projects.ser)
 
