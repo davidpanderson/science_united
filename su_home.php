@@ -47,12 +47,6 @@ function su_contribution($user) {
                 tra("Certificate"),
                 '<a href=su_cert.php class="btn btn-sm btn-success">'.$view.'</a>'
             );
-            if (PROJECT == "BOINC Planet") {
-                row2(
-                    tra("Claimed credit"),
-                    '<a href=bp_claim.php?display=1 class="btn btn-sm btn-success">'.$view.'</a>'
-                );
-            }
             end_table();
         }
     );
