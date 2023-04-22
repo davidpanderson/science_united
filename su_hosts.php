@@ -179,6 +179,7 @@ function su_host_project_accounting($host) {
 }
 
 function su_host_summary($host) {
+    global $user;
     page_head(tra("Computer details"));
     start_table("table-striped");
     $view = tra("View");
@@ -196,6 +197,12 @@ function su_host_summary($host) {
         "<a href=su_hosts.php?action=project_accounting&host_id=$host->id>$view</a>"
     );
     show_host_detail($host);
+    if (strstr($user->global_prefs, "</venue")) {
+        row2(
+            "Location<br><small>determines which set of computing preferences is used for this computer",
+            location_form($host)
+        );
+    }
     end_table();
     page_tail();
 }
