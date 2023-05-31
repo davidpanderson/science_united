@@ -27,19 +27,28 @@ require_once("../inc/su_compute_prefs.inc");
 function show_prefs($user) {
     page_head(tra("Computing settings"));
     $x = simplexml_load_string($user->global_prefs);
-    $pref = $x ? (string)$x->preset : null;
+    $preset = null;
+    $custom = false;
+    if ($x) {
+        if (isset($x->preset)) {
+            $preset = $x->preset;
+        } else {
+            $custom = true;
+        }
+    }
+    //print_r($x);
 
     // if prefs are missing or don't parse, reset them
     //
-    if (!$pref) {
+    if (!$preset && !$custom) {
         $p = compute_prefs_xml("standard");
         $user->update("global_prefs='$p'");
         $prefs = simplexml_load_string($p);
     }
 
-    $low_power_checked = ($pref=='low_power')?"checked":"";
-    $standard_checked = ($pref=='standard')?"checked":"";
-    $max_checked = ($pref=='max')?"checked":"";
+    $low_power_checked = ($preset=='low_power')?"checked":"";
+    $standard_checked = ($preset=='standard')?"checked":"";
+    $max_checked = ($preset=='max')?"checked":"";
 
     echo tra("You can control how many processors to use (most computers have 4 or 8 processors) and when to use them.");
     echo "
@@ -62,7 +71,7 @@ function show_prefs($user) {
         ),
         "pref",
         array(array("low_power", "")),
-        $pref=="low_power"
+        $preset=="low_power"
     );
     form_radio_buttons(
         tra("Standard %1 Use 50% of processors.%2",
@@ -71,7 +80,7 @@ function show_prefs($user) {
         ),
         "pref",
         array(array("standard", "")),
-        $pref=="standard"
+        $preset=="standard"
     );
     form_radio_buttons(
         tra("Maximum computing %1 Use all processors.%2",
@@ -80,14 +89,20 @@ function show_prefs($user) {
         ),
         "pref",
         array(array("max", "")),
-        $pref=="max"
+        $preset=="max"
     );
 
     form_submit(tra("Update"));
     form_end();
-    echo tra("Or %1customize your preferences%2.",
-        "<a href=prefs.php?subset=global>", "</a>"
-    );
+    if ($custom) {
+        echo tra("You are using custom preferences.  %1Show%2.",
+            "<a href=prefs.php?subset=global>", "</a>"
+        );
+    } else {
+        echo tra("Or %1customize your preferences%2.",
+            "<a href=prefs.php?subset=global>", "</a>"
+        );
+    }
     page_tail();
 }
 
