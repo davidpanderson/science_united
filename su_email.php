@@ -58,7 +58,8 @@ function do_user($user) {
     //
     $ndays = $user->send_email;
 
-    // add 1 day because of accounting period
+    // find work done by user's hosts since last email
+    // Add 1 day because of accounting period
     //
     $t0 = time() - ($ndays+1)*86400;
     $uas = SUAccountingUser::enum("user_id = $user->id and create_time > $t0");
@@ -73,6 +74,7 @@ function do_user($user) {
         $ndays_str = "$ndays days";
     }
 
+    $no_new_work = false;
     if (delta_set_nonzero($delta)) {
         $x .= sprintf(
             'In the last %s your computers have contributed %s hours of processing time, and have completed %d jobs.  Congratulations!',
@@ -80,28 +82,40 @@ function do_user($user) {
             show_num(($delta->cpu_time+$delta->gpu_time)/3600.),
             $delta->njobs_success+$delta->njobs_fail
         );
-        $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.";
-        $x .= "<p><p>\n";
 
         $t0 = time() - 86400.*7;
-        foreach ($hosts as $host) {
-            $idle_days = (time() - $host->rpc_time)/86400;
-            if ($host->rpc_time < $t0) {
-                $x .= sprintf(
-                    "Your computer '%s' hasn't contacted us in %d days; please check that the latest version of BOINC is running there.<p>",
-                    $host->domain_name, (int)$idle_days
-                );
-            }
-        }
     } else {
         $x .= sprintf(
-            "Your computers haven't reported work in the last %s.
-            Please check that the latest version of BOINC is installed, unsuspended,
-            and attached to Science United.",
+            "Your computers haven't reported work in the last %s.",
             $ndays_str
         );
+        $no_new_work = true;
+    }
+    $x .= "<p>\n";
+    $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.";
+    $x .= "<p><p>\n";
+    $any_idle = false;
+    $y = '';
+    foreach ($hosts as $host) {
+        if ($host->rpc_time < $t0 || $no_new_work) {
+            $idle_days = (int)((time() - $host->rpc_time)/86400);
+            if ($idle_days>0) {
+                $x .= sprintf(
+                    "Your computer '%s' hasn't contacted us in %d days.<br>",
+                    $host->domain_name, $idle_days
+                );
+            } else {
+                $x .= sprintf(
+                    "Your computer '%s' contacted us today.<br>",
+                    $host->domain_name
+                );
+            }
+            $any_idle = true;
+        }
+    }
+    if ($any_idle) {
+        $x .= '<p>Please check that the latest version of BOINC is installed, unsuspended, and attached to Science United.';
         $x .= " Get help <a href=https://scienceunited.org/su_help.php>here</a>.";
-        $x .= "<p><p>\n";
     }
     su_send_email($user, $x);
     $x = time() + $user->send_email*86400;
@@ -121,8 +135,7 @@ function main() {
     log_write("done");
 }
 
-//do_user(BoincUser::lookup_id(22203));
-
+//do_user(BoincUser::lookup_id(22203)); exit;
 main();
 
 ?>
