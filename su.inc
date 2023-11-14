@@ -361,8 +361,8 @@ function show_accounting_totals($a) {
     start_table();
     row2(tra("CPU days"), show_days($a->cpu_time_total));
     row2(tra("GPU days"), show_days($a->gpu_time_total));
-    row2(tra("Successful jobs"), $a->njobs_success_total);
-    row2(tra("Failed jobs"), $a->njobs_fail_total);
+    row2(tra("Successful jobs"), number_format($a->njobs_success_total));
+    row2(tra("Failed jobs"), number_format($a->njobs_fail_total));
     end_table();
 }
 
@@ -370,12 +370,12 @@ function show_accounting_deltas($a, $active=false) {
     start_table();
     row2(tra("CPU days"), show_days($a->cpu_time_delta));
     row2(tra("GPU days"), show_days($a->gpu_time_delta));
-    row2(tra("Successful jobs"), $a->njobs_success_delta);
-    row2(tra("Failed jobs"), $a->njobs_fail_delta);
+    row2(tra("Successful jobs"), number_format($a->njobs_success_delta));
+    row2(tra("Failed jobs"), number_format($a->njobs_fail_delta));
     if ($active) {
-        row2("Active volunteers", $a->nactive_users);
-        row2("Active computers", $a->nactive_hosts);
-        row2("Active computers with GPU", $a->nactive_hosts_gpu);
+        row2("Active volunteers", number_format($a->nactive_users));
+        row2("Active computers", number_format($a->nactive_hosts));
+        row2("Active computers with GPU", number_format($a->nactive_hosts_gpu));
     }
     end_table();
 }

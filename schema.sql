@@ -82,7 +82,8 @@ create table su_account (
 
 /*
  * Per (host, project) record. No history.
- * Stores totals at last AM RPC; used to compute deltas.
+ * Stores totals reported by last AM RPC; used to compute deltas.
+ * Don't use this to display anything; may include pre-SU values
  */
 create table su_host_project (
     host_id                 integer         not null,

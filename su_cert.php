@@ -38,29 +38,6 @@ function set_items($hp) {
 
 }
 
-function get_project_totals($user) {
-    $hosts = BoincHost::enum("userid = $user->id");
-    $project_totals = array();
-    foreach ($hosts as $host) {
-        $hps = SUHostProject::enum("host_id=$host->id");
-        foreach ($hps as $hp) {
-            $pid = $hp->project_id;
-            if (array_key_exists($pid, $project_totals)) {
-                $project_totals[$pid] = add_items($hp, $project_totals[$pid]);
-            } else {
-                $project_totals[$pid] = set_items($hp);
-            }
-        }
-    }
-    $s = 0;
-    foreach ($project_totals as $id=>$x) {
-        echo "$x->cpu_time\n";
-        $s += $x->cpu_time;
-    }
-    echo $s;
-    return $project_totals;
-}
-
 // get project's top-level science keywords as (keyword_id, fraction) pairs
 //
 function project_areas($pid) {
@@ -109,11 +86,11 @@ function scale($pt, $frac) {
     return $pt2;
 }
 
-function get_area_totals($project_totals) {
-
+function get_area_totals($user) {
+    $accounts = SUAccount::enum("user_id=$user->id");
     $area_totals = array();
-    foreach ($project_totals as $pid=>$pt) {
-        $kws = project_areas($pid);
+    foreach ($accounts as $pt) {
+        $kws = project_areas($pt->project_id);
         foreach ($kws as $kw) {
             $kwid = $kw->keyword_id;
             $pt2 = scale($pt, $kw->fraction);
@@ -143,9 +120,7 @@ function show_cert($user) {
     $border = 9;
     $font = "\"Optima,Lucida Bright,Times New Roman\"";
 
-
-    $p = get_project_totals($user);
-    $areas = get_area_totals($p);
+    $areas = get_area_totals($user);
     echo "
         <table width=1200 height=800 border=$border cellpadding=20><tr><td>
         <center>
