@@ -25,7 +25,7 @@ require_once("../inc/su_project_infos.inc");
 require_once("../inc/keywords.inc");
 
 function show_projects() {
-    $projects = SUproject::enum("");
+    $projects = SUproject::enum("", 'order by name');
     if ($projects) {
         start_table('table-striped');
         row_heading_array(array(

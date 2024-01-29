@@ -79,9 +79,9 @@ class SUProject {
         $db = BoincDb::get();
         return $db->delete($this, 'su_project');
     }
-    static function enum($where_clause=null) {
+    static function enum($where_clause=null, $order_clause=null) {
         $db = BoincDb::get();
-        return $db->enum('su_project', 'SUProject', $where_clause);
+        return $db->enum('su_project', 'SUProject', $where_clause, $order_clause);
     }
     static function lookup($clause) {
         $db = BoincDb::get();

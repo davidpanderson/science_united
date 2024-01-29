@@ -17,6 +17,8 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
+DEPRECATED.  We now use a single account on each project.
+
 // Daemon to create project accounts.
 // Does a pass:
 // - every 10 min, to do retries

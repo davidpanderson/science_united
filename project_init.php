@@ -119,8 +119,7 @@ function update_project($p) {
 }
 
 // create or update projects based on projects.xml
-// If a project is not there, flag as deprecated
-// Skip certain projects.
+// If a project is not there, flag as deprecated.
 //
 function update_projects() {
     $projs = SUProject::enum();
@@ -130,18 +129,18 @@ function update_projects() {
     $x = simplexml_load_file("projects.xml");
     $projects = $x->project;
     foreach ($projects as $p) {
-        if ((int)$p->id == PROJ_QCN) continue;
-        if ((int)$p->id == PROJ_RADIOACTIVE) continue;
-        if ((int)$p->id == PROJ_LEIDEN) continue;
-        if ((int)$p->id == PROJ_MOO) continue;
-        if ((int)$p->id == PROJ_YOYO) continue;
-        if ((int)$p->id == PROJ_MINECRAFT) continue;
+        $id = (int)$p->id;
 
-        // the following require invitation code; skip
-        //
-        if ((int)$p->id == PROJ_COLLATZ) continue;
-        if ((int)$p->id == PROJ_PRIMABOINCA) continue;
-        if ((int)$p->id == PROJ_SRBASE) continue;
+        // Skip projects that don't exist anymore
+
+        if ($id == PROJ_QCN) continue;
+        if ($id == PROJ_RADIOACTIVE) continue;
+        if ($id == PROJ_LEIDEN) continue;
+        if ($id == PROJ_MOO) continue;
+        if ($id == PROJ_YOYO) continue;
+        if ($id == PROJ_MINECRAFT) continue;
+        if ($id == PROJ_COLLATZ) continue;
+        if ($id == PROJ_PRIMABOINCA) continue;
         update_project($p);
     }
 }

@@ -17,14 +17,21 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // AM RPC handler
+// request: a list of projects the client is currently attached to,
+//      with info about work done for each.
+// reply: list of projects to add (or detach when done)
 //
+// calls:
+// do_accounting()
+//      update accounting fields of various tables
+// choose_projects_rpc() (su_schedule.inc)
+//      choose projects that cover all the client's resources
+//      rank_projects(): order projects based on prefs, share
+//          populate_score_info(): get resources from req
+//      select_projects_resource()
+//  
+
 // The user account already exists; the host may not.
-// this call must return quickly, else the client will hang.
-// So what we do is:
-// - decide what projects to have the host run
-// - for each project for which the user doesn't have an account,
-//   create an account record; a periodic task will create the account later
-// - return a list of projects for which the user has a working account
 
 require_once("../inc/xml.inc");
 require_once("../inc/boinc_db.inc");
