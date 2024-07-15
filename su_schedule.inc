@@ -47,7 +47,8 @@ define('MAX_PROJECTS', 10);
     // max # of projects.
     // this could happen if lots of project aren't supplying work to the host
 
-// Our "canonical" resource names are cpu, nvidia, amd, and intel_gpu
+// Our "canonical" resource names are:
+// cpu, nvidia, amd, intel_gpu, apple_gpu
 // Convert other variants to canonical
 //
 function canonical_resource_name($x) {
@@ -56,6 +57,7 @@ function canonical_resource_name($x) {
     case "NVIDIA": return "nvidia";
     case "ATI": return "amd";
     case "intel_gpu": return "intel_gpu";
+    case "apple_gpu": return "apple_gpu";
     }
     log_write("Unknown resource $x");
     return $x;
@@ -69,6 +71,7 @@ function human_resource_name($x) {
     case "nvidia": return "NVIDIA GPU";
     case "amd": return "AMD GPU";
     case "intel_gpu": return "Intel GPU";
+    case "apple_gpu": return "Apple GPU";
     }
     return $x;
 }
@@ -239,6 +242,8 @@ function host_serialnum_to_gpus_vbox($host) {
             $host->resources[] = "amd";
         } else if ($d[0] == "INTEL") {
             $host->resources[] = "intel_gpu";
+        } else if ($d[0] == "apple_gpu") {
+            $host->resources[] = "apple_gpu";
         }
     }
     return $host;
@@ -287,6 +292,9 @@ function populate_score_info($host, $req) {
         }
         if ($req->host_info->coprocs->coproc_intel_gpu) {
             $host->resources[] = "intel_gpu";
+        }
+        if ($req->host_info->coprocs->coproc_apple_gpu) {
+            $host->resources[] = "apple_gpu";
         }
 
         $host->vbox = (string)$req->host_info->virtualbox_version?true:false;

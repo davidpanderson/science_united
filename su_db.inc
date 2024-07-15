@@ -28,6 +28,8 @@
 //      days between status emails.  zero means don't send
 // user.seti_last_result_time
 //      when to send next status email
+// user.donated
+//      true if opted in for leaderboards
 
 require_once("../inc/boinc_db.inc");
 

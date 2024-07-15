@@ -1,6 +1,7 @@
 /*
  * schema for Science United database.
  * These tables are added to a standard BOINC database.
+ * See su_db.inc for borrowed fields in BOINC DB
  */
 
 /*

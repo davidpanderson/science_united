@@ -59,6 +59,9 @@ function get_avs($p) {
             if (strstr($y[1], "intel_gpu")) {
                 $z->gpu = "intel_gpu";
             }
+            if (strstr($y[1], "apple_gpu")) {
+                $z->gpu = "apple_gpu";
+            }
             if (strstr($y[1], "vbox")) {
                 $z->vbox = true;
             }

@@ -30,6 +30,7 @@
 
 require_once("../inc/util.inc");
 require_once("../inc/su.inc");
+require_once("../inc/smooth.inc");
 
 // graph last month of FLOPS of top N projects
 //
@@ -106,7 +107,7 @@ function projects_graph($ndays, $gpu, $xsize, $ysize) {
     passthru($cmd);
 }
 
-function graph($type, $id, $what, $ndays, $xsize, $ysize) {
+function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
     $min_time = time() - $ndays*86400;
     $accts = null;
     switch ($type) {
@@ -128,29 +129,50 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
 
     switch ($what) {
     case 'jobs':
-        $title1 = tra("Successful jobs/day");
-        $title2 = tra("Failed jobs/day");
-        $color1 = "green";
-        $color2 = "red";
+        if ($integrate) {
+            $title2 = tra("Successful jobs");
+            $title1 = tra("Failed jobs");
+        } else {
+            $title2 = tra("Successful jobs/day");
+            $title1 = tra("Failed jobs/day");
+        }
+        $color2 = "green";
+        $color1 = "red";
         $graph_two = true;
-        $graph_type = 'lines';
+        $graph_type = 'boxes';
+        $success_smooth = new SMOOTHER();
+        $fail_smooth = new SMOOTHER();
         break;
     case 'time':
-        $title1 = tra("CPU hours/day");
-        $title2 = tra("GPU hours/day");
+        if ($integrate) {
+            $title1 = tra("CPU hours");
+            $title2 = tra("GPU hours");
+        } else {
+            $title1 = tra("CPU hours/day");
+            $title2 = tra("GPU hours/day");
+        }
         $color1 = "khaki";
         $color2 = "orange";
         $graph_two = false;
         $graph_type = 'filledcurve x1';
+        $cpu_smooth = new SMOOTHER();
+        $gpu_smooth = new SMOOTHER();
         break;
     case 'ec':
-        $title1 = "CPU TFLOPS";
-        $title2 = "GPU TFLOPS";
+        if ($integrate) {
+            $title1 = "CPU TFLOPs";
+            $title2 = "GPU TFLOPs";
+        } else {
+            $title1 = "CPU TFLOPs/sec";
+            $title2 = "GPU TFLOPs/sec";
+        }
         $color1 = "khaki";
         $color2 = "orange";
         $graph_two = false;
         $graph_type = 'filledcurve x1';
         $graph_type = 'boxes';
+        $cpu_smooth = new SMOOTHER();
+        $gpu_smooth = new SMOOTHER();
         break;
     case 'users':
         $title1 = "Active users";
@@ -182,35 +204,64 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize) {
             $end_time = $accts[$i+1]->create_time;
         }
         $dt = $end_time - $a->create_time;
+        if ($dt<86400) $dt=86400;
         switch ($what) {
         case 'jobs':
-            $dt /= 86400;
-            fprintf($f, "%f %f %f\n",
-                $a->create_time,
-                $a->njobs_success_delta/$dt,
-                $a->njobs_fail_delta/$dt
-            );
+            if ($integrate) {
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $a->njobs_fail_total,
+                    $a->njobs_success_total
+                );
+            } else {
+                $dt /= 86400;
+                $ss = $success_smooth->val($a->njobs_success_delta);
+                $fs = $fail_smooth->val($a->njobs_fail_delta);
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $fs, $ss
+                );
+            }
             break;
         case 'time':
-            $dt /= 24;
-            fprintf($f, "%f %f %f\n",
-                $a->create_time,
-                $a->cpu_time_delta/$dt,
-                ($a->cpu_time_delta+$a->gpu_time_delta)/$dt
-            );
+            if ($integrate) {
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $a->cpu_time_total,
+                    $a->cpu_time_total+$a->gpu_time_total
+                );
+            } else {
+                $dt /= 24;
+                $cs = $cpu_smooth->val($a->cpu_time_delta);
+                $gs = $gpu_smooth->val($a->gpu_time_delta);
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $cs/$dt,
+                    ($cs+$gs)/$dt
+                );
+            }
             if ($a->gpu_time_delta) {
                 $graph_two = true;
             }
             break;
         case 'ec':
-            $c = ec_to_gflop_hours($a->cpu_ec_delta);
-            $g = ec_to_gflop_hours($a->gpu_ec_delta);
-            $dt /= 3600;
-            fprintf($f, "%f %f %f\n",
-                $a->create_time,
-                $c/($dt*1000),
-                ($c+$g)/($dt*1000)
-            );
+            if ($integrate) {
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $a->cpu_ec_total, $a->gpu_ec_total
+                );
+            } else {
+                $cs = $cpu_smooth->val($a->cpu_ec_delta);
+                $gs = $gpu_smooth->val($a->gpu_ec_delta);
+                $c = ec_to_gflop_hours($cs);
+                $g = ec_to_gflop_hours($gs);
+                $dt /= 3600;
+                fprintf($f, "%f %f %f\n",
+                    $a->create_time,
+                    $c/($dt*1000),
+                    ($c+$g)/($dt*1000)
+                );
+            }
             if ($a->gpu_ec_delta) {
                 $graph_two = true;
             }
@@ -282,10 +333,11 @@ if (1) {
         exit;
     }
     $id = get_int('id', true);
+    $integrate = get_int('integrate', true);
     $what = get_str('what');
-    graph($type, $id, $what, $ndays, $xsize, $ysize);
+    graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate);
 } else {
-    //graph('total', 0, 'job', 100, 800, 600);
-    graph('user', 22203, 'ec', 30, 800, 600);
+    graph('total', 22203, 'ec', 1000, 800, 600, false);
+    //graph('user', 22203, 'ec', 30, 800, 600);
 }#
 ?>

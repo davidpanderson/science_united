@@ -42,25 +42,23 @@ Consider detaching from the projects you were previously running.
 
 <h3>What is Science United?</h3>
 <p>
-Science United (SU) is a new way for computer owners
+Science United (SU) is a new way
 to participate in BOINC-based volunteer computing.
 SU doesn't replace the old way of doing things,
 where you people attach to specific projects;
-rather, it provides an alternative where you choose science areas,
+rather, it's an alternative where you choose science areas,
 and SU picks the projects for you.
-<p>
-SU is designed for people who are not technical,
-who don't want to spend much time on BOINC
-(e.g., fiddling with settings or browsing project web sites),
-and who are motivated primarily by science goals.
-
-<p>
 The computing power of SU participants is divided among
-a set of vetted projects.
-Eventually, the choice of projects and the allocation policy will be made by
-an independent committee.
-For now, all science projects vetted by BOINC are included,
-with equal allocation shares.
+all approved BOINC projects.
+<p>
+SU is designed for people who
+<ul>
+<li> are not technical;
+<li> don't want to spend much time on BOINC
+(fiddling with settings or browsing project web sites);
+<li> are motivated primarily by science goals.
+</ul>
+<p>
 
 <h3>Science areas, not projects</h3>
 
@@ -82,12 +80,12 @@ in effect, SU does that for you.
 
 <h3>Encourage new projects</h3>
 <p>
-This means that a new project, if vetted by SU, can be assured of
+This means that a new project can be assured of
 a certain amount of computing power,
 without doing any publicity or even developing a web site.
 The need to do these things, and the risk of investing in BOINC,
 have been major barriers to entry for scientists who might otherwise use BOINC.
-The hope is that SU will lead to the creation of many more projects.
+The hope is that SU will lead to the creation of more projects.
 
 <h3>User-friendliness</h3>
 
@@ -107,9 +105,9 @@ SU tries to remedy these problems.
 In looking at the SU site, there are few things that you might notice:
 
 <ul>
-<li> New users download BOINC by the new "auto-attach" mechanism
+<li> New users download BOINC by the "auto-attach" mechanism
 where a) the download happens directly, rather than going through the
-BOINC web site, and b) when BOINC starts up, it is already attached to SU.
+BOINC web site, and b) when BOINC starts up, it's already attached to SU.
 
 <li> There are no leader boards.
 Credit isn't shown anywhere.
@@ -136,7 +134,7 @@ set it, and forget it.
 They may or may not ever return to the SU web site.
 <p>
 By default, SU sends users a weekly "status" email
-whose purpose is to make the user feel good about their contribution,
+whose purpose is to keep the user informed about their contribution,
 and to alert them if any of their computers have stopped doing work.
 
 <h3>Feedback</h3>
@@ -144,10 +142,9 @@ and to alert them if any of their computers have stopped doing work.
 Give feedback (bugs, questions, feature requests)
 on the SU message boards.
 You can also email me (David Anderson) directly.
-Remember that the target audience of SU is not you;
-we're not going to add "power user" features to SU.
+Remember that the target audience of SU is not BOINC 'power users'.
 Pretend you're interested in science but know little about computers.
-Would you understand the overall idea?
+Would you understand the overall idea of SU?
 Would you be able to follow the instructions?
 Would you follow through to the end?
 

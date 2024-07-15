@@ -19,36 +19,70 @@
 require_once("../inc/util.inc");
 page_head(tra("Help"));
 text_start();
-echo sprintf("%s
-    <h3>%s</h3>
+echo sprintf("<p>\n%s",
+    tra("If you received a 'no work reported' email from Science United or are having other problems, please do the following:")
+);
+echo sprintf('<h3>%s</h3>',
+    tra("Make sure BOINC is installed on your computer")
+);
+echo sprintf('
     <p>
-    %s %s
+    <ul>
+    <li> On desktop systems:
+    %s
+    <li> On headless Linux systems: run
+    <pre>ps -x | grep boinc</pre>
+    and look for a "boinc-client" process
+    </ul>',
+    tra("Look for the BOINC icon %1 in your system tray or dock.",
+        "<img height=24 src=https://boinc.berkeley.edu/logo/boinc32.bmp>"
+    )
+);
+echo sprintf('
     <p>
     %s
-    ",
-    tra("If you received a 'no work reported' email from Science United or are having other problems, please do the following:"),
-    tra("Make sure BOINC is installed on your computer"),
-    tra("Do you see the BOINC icon %1 in your system tray or dock?",
-        "<img height=24 src=https://boinc.berkeley.edu/logo/boinc32.bmp>"
-    ),
-    tra("If not, %1 download and install BOINC%2.",
+    ',
+    tra("If BOINC is not running, %1 download and install BOINC%2.",
         "<a href=download_software.php>", "</a>"
     ),
     tra("Science United requires BOINC version 7.16 or later.")
 );
-echo sprintf("<h3>%s</h3>
+echo sprintf("<h3>%s</h3>",
+    tra("Make sure BOINC is attached to Science United")
+);
+echo sprintf("
     <p>
     <ul>
-    <li> %s
-    <li> %s
-    <li> %s
-    </ul>
-    <br><img width=400 src=pictures/su_menu.jpg>
+    <li> On desktop systems:
+        <ul>
+            <li> %s
+            <li> %s
+            <li> %s
+        </ul>
+        <br><img width=400 src=pictures/su_menu.jpg>
     ",
-    tra("Make sure BOINC is attached to Science United"),
     tra("Double-click the BOINC icon to open the BOINC Manager."),
     tra("Switch to the Advanced View (View / Advanced View)."),
     tra("Click on the Tools menu.  You should see 'Synchronize with Science United'.  If not, select 'Use account manager' and attach BOINC to your Science United account.")
+);
+echo sprintf("
+    <p>
+    <li> On headless Linux systems:
+        <ul>
+        <li> Run 
+            <pre>boinccmd --acct_mgr info</pre>
+            You should see
+<pre>
+Account manager info:
+   Name: Science United
+   URL: https://scienceunited.org/
+</pre>
+        <li> If not, run
+<pre>boinccmd --acct_mgr attach https://scienceunited.org email password</pre>
+    using the email address and password of your Science United account.
+        </ul>
+    </ul>
+    "
 );
 
 echo sprintf("<h3>%s</h3>

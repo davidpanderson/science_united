@@ -662,3 +662,24 @@ choose_projects_rpc()
         if # projects < 2
             scan list until find project that can use some resource.
             tell it to use all resources that it can
+===============
+
+su_graph2.php
+form:
+    what
+        total
+        project (select)
+        you
+        user X
+    time, ec, or #jobs 
+    integrate?
+    duration (before now)
+
+leaderboard:
+    show
+        CPU time
+        GPU time
+        GFLOPs
+    time
+        total
+        last day

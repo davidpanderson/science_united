@@ -215,6 +215,13 @@ function make_serialnum($req) {
             (int)$c->global_mem_size/MEGA
         );
     }
+    $c = $req->host_info->coprocs->coproc_apple_gpu;
+    if ($c) {
+        $x .= sprintf("[apple_gpu|%s|%d|%dMB]",
+            (string)$c->name, (int)$c->count,
+            (int)$c->global_mem_size/MEGA
+        );
+    }
 
     // other OpenCL GPUs
     foreach ($req->host_info->coprocs->coproc as $y) {
@@ -799,6 +806,7 @@ function main() {
     $client_ver = version_to_int((string)$req->client_version);
     if ($client_ver < 71000) {
         send_error_reply("Science United requires a newer version of BOINC.  Please install the current version from https://boinc.berkeley.edu/download.php");
+        //send_error_reply("Science United requires a newer version of BOINC.  Please <a href=https://boinc.berkeley.edu/download.php>install the current version</a>.");
         log_write("client version too low: ".(string)$req->client_version);
         return;
     }

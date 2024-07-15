@@ -18,17 +18,30 @@
 
 require_once("su_db.inc");
 
+// front page: either show 1-month user work graph,
+// or explain why not
+
 function show_user_graph($user, $what, $ndays) {
     $min_time = time() - $ndays*86400;
     $n = SUAccountingUser::count("user_id=$user->id and create_time>$min_time");
     if ($n>1) {
+        $url = sprintf(
+            'su_graph2.php?type=user&id=%d&what=%s&ndays=%d',
+            $user->id, $what, 365
+        );
+        $img_url = sprintf(
+            'su_graph.php?type=user&id=%d&what=%s&ndays=%d&xsize=600&ysize=350',
+            $user->id, $what, $ndays
+        );
         echo sprintf('
-            <p>
-            %s
-            <p>
-            <img class="img-responsive" src="su_graph.php?type=user&id=%d&what=%s&ndays=%d&xsize=600&ysize=350">
-        ',
-        tra("Past month:"), $user->id, $what, $ndays
+            <p>%s<p>
+            <a href=%s>
+            <img class="img-responsive" src="%s">
+            </a>
+            ',
+            tra("Past month (click to see more):"),
+            $url,
+            $img_url
         );
     } else {
         $m = SUAccountingUser::count("user_id=$user->id");
