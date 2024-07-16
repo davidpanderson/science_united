@@ -29,7 +29,8 @@
 // user.seti_last_result_time
 //      when to send next status email
 // user.donated
-//      true if opted in for leaderboards
+//      nonzero if opted in for leaderboards
+//      alter table user add index user_donated(donated);
 
 require_once("../inc/boinc_db.inc");
 

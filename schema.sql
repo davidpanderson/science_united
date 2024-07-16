@@ -138,7 +138,6 @@ create table su_accounting (
     primary key (id)
 ) engine=InnoDB;
 
-
 create table su_accounting_project (
     id                      integer         not null auto_increment,
     create_time             double          not null default 0,

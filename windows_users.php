@@ -10,7 +10,8 @@ function main() {
         $hosts = BoincHost::enum("userid = $user->id");
         $found = false;
         foreach ($hosts as $host) {
-            if ($host->expavg_credit < .1) continue;
+            //if ($host->expavg_credit < .1) continue;
+                // not used in SU
             if (strstr($host->os_name, "Windows")) {
                 $found = true;
                 break;

@@ -145,14 +145,14 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         break;
     case 'time':
         if ($integrate) {
-            $title1 = tra("CPU hours");
-            $title2 = tra("GPU hours");
+            $title2 = tra("CPU hours");
+            $title1 = tra("GPU hours");
         } else {
-            $title1 = tra("CPU hours/day");
-            $title2 = tra("GPU hours/day");
+            $title2 = tra("CPU hours/day");
+            $title1 = tra("GPU hours/day");
         }
-        $color1 = "khaki";
-        $color2 = "orange";
+        $color2 = "khaki";
+        $color1 = "orange";
         $graph_two = false;
         $graph_type = 'filledcurve x1';
         $cpu_smooth = new SMOOTHER();
@@ -227,8 +227,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
             if ($integrate) {
                 fprintf($f, "%f %f %f\n",
                     $a->create_time,
-                    $a->cpu_time_total,
-                    $a->cpu_time_total+$a->gpu_time_total
+                    $a->gpu_time_total,
+                    $a->cpu_time_total
                 );
             } else {
                 $dt /= 24;
@@ -236,8 +236,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
                 $gs = $gpu_smooth->val($a->gpu_time_delta);
                 fprintf($f, "%f %f %f\n",
                     $a->create_time,
-                    $cs/$dt,
-                    ($cs+$gs)/$dt
+                    $gs/$dt,
+                    $cs/$dt
                 );
             }
             if ($a->gpu_time_delta) {
