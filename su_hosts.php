@@ -24,9 +24,9 @@ require_once("../inc/su.inc");
 
 // show list of user's hosts, minimal info, link to details
 //
-function su_show_user_hosts($user) {
+function show_user_hosts_page($user, $show_all) {
     $hosts = BoincHost::enum(
-        "userid=$user->id and total_credit=0 order by domain_name, rpc_time desc"
+        "userid=$user->id order by domain_name, rpc_time desc"
     );
     page_head(tra("Your computers"));
     if (count($hosts) == 0) {
@@ -35,41 +35,63 @@ function su_show_user_hosts($user) {
         return;
     }
     start_table("table-striped");
-    row_heading_array(array(
-        tra("Computer name")."<br><small>".tra("Click for details")."</small>",
+    row_heading_array([
+        tra("Computer name"),
         tra("Operating system"),
-        tra("Last contact"),
-        tra("Remove")."<br><small>".tra("... if this is a duplicate or the computer is no longer running BOINC")."</small>"));
+        tra("Hardware/software info"),
+        tra("Science United info"),
+        tra("Last contact")
+    ]);
     $now = time();
+    $have_hidden = False;
     foreach($hosts as $h) {
-        $link = sprintf('<a class="btn btn-success" href="su_hosts.php?action=del&host_id=%d">%s</a>',
-            $h->id,
-            tra("Remove")
-        );
-        row_array(array(
-            sprintf("<a href=%s>%s</a>",
-                "su_hosts.php?action=summary&host_id=$h->id", $h->domain_name
-            ),
+        if ($h->total_credit) {
+            $have_hidden = True;
+            if (!$show_all) continue;
+        }
+        row_array([
+            $h->domain_name,
             $h->os_name,
-            time_diff_str($h->rpc_time, $now),
-            $link
-        ));
+            sprintf(
+                '<a href=su_hosts.php?action=hw_sw_info&host_id=%d>view</a>',
+                $h->id
+            ),
+            sprintf(
+                '<a href=su_hosts.php?action=su_info&host_id=%d>view</a>',
+                $h->id
+            ),
+            time_diff_str($h->rpc_time, $now)
+        ]);
     }
     end_table();
+    if ($have_hidden) {
+        if ($show_all) {
+            echo "<p>Showing all computers.
+                <a href=su_hosts.php>Don't show hidden computers</a>.
+            ";
+        } else {
+            echo "<p>Some of your computers are hidden.
+                <a href=su_hosts.php?show_all=1>Show all computers</a>.
+            ";
+        }
+    }
     page_tail();
 }
 
-function su_hide_host($user) {
+function hide_host($user, $hidden) {
     $id = get_int("host_id");
     $h = BoincHost::lookup_id($id);
     if (!$h || $h->userid != $user->id) {
         error_page("no such host");
     }
-    $h->update("total_credit=-1");      // otherwise unused field
+    if ($hidden) {
+        $h->update("total_credit=-1");      // otherwise unused field
+    } else {
+        $h->update("total_credit=0");
+    }
 }
 
-function su_host_project_select($user, $host) {
-    page_head(tra("How projects are chosen for %1", $host->domain_name));
+function host_project_select($user, $host) {
     echo tra('To decide which projects this computer should work for, we compute a "score" for each project.  The components of the score are:');
     echo sprintf("
         <ul>
@@ -144,7 +166,7 @@ function su_host_project_select($user, $host) {
     page_tail();
 }
 
-function su_host_detail($host) {
+function hw_sw_info_page($host) {
     page_head(tra("Computer hardware and software"));
     start_table("table-striped");
     show_host_hw_sw($host);
@@ -152,8 +174,7 @@ function su_host_detail($host) {
     page_tail();
 }
 
-function su_host_project_accounting($host) {
-    page_head(tra("Projects for which this computer has done work"));
+function host_project_accounting($host) {
     $ps = SUHostProject::enum("host_id=$host->id");
     start_table("table-striped");
     row_heading_array(array(
@@ -175,66 +196,72 @@ function su_host_project_accounting($host) {
         }
     }
     end_table();
-    page_tail();
 }
 
-function su_host_summary($host) {
+// show SU-specific info about this host
+//
+function su_info_page($host) {
     global $user;
-    page_head(tra("Computer details"));
+    page_head(tra("Science United info"));
     start_table("table-striped");
     $view = tra("View");
     row2(tra("Name"), $host->domain_name);
-    row2(
-        tra("Hardware/software details"),
-        "<a href=su_hosts.php?action=detail&host_id=$host->id>$view</a>"
-    );
-    row2(
-        tra("How projects are chosen for this computer"),
-        "<a href=su_hosts.php?action=project_select&host_id=$host->id>$view</a>"
-    );
-    row2(
-        tra("Projects for which this computer has done work"),
-        "<a href=su_hosts.php?action=project_accounting&host_id=$host->id>$view</a>"
-    );
     show_host_detail($host);
-    if (strstr($user->global_prefs, "</venue")) {
+    row2(
+        "Location<br><small>determines which set of computing preferences is used for this computer",
+        location_form($host)
+    );
+    if ($host->total_credit) {
         row2(
-            "Location<br><small>determines which set of computing preferences is used for this computer",
-            location_form($host)
+            'This computer is currently hidden',
+            sprintf(
+                '<a class="btn btn-success" href="su_hosts.php?action=hide&host_id=%d&hidden=0">%s</a>',
+                $host->id, 'Un-hide'
+            )
+        );
+    } else {
+        row2(
+            'Hide<br><small>If this is a duplicate or the computer is no longer running BOINC.</small>',
+            sprintf(
+                '<a class="btn btn-success" href="su_hosts.php?action=hide&host_id=%d&hidden=1">%s</a>',
+                $host->id, 'Hide'
+            )
         );
     }
     end_table();
+
+    echo sprintf('<h3>%s</h3>',
+        tra("Projects for which this computer has done work")
+    );
+    host_project_accounting($host);
+
+    echo sprintf('<h3>%s</h3>',
+        tra("How projects are chosen for %1", $host->domain_name)
+    );
+    $host = populate_score_info($host, null);
+    host_project_select($user, $host);
+
     page_tail();
 }
 
 $user = get_logged_in_user();
 $action = get_str("action", true);
 switch ($action) {
-case "del":
-    su_hide_host($user);
-    su_show_user_hosts($user);
+case "hide":
+    hide_host($user, get_int('hidden'));
+    show_user_hosts_page($user, false);
     break;
-case "summary":
+case "su_info":
     $host = BoincHost::lookup_id(get_int("host_id"));
     if ($host->userid != $user->id) error_page('not your host');
-    su_host_summary($host);
+    su_info_page($host);
     break;
-case "detail":
+case "hw_sw_info":
     $host = BoincHost::lookup_id(get_int("host_id"));
     if ($host->userid != $user->id) error_page('not your host');
-    su_host_detail($host);
-    break;
-case "project_select":
-    $host = BoincHost::lookup_id(get_int("host_id"));
-    if ($host->userid != $user->id) error_page('not your host');
-    $host = populate_score_info($host, null);
-    su_host_project_select($user, $host);
-    break;
-case "project_accounting":
-    $host = BoincHost::lookup_id(get_int("host_id"));
-    if ($host->userid != $user->id) error_page('not your host');
-    su_host_project_accounting($host);
+    hw_sw_info_page($host);
     break;
 default:
-    su_show_user_hosts($user);
+    $show_all = get_int('show_all', true);
+    show_user_hosts_page($user, $show_all);
 }

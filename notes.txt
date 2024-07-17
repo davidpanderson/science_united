@@ -683,3 +683,30 @@ leaderboard:
     time
         total
         last day
+
+================
+Display of hosts to the user
+    need to let them set venue
+
+    main list
+        name, OS, last contact
+        links to
+            HW/SW info
+            SU info: include
+                current stuff
+                venue
+                hide button
+                projects for which done work
+                how projects are chosen
+        show all link if have hidden
+
+when view another user (show_user.php)
+    if public 
+        work done info (as in leaderboard)
+        link to Computers
+            use su_hosts (but don't show IP addr)
+        link to graphs
+            use su_graphs2; just for this user
+
+graph.php:
+    don't show private users to others

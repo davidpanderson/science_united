@@ -231,10 +231,9 @@ function show_user_projects($user) {
 
 ///////////// UI INVOLVING HOSTS /////////////
 
-// table description of a host
+// show SU-specific info about a host
 //
 function show_host_detail($host) {
-    row2(tra("Domain name"), $host->domain_name);
     if ($host->product_name) {
         row2(tra("Product name"), $host->product_name);
     }
@@ -242,8 +241,8 @@ function show_host_detail($host) {
     if ($x >= 0) $x="+$x";
     row2(tra("Local Standard Time"), tra("UTC %1 hours", $x));
     row2(tra("Created"), time_str($host->create_time));
-    row2(tra("Number of times client has contacted server"), $host->rpc_seqno);
-    row2(tra("Last time contacted server"), sched_log_link($host->rpc_time));
+    row2(tra("Number of times contacted Science United"), $host->rpc_seqno);
+    row2(tra("Last time contacted Science United"), sched_log_link($host->rpc_time));
     row2(tra("Fraction of time BOINC is running"), number_format(100*$host->on_frac, 2)."%");
     if ($host->connected_frac > 0) {
         row2(tra("While BOINC is running, fraction of time computer has an Internet connection"), number_format(100*$host->connected_frac, 2)."%");
@@ -252,6 +251,8 @@ function show_host_detail($host) {
     row2(tra("While is BOINC running, fraction of time GPU computing is allowed"), number_format(100*$host->gpu_active_frac, 2)."%");
 }
 
+// show info about a host's HW and SW
+//
 function show_host_hw_sw($host) {
     row2("Name", $host->domain_name);
     row2(tra("CPU type"), "$host->p_vendor <br> $host->p_model");
