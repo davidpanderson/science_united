@@ -345,7 +345,11 @@ function prefs_edit_form($user, $show_saved) {
     start_table("table-striped");
     generate_html_category(KW_CATEGORY_LOC, $uprefs);
     end_table();
-    echo '<button type="submit" class="btn btn-success">'.tra("Save").'</button>';
+    echo sprintf(
+        '<button type="submit" %s class="btn">%s</button>',
+        button_style(),
+        tra("Save")
+    );
     form_end();
     generate_javascript($uprefs);
     page_tail();

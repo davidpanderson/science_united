@@ -80,8 +80,9 @@ echo sprintf('
 );
 
 echo "<p><p>";
-echo sprintf('<a href='.USER_HOME.' class="btn btn-success">%s</a>
+echo sprintf('<a href=su_home.php %s class="btn">%s</a>
     ',
+    button_style(),
     tra('Continue to your home page')
 );
 text_end();

@@ -381,14 +381,14 @@ function show_accounting_deltas($a, $active=false) {
     end_table();
 }
 
-// generic function to show accounting history
+// function to show accounting history
 //
 function show_accounting_history($as) {
     if (count($as) == 0) {
         echo "No records yet";
         return;
     }
-    start_table();
+    start_table('table-striped');
     row_heading_array(array(
         "Start",
         "CPU days",
@@ -399,7 +399,7 @@ function show_accounting_history($as) {
         "Jobs failed",
     ));
 
-    for($i=0; $i<count($as); $i++) {
+    for ($i=0; $i<count($as); $i++) {
         $a = $as[$i];
         if ($i == 0) {
             row_array(array(
@@ -416,7 +416,7 @@ function show_accounting_history($as) {
             $dt = $as[$i-1]->create_time - $a->create_time ;
         }
         row_array(array(
-            $a->id." ".time_str($a->create_time),
+            time_str($a->create_time),
             show_days($a->cpu_time_delta),
             //$a->cpu_time_delta,
             show_gflops($a->cpu_ec_delta, $dt),

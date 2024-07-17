@@ -163,7 +163,6 @@ function host_project_select($user, $host) {
         row_array($x);
     }
     end_table();
-    page_tail();
 }
 
 function hw_sw_info_page($host) {
@@ -202,7 +201,7 @@ function host_project_accounting($host) {
 //
 function su_info_page($host) {
     global $user;
-    page_head(tra("Science United info"));
+    page_head(tra("Science United computer info"));
     start_table("table-striped");
     $view = tra("View");
     row2(tra("Name"), $host->domain_name);
@@ -221,9 +220,10 @@ function su_info_page($host) {
         );
     } else {
         row2(
-            'Hide<br><small>If this is a duplicate or the computer is no longer running BOINC.</small>',
+            'Hide this computer<br><small>If this is a duplicate or the computer is no longer running BOINC.</small>',
             sprintf(
-                '<a class="btn btn-success" href="su_hosts.php?action=hide&host_id=%d&hidden=1">%s</a>',
+                '<a class="btn" %s href="su_hosts.php?action=hide&host_id=%d&hidden=1">%s</a>',
+                button_style(),
                 $host->id, 'Hide'
             )
         );
