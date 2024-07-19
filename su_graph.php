@@ -21,6 +21,7 @@
 // URL args:
 // type=user/project/total
 // id=n
+//      if type = user, a user ID
 // what:
 //      jobs: show success and fail job deltas
 //      time: show CPU and GPU time deltas
@@ -155,6 +156,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color1 = "orange";
         $graph_two = false;
         $graph_type = 'filledcurve x1';
+        //$graph_type = 'boxes';
         $cpu_smooth = new SMOOTHER();
         $gpu_smooth = new SMOOTHER();
         break;
@@ -333,6 +335,16 @@ if (1) {
         exit;
     }
     $id = get_int('id', true);
+    if ($type == 'user') {
+        if ($id) {
+            $user = BoincUser::lookup_id($id);
+            if (!$user) die();
+            if (!$user->donated) die();
+        } else {
+            $user = get_logged_in_user();
+            $id = $user->id;
+        }
+    }
     $integrate = get_int('integrate', true);
     $what = get_str('what');
     graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate);

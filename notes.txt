@@ -701,12 +701,11 @@ Display of hosts to the user
         show all link if have hidden
 
 when view another user (show_user.php)
-    if public 
+    if user is public 
         work done info (as in leaderboard)
         link to Computers
-            use su_hosts (but don't show IP addr)
-        link to graphs
-            use su_graphs2; just for this user
+            use su_hosts (make sure don't show IP addr)
+        last-month work graphs, and link to su_graph2 (for this user)
 
 graph.php:
     don't show private users to others

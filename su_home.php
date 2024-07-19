@@ -56,6 +56,7 @@ function su_community($user) {
     panel(tra("Community"), function() use($user) {
         start_table();
         show_community_private($user);
+        row2('Leaderboards', '<a href=su_lb.php>View</a>');
         end_table();
     });
 }

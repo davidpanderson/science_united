@@ -24,6 +24,13 @@ require_once("../inc/su_util.inc");
 require_once("../inc/su_project_infos.inc");
 require_once("../inc/keywords.inc");
 
+// are we logged in as this user?
+//
+function is_logged_in($user) {
+    if (!isset($_COOKIE['auth'])) return false;
+    return $_COOKIE['auth'] == $user->authenticator;
+}
+
 function admin_only() {
     $user = get_logged_in_user();
     BoincForumPrefs::lookup($user);
@@ -429,3 +436,29 @@ function show_accounting_history($as) {
     }
     end_table();
 }
+
+// return an object with fields ec_avg, ec_total, time_avg, time_total
+// or null if no info
+//
+function get_work_info($user_id) {
+    $acs = SUAccountingUser::enum("user_id=$user_id", "order by id desc limit 7");
+    if (!$acs) {
+        return null;
+    }
+    $ec_sum = 0;
+    $time_sum = 0;
+    foreach ($acs as $ac) {
+        $ec_sum += $ac->cpu_ec_delta + $ac->gpu_ec_delta;
+        $time_sum += $ac->cpu_time_delta + $ac->gpu_time_delta;
+    }
+    $a = new StdClass;
+    $n = count($acs);
+    $a->ec_avg = $ec_sum/$n;
+    $a->time_avg = $time_sum/$n;
+    $ac = $acs[0];
+    $a->ec_total = $ac->cpu_ec_total + $ac->gpu_ec_total;
+    $a->time_total = $ac->cpu_time_total + $ac->gpu_time_total;
+    return $a;
+}
+
+?>

@@ -50,9 +50,8 @@ function user_summary($user) {
     echo "<h3>".tra("Your recent contribution")."</h3>\n";
     show_user_graph($user, "ec", 30);
     show_calls_to_action();
-    echo sprintf('<center><a href=%ssu_home.php style="background-color:seagreen; color:white; font-size:18px" class="btn btn-success">%s</a></center>
-',
-        URL_BASE,
+    echo sprintf('<center><a href=su_home.php %s" class="btn">%s</a></center>',
+        button_style('green', 18),
         tra('Continue to your home page')
     );
 }

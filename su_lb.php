@@ -26,56 +26,61 @@ function sort_heading($sort, $col_sort, $title) {
 }
 
 function main($sort) {
+    $user = get_logged_in_user();
     $users = BoincUser::enum('donated>0');
     $x = [];
     foreach ($users as $user) {
-        $acs = SUAccountingUser::enum("user_id=$user->id", "order by id desc limit 7");
-        if (!$acs) {
-            continue;
-        }
-        $ec_sum = 0;
-        $time_sum = 0;
-        foreach ($acs as $ac) {
-            $ec_sum += $ac->cpu_ec_delta + $ac->gpu_ec_delta;
-            $time_sum += $ac->cpu_time_delta + $ac->gpu_time_delta;
-        }
-        $a = new StdClass;
-        $n = count($acs);
-        $a->ec_avg = $ec_sum/$n;
-        $a->time_avg = $time_sum/$n;
-        $ac = $acs[0];
-        $a->ec_total = $ac->cpu_ec_total + $ac->gpu_ec_total;
-        $a->time_total = $ac->cpu_time_total + $ac->gpu_time_total;
+        $a = get_work_info($user->id);
+        if (!$a) continue;
         $x[] = [$user, $a];
     }
     usort($x, $sort);
-    page_head('Leaders');
+    page_head('Leading contributors');
+    text_start(800);
+    echo '
+        <p>
+        The volunteers who have contributes the most
+        computing to Science United are listed below.
+        <p>
+        Volunteers are shown only if they have
+        <a href=su_lb_intro.php>opted in</a>;
+        you are encouraged to do so.
+        <p>
+    ';
     echo "<style> .rt { text-align: right; } </style>";
-    start_table();
+    start_table('table-striped');
     row_heading_array(
         [
             'Volunteer',
             sort_heading($sort, 'ec_total', 'Total TFLOPs'),
             sort_heading($sort, 'ec_avg', 'Recent TFLOPs per day'),
-            sort_heading($sort, 'time_total', 'Total processor time (days)'),
-            sort_heading($sort, 'time_avg', 'Recent processor time (days per day)')
+            //sort_heading($sort, 'time_total', 'Total processor time (days)'),
+            //sort_heading($sort, 'time_avg', 'Recent processor time (days per day)')
         ],
-        ['class=bg-primary', '', '', '', ''], 'bg-primary rt'
+        //['class=bg-primary', '', '', '', ''], 'bg-primary rt'
+        ['class=bg-primary', '', ''], 'bg-primary rt'
     );
+    $i = 0;
     foreach ($x as [$user, $a]) {
+        $i++;
         row_array(
             [
-                sprintf('<a href=show_user.php?userid=%d>%s</a>', $user->id, $user->name),
+                sprintf(
+                    '%d. <a href=su_show_user.php?userid=%d>%s</a>',
+                    $i, $user->id, $user->name
+                ),
                 number_format(ec_to_tflops($a->ec_total), 2),
                 number_format(ec_to_tflops($a->ec_avg), 2),
-                number_format($a->time_total/86400, 2),
-                number_format($a->time_avg/86400,2)
+                //number_format($a->time_total/86400, 2),
+                //number_format($a->time_avg/86400,2)
             ],
-            ['', 'class=rt', 'class=rt', 'class=rt', 'class=rt']
+            //['', 'class=rt', 'class=rt', 'class=rt', 'class=rt']
+            ['', 'class=rt', 'class=rt']
         );
     }
 
     end_table();
+    end_text();
     page_tail();
 }
 
