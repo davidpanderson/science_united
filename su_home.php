@@ -23,7 +23,7 @@ require_once("../inc/su_user.inc");
 
 function su_contribution($user) {
     panel(tra("Contribution"),
-        function() {
+        function() use($user) {
             start_table();
             $view = tra("View");
             row2(
@@ -33,7 +33,7 @@ function su_contribution($user) {
             );
             row2(
                 tra("Computing: graphs"),
-                button_text('su_user_accounting.php?graphs=1', $view)
+                button_text("su_graph2.php?userid=$user->id&what=ec&ndays=365", $view)
             );
             row2(
                 tra("Computing: details"),

@@ -272,41 +272,41 @@ function show_host_hw_sw($host) {
     if ($v) {
         row2(tra("BOINC version"), $v);
     }
-    $x = $host->m_nbytes/MEGA;
+    $x = $host->m_nbytes/GIGA;
     $y = round($x, 2);
-    row2(tra("Memory"), tra("%1 MB", $y));
+    row2(tra("Memory"), tra("%1 GB", $y));
     if ($host->m_cache > 0) {
-        $x = $host->m_cache/KILO;
+        $x = $host->m_cache/MEGA;
         $y = round($x, 2);
-        row2(tra("Cache"), tra("%1 KB", $y));
+        row2(tra("Cache"), tra("%1 MB", $y));
     }
 
-    $x = $host->m_swap/MEGA;
+    $x = $host->m_swap/GIGA;
     $y = round($x, 2);
-    row2(tra("Swap space"), tra("%1 MB", $y));
+    row2(tra("Swap space"), tra("%1 GB", $y));
     $x = $host->d_total/GIGA;
     $y = round($x, 2);
     row2(tra("Total disk space"), tra("%1 GB", $y));
     $x = $host->d_free/GIGA;
     $y = round($x, 2);
     row2(tra("Free Disk Space"), tra("%1 GB", $y));
-    $x = $host->p_fpops/(1000*1000);
+    $x = $host->p_fpops/1e9;
     $y = round($x, 2);
-    row2(tra("Measured floating point speed"), tra("%1 million ops/sec", $y));
-    $x = $host->p_iops/(1000*1000);
+    row2(tra("Measured floating point speed"), tra("%1 billion ops/sec", $y));
+    $x = $host->p_iops/1e9;
     $y = round($x, 2);
-    row2(tra("Measured integer speed"), tra("%1 million ops/sec", $y));
-    $x = $host->n_bwup/KILO;
+    row2(tra("Measured integer speed"), tra("%1 billion ops/sec", $y));
+    $x = $host->n_bwup/MEGA;
     $y = round($x, 2);
     if ($y > 0) {
-        row2(tra("Average upload rate"), tra("%1 KB/sec", $y));
+        row2(tra("Average upload rate"), tra("%1 MB/sec", $y));
     } else {
         row2(tra("Average upload rate"), tra("Unknown"));
     }
-    $x = $host->n_bwdown/KILO;
+    $x = $host->n_bwdown/MEGA;
     $y = round($x, 2);
     if ($y > 0) {
-        row2(tra("Average download rate"), tra("%1 KB/sec", $y));
+        row2(tra("Average download rate"), tra("%1 MB/sec", $y));
     } else {
         row2(tra("Average download rate"), tra("Unknown"));
     }
@@ -314,7 +314,6 @@ function show_host_hw_sw($host) {
     row2("CPU features", $host->p_features);
     row2("VM extensions disabled?", $host->p_vm_extensions_disabled?"yes":"no");
     row2("VirtualBox version", $host->virtualbox_version);
-    row2("BOINC client version", $host->boinc_client_version);
 }
 
 // show list of projects a host has computed for

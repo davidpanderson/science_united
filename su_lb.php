@@ -52,13 +52,14 @@ function main($sort) {
     row_heading_array(
         [
             'Volunteer',
+            'Work graphs',
             sort_heading($sort, 'ec_total', 'Total TFLOPs'),
             sort_heading($sort, 'ec_avg', 'Recent TFLOPs per day'),
             //sort_heading($sort, 'time_total', 'Total processor time (days)'),
             //sort_heading($sort, 'time_avg', 'Recent processor time (days per day)')
         ],
         //['class=bg-primary', '', '', '', ''], 'bg-primary rt'
-        ['class=bg-primary', '', ''], 'bg-primary rt'
+        ['class=bg-primary', 'class=bg-primary', '', ''], 'bg-primary rt'
     );
     $i = 0;
     foreach ($x as [$user, $a]) {
@@ -69,18 +70,22 @@ function main($sort) {
                     '%d. <a href=su_show_user.php?userid=%d>%s</a>',
                     $i, $user->id, $user->name
                 ),
+                sprintf(
+                    '<a href=su_graph2.php?userid=%d&what=ec&ndays=365>View</a>',
+                    $user->id
+                ),
                 number_format(ec_to_tflops($a->ec_total), 2),
                 number_format(ec_to_tflops($a->ec_avg), 2),
                 //number_format($a->time_total/86400, 2),
                 //number_format($a->time_avg/86400,2)
             ],
             //['', 'class=rt', 'class=rt', 'class=rt', 'class=rt']
-            ['', 'class=rt', 'class=rt']
+            ['', '', 'class=rt', 'class=rt']
         );
     }
 
     end_table();
-    end_text();
+    text_end();
     page_tail();
 }
 

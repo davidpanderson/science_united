@@ -18,6 +18,7 @@
 
 require_once("su_db.inc");
 
+// show an accounting graph for the logged-in user
 // front page: either show 1-month user work graph,
 // or explain why not
 
@@ -26,7 +27,7 @@ function show_user_graph($user, $what, $ndays) {
     $n = SUAccountingUser::count("user_id=$user->id and create_time>$min_time");
     if ($n>1) {
         $url = sprintf(
-            'su_graph2.php?type=user&id=%d&what=%s&ndays=%d',
+            'su_graph2.php?userid=%d&what=%s&ndays=%d',
             $user->id, $what, 365
         );
         $img_url = sprintf(
@@ -53,7 +54,7 @@ function show_user_graph($user, $what, $ndays) {
             );
         } else {
             if ($n == 0) {
-                // last report was > 30 days ago.
+                // last report was > $ndays days ago.
                 //
                 echo tra("No work reported in last %1 days. %2Need help?%3",
                     $ndays,

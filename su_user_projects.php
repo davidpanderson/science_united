@@ -65,7 +65,7 @@ function show_projects($user) {
         $p->done = false;
     }
     $first = true;
-    start_table();
+    start_table('table-striped');
     row_heading_array(array(
         tra("Name")."<br><small>".tra("Click for details")."</small>",
         tra("You've contributed since"),

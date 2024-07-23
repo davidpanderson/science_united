@@ -141,8 +141,6 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color1 = "red";
         $graph_two = true;
         $graph_type = 'boxes';
-        $success_smooth = new SMOOTHER();
-        $fail_smooth = new SMOOTHER();
         break;
     case 'time':
         if ($integrate) {
@@ -154,11 +152,9 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         }
         $color2 = "khaki";
         $color1 = "orange";
-        $graph_two = false;
-        $graph_type = 'filledcurve x1';
-        //$graph_type = 'boxes';
-        $cpu_smooth = new SMOOTHER();
-        $gpu_smooth = new SMOOTHER();
+        $graph_two = true;
+        //$graph_type = 'filledcurve x1';
+        $graph_type = 'boxes';
         break;
     case 'ec':
         if ($integrate) {
@@ -170,11 +166,9 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         }
         $color1 = "khaki";
         $color2 = "orange";
-        $graph_two = false;
+        $graph_two = true;
         $graph_type = 'filledcurve x1';
         $graph_type = 'boxes';
-        $cpu_smooth = new SMOOTHER();
-        $gpu_smooth = new SMOOTHER();
         break;
     case 'users':
         $title1 = "Active users";
@@ -186,12 +180,12 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         break;
     }
 
-    // write data to temp file
+    // read data into arrays date, val1 and val2
     //
-    $fn = tempnam("/tmp", "su_data");
-    $f = fopen($fn, "w");
     $n = count($accts);
-
+    $time = [];
+    $val1 = [];
+    $val2 = [];
     for ($i=0; $i<$n; $i++) {
         $a = $accts[$i];
         if ($i == $n-1) {
@@ -206,41 +200,28 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
             $end_time = $accts[$i+1]->create_time;
         }
         $dt = $end_time - $a->create_time;
+
+        $time[] = $a->create_time;
         if ($dt<86400) $dt=86400;
         switch ($what) {
         case 'jobs':
             if ($integrate) {
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $a->njobs_fail_total,
-                    $a->njobs_success_total
-                );
+                $val1[] = $a->njobs_fail_total;
+                $val2[] = $a->njobs_success_total;
             } else {
                 $dt /= 86400;
-                $ss = $success_smooth->val($a->njobs_success_delta);
-                $fs = $fail_smooth->val($a->njobs_fail_delta);
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $fs, $ss
-                );
+                $val1[] = $a->njobs_fail_delta/$dt;
+                $val2[] = $a->njobs_success_delta/$dt;
             }
             break;
         case 'time':
             if ($integrate) {
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $a->gpu_time_total,
-                    $a->cpu_time_total
-                );
+                $val1[] = $a->gpu_time_total;
+                $val2[] = $a->cpu_time_total;
             } else {
                 $dt /= 24;
-                $cs = $cpu_smooth->val($a->cpu_time_delta);
-                $gs = $gpu_smooth->val($a->gpu_time_delta);
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $gs/$dt,
-                    $cs/$dt
-                );
+                $val2[] = $a->cpu_time_delta/$dt;
+                $val1[] = $a->gpu_time_delta/$dt;
             }
             if ($a->gpu_time_delta) {
                 $graph_two = true;
@@ -248,34 +229,45 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
             break;
         case 'ec':
             if ($integrate) {
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $a->cpu_ec_total, $a->gpu_ec_total
-                );
+                $val1[] = $a->cpu_ec_total;
+                $val2[] = $a->gpu_ec_total;
             } else {
-                $cs = $cpu_smooth->val($a->cpu_ec_delta);
-                $gs = $gpu_smooth->val($a->gpu_ec_delta);
+                $cs = $a->cpu_ec_delta;
+                $gs = $a->gpu_ec_delta;
                 $c = ec_to_gflop_hours($cs);
                 $g = ec_to_gflop_hours($gs);
                 $dt /= 3600;
-                fprintf($f, "%f %f %f\n",
-                    $a->create_time,
-                    $c/($dt*1000),
-                    ($c+$g)/($dt*1000)
-                );
+                $val1[] = $c/($dt*1000);
+                $val2[] = ($c+$g)/($dt*1000);
             }
             if ($a->gpu_ec_delta) {
                 $graph_two = true;
             }
             break;
         case 'users':
-            fprintf($f, "%f %d %d\n",
-                $a->create_time,
-                $a->nactive_users,
-                $a->nactive_hosts
-            );
+            $val1[] = $a->nactive_users;
+            $val2[] = $a->nactive_hosts;
             break;
         }
+    }
+
+    // remove outliers if needed
+    if (!$integrate) {
+        switch ($what) {
+        case 'time':
+        case 'ec':
+            remove_outliers($val1);
+            remove_outliers($val2);
+        }
+    }
+
+    // write data to temp file
+    //
+    $fn = tempnam("/tmp", "su_data");
+    $f = fopen($fn, "w");
+    for ($i=0; $i<$n; $i++) {
+        //echo "$i $val1[$i] $val2[$i]\n";
+        fprintf($f, "%f %f %f\n", $time[$i], $val1[$i], $val2[$i]);
     }
     fclose($f);
 
@@ -334,20 +326,20 @@ if (1) {
         projects_graph($ndays, get_int('gpu'), $xsize, $ysize);
         exit;
     }
+    $user = get_logged_in_user();
     $id = get_int('id', true);
     if ($type == 'user') {
         if ($id) {
-            $user = BoincUser::lookup_id($id);
-            if (!$user) die();
-            if (!$user->donated) die();
-        } else {
-            $user = get_logged_in_user();
-            $id = $user->id;
+            if ($id != $user->id) {
+                $user = BoincUser::lookup_id($id);
+                if (!$user) die();
+                if (!$user->donated) die();
+            }
         }
     }
     $integrate = get_int('integrate', true);
     $what = get_str('what');
-    graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate);
+    graph($type, $user->id, $what, $ndays, $xsize, $ysize, $integrate);
 } else {
     graph('total', 22203, 'ec', 1000, 800, 600, false);
     //graph('user', 22203, 'ec', 30, 800, 600);

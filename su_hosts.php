@@ -257,14 +257,18 @@ function su_info_page($host, $is_me) {
     page_tail();
 }
 
+$user = get_logged_in_user();
 $id = get_int('user_id', true);
 if ($id) {
-    $user = BoincUser::lookup_id($id);
-    if (!$user) error_page('no user');
-    if (!$user->donated) error_page('no access');
-    $is_me = false;
+    if ($id == $user->id) {
+        $is_me = true;
+    } else {
+        $user = BoincUser::lookup_id($id);
+        if (!$user) error_page('no user');
+        if (!$user->donated) error_page('no access');
+        $is_me = false;
+    }
 } else {
-    $user = get_logged_in_user();
     $is_me = true;
 }
 $action = get_str("action", true);

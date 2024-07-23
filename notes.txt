@@ -677,8 +677,7 @@ form:
 
 leaderboard:
     show
-        CPU time
-        GPU time
+        processor time
         GFLOPs
     time
         total
@@ -706,6 +705,18 @@ when view another user (show_user.php)
         link to Computers
             use su_hosts (make sure don't show IP addr)
         last-month work graphs, and link to su_graph2 (for this user)
+=============
+su_graph2.php
+    if type = user
+        it has userid arg
+        if userid = logged in user
+            show 'Work done by you'
+        else
+            show 'Work done by <name>'
+        show checkbox for 'all volunteers'
 
-graph.php:
-    don't show private users to others
+link here from:
+    front page (from the graph)
+    home page: graphs link (you/EC/year)
+    Community menu: work graphs (all/EC/year)
+    leaderboard (new column)
