@@ -140,7 +140,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color2 = "green";
         $color1 = "red";
         $graph_two = true;
-        $graph_type = 'boxes';
+        $graph_type = 'fillsteps';
         break;
     case 'time':
         if ($integrate) {
@@ -154,7 +154,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color1 = "orange";
         $graph_two = true;
         //$graph_type = 'filledcurve x1';
-        $graph_type = 'boxes';
+        $graph_type = 'fillsteps';
         break;
     case 'ec':
         if ($integrate) {
@@ -167,8 +167,8 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color1 = "khaki";
         $color2 = "orange";
         $graph_two = true;
-        $graph_type = 'filledcurve x1';
-        $graph_type = 'boxes';
+        $graph_type = 'fillsteps';
+        //$graph_type = 'boxes';
         break;
     case 'users':
         $title1 = "Active users";
@@ -176,7 +176,7 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         $color1 = "green";
         $color2 = "blue";
         $graph_two = true;
-        $graph_type = 'lines';
+        $graph_type = 'fillsteps';
         break;
     }
 
@@ -286,7 +286,7 @@ plot "%s" using 1:3 with %s title "%s" lc rgb "%s", \
         );
     } else {
         $plot = sprintf(
-            'plot "%s" using 1:2 with %s title "%s" lc rgb"%s"',
+            'plot "%s" using 1:2 with %s title "%s" lc rgb "%s"',
             $fn, $graph_type, $title1, $color1
         );
     }
