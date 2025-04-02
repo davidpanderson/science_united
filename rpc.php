@@ -190,6 +190,8 @@ function send_reply($user, $host, $req, $accounts) {
     ;
 }
 
+// keep up to date with get_misc_info() in sched/handle_request.cpp
+//
 function make_serialnum($req) {
     $x = sprintf("[BOINC|%s]", (string)($req->client_version));
 
@@ -237,7 +239,27 @@ function make_serialnum($req) {
     if ($v) {
         $x .= sprintf("[vbox|%s]", $v);
     }
+
+    [$version, $type] = get_docker_info($req->host_info);
+    print_r($req);
+    echo "vers $version type $type\n";
+    if ($version) {
+        $x .= sprintf('[docker|%s|%s]', $version, $type);
+    }
     return $x;
+}
+
+function get_docker_info($host_info) {
+    if (strstr($host_info->os_name, 'Windows')) {
+        foreach ($host_info->wsl->distro as $distro) {
+            if ($distro->docker_version) {
+                return [$distro->docker_version, $distro->docker_type];
+            }
+        }
+        return [null, null];
+    } else {
+        return [$host_info->docker_version, $host_info->docker_type];
+    }
 }
 
 // update the host DB record
@@ -356,7 +378,18 @@ function similar_host($h, $req) {
 function lookup_records($req) {
     $authenticator = (string)$req->authenticator;
     if ($authenticator) {
-        $user = BoincUser::lookup_auth($authenticator);
+        if (strstr($authenticator, '_')) {
+            // weak auth case
+            $id = (int)$authenticator;
+            $user = BoincUser::lookup_id($id);
+            if ($user) {
+                if ($authenticator != su_weak_auth($user)) {
+                    $user = null;
+                }
+            }
+        } else {
+            $user = BoincUser::lookup_auth($authenticator);
+        }
         if (!$user) {
             log_write("auth $authenticator not found");
             su_error(-1, 'no account found');
@@ -368,9 +401,6 @@ function lookup_records($req) {
             log_write("account $email_addr not found");
             su_error(-1, 'no account found');
         }
-    }
-
-    if (!$authenticator) {
         $passwd_hash = (string)$req->password_hash;
         if (!check_passwd_hash($user, $passwd_hash)) {
             su_error(-1, 'bad password');

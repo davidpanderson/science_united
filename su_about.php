@@ -24,13 +24,14 @@ echo sprintf("
     <p>
     <a href=https://boinc.berkeley.edu>BOINC</a> is the preeminent
     platform for volunteer computing (VC).
-    It is used by most VC projects, including SETI@home, Einstein@home,
+    It is used by most VC projects, including Einstein@home,
     Climateprediction.net, IBM World Community Grid, and Rosetta@home.
     <p>
     %s is a new way to particate in BOINC.
-    With %s, computer owners volunteer for science areas
+    With %s, you volunteer for
+    <a href=https://scienceunited.org/su_prefs.php>science areas and locations</a>
     rather than for specific projects.
-    %s assigns computers to appropriate projects;
+    %s assigns your computers to appropriate projects;
     these assignments may change over time.
     <p>
     We call this the 'coordinated model' for VC.
@@ -46,7 +47,6 @@ echo sprintf("
     The user interface of %s is designed to appeal to
     a wider audience than the current BOINC user base,
     which is mostly male and tech-savvy.
-    For example, %s has no leader boards.
     <p>
     Learn more:
     <a href=doc/ui_goals.pdf>%s: UI/UX goals</a>
@@ -63,9 +63,6 @@ echo sprintf("
     For now, all <a href=https://boinc.berkeley.edu/projects.php>science projects
     vetted by BOINC</a> are included in this set,
     and they have equal allocations.
-    Eventually the selection of science projects,
-    and the allocation of computing power among them,
-    will be determined by a committee of scientists.
     <p>
     If you are a scientist considering using BOINC,
     please <a href=https://boinc.berkeley.edu/anderson/>contact us</a>.

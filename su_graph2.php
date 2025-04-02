@@ -52,7 +52,7 @@ function main($what, $ndays, $integrate, $user, $is_me) {
     form($what, $integrate, $ndays, $user, $is_me);
     $url = sprintf(
         'su_graph.php?type=%s&id=%d&what=%s&ndays=%d&integrate=%d&xsize=%d&ysize=%d',
-        $type, $user->id, $what, $ndays, $integrate, 900, 500
+        $type, $user?$user->id:0, $what, $ndays, $integrate, 900, 500
     );    
     //echo $url;
     echo sprintf('<center><img class="img-responsive", src=%s></center>', $url);

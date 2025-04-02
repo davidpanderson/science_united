@@ -110,4 +110,9 @@ function total_update_string($d) {
     ";
 }
 
+function su_weak_auth($user) {
+    $x = md5($user->authenticator.$user->passwd_hash);
+    return "{$user->id}_$x";
+}
+
 ?>

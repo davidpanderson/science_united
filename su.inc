@@ -264,11 +264,12 @@ function show_host_hw_sw($host) {
     row2("Name", $host->domain_name);
     row2(tra("CPU type"), "$host->p_vendor <br> $host->p_model");
     row2(tra("Number of processors"), $host->p_ncpus);
-    if ($host->serialnum) {
-        row2(tra("Coprocessors"), gpu_desc($host->serialnum));
-    }
+    $parsed_ser = parse_serialnum($host->serialnum);
+    row2(tra("Coprocessors"), gpu_desc($parsed_ser));
+    row2(tra("Virtualization"), vbox_desc($parsed_ser));
+    row2(tra("Docker"), docker_desc($parsed_ser));
     row2(tra("Operating System"), "$host->os_name <br> $host->os_version");
-    $v = boinc_version($host->serialnum);
+    $v = boinc_version($parsed_ser);
     if ($v) {
         row2(tra("BOINC version"), $v);
     }

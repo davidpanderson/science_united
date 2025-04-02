@@ -25,7 +25,6 @@ require_once("../inc/su_schedule.inc");
 function project_row($p, $ukws, $a) {
     if ($a) {
         $checked = $a->opt_out?"checked":"";
-        $d = date_str($a->create_time);
         $c = $a->cpu_time/3600.;
         $g = $a->gpu_time/3600.;
         $njs = $a->njobs_success;
@@ -33,7 +32,6 @@ function project_row($p, $ukws, $a) {
         $excluded = $a->opt_out?"; excluded":"";
     } else {
         $checked = "";
-        $d = "---";
         $c = 0;
         $g = 0;
         $njs = 0;
@@ -45,7 +43,8 @@ function project_row($p, $ukws, $a) {
             $p->id,
             $p->name
         ),
-        $d,
+        project_kw_string($p->id, SCIENCE),
+        project_kw_string($p->id, LOCATION),
         show_num($c),
         show_num($g),
         $njs,
@@ -68,12 +67,13 @@ function show_projects($user) {
     start_table('table-striped');
     row_heading_array(array(
         tra("Name")."<br><small>".tra("Click for details")."</small>",
-        tra("You've contributed since"),
+        tra("Science keywords"),
+        tra("Location keywords"),
         tra("CPU hours"),
         tra("GPU hours"),
         tra("# successful jobs"),
         tra("# failed jobs"),
-        tra("Allowed by prefs?"),
+        tra("Allowed by your prefs?"),
     ));
 
     $ukws = SUUserKeyword::enum("user_id=$user->id");
@@ -112,14 +112,14 @@ function su_show_project($user, $project_id) {
     page_head($project->name);
     start_table();
     row2(tra("Web site"), "<a href=$project->url>$project->url</a>");
-    row2(tra("Science keywords"), project_kw_string($project->id, SCIENCE));
-    row2(tra("Location keywords"), project_kw_string($project->id, LOCATION));
+    row2(tra("Science areas"), project_kw_string($project->id, SCIENCE));
+    row2(tra("Locations "), project_kw_string($project->id, LOCATION));
     if ($acct) {
-        //row2(tra("First contribution"), date_str($acct->create_time));
-        row2(tra("CPU computing"), $acct->cpu_ec);
+        row2(tra("You've contributed since"), date_str($acct->create_time));
+        row2(tra("CPU TFLOPs"), $acct->cpu_ec);
         row2(tra("CPU time"), $acct->cpu_time);
         if ($acct->gpu_ec) {
-            row2(tra("GPU computing"), $acct->gpu_ec);
+            row2(tra("GPU TFLOPs"), $acct->gpu_ec);
             row2(tra("GPU time"), $acct->gpu_time);
         }
         row2(tra("# jobs succeeded"), $acct->njobs_success);

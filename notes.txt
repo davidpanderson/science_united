@@ -720,3 +720,11 @@ link here from:
     home page: graphs link (you/EC/year)
     Community menu: work graphs (all/EC/year)
     leaderboard (new column)
+===============
+weak auth
+    RPC: if auth present and of form ID_RND
+        look up user by ID
+        compute weak auth
+        check
+    su_account_settings.php
+        show weak auth, link to page that explains it
