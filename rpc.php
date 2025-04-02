@@ -241,8 +241,6 @@ function make_serialnum($req) {
     }
 
     [$version, $type] = get_docker_info($req->host_info);
-    print_r($req);
-    echo "vers $version type $type\n";
     if ($version) {
         $x .= sprintf('[docker|%s|%s]', $version, $type);
     }
