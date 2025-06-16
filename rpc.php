@@ -366,8 +366,8 @@ function create_host($req, $user) {
 
 function similar_host($h, $req) {
     $hi = $req->host_info;
-    if ($h->host_cpid != (string)$hi->host_cpid) return false;
     if ($h->domain_name != (string)$hi->domain_name) return false;
+    if ($h->last_ip_addr != (string)$hi->ip_addr) return false;
     return true;
 }
 
