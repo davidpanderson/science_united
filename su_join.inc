@@ -23,8 +23,6 @@ require_once("../inc/keywords.inc");
 require_once("../inc/recaptchalib.inc");
 
 function su_join_form($next_url) {
-    global $recaptcha_public_key;
-
     form_input_hidden('next_url', $next_url);
 
     // Using invitation codes to restrict access?
@@ -99,8 +97,6 @@ function global_prefs_form() {
 }
 
 function show_join_form() {
-    global $recaptcha_public_key;
-
     form_start("su_join.php", "post");
     form_input_hidden("action", "join");
     form_general("", "Already using BOINC? <a href=su_boinc_users.php>Read this first.</a>");
@@ -110,8 +106,8 @@ function show_join_form() {
         keyword_prefs_form();
     }
     global_prefs_form();
-    if ($recaptcha_public_key) {
-        form_general("", boinc_recaptcha_get_html($recaptcha_public_key));
+    if (recaptcha_public_key()) {
+        form_general("", boinc_recaptcha_get_html(recaptcha_public_key()));
     }
     form_submit("Join");
     form_end();
