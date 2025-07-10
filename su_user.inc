@@ -50,7 +50,7 @@ function show_download($user) {
     $hosts = BoincHost::enum("userid=$user->id");
     if (count($hosts) == 0) {
         echo WARNING."It looks like BOINC isn't running on your computer.
-            Try <a href=download.php?dev=1>re-installing it</a>.
+            Try <a href=download.php>re-installing it</a>.
             If you need help,
             <a href=https://boinc.berkeley.edu/help.php>go here</a>.
             <br>
@@ -61,7 +61,7 @@ function show_download($user) {
     if ($dt > 7*86400) {
         echo WARNING."None of your computers has contacted us in the last ".time_diff($dt, 0)." ago.
             Please check that BOINC is running.
-            You may need to <a href=download.php?dev=1>re-install BOINC</a>.
+            You may need to <a href=download.php>re-install BOINC</a>.
             <br>
         ";
         return;

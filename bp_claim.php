@@ -265,7 +265,7 @@ function intro() {
         <p>
         <a href=bp_claim.php?form=1>Yes - I'm already running BOINC<a/>.
         <p>
-        <a href=download_software.php?dev=1>No - I'm new to BOINC<a/>.
+        <a href=download_software.php>No - I'm new to BOINC<a/>.
     ";
     page_tail();
 }

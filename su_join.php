@@ -83,7 +83,7 @@ function handle_submit() {
     }
 
     send_cookie('auth', $user->authenticator, false);
-    Header("Location: download_software.php?dev=1");
+    Header("Location: download_software.php");
 }
 
 $action = post_str('action', true);
