@@ -39,7 +39,12 @@ function su_show_project($project, $user) {
         row2("Created", date_str($project->create_time));
         row2("Status", project_status_string($project->status));
         row2("Allocation share", $project->share);
-        row2("", '<a class="btn btn-success" href="su_projects_edit.php?action=edit_project_form&id='.$project->id.'">Edit status and share</a>');
+        row2("", sprintf(
+            '<a class="btn" %s href="su_projects_edit.php?action=edit_project_form&id=%d">Edit status and share</a>',
+                button_style(),
+                $project->id
+            )
+        );
         row2("Average TFLOPS", number_format(ec_to_tflops($project->avg_ec), 3));
         row2("Average TFLOPS, adjusted", number_format(ec_to_tflops($project->avg_ec_adjusted), 3));
     }
@@ -63,8 +68,8 @@ function su_show_project($project, $user) {
     row2("Platforms", get_platforms_string($project->id));
     row2("Accounting",
         sprintf(
-            'Last 30 days:<br><img src="su_graph.php?type=project&id=%d&what=ec&ndays=%d&xsize=%d&ysize=%d"><br><a href=su_projects_acct.php?project_id=%d class="btn btn-success">History</a>',
-            $project->id, 30, 500, 300, $project->id
+            'Last 30 days:<br><img src="su_graph.php?type=project&id=%d&what=ec&ndays=%d&xsize=%d&ysize=%d"><p> <p><a href=su_projects_acct.php?project_id=%d class="btn" %s>History</a>',
+            $project->id, 30, 500, 300, $project->id, button_style()
         )
     );
     end_table();
