@@ -76,9 +76,10 @@ function intro_panel() {
                 );
             }
             echo "<br><br>\n";
-            echo sprintf('<center><a href="%ssu_join.php" class="btn btn-success"><font size=+2>%s</font></a></center>
+            echo sprintf('<center><a href="%ssu_join.php" class="btn" %s><font size=+2>%s</font></a></center>
                 ',
                 URL_BASE,
+                button_style('green', 28),
                 tra('Join %1', PROJECT)
             );
             echo sprintf('<br><br>%s <a href=%slogin_form.php>%s</a>',
