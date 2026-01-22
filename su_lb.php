@@ -27,6 +27,9 @@ function sort_heading($sort, $col_sort, $title) {
 
 function main($sort) {
     $user = get_logged_in_user();
+
+    // get users who have opted in
+    //
     $users = BoincUser::enum('donated>0');
     $x = [];
     foreach ($users as $user) {
@@ -39,7 +42,7 @@ function main($sort) {
     text_start(800);
     echo '
         <p>
-        The volunteers who have contributes the most
+        The volunteers who have contributed the most
         computing to Science United are listed below.
         <p>
         Volunteers are shown only if they have

@@ -264,12 +264,12 @@ function show_host_hw_sw($host) {
     row2("Name", $host->domain_name);
     row2(tra("CPU type"), "$host->p_vendor <br> $host->p_model");
     row2(tra("Number of processors"), $host->p_ncpus);
-    $parsed_ser = parse_serialnum($host->serialnum);
-    row2(tra("Coprocessors"), gpu_desc($parsed_ser));
-    row2(tra("Virtualization"), vbox_desc($parsed_ser));
-    row2(tra("Docker"), docker_desc($parsed_ser));
+    $misc = json_decode($host->misc);
+    row2(tra("Coprocessors"), gpu_desc($misc));
+    row2(tra("Virtualization"), vbox_desc($misc));
+    row2(tra("Docker"), docker_desc($misc));
     row2(tra("Operating System"), "$host->os_name <br> $host->os_version");
-    $v = boinc_version($parsed_ser);
+    $v = boinc_version($misc);
     if ($v) {
         row2(tra("BOINC version"), $v);
     }
@@ -447,7 +447,9 @@ function get_work_info($user_id) {
     }
     $ec_sum = 0;
     $time_sum = 0;
+    $start = time() - 30*85400;
     foreach ($acs as $ac) {
+        if ($ac->create_time < $start) continue;
         $ec_sum += $ac->cpu_ec_delta + $ac->gpu_ec_delta;
         $time_sum += $ac->cpu_time_delta + $ac->gpu_time_delta;
     }

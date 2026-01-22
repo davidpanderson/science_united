@@ -190,76 +190,6 @@ function send_reply($user, $host, $req, $accounts) {
     ;
 }
 
-// keep up to date with get_misc_info() in sched/handle_request.cpp
-//
-function make_serialnum($req) {
-    $x = sprintf("[BOINC|%s]", (string)($req->client_version));
-
-    $c = $req->host_info->coprocs->coproc_cuda;
-    if ($c) {
-        $x .= sprintf("[CUDA|%s|%d|%dMB]",
-            (string)$c->name,
-            (int)$c->count,
-            ((double)$c->totalGlobalMem)/MEGA
-        );
-    }
-    $c = $req->host_info->coprocs->coproc_ati;
-    if ($c) {
-        $x .= sprintf("[CAL|%s|%d|%dMB]",
-            (string)$c->name, (int)$c->count,
-            (int)$c->localRAM
-        );
-    }
-    $c = $req->host_info->coprocs->coproc_intel_gpu;
-    if ($c) {
-        $x .= sprintf("[INTEL|%s|%d|%dMB]",
-            (string)$c->name, (int)$c->count,
-            (int)$c->global_mem_size/MEGA
-        );
-    }
-    $c = $req->host_info->coprocs->coproc_apple_gpu;
-    if ($c) {
-        $x .= sprintf("[apple_gpu|%s|%d|%dMB]",
-            (string)$c->name, (int)$c->count,
-            (int)$c->global_mem_size/MEGA
-        );
-    }
-
-    // other OpenCL GPUs
-    foreach ($req->host_info->coprocs->coproc as $y) {
-        if (empty($y->coproc_opencl)) continue;
-        $co = $y->coproc_opencl;
-        $x .= sprintf("[%s|%s|1|%dMB]",
-            $co->vendor, $co->name,
-            (int)$co->global_mem_size/MEGA
-        );
-    }
-
-    $v = (string)$req->host_info->virtualbox_version;
-    if ($v) {
-        $x .= sprintf("[vbox|%s]", $v);
-    }
-
-    [$version, $type] = get_docker_info($req->host_info);
-    if ($version) {
-        $x .= sprintf('[docker|%s|%s]', $version, $type);
-    }
-    return $x;
-}
-
-function get_docker_info($host_info) {
-    if (strstr($host_info->os_name, 'Windows')) {
-        foreach ($host_info->wsl->distro as $distro) {
-            if ($distro->docker_version) {
-                return [$distro->docker_version, $distro->docker_type];
-            }
-        }
-        return [null, null];
-    } else {
-        return [$host_info->docker_version, $host_info->docker_type];
-    }
-}
-
 // update the host DB record
 // Note: we update rpc_time in the DB, but not the object
 //
@@ -279,7 +209,7 @@ function update_host($req, $host) {
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$hi->host_cpid);
-    $serialnum = make_serialnum($req);
+    $misc = BoincDb::escape_string(make_hostinfo_json($req));
     $ip_addr = BoincDb::escape_string((string)$hi->ip_addr);
     $external_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
     $p_ncpus = (int)$hi->p_ncpus;
@@ -322,7 +252,6 @@ function update_host($req, $host) {
         timezone = $timezone,
         domain_name = '$domain_name',
         host_cpid = '$host_cpid',
-        serialnum = '$serialnum',
         last_ip_addr = '$ip_addr',
         external_ip_addr = '$external_ip_addr',
         p_ncpus = $p_ncpus,
@@ -346,7 +275,8 @@ function update_host($req, $host) {
         n_bwdown = $n_bwdown,
         p_ngpus = $p_ngpus,
         p_gpu_fpops = $p_gpu_fpops,
-        rpc_seqno = rpc_seqno+1
+        rpc_seqno = rpc_seqno+1,
+        misc = '$misc'
     ";
     $ret = $host->update($query);
     if (!$ret) {

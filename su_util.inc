@@ -115,4 +115,114 @@ function su_weak_auth($user) {
     return "{$user->id}_$x";
 }
 
+function is_logged_in_user($user) {
+    $u = get_logged_in_user(false);
+    return $u?($u->id == $user->id):false;
+}
+
+// input: a request message, parsed into a SimpleXML struct
+// converts this to the structure used in host.misc,
+// and returns the JSON for it
+//
+function make_hostinfo_json($req) {
+    $x = new StdClass;
+    $gpus = [];
+    $config = [];
+    $x->client_version = (string)$req->client_version;
+    foreach ($req->host_info->coprocs->children() as $k => $c) {
+        switch($k) {
+        case 'coproc_cuda':
+            $gpus[] = make_gpu($c, 'nvidia', (string)$c->cudaVersion);
+            break;
+        case 'coproc_ati':
+            $gpus[] = make_gpu($c, 'amd', (string)$c->CALVersion);
+            break;
+        case 'coproc_intel_gpu':
+            $gpus[] = make_gpu($c, 'intel');
+            break;
+        case 'coproc_apple_gpu':
+            $gpus[] = make_gpu($c, 'apple');
+            break;
+        default:
+            $gpus[] = make_gpu($c, 'opencl');
+            break;
+        }
+    }
+
+    $v = $req->host_info->virtualbox_version;
+    if ($v) {
+        $x->vbox = make_vbox($req);
+    }
+
+    [$version, $type, $d] = get_docker_info($req->host_info);
+    if ($version) {
+        $x->docker = make_docker($version, $type, $d);
+    }
+
+    if ($req->dont_use_docker) {
+        $config['dont_use_docker'] = true;
+    }
+    if ($req->dont_use_wsl) {
+        $config['dont_use_wsl'] = true;
+    }
+
+    if ($gpus) $x->gpus = $gpus;
+    if ($config) $x->config = $gpus;
+
+    return json_encode($x, JSON_PRETTY_PRINT);
+}
+
+function make_gpu($c, $type, $driver_version = null) {
+    $x = new StdClass;
+    $x->type = $type;
+    $x->model = (string)$c->name;
+    $x->count = (int)$c->count;
+    $x->ram_mb = (float)$c->available_ram/MEGA;
+    if ($driver_version) {
+        $x->driver_version = $driver_version;
+    }
+    if (!empty($c->coproc_opencl->opencl_device_version)) {
+        $x->opencl_version = (string)$c->coproc_opencl->opencl_device_version;
+    }
+    return $x;
+}
+
+function make_vbox($req) {
+    $x = new StdClass;
+    $x->version = (string)$req->host_info->virtualbox_version;
+    $x->hw_accel = strstr($req->host_info->p_features, 'vmx')
+        || strstr($req->host_info->p_features, 'svm')
+    ;
+    $x->hw_accel_enabled = !($req->host_info->p_vm_extensions_disabled);
+    return $x;
+}
+
+function make_docker($version, $type, $d) {
+    $x = new StdClass;
+    $x->version = (string)$version;
+    $x->type = (int)$type;
+    if ($d) {
+        $x->wsl_distro = $d;
+    }
+    return $x;
+}
+
+function get_docker_info($host_info) {
+    if (strstr($host_info->os_name, 'Windows')) {
+        foreach ($host_info->wsl->distro as $distro) {
+            if ($distro->docker_version) {
+                $d = new StdClass;
+                $d->wsl_distro = (string)$distro->distro_name;
+                if (!empty($distro->distro_version)) {
+                    $d->boinc_buda_runner_version = (int)$distro->distro_version;
+                }
+                return [$distro->docker_version, $distro->docker_type, $d];
+            }
+        }
+        return [null, null, null];
+    } else {
+        return [$host_info->docker_version, $host_info->docker_type, null];
+    }
+}
+
 ?>

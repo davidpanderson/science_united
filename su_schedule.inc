@@ -225,25 +225,28 @@ function host_info_to_platforms($host) {
     return $host;
 }
 
-// populate $host->resources and $host->vbox based on contents of serialnum
+// populate $host->resources based on JSON info
 //
-function host_serialnum_to_gpus_vbox($host) {
+function host_misc_to_gpus_vbox($host) {
     $host->resources = array("cpu");
-    $host->vbox = false;
-    $descs = explode("]", $host->serialnum);
-    foreach ($descs as $desc) {
-        $desc = trim($desc, "[");
-        $d = explode("|", $desc);
-        if ($d[0] == "vbox") {
-            $host->vbox = true;
-        } else if ($d[0] == "CUDA") {
-            $host->resources[] = "nvidia";
-        } else if ($d[0] == "CAL") {
-            $host->resources[] = "amd";
-        } else if ($d[0] == "INTEL") {
-            $host->resources[] = "intel_gpu";
-        } else if ($d[0] == "apple_gpu") {
-            $host->resources[] = "apple_gpu";
+    $misc = json_decode($host->misc);
+    $host->vbox = !empty($misc->vbox);
+    if (!empty($misc->gpus)) {
+        foreach ($misc->gpus as $g) {
+            switch ($g->type) {
+            case 'nvidia':
+                $host->resources[] = "nvidia";
+                break;
+            case 'amd':
+                $host->resources[] = "amd";
+                break;
+            case 'intel':
+                $host->resources[] = "intel_gpu";
+                break;
+            case 'apple':
+                $host->resources[] = "apple_gpu";
+                break;
+            }
         }
     }
     return $host;
@@ -304,7 +307,7 @@ function populate_score_info($host, $req) {
         $host = host_info_to_platforms($host);
         // get GPUs and Vbox info
         //
-        $host = host_serialnum_to_gpus_vbox($host);
+        $host = host_misc_to_gpus_vbox($host);
     }
 
     return $host;

@@ -17,10 +17,10 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 require_once("su_db.inc");
+require_once("su_util.inc");
 
-// show an accounting graph for the logged-in user
-// front page: either show 1-month user work graph,
-// or explain why not
+// show 1-month accounting graph a user
+// if no recent work, explain
 
 function show_user_graph($user, $what, $ndays) {
     $min_time = time() - $ndays*86400;
@@ -49,17 +49,18 @@ function show_user_graph($user, $what, $ndays) {
         if ($m == 0) {
             // no host activity so far
             //
-            echo tra("No work reported so far. %1Need help?%2",
-                "<a href=su_help.php>", "</a>"
-            );
+            echo tra("No work reported so far.");
+            if (is_logged_in_user($user)) {
+                echo tra("%1Need help?%2", " <a href=su_help.php>", "</a>");
+            }
         } else {
             if ($n == 0) {
                 // last report was > $ndays days ago.
                 //
-                echo tra("No work reported in last %1 days. %2Need help?%3",
-                    $ndays,
-                    "<a href=su_help.php>", "</a>"
-                );
+                echo tra("No work reported in last %1 days.", $ndays);
+                if (is_logged_in_user($user)) {
+                    echo tra("%1Need help?%2", " <a href=su_help.php>", "</a>");
+                }
             } else {
                 // one report in last 30 days
                 //

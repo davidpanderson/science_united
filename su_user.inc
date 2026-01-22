@@ -70,8 +70,8 @@ function show_download($user) {
         if (time() - $host->rpc_time > 7*86400) {
             continue;
         }
-        $parsed_ser = parse_serialnum($host->serialnum);
-        $cv = boinc_version($parsed_ser);
+        $misc = json_decode($host->misc);
+        $cv = boinc_version($misc);
         if (version_compare($cv, CURRENT_CLIENT_VERSION) < 0) {
             echo WARNING."Your computer $host->domain_name is running an old version of BOINC.
                 Please <a href=su_download_info.php>upgrade to the current version</a>.
