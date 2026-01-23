@@ -22,13 +22,16 @@ function form($what, $integrate, $ndays, $user, $is_me) {
             $user->id
         );
     }
+    $what_options = [
+        ['ec','FLOPs'],
+        ['time', 'Time'],
+        ['jobs', 'Jobs'],
+    ];
+    if (!$user) {
+        $what_options[] = ['users', 'Active volunteers and computers'];
+    }
     form_radio_buttons('What to graph', 'what',
-        [
-            ['ec','FLOPs'],
-            ['time', 'Time'],
-            ['jobs', 'Jobs'],
-            ['users', 'Active volunteers and computers']
-        ],
+        $what_options,
         $what
     );
     form_checkboxes('Show cumulative total', [['integrate', '', $integrate]]);
