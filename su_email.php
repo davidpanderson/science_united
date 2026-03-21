@@ -92,7 +92,7 @@ function do_user($user) {
         $no_new_work = true;
     }
     $x .= "<p>\n";
-    $x .= " For details, <a href=https://scienceunited.org/>visit Science United</a>.";
+    $x .= " For details, <a href=https://scienceunited.org/su_hosts.php>visit Science United</a>.";
     $x .= "<p><p>\n";
     $any_idle = false;
     $y = '';

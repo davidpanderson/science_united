@@ -26,7 +26,7 @@ require_once("../inc/su.inc");
 //
 function show_user_hosts_page($user, $show_all, $is_me) {
     $hosts = BoincHost::enum(
-        "userid=$user->id order by domain_name, rpc_time desc"
+        "userid=$user->id order by total_credit desc, domain_name, rpc_time desc"
     );
     if ($is_me) {
         page_head(tra("Your computers"));
@@ -44,7 +44,8 @@ function show_user_hosts_page($user, $show_all, $is_me) {
         tra("Operating system"),
         tra("Hardware/software info"),
         tra("Science United info"),
-        tra("Last contact")
+        tra("Last contact"),
+        tra("Visibility")
     ]);
     $now = time();
     $have_hidden = False;
@@ -52,6 +53,19 @@ function show_user_hosts_page($user, $show_all, $is_me) {
         if ($h->total_credit) {
             $have_hidden = true;
             if (!$show_all) continue;
+            $hide_button = button_text(
+                "su_hosts.php?action=hide&host_id=$h->id&hidden=0",
+                'Unhide',
+                'If this computer is currently running BOINC',
+                'btn-xs', button_style()
+            );
+        } else {
+            $hide_button = button_text(
+                "su_hosts.php?action=hide&host_id=$h->id&hidden=1",
+                'Hide',
+                'If this computer no longer runs BOINC or is a duplicate',
+                'btn-xs', button_style()
+            );
         }
         row_array([
             $h->domain_name,
@@ -64,7 +78,8 @@ function show_user_hosts_page($user, $show_all, $is_me) {
                 '<a href=su_hosts.php?action=su_info&user_id=%d&host_id=%d>view</a>',
                 $user->id, $h->id
             ),
-            time_diff_str($h->rpc_time, $now)
+            time_diff_str($h->rpc_time, $now),
+            $hide_button
         ]);
     }
     end_table();
@@ -222,24 +237,6 @@ function su_info_page($host, $is_me) {
             "Location<br><small>determines which set of computing preferences is used for this computer",
             location_form($host)
         );
-        if ($host->total_credit) {
-            row2(
-                'This computer is currently hidden',
-                sprintf(
-                    '<a class="btn btn-success" href="su_hosts.php?action=hide&host_id=%d&hidden=0">%s</a>',
-                    $host->id, 'Un-hide'
-                )
-            );
-        } else {
-            row2(
-                'Hide this computer<br><small>If this is a duplicate or the computer is no longer running BOINC.</small>',
-                sprintf(
-                    '<a class="btn" %s href="su_hosts.php?action=hide&host_id=%d&hidden=1">%s</a>',
-                    button_style(),
-                    $host->id, 'Hide'
-                )
-            );
-        }
     }
     end_table();
 
