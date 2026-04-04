@@ -102,6 +102,8 @@ create table su_host_project (
     njobs_success           integer         not null default 0,
     njobs_fail              integer         not null default 0,
     project_host_id         integer         not null default 0,
+    avg_ec                  double          not null default 0,
+        - avg EC (per day) between last pair of RPCs
     unique(host_id, project_id),
     index project_host (project_id, project_host_id)
 ) engine=InnoDB;

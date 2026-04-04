@@ -728,3 +728,70 @@ weak auth
         check
     su_account_settings.php
         show weak auth, link to page that explains it
+===========
+credit display in client (4/2026)
+
+currently:
+    the scheduler reply from a project P includes
+        user and host total credit
+        user and host expavg credit
+        where 'user' is sum of all of user's hosts running P
+    and these are all shown in the Manager
+
+For SU users,
+host numbers are OK.
+but user numbers from projects are sum of all SU users;
+get user numbers (per-project total and avg EC) from SU instead
+
+SU keeps track of cpu_ec and gpu_ec (totals) for
+    user (su_accounting_user)
+    user/project (su_account)
+    host/project (su_host_project)
+
+If a user has multiple hosts, each of them does SU RPCs every day or so.
+Each RPC reports EC for each attached project.
+
+How do we compute proj.user_avg_ec (summed over hosts)?
+    add field su_host_project.avg_ec
+    On RPC, set to dEC / dt for current projects
+
+    in send_reply()
+        for each project
+        enum hosts.id of this user
+        enum su_host_project for that project and host ID in list
+        avg_ec is sum
+        total_ec is sum
+    is there a more efficient way? doesn't have to be accurate
+        can't think of one
+
+how do we compute proj.user_total_ec?
+    easy; it's in su_account
+
+changes:
+- RPC reply includes, for each project
+    - total user EC (cpu+gpu)
+    - average user EC
+        for existing projects: compute this based on delta since last RPC
+        for new projects: compute based on total, create_time
+
+- client:
+    if project is attached via SU:
+    - keep track (in PROJECT, on disk too)
+        - total user EC returned by last RPC
+        - avg user EC returned by last RPC
+        report these in GUI RPCs (user_total_credit, user_expavg_credit)
+
+        (for host credit, use info from project as we currently do)
+
+gpugrid
+primegrid
+
+===============
+TO INVESTIGATE:
+
+the client reports cumulative cpu_ec/gpu_ec for a project, across sessions.
+
+But if the project is detached and reattached, it starts from zero
+What happens then on the server?  It sees a negative delta and complains.
+
+Better: include cpu/gpu ec/time in RPC reply for new projects

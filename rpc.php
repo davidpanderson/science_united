@@ -17,19 +17,36 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // AM RPC handler
-// request: a list of projects the client is currently attached to,
-//      with info about work done for each.
-// reply: list of projects to add (or detach when done)
+// request: a list of 'current' projects the client is currently attached to,
+//      for each one, total cpu/gpu ec and time
+// reply: list of projects
+//      'continuing': current project, keep attached
+//      'detaching': current project, detach when done
+//      'new': attach to non-current project
 //
-// calls:
+// this calls:
 // do_accounting()
-//      update accounting fields of various tables
+//      for each current project, update accounting fields of various tables:
+//          host_project
+//          account (user/project)
+//          accounting_project (project total)
+//          accounting_user (user total)
+//          accounting (totals)
 // choose_projects_rpc() (su_schedule.inc)
 //      choose projects that cover all the client's resources
-//      rank_projects(): order projects based on prefs, share
-//          populate_score_info(): get resources from req
+//      rank_projects(): get projects list ordered by score
+//           based on KW prefs, project resource share
+//          populate_score_info(): get host resources from req
 //      select_projects_resource()
-//  
+//          given ranked list of projects,
+//          select subset that covers host resources
+// adjust_avg_ec()
+//      inc/dec avg_ec of projects we're attaching/detaching.
+//      This avoids sending only 1 project for a long period
+// send_reply()
+//      send <account> elements for continuing, new, detaching projects
+//      in all cases, send avg and total user EC,
+//      summing over host_project records.
 
 // The user account already exists; the host may not.
 
@@ -112,7 +129,32 @@ function send_error_reply($msg) {
 ";
 }
 
-// $accounts is an array of array(project, account)
+// return avg (per day) and total EC for this user/project
+//
+function get_user_project_ec($user, $project) {
+    static $host_ids = null;
+    if (!$host_ids) {
+        $hosts = BoincHost::enum_fields('id', "userid=$user->id");
+        $ids = [];
+        foreach ($hosts as $h) {
+            $ids[] = $h->id;
+        }
+        $host_ids = implode(',', $ids);
+    }
+    $hps = SUHostProject::enum(
+        "host_id in ($host_ids) and project_id=$project->id"
+    );
+    $avg_ec = 0;
+    $total_ec = 0;
+    foreach ($hps as $hp) {
+        $avg_ec += $hp->avg_ec;
+        $total_ec += $hp->cpu_ec;
+        $total_ec += $hp->gpu_ec;
+    }
+    return [$avg_ec, $total_ec];
+}
+
+// $accounts is a list of [project, account] pairs
 //
 function send_reply($user, $host, $req, $accounts) {
     echo "<acct_mgr_reply>\n"
@@ -136,6 +178,13 @@ function send_reply($user, $host, $req, $accounts) {
     send_user_keywords($user);
     echo expand_compute_prefs($user->global_prefs);
 
+    // get list of URLs of current projects
+    //
+    $current_urls = [];
+    foreach ($req->project as $rp) {
+        $current_urls[] = (string)$rp->url;
+    }
+
     // tell client which projects to attach to
     //
     foreach ($accounts as $a) {
@@ -154,7 +203,30 @@ function send_reply($user, $host, $req, $accounts) {
                 echo "   <no_rsc>$r</no_rsc>\n";
             }
         }
-        echo "</account>\n";
+
+        // if client is not already attached to this project,
+        // send initial accounting info if any
+        //
+        if (!in_array($proj->url, $current_urls)) {
+            $hp = SUHostProject::lookup(
+                "host_id=$host->id and project_id=$proj->id"
+            );
+            if ($hp) {
+                echo "   <cpu_ec>$hp->cpu_ec</cpu_ec>\n"
+                    ."   <cpu_time>$hp->cpu_time</cpu_time>\n"
+                    ."   <gpu_ec>$hp->gpu_ec</gpu_ec>\n"
+                    ."   <gpu_time>$hp->gpu_time</gpu_time>\n"
+                    ."   <njobs_success>$hp->njobs_success</njobs_success>\n"
+                    ."   <njobs_error>$hp->njobs_error</njobs_error>\n"
+                ;
+            }
+        }
+
+        [$avg_ec, $total_ec] = get_user_project_ec($user, $proj);
+        echo "   <user_avg_ec>$avg_ec</user_avg_ec>\n"
+            ."   <user_total_ec>$total_ec</user_total_ec>\n"
+            ."</account>\n"
+        ;
     }
 
     // tell client to detach from other projects it's currently attached to,
@@ -170,19 +242,20 @@ function send_reply($user, $host, $req, $accounts) {
         if (is_in_accounts($url, $accounts)) {
             continue;
         }
-        if (0) {
-            $project = SUProject::lookup("url='$url'");
-            if (!$project) {
-                continue;
-            }
-        }
+        $project = SUProject::lookup("url='$url'");
         log_write("sending detach from $url");
         echo "<account>\n"
             ."   <url>$url</url>\n"
             ."   <dont_request_more_work/>\n"
             ."   <detach_when_done/>\n"
-            ."</account>\n"
         ;
+        if ($project) {
+            [$avg_ec, $total_ec] = get_user_project_ec($user, $project);
+            echo "   <user_avg_ec>$avg_ec</user_avg_ec>\n"
+                ."   <user_total_ec>$total_ec</user_total_ec>\n"
+            ;
+        }
+        echo "</account>\n";
     }
 
     echo "   <opaque><host_id>$host->id</host_id></opaque>\n"
@@ -483,15 +556,14 @@ function find_project($url) {
     return SUProject::lookup("url like '%$url'");
 }
 
-// - compute accounting deltas based on AM request message
-// (which lists per-project totals)
-// and totals in host/project records.
+// - compute accounting deltas based on AM request message,
+//   which lists per-project totals.
 // - update host/project records
 // - add deltas to latest project accounting records
 // - add deltas (summed over projects) to latest user accounting record
 // - add deltas (summed over projects) to latest global accounting record
 //
-// Return list of projects
+// Return list of current projects.
 //
 function do_accounting(
     $req,           // AM RPC request as simpleXML object
@@ -584,8 +656,13 @@ function do_accounting(
         $d = $rp_njobs_fail - $hp->njobs_fail;
         $dproj->njobs_fail = check_njobs_delta($dt, $d, $project);
 
-        // update host/project record (totals)
+        // update host/project record (totals and avg since last RPC)
         //
+        if ($dt) {
+            $avg_ec = 86400*($dproj->cpu_ec + $dproj->gpu_ec)/$dt;
+        } else {
+            $avg_ec = 0;
+        }
         $ret = $hp->update("
             cpu_time = $rp_cpu_time,
             cpu_ec = $rp_cpu_ec,
@@ -593,7 +670,8 @@ function do_accounting(
             gpu_ec = $rp_gpu_ec,
             njobs_success = $rp_njobs_success,
             njobs_fail = $rp_njobs_fail,
-            project_host_id = $rp->hostid
+            project_host_id = $rp->hostid,
+            avg_ec = $avg_ec
             where host_id = $host->id and project_id = $project->id
         ");
         if (!$ret) {
@@ -604,6 +682,7 @@ function do_accounting(
         // if no changes, we're done with this project
         //
         if (!delta_set_nonzero($dproj)) {
+            $project->recent_avg_ec = 0;
             continue;
         }
 
@@ -769,7 +848,7 @@ function main() {
         return;
     }
 
-    if (file_exists("stop_sched")) {
+    if (file_exists("../../stop_sched")) {
         log_write("down for maintenance");
         send_error_reply("Science United is down for maintenance");
         return;

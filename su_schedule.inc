@@ -553,9 +553,9 @@ function choose_projects_join($user) {
     return $chosen_projects;
 }
 
-// Decide what projects to have this user/host run.
+// Decide what projects this user/host should run.
 // Called from AM RPC handler.
-// Return list of accounts.
+// Return list of [project, account] pairs.
 //
 function choose_projects_rpc($user, $host, $req) {
     $projects = rank_projects($user, $host, $req);
@@ -584,7 +584,7 @@ function choose_projects_rpc($user, $host, $req) {
             log_write("no account");
             continue;
         }
-        $accounts_to_send[] = array($p, $account);
+        $accounts_to_send[] = [$p, $account];
         $n++;
         log_write("sending attach to $p->name");
         $x = "";
