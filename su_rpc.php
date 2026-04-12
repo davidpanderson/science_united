@@ -89,7 +89,7 @@ function set_keywords($user) {
     echo "<success/>\n";
 }
 
-$key = parse_config(get_config(), "<rpc_key>");
+$key = project_config_val("rpc_key");
 if ($key) {
     $rpc_key = get_str('rpc_key');
     if ($rpc_key != $key) {

@@ -86,11 +86,11 @@ function action() {
     $passwd_hash = md5($passwd.strtolower($email_addr));
     $url = $project->url."lookup_account.php?email_addr=$email_addr&passwd_hash=$passwd_hash";
     $x = url_get_contents($url);
-    $e = parse_element($x, "<error_msg>");
+    $e = parse_element_text($x, "<error_msg>");
     if ($e) {
         error_page("Error: $e");
     }
-    $auth = parse_element($x, "<authenticator>");
+    $auth = parse_element_text($x, "<authenticator>");
     if (!$auth) {
         error_page("Couldn't get account info - try again later.");
     }
@@ -99,7 +99,7 @@ function action() {
     //
     $url = $project->url."am_get_info.php?account_key=$auth";
     $x = url_get_contents($url);
-    $cpid = parse_element($x, "<cpid>");
+    $cpid = parse_element_text($x, "<cpid>");
 
     // get the project/credit info from netsoft
     //

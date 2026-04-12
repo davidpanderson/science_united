@@ -225,12 +225,16 @@ function host_info_to_platforms($host) {
     return $host;
 }
 
-// populate $host->resources based on JSON info
+// populate host field based on info in host->misc:
+// $host->resources (list of GPUs)
+// $host->vbox
+// $host->docker
 //
-function host_misc_to_gpus_vbox($host) {
+function host_misc_to_resources($host) {
     $host->resources = array("cpu");
-    $misc = json_decode($host->misc);
+    $misc = $host->misc;
     $host->vbox = !empty($misc->vbox);
+    $host->docker = !empty($misc->docker) && empty($misc->config->dont_use_docker);
     if (!empty($misc->gpus)) {
         foreach ($misc->gpus as $g) {
             switch ($g->type) {
@@ -252,7 +256,7 @@ function host_misc_to_gpus_vbox($host) {
     return $host;
 }
 
-// populate $host->platforms, $host->resources, $host_vbox
+// populate $host->platforms, $host->resources, $host->vbox, $host->docker
 //
 function populate_score_info($host, $req) {
     if (!$host) {
@@ -263,11 +267,15 @@ function populate_score_info($host, $req) {
         $h->platforms = array(client_info_to_platform_long($client_info));
         $h->resources = array("cpu");
         $h->vbox = false;
+        $h->docker = false;
         return $h;
     }
 
     // here we have host.
     //
+    if (is_string($host->misc)) {
+        $host->misc = json_decode($host->misc);
+    }
     if ($req) {
         // get platforms from AM request
         //
@@ -286,29 +294,14 @@ function populate_score_info($host, $req) {
             log_write("request has no platforms");
             am_error_reply("Incomplete request message.  Please upgrade to the latest BOINC client.");
         }
-        $host->resources = array("cpu");
-        if ($req->host_info->coprocs->coproc_cuda) {
-            $host->resources[] = "nvidia";
-        }
-        if ($req->host_info->coprocs->coproc_ati) {
-            $host->resources[] = "amd";
-        }
-        if ($req->host_info->coprocs->coproc_intel_gpu) {
-            $host->resources[] = "intel_gpu";
-        }
-        if ($req->host_info->coprocs->coproc_apple_gpu) {
-            $host->resources[] = "apple_gpu";
-        }
-
-        $host->vbox = (string)$req->host_info->virtualbox_version?true:false;
     } else {
-        // no request - get platform from processor and OS info
+        // no request - get platform from info in host DB record
         //
         $host = host_info_to_platforms($host);
-        // get GPUs and Vbox info
-        //
-        $host = host_misc_to_gpus_vbox($host);
     }
+    // get GPUs, Vbox, Docker info from host->misc
+    //
+    $host = host_misc_to_resources($host);
 
     return $host;
 }
@@ -427,6 +420,7 @@ function can_use($project, $host, $r) {
     foreach ($avs as $av) {
         if (!in_array($av->platform, $host->platforms)) continue;
         if ($av->vbox && !$host->vbox) continue;
+        if ($av->docker && !$host->docker) continue;
         if ($r == "cpu") {
             if ($av->gpu) continue;
         } else {

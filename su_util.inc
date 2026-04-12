@@ -121,10 +121,9 @@ function is_logged_in_user($user) {
 }
 
 // input: a request message, parsed into a SimpleXML struct
-// converts this to the structure used in host.misc,
-// and returns the JSON for it
+// output: the structure used in host.misc,
 //
-function make_hostinfo_json($req) {
+function req_to_misc($req) {
     $x = new StdClass;
     $gpus = [];
     $config = [];
@@ -169,7 +168,7 @@ function make_hostinfo_json($req) {
     if ($gpus) $x->gpus = $gpus;
     if ($config) $x->config = $gpus;
 
-    return json_encode($x, JSON_PRETTY_PRINT);
+    return $x;
 }
 
 function make_gpu($c, $type, $driver_version = null) {

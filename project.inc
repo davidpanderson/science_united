@@ -8,7 +8,7 @@
 
 require_once("../inc/util.inc");
 
-$master_url = parse_config(get_config(), "<master_url>");
+$master_url = project_config_val("master_url");
 //define("PROJECT", '<nobr><img style="vertical-align: text-top; height:.95em;" src=power.png>nboard</nobr>');
 // other ideas: SciOn, Onsite, Onward
 //define("PROJECT_WHITE", '<nobr><img style="vertical-align: text-top; height:1em;" src=power_white.png>nboard</nobr>');
@@ -42,6 +42,8 @@ define("PROJECT_ID", 100);
 define('DARK_MODE', true);
 define('HOME_PAGE', 'su_home.php');
 define('SHOW_USER_PAGE', 'su_show_user.php');
+define('NEED_CREDIT_TO_POST_EXCEPT_HELP', false);
+
 define("GLOBAL_HEAD_EXTRA", "
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-130506275-1\"></script>

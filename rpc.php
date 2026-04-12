@@ -25,6 +25,11 @@
 //      'new': attach to non-current project
 //
 // this calls:
+// lookup_records()
+//      looks up (or creates) user, host records
+//      populates host.misc (gpu/vbox/docker info) from req info
+//      updates host record
+//      returns [$user, $host]
 // do_accounting()
 //      for each current project, update accounting fields of various tables:
 //          host_project
@@ -217,7 +222,7 @@ function send_reply($user, $host, $req, $accounts) {
                     ."   <gpu_ec>$hp->gpu_ec</gpu_ec>\n"
                     ."   <gpu_time>$hp->gpu_time</gpu_time>\n"
                     ."   <njobs_success>$hp->njobs_success</njobs_success>\n"
-                    ."   <njobs_error>$hp->njobs_error</njobs_error>\n"
+                    ."   <njobs_error>$hp->njobs_fail</njobs_error>\n"
                 ;
             }
         }
@@ -282,7 +287,7 @@ function update_host($req, $host) {
     $timezone = (int)$hi->timezone;
     $domain_name = BoincDb::escape_string((string)$hi->domain_name);
     $host_cpid = BoincDb::escape_string((string)$hi->host_cpid);
-    $misc = BoincDb::escape_string(make_hostinfo_json($req));
+    $misc = BoincDb::escape_string(json_encode($host->misc, JSON_PRETTY_PRINT));
     $ip_addr = BoincDb::escape_string((string)$hi->ip_addr);
     $external_ip_addr = BoincDb::escape_string($_SERVER['REMOTE_ADDR']);
     $p_ncpus = (int)$hi->p_ncpus;
@@ -434,12 +439,12 @@ function lookup_records($req) {
             log_write("No host specified in request, and no similar host");
         }
     }
-    if ($host) {
-        update_host($req, $host);
-    } else {
+    if (!$host) {
         $host = create_host($req, $user);
         log_write("Created new host $host->id");
     }
+    $host->misc = req_to_misc($req);
+    update_host($req, $host);
     return array($user, $host);
 }
 

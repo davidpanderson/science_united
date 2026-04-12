@@ -26,8 +26,10 @@
 // Should also do it whenever a project releases an app for
 // a new GPU type or vbox; i.e. should do it periodically
 //
-// Run this in projects/scienceunited/html/ops
-// Also run project_init.php
+// Run in projects/scienceunited/html/ops:
+// get_projects.php
+// project_digest.php
+// project_init.php
 
 // first:
 // wget https://boinc.berkeley.edu/project_list.php
@@ -43,6 +45,7 @@ function get_avs($p) {
         $z->platform = $y[0];
         $z->gpu = "";
         $z->vbox = false;
+        $z->docker = false;
         if (count($y) > 1) {
             if (strstr($y[1], "cuda")) {
                 $z->gpu = "nvidia";
@@ -62,8 +65,8 @@ function get_avs($p) {
             if (strstr($y[1], "apple_gpu")) {
                 $z->gpu = "apple_gpu";
             }
-            if (strstr($y[1], "vbox")) {
-                $z->vbox = true;
+            if (strstr($y[1], "docker")) {
+                $z->docker = true;
             }
         }
         $avs[] = $z;
@@ -107,6 +110,7 @@ function main() {
         echo "processed $x->id: $x->name\n";
     }
     file_put_contents("../user/projects.ser", serialize($y));
+    file_put_contents('../user/projects.json', json_encode($y, JSON_PRETTY_PRINT));
 }
 
 main();
