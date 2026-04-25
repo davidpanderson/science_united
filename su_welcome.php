@@ -21,7 +21,7 @@ page_head(tra("Welcome to %1", PROJECT));
 text_start();
 echo tra("At this point BOINC should be installed and running on your computer; the system tray should have an icon like this: %1 If not, %2 get help here %3.",
     "<img src=https://boinc.berkeley.edu/logo/boinc32.bmp>",
-    "<a href=https://boinc.berkeley.edu/wiki/BOINC_Help>",
+    "<a href=https://github.com/BOINC/boinc/wiki/BOINC-Help>",
     "</a>"
 );
 
@@ -46,7 +46,7 @@ echo sprintf('
     tra("You can monitor what BOINC is doing, and control it, using the BOINC Manager.
         Open this by double-clicking on the BOINC icon.
         Details are %1here%2.",
-        "<a href=https://boinc.berkeley.edu/wiki/BOINC_Manager>",
+        "<a href=https://github.com/BOINC/boinc/wiki/BOINC_Manager>",
         "</a>"
     )
 );

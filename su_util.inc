@@ -177,11 +177,18 @@ function make_gpu($c, $type, $driver_version = null) {
     $x->model = (string)$c->name;
     $x->count = (int)$c->count;
     $x->ram_mb = (float)$c->available_ram/MEGA;
+    $x->peak_flops = (float)$c->peak_flops;
     if ($driver_version) {
         $x->driver_version = $driver_version;
     }
     if (!empty($c->coproc_opencl->opencl_device_version)) {
         $x->opencl_version = (string)$c->coproc_opencl->opencl_device_version;
+    }
+    if (!empty($c->max_compute_units)) {
+        $x->max_compute_units = (int)$c->max_compute_units;
+    }
+    if (!empty($c->max_clock_frequency)) {
+        $x->max_clock_frequency = (float)$c->max_clock_frequency;
     }
     return $x;
 }

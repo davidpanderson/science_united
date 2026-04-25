@@ -71,12 +71,12 @@ function show_user_hosts_page($user, $show_all, $is_me) {
             $h->domain_name,
             $h->os_name,
             sprintf(
-                '<a href=su_hosts.php?action=hw_sw_info&user_id=%d&host_id=%d>view</a>',
-                $user->id, $h->id
+                '<a href=su_hosts.php?action=hw_sw_info&host_id=%d>view</a>',
+                $h->id
             ),
             sprintf(
-                '<a href=su_hosts.php?action=su_info&user_id=%d&host_id=%d>view</a>',
-                $user->id, $h->id
+                '<a href=su_hosts.php?action=su_info&host_id=%d>view</a>',
+                $h->id
             ),
             time_diff_str($h->rpc_time, $now),
             $hide_button
@@ -97,11 +97,13 @@ function show_user_hosts_page($user, $show_all, $is_me) {
     page_tail();
 }
 
-function hide_host($user, $hidden) {
-    $id = get_int("host_id");
-    $h = BoincHost::lookup_id($id);
-    if (!$h || $h->userid != $user->id) {
+function hide_host($user, $host_id, $hidden) {
+    $h = BoincHost::lookup_id($host_id);
+    if (!$h) {
         error_page("no such host");
+    }
+    if ($h->userid != $user->id) {
+        error_page("not your host");
     }
     if ($hidden) {
         $h->update("total_credit=-1");      // otherwise unused field
@@ -254,38 +256,53 @@ function su_info_page($host, $is_me) {
     page_tail();
 }
 
-$user = get_logged_in_user();
-$id = get_int('user_id', true);
-if ($id) {
-    if ($id == $user->id) {
-        $is_me = true;
-    } else {
-        $user = BoincUser::lookup_id($id);
-        if (!$user) error_page('no user');
-        if (!$user->donated) error_page('no access');
-        $is_me = false;
-    }
-} else {
-    $is_me = true;
+// if no access, error out.
+// else return is_me flag
+//
+function check_access($user, $host_userid) {
+    if (is_admin($user)) return true;
+    if ($host_userid == $user->id) return true;
+    $user2 = BoincUser::lookup_id($host_userid);
+    if (!$user2) error_page('no user');
+    if (!$user2->donated) error_page('no access');
+    return false;
 }
+
+$user = get_logged_in_user();
+BoincForumPrefs::lookup($user);
+$is_admin = is_admin($user);
+
 $action = get_str("action", true);
 switch ($action) {
 case "hide":
-    if (!$is_me) break;
-    hide_host($user, get_int('hidden'));
+    $host_id = get_int("host_id");
+    $hidden = get_int('hidden');
+    hide_host($user, $host_id, $hidden);
     show_user_hosts_page($user, false, true);
     break;
 case "su_info":
-    $host = BoincHost::lookup_id(get_int("host_id"));
-    if ($host->userid != $user->id) error_page('no access');
+    $host_id = get_int("host_id");
+    $host = BoincHost::lookup_id($host_id);
+    if (!$host) error_page('no host');
+    $is_me = check_access($user, $host->userid);
     su_info_page($host, $is_me);
     break;
 case "hw_sw_info":
-    $host = BoincHost::lookup_id(get_int("host_id"));
-    if ($host->userid != $user->id) error_page('no access');
+    $host_id = get_int("host_id");
+    $host = BoincHost::lookup_id($host_id);
+    $is_me = check_access($user, $host->userid);
     hw_sw_info_page($host, $user, $is_me);
     break;
 default:
+    $user_id = get_int('user_id', true);
+    if ($user_id) {
+        check_access($user, $user_id);
+        $is_me = $user->id == $user_id;
+        $other_user = BoincUser::lookup_id($user_id);
+    } else {
+        $is_me = true;
+        $other_user = $user;
+    }
     $show_all = $is_me?get_int('show_all', true):false;
-    show_user_hosts_page($user, $show_all, $is_me);
+    show_user_hosts_page($other_user, $show_all, $is_me);
 }

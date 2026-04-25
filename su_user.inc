@@ -157,7 +157,7 @@ function show_calls_to_action() {
         tra('Tell friends and family about %1.', PROJECT),
         tra("Run BOINC on your other computing devices (desktops, laptops, tablets, Android phones)."),
         tra("Is BOINC running on this computer?  If not, %1Download it%2.",
-            '<a href="download.php">',
+            '<a href="download_software.php">',
             '<a/>'
         )
     );

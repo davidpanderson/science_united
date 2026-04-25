@@ -43,6 +43,7 @@ define('DARK_MODE', true);
 define('HOME_PAGE', 'su_home.php');
 define('SHOW_USER_PAGE', 'su_show_user.php');
 define('NEED_CREDIT_TO_POST_EXCEPT_HELP', false);
+define('WELCOME_PAGE', 'su_welcome.php');
 
 define("GLOBAL_HEAD_EXTRA", "
 <!-- Global site tag (gtag.js) - Google Analytics -->
