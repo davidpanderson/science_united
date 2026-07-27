@@ -3,6 +3,7 @@
 require_once("../inc/util.inc");
 require_once("../inc/su_db.inc");
 require_once("../inc/su_project_infos.inc");
+require_once("../inc/project_ids.inc");
 require_once("../inc/keywords.inc");
 
 // see how much this user has contributed to each top-level science keyword
@@ -36,6 +37,29 @@ function set_items($hp) {
     $x->njobs_fail = $hp->njobs_fail;
     return $x;
 
+}
+
+// defunct projects
+// Ideally should get this info from boinc-site projects.inc
+// commented-out entries.
+
+function add_proj($id, $kws) {
+    global $project_infos;
+    $x = new StdClass;
+    $x->id = $id;
+    $x->kws = [];
+    foreach ($kws as $k) {
+        $y = new Stdclass;
+        $y->keyword_id = $k;
+        $y->fraction = 1;
+        $x->kws[] = $y;
+    }
+    $project_infos[$id] = $x;
+}
+
+function add_defunct_projects() {
+    global $project_infos;
+    add_proj(PROJ_SETI, [KW_ASTRONOMY]);
 }
 
 // get project's top-level science keywords as (keyword_id, fraction) pairs
@@ -120,6 +144,7 @@ function show_cert($user) {
     $border = 9;
     $font = "\"Optima,Lucida Bright,Times New Roman\"";
 
+    add_defunct_projects();
     $areas = get_area_totals($user);
     echo "
         <table width=1200 height=800 border=$border cellpadding=20><tr><td>

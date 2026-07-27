@@ -111,15 +111,18 @@ function projects_graph($ndays, $gpu, $xsize, $ysize) {
 function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
     $min_time = time() - $ndays*86400;
     $accts = null;
+    $use_tflops = false;
     switch ($type) {
     case 'user':
         $accts = SUAccountingUser::enum("user_id=$id and create_time>$min_time order by id");
         break;
     case 'project':
         $accts = SUAccountingProject::enum("project_id=$id and create_time>$min_time order by id");
+        $use_tflops = true;
         break;
     case 'total':
         $accts = SUAccounting::enum("create_time>$min_time order by id");
+        $use_tflops = true;
         break;
     }
 
@@ -158,11 +161,21 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
         break;
     case 'ec':
         if ($integrate) {
-            $title1 = "CPU TFLOPs";
-            $title2 = "GPU TFLOPs";
+            if ($use_tflops) {
+                $title1 = "CPU TFLOPs";
+                $title2 = "GPU TFLOPs";
+            } else {
+                $title1 = "CPU GFLOPs";
+                $title2 = "GPU GFLOPs";
+            }
         } else {
-            $title1 = "CPU TFLOPs/sec";
-            $title2 = "GPU TFLOPs/sec";
+            if ($use_tflops) {
+                $title1 = "CPU TFLOPs/sec";
+                $title2 = "GPU TFLOPs/sec";
+            } else {
+                $title1 = "CPU GFLOPs/sec";
+                $title2 = "GPU GFLOPs/sec";
+            }
         }
         $color1 = "khaki";
         $color2 = "orange";
@@ -237,8 +250,11 @@ function graph($type, $id, $what, $ndays, $xsize, $ysize, $integrate) {
                 $c = ec_to_gflop_hours($cs);
                 $g = ec_to_gflop_hours($gs);
                 $dt /= 3600;
-                $val1[] = $c/($dt*1000);
-                $val2[] = ($c+$g)/($dt*1000);
+                if ($use_tflops) {
+                    $dt *= 1000;
+                }
+                $val1[] = $c/$dt;
+                $val2[] = ($c+$g)/$dt;
             }
             if ($a->gpu_ec_delta) {
                 $graph_two = true;
