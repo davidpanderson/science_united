@@ -140,7 +140,7 @@ function show_cert($user) {
     global $job_keywords;
 
     $join = gmdate('j F Y', $user->create_time);
-    $today = gmdate('j F Y', time(0));
+    $today = gmdate('j F Y', time());
     $border = 9;
     $font = "\"Optima,Lucida Bright,Times New Roman\"";
 

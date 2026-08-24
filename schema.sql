@@ -61,11 +61,11 @@ create table su_user_keyword (
  * for accounting purposes; they'll have the same authenticator.
  */
 create table su_account (
-    user_id                 integer         not null,
-    project_id              integer         not null,
-    create_time             double          not null,
-    authenticator           varchar(254)    not null,
-    state                   smallint        not null,
+    user_id                 integer         not null default 0,
+    project_id              integer         not null default 0,
+    create_time             double          not null default 0,
+    authenticator           varchar(254)    not null default '',
+    state                   smallint        not null default 0,
     retry_time              double          not null default 0,
     cpu_ec                  double          not null default 0,
     cpu_time                double          not null default 0,

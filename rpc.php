@@ -365,7 +365,7 @@ function update_host($req, $host) {
 function create_host($req, $user) {
     $now = time();
     $id = BoincHost::insert(
-        "(create_time, userid) values ($now, $user->id)"
+        "(create_time, userid, rpc_time, rpc_seqno) values ($now, $user->id, 0, 0)"
     );
     $host = BoincHost::lookup_id($id);
     update_host($req, $host);
@@ -413,7 +413,7 @@ function lookup_records($req) {
         }
     }
 
-    if (array_key_exists('opaque', $req)) {
+    if (isset($req->attributes()->opaque)) {
         $host_id = (int)$req->opaque->host_id;
         $host = BoincHost::lookup_id($host_id);
         if ($host) {
