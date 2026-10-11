@@ -16,14 +16,14 @@ create table su_project (
     url_signature           varchar(1024)   not null,
     share                   double          not null,
     status                  tinyint         not null,
-    avg_ec                  double          not null,
+    avg_ec                  double          not null default 0,
         # average EC per second over last week
-    avg_ec_adjusted         double          not null,
+    avg_ec_adjusted         double          not null default 0,
         # same, but adjusted for hosts arriving and leaving
         # reset to avg_ec at start of each accounting period
-    web_url                 varchar(254)    not null,
-    authenticator           varchar(254)    not null,
-    nhosts                  integer         not null,
+    web_url                 varchar(254)    not null default '',
+    authenticator           varchar(254)    not null default '',
+    nhosts                  integer         not null default 0,
         # value at end of last accounting period
         # rough estimate of how many hosts attached
     primary key (id)
@@ -33,12 +33,12 @@ create table su_project (
 
 create table su_allocation (
     id                      integer         not null auto_increment,
-    project_id              integer         not null,
-    init_alloc              double          not null,
-    alloc_rate              double          not null,
-    start_time              double          not null,
-    duration                double          not null,
-    status                  tinyint         not null,
+    project_id              integer         not null default 0,
+    init_alloc              double          not null default 0,
+    alloc_rate              double          not null default 0,
+    start_time              double          not null default 0,
+    duration                double          not null default 0,
+    status                  tinyint         not null default 0,
         /* 0 init, 1 in progress, 2 over */
     primary key (id)
 ) engine=InnoDB;

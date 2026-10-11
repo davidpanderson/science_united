@@ -208,7 +208,10 @@ function make_docker($version, $type, $d) {
     $x->version = (string)$version;
     $x->type = (int)$type;
     if ($d) {
-        $x->wsl_distro = $d;
+        $x->wsl_distro = $d->wsl_distro;
+        if (!empty($d->boinc_buda_runner_version)) {
+            $x->boinc_buda_runner_version = $d->boinc_buda_runner_version;
+        }
     }
     return $x;
 }

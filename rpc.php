@@ -365,7 +365,7 @@ function update_host($req, $host) {
 function create_host($req, $user) {
     $now = time();
     $id = BoincHost::insert(
-        "(create_time, userid, rpc_time, rpc_seqno) values ($now, $user->id, 0, 0)"
+        "(create_time, userid, rpc_time, rpc_seqno, misc) values ($now, $user->id, 0, 0, '')"
     );
     $host = BoincHost::lookup_id($id);
     update_host($req, $host);

@@ -17,17 +17,14 @@
 // along with BOINC.  If not, see <http://www.gnu.org/licenses/>.
 
 // initialize or update the project DB table
-// run this from html/ops
 // RUN WHENEVER BOINC PROJECT LIST HAS CHANGED
 //
-// input: html/ops/projects.xml
-// get this from https://boinc.berkeley.edu/project_list.php
-//
+// php get_projects.php
+// php project_digest.php
+// php project_init.php
+
 // If there are new projects:
 // set su_project.authenticator and state using mysql
-//
-// IF ANYTHING HAS CHANGED:
-// run project_digest.php as well (to update projects.ser)
 
 require_once("../inc/keywords.inc");
 require_once("../inc/project_ids.inc");

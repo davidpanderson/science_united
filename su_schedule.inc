@@ -154,6 +154,7 @@ function keywd_score($pkws, $ukws) {
 //
 function allocation_score($project, $req) {
     $su_allocate = SUAllocate::get();
+    if ($su->allocate->avg_ec_total == 0) return 0;
 
     // fraction of computing this project has gotten recently
     //

@@ -22,18 +22,13 @@
 // and write these, serialized, to projects.ser
 
 // DO THIS WHENEVER THE BOINC PROJECT LIST CHANGES
-//
 // Should also do it whenever a project releases an app for
 // a new GPU type or vbox; i.e. should do it periodically
 //
 // Run in projects/scienceunited/html/ops:
-// get_projects.php
-// project_digest.php
-// project_init.php
-
-// first:
-// wget https://boinc.berkeley.edu/project_list.php
-// and put it in projects.xml
+// php get_projects.php
+// php project_digest.php
+// php project_init.php
 
 require_once("../inc/su_db.inc");
 
